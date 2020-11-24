@@ -3,34 +3,76 @@
 }
 
 html {
-    
+    font-family: sans-serif;
 }
 
 body {
     margin: 0;
-    
 }
 
-a{
-    
+a,
+a:visited,
+a:active {
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
 }
 
-li{
-    
+ul {
+    margin: 0;
+    padding: 0px;
 }
 
-select{
-    
+li {
+    list-style: none;
+    margin: 0;
 }
 
-h1, h2, h3, h4, h5, h6 {
-    
+select {}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 0 0 10px 0;
 }
 
-p {
-    
+p {}
+
+img {}
+
+button {
+    cursor: pointer;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    padding: 5px;
 }
 
-img {
-    
+.dark-btn {
+    background-color: rgb(65, 65, 65);
+    color: whitesmoke;
+}
+
+.light-btn {
+    background-color: whitesmoke;
+    color: rgb(65, 65, 65);
+    ;
+}
+
+select {
+    // background-color: rgb(230, 230, 230);
+    border-radius: 5px;
+    outline: 0;
+    cursor: pointer;
+}
+
+input {
+    border-radius: 5px;
+    outline: 0;
+    border: none;
+    padding: 2px;
+    margin: 5px;
 }
