@@ -1,11 +1,11 @@
-import router from '@/router'
+import router from '@/router/router'
+import Axios from 'axios';
 
 const BASE_URL = process.env.NODE_ENV === 'production'
     ? '/api/'
     : '//localhost:3000/api/'
 
 
-import Axios from 'axios';
 var axios = Axios.create({
     withCredentials: true
 });

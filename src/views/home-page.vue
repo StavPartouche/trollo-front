@@ -1,5 +1,5 @@
 <template>
-	<section class="home-page flex flex-column justidy-space-between">
+	<section class="home-page flex-column justidy-space-between">
 		<h1>hello trollo</h1>
 		<footer>
 			<p>® All rights reserved 2020 - Stav Partouche - Maya Malik - Inbar Tamir</p>
