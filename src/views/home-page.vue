@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div>
     <h1>hello trollo</h1>
     <h1>trololololol</h1>
   </div>
@@ -11,8 +11,5 @@
 
 export default {
   name: 'home-page',
-  components: {
-    
-  }
 }
 </script>
