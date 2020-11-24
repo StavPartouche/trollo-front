@@ -1,0 +1,21 @@
+.home-page {
+    position: relative;
+    min-height: calc(100vh - 80px);
+
+    footer {
+        position: absolute;
+        text-align: center;
+        width: 100vw;
+        height: 40px;
+        bottom: 0;
+        padding: 15px;
+        background-color: rgb(135, 184, 187);
+
+        p {
+            margin: 0 auto;
+            color: white;
+            font-weight: bold;
+            font-size: rem(14px);
+        }
+    }
+}

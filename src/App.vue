@@ -1,18 +1,18 @@
 <template>
   <div id="app">
-    <nav-bar/>
+    <app-header />
     <router-view/>
   </div>
 </template>
 
 <script>
 
-import navBar from '../src/cmp/nav-bar.cmp'
+import appHeader from '../src/cmps/app-header.cmp'
 
 export default {
   name: 'app',
   components: {
-    navBar
+    appHeader
   }
 }
 </script>

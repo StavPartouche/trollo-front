@@ -1,0 +1,22 @@
+.app-header {
+    height: 80px;
+    padding: 0 rem(20px);
+    background-color: aliceblue;
+    border-bottom: 1px solid rgb(138, 199, 253);
+
+    & > * {
+        height: 100%;
+    }
+
+    .links * {
+        margin: 0 rem(10px);
+    }
+
+    .logo {
+        height: 80%;
+
+        img {
+            height: 100%;
+        }
+    }
+}
