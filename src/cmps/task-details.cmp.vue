@@ -13,7 +13,22 @@
                 </div>
                 <div>
                     <h3>Attachments</h3>
-                    <img v-for="(attachment,idx) in task.attachments" :key= idx :src="attachment"/>
+                    <img v-for="(attachment,idx) in task.attachments" :key="idx" :src="attachment"/>
+                </div>
+                <div>
+                    <h3>Check Lists</h3>
+                    <div v-for ="(checkList, checkListIdx) in task.checkLists" :key="checkListIdx">
+                         <h4>{{checkList.title}}</h4>
+                         <ul>
+                             <li v-for="(item,idx) in checkList.items" :key="idx">
+                                 {{item.txt}}
+                             </li>
+                         </ul>
+                         <form  @submit.prevent="addItem(checkListIdx)">
+                            <input type="text" v-model="newItem">
+                            <button>add to list</button>
+                         </form>
+                     </div>
                 </div>
                 <div>
                     <h3>Comments</h3>
@@ -56,7 +71,8 @@ export default {
   data() {
     return {
         isPopup: false,
-        cmpType: ''
+        cmpType: '',
+        newItem:''
     };
   },
   methods: {
@@ -72,6 +88,16 @@ export default {
             }
             this.$emit('updateTask', newCheckList)
         }
+    },
+    addItem(checkListIdx){
+        console.log(checkListIdx);
+        const item = {
+            checkListIdx: checkListIdx,
+            txt: this.newItem,
+            isDone: false
+        }
+        this.$emit('addItem', item)
+        this.newItem = ''
     },
     openPopup(type){
         this.cmpType = type,

@@ -1,3 +1,9 @@
 .board-setting {
+    position: absolute;
+    top: 20px;
+    left: 20px;
     background-color: rgb(226, 115, 115);
+    .img-circle {
+        width: 100px;
+    }
 }

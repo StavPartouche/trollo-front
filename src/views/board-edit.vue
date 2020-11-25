@@ -1,11 +1,11 @@
 <template>
   <div class="board-edit">
-    <nav-tools
+    <board-nav
       @saveBoard="saveBoardSettings"
       v-if="board"
       :board="board"
       :members="members"
-    ></nav-tools>
+    ></board-nav>
     <div class="lists-container">
       <ul class="list" v-if="board">
         <li
@@ -30,14 +30,14 @@
       </ul>
       <button @click="addList">Add list</button>
     </div>
-    <task-details v-if="currTask" :task="currTask" :activites="board.activities" @updateTask="updateTask" @close="closeDetails"/>
+    <task-details v-if="currTask" :task="currTask" :activites="board.activities" @addItem="addItem" @updateTask="updateTask" @close="closeDetails"/>
   </div>
 </template>
 
 <script>
 import { boardService } from "../services/board.service.js";
 import { userService } from "../services/user.service.js";
-import navTools from "../cmps/nav-tools.cmp";
+import boardNav from "../cmps/board-nav.cmp";
 import taskDetails from "../cmps/task-details.cmp";
 
 export default {
@@ -106,13 +106,22 @@ export default {
           this.updateBoard();
       }
     },
+    addItem(item){
+      const currCheckListItems = this.board.lists[this.currListIdx].tasks[this.currTaskIdx].checkLists[item.checkListIdx].items
+      const newItem = {
+        txt: item.txt,
+        isDone: item.isDone
+      }
+      currCheckListItems.push(newItem)
+      this.updateBoard();
+    },
     async getMember(memberId){
       const member = await userService.getById(memberId)
       return member
     }
   },
   components: {
-    navTools,
+    boardNav,
     taskDetails,
   },
   async created() {

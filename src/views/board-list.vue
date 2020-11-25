@@ -87,40 +87,40 @@
 import { boardService } from "../services/board.service.js";
 
 export default {
-	name: "board-list",
-	data() {
-		return {
-			boards: [],
-		};
-	},
-	methods: {
-		async addBoard() {
-			const user = this.$store.getters.loggedInUser;
-			var newBoard = boardService.getEmptyBoard(user);
-			newBoard.name = prompt("Enter Board name");
-			var saveBoard = await this.$store.dispatch({
-				type: "saveBoard",
-				board: newBoard,
-			});
-			this.$router.push(`/board/${saveBoard._id}`);
-		},
-	},
-	computed: {
-		userBoards() {
-			return this.$store.getters.userBoardsForDisplay;
-		},
-		publicBoards() {
-			return this.$store.getters.publicBoardsForDisplay;
-		},
-		templateBoards() {
-			return this.$store.getters.templatesForDisplay;
-		},
-	},
-	created() {
-		this.$store.dispatch({
-			type: "loadBoards",
-		});
-	},
+  name: "board-list",
+  data() {
+    return {
+      boards: [],
+    };
+  },
+  methods: {
+    async addBoard() {
+      const user = this.$store.getters.loggedInUser;
+      var newBoard = boardService.getEmptyBoard(user._id);
+      newBoard.name = prompt("Enter Board name");
+      var saveBoard = await this.$store.dispatch({
+        type: "saveBoard",
+        board: newBoard,
+      });
+      this.$router.push(`/board/${saveBoard._id}`);
+    },
+  },
+  computed: {
+    userBoards() {
+      return this.$store.getters.userBoardsForDisplay;
+    },
+    publicBoards() {
+      return this.$store.getters.publicBoardsForDisplay;
+    },
+    templateBoards() {
+      return this.$store.getters.templatesForDisplay;
+    },
+  },
+  created() {
+    this.$store.dispatch({
+      type: "loadBoards",
+    });
+  },
 };
 </script>
 

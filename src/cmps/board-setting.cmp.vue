@@ -5,22 +5,27 @@
       </label>
       <label for="">
         Due Date:
-      <input type="date" v-model="boardToEdit.createdAt" />
+      <input type="date" v-model="boardToEdit.dueDate" />
       </label>
       <label for="">
         Description:
       <input type="text" v-model="boardToEdit.description" />
       </label>
-      <label for="">
-        Image:
-      <input type="text" v-model="boardToEdit.style.url" />
-      </label>
+      <pre>{{boardToEdit.style.url}}</pre>
+      <!-- <img src="src\styles\assets\board-background-imgs\bgc1.jpg" alt=""> -->
+      <div class="img-circle">
+      <img src="@/styles/assets/board-background-imgs/bgc1.jpg" alt="">
+      </div>
+      <img @click="toggleBackground" :src="boardToEdit.style.url" />
+      <img :src="imgUrl" />
+      <board-background v-if="isBackground" imgUrl="imgUrl"/>
       <button type="button">Delete Board</button>
       <button>save</button>
     </form>
 </template>
 
 <script>
+import boardBackground from './board-background.cmp'
 export default {
   name: "board-setting",
   props: {
@@ -28,7 +33,8 @@ export default {
   },
   data() {
     return {
-      boardToEdit: null
+      boardToEdit: null,
+      isBackground: false
     };
   },
   methods: {
@@ -36,10 +42,21 @@ export default {
       console.log('save changes');
       this.$emit('saveBoard', this.boardToEdit)
     },
+    toggleBackground(){
+      this.isBackground=!this.isBackground
+    }
+  },
+  computed:{
+imgUrl(){
+  return this.boardToEdit.style.url
+}
   },
   created(){
     this.boardToEdit = JSON.parse(JSON.stringify(this.board));
     console.log(this.boardToEdit);
+  },
+  components:{
+    boardBackground
   }
 };
 </script>
