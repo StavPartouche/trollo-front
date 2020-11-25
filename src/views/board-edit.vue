@@ -1,11 +1,6 @@
 <template>
   <div class="board-edit">
-    <!-- <nav-tools v-model="board"></nav-tools> -->
-<<<<<<< HEAD
     <nav-tools :board="board" :members="members"></nav-tools>
-=======
-    <!-- <nav-tools :board="board"></nav-tools> -->
->>>>>>> b5c4344e64db1249dab160d161f1275623d48e97
     <div class="lists-container">
       <ul class="list" v-if="board">
         <li class="list-item" v-for="(list, listIdx) in board.lists" :key="list.id">
