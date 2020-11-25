@@ -38,7 +38,7 @@ async function signup(userCred) {
 }
 
 async function logout() {
-    await httpService.post('logout');
+    // await httpService.post('logout');
     sessionStorage.clear();
 }
 

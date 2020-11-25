@@ -8,7 +8,7 @@
 			<template v-if="loggedInUser">
 				<router-link to="/user">User Page</router-link> |
 				<!-- <router-link to="/logout">Logout</router-link> -->
-				<a @click="onLogout">Logout</a>
+				<a href="#" @click="onLogout">Logout</a>
 			</template>
 		</div>
 	</nav>
@@ -31,7 +31,7 @@ export default {
 	},
 	methods: {
 		onLogout() {
-			// this.$store.
+			this.$store.dispatch({type: 'logout'})
 		}
 	}
 }
