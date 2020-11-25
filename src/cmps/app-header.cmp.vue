@@ -1,8 +1,7 @@
 <template>
 	<nav class="app-header flex align-center justify-space-between">
-		<router-link to="/" class="logo"
-			><img src="@/styles/assets/logo.png"
-		/></router-link>
+		<!-- <router-link to="/" class="logo"><img src="@/styles/assets/logo.png"/>Trollo</router-link> -->
+		<router-link to="/" class="logo">Trollo</router-link>
 		<div class="links flex align-center">
 			<router-link to="/board">Boards</router-link> |
 			<router-link to="/login" v-if="!loggedInUser">Login</router-link>

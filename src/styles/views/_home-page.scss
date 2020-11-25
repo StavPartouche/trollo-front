@@ -1,7 +1,12 @@
 .home-page {
+    flex: 1;
     position: relative;
     min-height: calc(100vh - 80px);
-
+    background-image: url('../styles/assets/home1.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    flex: 1;
     footer {
         position: absolute;
         text-align: center;
@@ -9,8 +14,7 @@
         height: 40px;
         bottom: 0;
         padding: 15px;
-        background-color: rgb(135, 184, 187);
-
+        background-color: rgb(58, 58, 58);
         p {
             margin: 0 auto;
             color: white;
