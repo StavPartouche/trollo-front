@@ -1,10 +1,12 @@
 <template>
-  <div v-if="board" class="nav-tools flex center">
-    <!-- <h1>navTools</h1> -->
+  <div class="nav-tools flex center">
+    <!-- <pre>{{board}}</pre> -->
     <button @click="toggleIsSetting">{{ board.name }}</button>
-    <form v-if="isSetting" action="">
-      <input type="name" v-model="board.name" />
-    </form>
+    <board-setting
+      @saveBoard="saveBoardSetting"
+      v-if="isSetting"
+      :board="boardToEdit"
+    />
     <ul>
       <li v-for="member in members" :key="member._id">
         {{ member.userName }}
@@ -20,6 +22,7 @@
 </template>
 
 <script>
+import boardSetting from "./board-setting.cmp";
 export default {
   name: "nav-tools",
   props: {
@@ -28,9 +31,13 @@ export default {
   },
   data() {
     return {
+      boardToEdit: null,
       isActivityLog: false,
       isSetting: false,
     };
+  },
+  computed: {
+
   },
   methods: {
     toggleActivityLog() {
@@ -39,6 +46,20 @@ export default {
     toggleIsSetting() {
       this.isSetting = !this.isSetting;
     },
+    saveBoardSetting(board) {
+      this.boardToEdit = board ;
+      this.saveBoard();
+    },
+    saveBoard(){
+      this.$emit('saveBoard', JSON.parse(JSON.stringify(this.boardToEdit)) )
+    }
   },
+  components: {
+    boardSetting,
+  },
+  created(){
+    console.log(this.board);
+    this.boardToEdit = JSON.parse(JSON.stringify(this.board))
+  }
 };
 </script>
