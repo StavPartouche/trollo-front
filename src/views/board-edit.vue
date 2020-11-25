@@ -2,18 +2,20 @@
   <div class="board-edit">
     <!-- <nav-tools v-model="board"></nav-tools> -->
     <nav-tools :board="board"></nav-tools>
-    <ul class="list" v-if="board">
-      <li class="list-item" v-for="(list, idx) in board.lists" :key="list.id">
-        <h2>{{list.name}}</h2>
-        <ul>
-          <li class="task" v-for="task in list.tasks" :key="task.id">
-            <p>{{task.name}}</p>
-          </li>
-        </ul>
-        <button @click="addTask(idx)">Add task</button>
-      </li>
-    </ul>
-    <button @click="addList">Add list</button>
+    <div class="lists-container">
+      <ul class="list" v-if="board">
+        <li class="list-item" v-for="(list, idx) in board.lists" :key="list.id">
+          <h2>{{list.name}}</h2>
+          <ul>
+            <li class="task" v-for="task in list.tasks" :key="task.id">
+              <p>{{task.name}}</p>
+            </li>
+          </ul>
+          <button @click="addTask(idx)">Add task</button>
+        </li>
+      </ul>
+      <button @click="addList">Add list</button>
+    </div>
   </div>
 </template>
 
