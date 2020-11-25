@@ -15,9 +15,6 @@ export default {
 		appHeader
 	},
 	created() {
-		// this.$store.dispatch({
-		// 	type: "loadBoards",
-		// });
 	}
 }
 </script>
