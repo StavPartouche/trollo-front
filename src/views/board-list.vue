@@ -2,9 +2,6 @@
 	<section>
 		<template v-if="userBoards.length">
 			<h2>User Boards:</h2>
-			<!-- <li>
-				<button @click="addBoard">add board</button>
-			</li> -->
 			<el-row>
 				<el-col :span="2" :offset="0">
 					<el-card @click.native="addBoard"
@@ -32,12 +29,12 @@
 			<hr />
 		</template>
 		<h2>Public Boards:</h2>
-		<el-col :span="2" :offset="0">
-			<el-card @click.native="addBoard"
-				><img class="plus-icon" src="../styles/assets/plus.png"
-			/></el-card>
-		</el-col>
 		<el-row>
+			<el-col v-if="!userBoards.length" :span="2" :offset="0">
+				<el-card @click.native="addBoard"
+					><img class="plus-icon" src="../styles/assets/plus.png"
+				/></el-card>
+			</el-col>
 			<el-col
 				:span="4"
 				v-for="board in publicBoards"
@@ -56,16 +53,6 @@
 				</router-link>
 			</el-col>
 		</el-row>
-		<!-- <ul>
-			<li v-for="board in publicBoards" :key="board._id">
-				<router-link :to="'/board/' + board._id">{{
-					board.name
-				}}</router-link>
-			</li>
-			<li v-if="!userBoards.length">
-				<button @click="addBoard">add board</button>
-			</li>
-		</ul> -->
 		<hr />
 		<h2>Templates:</h2>
 		<ul>
@@ -87,40 +74,41 @@
 import { boardService } from "../services/board.service.js";
 
 export default {
-  name: "board-list",
-  data() {
-    return {
-      boards: [],
-    };
-  },
-  methods: {
-    async addBoard() {
-      const user = this.$store.getters.loggedInUser;
-      var newBoard = boardService.getEmptyBoard(user._id);
-      newBoard.name = prompt("Enter Board name");
-      var saveBoard = await this.$store.dispatch({
-        type: "saveBoard",
-        board: newBoard,
-      });
-      this.$router.push(`/board/${saveBoard._id}`);
-    },
-  },
-  computed: {
-    userBoards() {
-      return this.$store.getters.userBoardsForDisplay;
-    },
-    publicBoards() {
-      return this.$store.getters.publicBoardsForDisplay;
-    },
-    templateBoards() {
-      return this.$store.getters.templatesForDisplay;
-    },
-  },
-  created() {
-    this.$store.dispatch({
-      type: "loadBoards",
-    });
-  },
+	name: "board-list",
+	data() {
+		return {
+			boards: [],
+		};
+	},
+	methods: {
+		async addBoard() {
+			const user = this.$store.getters.loggedInUser;
+			var newBoard = (user) ? boardService.getEmptyBoard(user._id) : boardService.getEmptyBoard();
+			newBoard.name = prompt("Enter Board name");
+			if (!newBoard.name) return;
+			var saveBoard = await this.$store.dispatch({
+				type: "saveBoard",
+				board: newBoard,
+			});
+			this.$router.push(`/board/${saveBoard._id}`);
+		},
+	},
+	computed: {
+		userBoards() {
+			return this.$store.getters.userBoardsForDisplay;
+		},
+		publicBoards() {
+			return this.$store.getters.publicBoardsForDisplay;
+		},
+		templateBoards() {
+			return this.$store.getters.templatesForDisplay;
+		},
+	},
+	created() {
+		this.$store.dispatch({
+			type: "loadBoards",
+		});
+	},
 };
 </script>
 
