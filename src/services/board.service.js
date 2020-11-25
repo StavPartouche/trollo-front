@@ -41,11 +41,11 @@ function getEmptyBoard(userId = 'guest') {
         name: '',
         members: [],
         labels: [],
-        background: { color: '', url: '' },
+        style: { backgroundColor: '', url: '' },
         creator: userId,
         dueDate: '',
         description: '',
-        activityLog: [{
+        activities: [{
             createdAt: Date.now(),
             txt: 'Board created',
             userId: userId,
@@ -75,7 +75,6 @@ function getEmptyTask() {
         members: [],
         labels: [],
         comments: [],
-        activityLog: [],
         previewImg: '',
         attachments: [],
         checkLists: []

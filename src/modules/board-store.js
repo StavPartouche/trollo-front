@@ -35,7 +35,6 @@ export default {
             console.log(getters.loggedInUser);
             const user = (getters.loggedInUser) ? getters.loggedInUser._id : undefined;
             const boards = await boardService.query(user);
-            console.log('boards:', boards)
             const templates = await boardService.query('template');
             commit({ type: 'setBoards', boards });
         },

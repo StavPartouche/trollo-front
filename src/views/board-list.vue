@@ -1,8 +1,8 @@
 <template>
-	<div>
-		<template v-if="userBoards.length">
-			<h2>User Boards:</h2>
-			<ul>
+  <section>
+    <template v-if="userBoards.length">
+      <h2>User Boards:</h2>
+      <!-- <ul>
 				<li v-for="board in userBoards" :key="board._id">
 					<router-link :to="'/board/' + board._id">{{
 						board.name
@@ -11,69 +11,143 @@
 				<li>
 					<button @click="addBoard">add board</button>
 				</li>
-			</ul>
-			<hr />
-		</template>
-		<h2>Public Boards:</h2>
-		<ul>
-			<li v-for="board in publicBoards" :key="board._id">
-				<router-link :to="'/board/' + board._id">{{
-					board.name
-				}}</router-link>
-			</li>
-			<li v-if="!userBoards">
-				<button @click="addBoard">add board</button>
-			</li>
-		</ul>
-		<hr />
-		<h2>Templates:</h2>
-		<ul>
-			<li v-for="board in templateBoards" :key="board._id">
-				<router-link :to="'/board/' + board._id">{{
-					board.name
-				}}</router-link>
-			</li>
-		</ul>
-	</div>
+			</ul> -->
+      <li>
+        <button @click="addBoard">add board</button>
+      </li>
+      <el-row>
+        <el-col
+          :span="4"
+          v-for="(board, index) in userBoards"
+          :key="board._id"
+          :offset="index > 0 ? 1 : 0"
+        >
+          <router-link :to="'/board/' + board._id">
+            <el-card :body-style="{ padding: '0px' }">
+              <!-- <img
+							src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
+							class="image"
+						/> -->
+              <div style="padding: 14px">
+                <span>{{ board.name }}</span>
+                <div class="bottom clearfix">
+                  <!-- <time class="time">{{ currentDate }}</time> -->
+                </div>
+              </div>
+            </el-card>
+          </router-link>
+        </el-col>
+      </el-row>
+      <hr />
+    </template>
+    <h2>Public Boards:</h2>
+    <ul>
+      <li v-for="board in publicBoards" :key="board._id">
+        <router-link :to="'/board/' + board._id">{{ board.name }}</router-link>
+      </li>
+      <li v-if="!userBoards.length">
+        <button @click="addBoard">add board</button>
+      </li>
+    </ul>
+    <hr />
+    <h2>Templates:</h2>
+    <ul>
+      <li v-for="board in templateBoards" :key="board._id">
+        <router-link :to="'/board/' + board._id">{{ board.name }}</router-link>
+      </li>
+    </ul>
+    <el-carousel :interval="4000" type="card" height="200px">
+      <el-carousel-item v-for="item in 6" :key="item">
+        <h3 class="medium">{{ item }}</h3>
+      </el-carousel-item>
+    </el-carousel>
+  </section>
 </template>
 
 <script>
-
-import { boardService } from '../services/board.service.js';
+import { boardService } from "../services/board.service.js";
 
 export default {
-	name: 'board-list',
-	data() {
-		return {
-			boards: [],
-		};
-	},
-	methods: {
-		async addBoard() {
-			var newBoard = boardService.getEmptyBoard();
-			newBoard.name = prompt('Enter Board name');
-			var saveBoard = await this.$store.dispatch({
-				type: 'saveBoard',
-				board: newBoard
-			});
-			this.$router.push(`/board/${saveBoard._id}`);
-		}
-	},
-	computed: {
-		userBoards() {
-			return this.$store.getters.userBoardsForDisplay;
-		},
-		publicBoards() {
-			return this.$store.getters.publicBoardsForDisplay;
-		},
-		templateBoards() {
-			return this.$store.getters.templatesForDisplay;
-		}
-	},
-	created() {
-		this.$store.dispatch({
-			type: 'loadBoards',
-		});
-	}
-}
+  name: "board-list",
+  data() {
+    return {
+      boards: [],
+    };
+  },
+  methods: {
+    async addBoard() {
+      const user = this.$store.getters.loggedInUser;
+      var newBoard = boardService.getEmptyBoard(user);
+      newBoard.name = prompt("Enter Board name");
+      var saveBoard = await this.$store.dispatch({
+        type: "saveBoard",
+        board: newBoard,
+      });
+      this.$router.push(`/board/${saveBoard._id}`);
+    },
+  },
+  computed: {
+    userBoards() {
+      return this.$store.getters.userBoardsForDisplay;
+    },
+    publicBoards() {
+      return this.$store.getters.publicBoardsForDisplay;
+    },
+    templateBoards() {
+      return this.$store.getters.templatesForDisplay;
+    },
+  },
+  created() {
+    this.$store.dispatch({
+      type: "loadBoards",
+    });
+  },
+};
 </script>
+
+<style>
+.time {
+  font-size: 13px;
+  color: #999;
+}
+
+.bottom {
+  margin-top: 13px;
+  line-height: 12px;
+}
+
+.button {
+  padding: 0;
+  float: right;
+}
+
+.image {
+  width: 100%;
+  display: block;
+}
+
+.clearfix:before,
+.clearfix:after {
+  display: table;
+  content: "";
+}
+
+.clearfix:after {
+  clear: both;
+}
+.el-carousel__item h3 {
+  color: #475669;
+  font-size: 14px;
+  opacity: 0.75;
+  line-height: 200px;
+  margin: 0;
+}
+
+.el-carousel__item:nth-child(2n) {
+  background-color: #99a9bf;
+}
+
+.el-carousel__item:nth-child(2n + 1) {
+  background-color: #d3dce6;
+}
+</style>
