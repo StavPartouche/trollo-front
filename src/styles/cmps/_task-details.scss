@@ -34,8 +34,8 @@
             display: flex;
 
             .task-details{
-                border: 1px solid green;
                 width: 75%;
+                overflow-y: auto;
 
                 img{
                     height: 100px;
