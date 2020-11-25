@@ -1,6 +1,10 @@
 <template>
-    <form v-if="isSetting" action="">
-      <input type="name" v-model="board.name" />
+    <form @submit.prevent="saveChanges" v-if="isSetting" action="">
+      <input type="text" v-model="board.name" />
+      <input type="date" v-model="board.createdAt" />
+      <input type="text" v-model="board.description" />
+      <input type="text" v-model="board.style.url" />
+      <button type="button">Delete Board</button>
       <button>save</button>
     </form>
 </template>

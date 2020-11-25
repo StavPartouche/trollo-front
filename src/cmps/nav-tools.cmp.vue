@@ -20,6 +20,8 @@
 </template>
 
 <script>
+
+import boardSettings from './board-setting.cmp.vue'
 export default {
   name: "nav-tools",
   props: {
@@ -39,6 +41,9 @@ export default {
     toggleIsSetting() {
       this.isSetting = !this.isSetting;
     },
+    components:{
+      boardSettings
+    }
   },
 };
 </script>
