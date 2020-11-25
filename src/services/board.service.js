@@ -37,6 +37,7 @@ function put(board) {
 }
 
 function getEmptyBoard(userId = 'guest') {
+    debugger
     return {
         name: '',
         members: [],

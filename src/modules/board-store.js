@@ -9,6 +9,7 @@ export default {
     },
     getters: {
         userBoardsForDisplay(state) {
+            console.log(state.boards.filter(board => board.creator !== 'guest' && board.creator !== 'template'))
             return state.boards.filter(board => board.creator !== 'guest' && board.creator !== 'template');
         },
         publicBoardsForDisplay(state) {
@@ -35,7 +36,6 @@ export default {
             console.log(getters.loggedInUser);
             const user = (getters.loggedInUser) ? getters.loggedInUser._id : undefined;
             const boards = await boardService.query(user);
-            const templates = await boardService.query('template');
             commit({ type: 'setBoards', boards });
         },
         async saveBoard({ commit }, { board }) {
