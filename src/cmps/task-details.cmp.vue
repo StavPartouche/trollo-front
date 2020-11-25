@@ -1,5 +1,6 @@
 <template>
   <div class="task-details">
+      <button @click="closeDetails">X</button>
     {{task.name}}
   </div>
 </template>
@@ -20,7 +21,9 @@ export default {
     }
   },
   methods:{ 
-    
+    closeDetails(){
+        this.$emit('close')
+    }
   },
   computed:{
     

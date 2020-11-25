@@ -16,7 +16,7 @@
       </ul>
       <button @click="addList">Add list</button>
     </div>
-    <task-details v-if="currTask" :task="currTask"/>
+    <task-details v-if="currTask" :task="currTask" @close="closeDetails"/>
   </div>
 </template>
 
@@ -57,6 +57,9 @@ export default {
                 type: 'saveBoard',
                 board: this.board
       })
+    },
+    closeDetails(){
+      this.currTask = null
     },
     async getMember(memberId){
       const member = await userService.getById(memberId)
