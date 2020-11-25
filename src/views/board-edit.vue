@@ -28,7 +28,7 @@ export default {
       newList.name = prompt('Enter List name')
       this.board.lists.push(newList)
       this.$store.dispatch({
-                type: 'updateBoard',
+                type: 'saveBoard',
                 board
       })
     }
