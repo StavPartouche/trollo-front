@@ -21,7 +21,7 @@
 					board.name
 				}}</router-link>
 			</li>
-			<li>
+			<li v-if="!userBoards">
 				<button @click="addBoard">add board</button>
 			</li>
 		</ul>
