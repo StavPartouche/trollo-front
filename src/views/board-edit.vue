@@ -30,7 +30,7 @@
       </ul>
       <button @click="addList">Add list</button>
     </div>
-    <task-details v-if="currTask" :task="currTask" :activites="board.activities" @updateTask="updateTask" @close="closeDetails"/>
+    <task-details v-if="currTask" :task="currTask" :activites="board.activities" @addItem="addItem" @updateTask="updateTask" @close="closeDetails"/>
   </div>
 </template>
 
@@ -105,6 +105,15 @@ export default {
           currCheckLists.push(newChechList)
           this.updateBoard();
       }
+    },
+    addItem(item){
+      const currCheckListItems = this.board.lists[this.currListIdx].tasks[this.currTaskIdx].checkLists[item.checkListIdx].items
+      const newItem = {
+        txt: item.txt,
+        isDone: item.isDone
+      }
+      currCheckListItems.push(newItem)
+      this.updateBoard();
     },
     async getMember(memberId){
       const member = await userService.getById(memberId)
