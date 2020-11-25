@@ -20,8 +20,9 @@ export default {
         }
     },
     actions: {
-        async loadBoards({ commit }){
-            const boards = await boardService.query()
+        async loadBoards({commit, getters}){
+            const user = (getters.loggedInUser[0]) ? getters.loggedInUser[0]._id : undefined;
+            const boards = await boardService.query(user)
             console.log(boards);
             commit({ type: 'setBoards', boards })
         },

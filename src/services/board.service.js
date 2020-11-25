@@ -9,8 +9,8 @@ export const boardService = {
     getEmptyBoard
 };
 
-function query() {
-    return httpService.get('board');
+function query(userId = 'kaki') {
+    return httpService.get(`board?creator=${userId}`);
 }
 
 function getById(boardId) {
@@ -40,7 +40,7 @@ function getEmptyBoard(userId = 'kaki') {
         members: [],
         labels: [],
         background: { color: '', url: '' },
-        creator: {},
+        creator: userId,
         dueDate: '',
         description: '',
         activityLog: [{

@@ -8,26 +8,33 @@
 			</h3>
 		</div>
 		<div v-else>
-			<form @submit.prevent="doLogin">
+			<form @submit.prevent="doLogin" v-if="isLogin">
+				<input
+					type="text"
+					v-model="loginCred.userName"
+					placeholder="Username"
+				/>
+				<br />
 				<input
 					type="text"
 					v-model="loginCred.email"
 					placeholder="Email"
 				/>
 				<br />
-				<input
+				<!-- <input
 					type="text"
 					v-model="loginCred.password"
 					placeholder="Password"
 				/>
-				<br />
+				<br /> -->
 				<button>Login</button>
+                <h5 class="login-signup-txt">Not a user? <a href="#" @click="toggleLogin">Sign Up</a></h5>
 			</form>
 
-			<form @submit.prevent="doSignup">
+			<form @submit.prevent="doSignup" v-else>
 				<input
 					type="text"
-					v-model="signupCred.username"
+					v-model="signupCred.userName"
 					placeholder="Username"
 				/>
 				<br />
@@ -37,33 +44,34 @@
 					placeholder="Email"
 				/>
 				<br />
-				<input
+				<!-- <input
 					type="text"
 					v-model="signupCred.password"
 					placeholder="Password"
 				/>
-				<br />
-				<input
+				<br /> -->
+				<!-- <input
 					type="text"
 					v-model="signupCred.password"
 					placeholder="Password"
 				/>
-				<br />
+				<br /> -->
 				<label>
 					Image:
 					<input type="file" @change="onUploadImg" />
 				</label>
 				<br />
 				<button>Signup</button>
+                <h5 class="login-signup-txt">Already a user? <a href="#" @click="toggleLogin">Login</a></h5>
 			</form>
 		</div>
 		<hr />
-		<button @click="getAllUsers">Get All Users</button>
-		<ul>
+		<!-- <button @click="getAllUsers">Get All Users</button> -->
+		<!-- <ul>
 			<li v-for="user in users" :key="user._id">
 				<pre>{{ user }}</pre>
 			</li>
-		</ul>
+		</ul> -->
 	</section>
 </template>
 
@@ -79,6 +87,7 @@ export default {
 			msg: '',
             userToEdit: {},
             isLoading: false,
+            isLogin: true
 		};
 	},
 	computed: {
@@ -87,7 +96,6 @@ export default {
 		},
 		loggedinUser() {
 			return this.$store.getters.loggedinUser;
-
 		}
 	},
 	created() {
@@ -96,7 +104,7 @@ export default {
 	methods: {
 		async doLogin() {
 			const cred = this.loginCred;
-			if (!cred.email || !cred.password) return this.msg = 'Please enter user/password';
+			if (!cred.email || !cred.userName) return this.msg = 'Please enter user/password';
 			await this.$store.dispatch({ type: 'login', userCred: cred });
 			this.loginCred = {};
 
@@ -106,7 +114,7 @@ export default {
 		},
 		doSignup() {
 			const cred = this.signupCred;
-			if (!cred.email || !cred.password || !cred.username) return this.msg = 'Please fill up the form';
+			if (!cred.email || !cred.userName) return this.msg = 'Please fill up the form';
 			cred.msgs = [];
 			this.$store.dispatch({ type: 'signup', userCred: cred });
 		},
@@ -122,9 +130,12 @@ export default {
         async onUploadImg(ev) {
 			this.isLoading = true;
 			const res = await uploadImg(ev);
-			this.signupCred.img = res.url;
+			this.signupCred.imgUrl = res.url;
 			this.isLoading = false;
-		}
+        },
+        toggleLogin() {
+            this.isLogin = !this.isLogin;
+        }
 	},
 	watch: {
 		loggedinUser() {

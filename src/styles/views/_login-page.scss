@@ -1,2 +1,9 @@
-.login-page {
+.login-signup-txt {
+    a {
+        text-decoration: underline;
+        
+        &:hover {
+            color: grey;
+        }
+    }
 }

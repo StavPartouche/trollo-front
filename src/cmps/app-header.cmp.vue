@@ -7,7 +7,8 @@
 			<router-link to="/login" v-if="!loggedInUser">Login</router-link>
 			<template v-if="loggedInUser">
 				<router-link to="/user">User Page</router-link> |
-				<router-link to="/logout">Logout</router-link>
+				<!-- <router-link to="/logout">Logout</router-link> -->
+				<a @click="onLogout">Logout</a>
 			</template>
 		</div>
 	</nav>
@@ -19,7 +20,18 @@ export default {
 	name: 'app-header',
 	data() {
 		return {
-			loggedInUser: null
+			// loggedInUser: null
+		}
+	},
+	computed: {
+		loggedInUser() {
+			console.log('this.$store.getters.loggedInUser:', this.$store.getters.loggedInUser)
+			return this.$store.getters.loggedInUser;
+		}
+	},
+	methods: {
+		onLogout() {
+			// this.$store.
 		}
 	}
 }
