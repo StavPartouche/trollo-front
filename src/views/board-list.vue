@@ -1,10 +1,11 @@
 <template>
   <div>
     <ul>
-      <li v-for="board in boards" :key="board._id">
+      <li v-for="board in boardsToShow" :key="board._id">
         <router-link :to="'/board/' + board._id" >{{board.name}}</router-link>
       </li>
       <li>
+        <button @click="addBoard">add board</button>
       </li>
     </ul>
   </div>
@@ -18,19 +19,26 @@ export default {
   name: 'board-list',
   data(){
     return{
-      boards: [{
-        _id: 'ddfdfodiji',
-        name: 'test'
-      }],
-      newBoard: null
+      boards: [],
     }
   },
-  methods:{
-
+  methods:{ 
+    async addBoard(){
+        var newBoard = boardService.getEmptyBoard()
+        newBoard.name = prompt('Enter Board name')
+        var saveBoard = await this.$store.dispatch({
+                type: 'saveBoard',
+                board: newBoard
+            })
+        this.$router.push(`/board/${saveBoard._id}`)
+    }
+  },
+  computed:{
+    boardsToShow(){
+      return this.$store.getters.boardsForDisplay;
+    }
   },
   created(){
-    this.newBoard = boardService.getEmptyBoard()
-    console.log("🚀 ~ file: board-list.vue ~ line 25 ~ created ~ this.newBoard", this.newBoard)
     
   }
 }
