@@ -1,7 +1,16 @@
 <template>
-<div class="nav-tools">
-    <h1>navTools</h1>
-<button>{{board}}</button>
+<div class="nav-tools flex center">
+    <!-- <h1>navTools</h1> -->
+      <button>{{board.name}}</button>
+      <ul>
+        <li v-for="user in members" :key="user._id">{{user}}</li>
+      </ul>
+      <button>{{board.activityLog}}</button>
+            <ul>
+        <li v-for="activity in activityLog" :key="activity.createdAt">
+          {{activity.txt}}
+        </li>
+      </ul>
 </div>
 </template>
 
