@@ -11,8 +11,8 @@ export const boardService = {
     getEmptyTask
 };
 
-function query(userId = 'kaki') {
-    return httpService.get(`board?creator=${userId}`);
+function query(userId = 'guest') {
+    return httpService.get(`board?creator=${userId}&creator=guest&creator=template`);
 }
 
 function getById(boardId) {
@@ -36,7 +36,7 @@ function put(board) {
     return httpService.put(`board/${board._id}`, board);
 }
 
-function getEmptyBoard(userId = 'kaki') {
+function getEmptyBoard(userId = 'guest') {
     return {
         name: '',
         members: [],

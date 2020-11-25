@@ -1,13 +1,6 @@
 <template>
 	<section class="login-page flex-column align-center">
-		<div v-if="loggedinUser">
-			<h3>
-				Loggedin User:
-				{{ loggedinUser.username }}
-				<button @click="doLogout">Logout</button>
-			</h3>
-		</div>
-		<div v-else>
+		<div v-show="!loggedinUser">
 			<form @submit.prevent="doLogin" v-if="isLogin">
 				<input
 					type="text"
@@ -106,17 +99,15 @@ export default {
 			const cred = this.loginCred;
 			if (!cred.email || !cred.userName) return this.msg = 'Please enter user/password';
 			await this.$store.dispatch({ type: 'login', userCred: cred });
-			this.loginCred = {};
-
-		},
-		doLogout() {
-			this.$store.dispatch({ type: 'logout' });
+            this.loginCred = {};
+            this.$router.push('/board');
 		},
 		doSignup() {
-			const cred = this.signupCred;
+            const cred = this.signupCred;
+            if (!this.signupCred.imgUrl) this.signupCred.imgUrl = '';
 			if (!cred.email || !cred.userName) return this.msg = 'Please fill up the form';
-			cred.msgs = [];
 			this.$store.dispatch({ type: 'signup', userCred: cred });
+            this.$router.push('/board');
 		},
 		getAllUsers() {
 			this.$store.dispatch({ type: 'loadUsers' });

@@ -1,4 +1,4 @@
-import { userService } from '@/services/user.service.js'
+import { userService } from '@/services/user.service.js';
 
 var localLoggedInUser = null;
 if (sessionStorage.user) localLoggedInUser = JSON.parse(sessionStorage.user);
@@ -58,4 +58,4 @@ export default {
         },
     }
 
-}
+};

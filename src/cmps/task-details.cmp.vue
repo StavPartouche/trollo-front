@@ -31,7 +31,7 @@
                 </div>
             </div>
             <div class="side-bar">
-
+                
             </div>
         </div>
     </div>

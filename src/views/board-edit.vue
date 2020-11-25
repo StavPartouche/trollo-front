@@ -1,6 +1,5 @@
 <template>
   <div class="board-edit">
-    <!-- <nav-tools v-model="board"></nav-tools> -->
     <nav-tools :board="board"></nav-tools>
     <div class="lists-container">
       <ul class="list" v-if="board">
@@ -12,6 +11,7 @@
             </li>
           </ul>
           <button @click="addTask(listIdx)">Add task</button>
+          <button @click="removeList(listIdx)">Delete List</button>
         </li>
       </ul>
       <button @click="addList">Add list</button>
@@ -34,7 +34,6 @@ export default {
       board: null,
       members:[],
       currTask: null
-      // currTask: null
     }
   },
   methods:{
@@ -46,6 +45,16 @@ export default {
                 type: 'saveBoard',
                 board: this.board
       })
+    },
+    removeList(listIdx){
+        const confirmRemove = confirm('sure?')
+        if(confirmRemove){
+          this.board.lists.splice(listIdx, 1)
+          this.$store.dispatch({
+                type: 'saveBoard',
+                board: this.board
+      })
+        }
     },
     openTask(listIdx, taskIdx){
       this.currTask = this.board.lists[listIdx].tasks[taskIdx]
@@ -79,7 +88,7 @@ export default {
         this.members.push(memberObject)
     });
     this.board = JSON.parse(JSON.stringify(board))
-    this.currTask = this.board.lists[0].tasks[0]
+    // this.currTask = this.board.lists[0].tasks[0]
   }
 }
 </script>
