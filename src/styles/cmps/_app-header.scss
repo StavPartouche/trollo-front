@@ -22,6 +22,10 @@
                 text-shadow: 1px 3px 6px rgb(246, 246, 246);
                 // font-size: rem(30px);
             }
+            &.router-link-active:not(.logo) {
+                color: white;
+                text-shadow: none;
+            }
         }
         .fa-home {
             font-size: rem(25px);

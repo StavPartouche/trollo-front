@@ -1,5 +1,5 @@
 <template>
-	<section>
+	<section class="board-list">
 		<template v-if="userBoards.length">
 			<h2>User Boards:</h2>
 			<el-row>
@@ -19,7 +19,6 @@
 							<div style="padding: 14px">
 								<span>{{ board.name }}</span>
 								<div class="bottom clearfix">
-									<!-- <time class="time">{{ currentDate }}</time> -->
 								</div>
 							</div>
 						</el-card>
@@ -46,7 +45,6 @@
 						<div style="padding: 14px">
 							<span>{{ board.name }}</span>
 							<div class="bottom clearfix">
-								<!-- <time class="time">{{ currentDate }}</time> -->
 							</div>
 						</div>
 					</el-card>
@@ -107,64 +105,7 @@ export default {
 	created() {
 		this.$store.dispatch({
 			type: "loadBoards",
-		});
+    });
 	},
 };
 </script>
-
-<style>
-/* .time {
-  font-size: 13px;
-  color: #999;
-} */
-
-div.el-card:hover {
-	cursor: pointer;
-	box-shadow: 0 0 4px rgba(0, 0, 0, 0.63);
-}
-
-.el-card .plus-icon {
-	margin: 0 auto;
-	height: 20px;
-}
-
-.bottom {
-	margin-top: 13px;
-	line-height: 12px;
-}
-
-.button {
-	padding: 0;
-	float: right;
-}
-
-.image {
-	width: 100%;
-	display: block;
-}
-
-.clearfix:before,
-.clearfix:after {
-	display: table;
-	content: "";
-}
-
-.clearfix:after {
-	clear: both;
-}
-.el-carousel__item h3 {
-	color: #475669;
-	font-size: 14px;
-	opacity: 0.75;
-	line-height: 200px;
-	margin: 0;
-}
-
-.el-carousel__item:nth-child(2n) {
-	background-color: #99a9bf;
-}
-
-.el-carousel__item:nth-child(2n + 1) {
-	background-color: #d3dce6;
-}
-</style>
