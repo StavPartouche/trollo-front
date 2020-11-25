@@ -9,7 +9,7 @@ export default {
     getters: {
         boardsForDisplay(state){
             return state.boards
-        }
+        },
     },
     mutations: {
         setBoards(state, { boards }){
@@ -17,9 +17,10 @@ export default {
         },
         addBoard(state, { savedBoard }){
             state.boards.push(savedBoard)
-        }
+        },
     },
     actions: {
+        //Board
         async loadBoards({ commit }){
             const boards = await boardService.query()
             console.log(boards);
@@ -30,6 +31,6 @@ export default {
             const savedBoard = await boardService.save(board)
             commit({ type: actionType, savedBoard })
             return savedBoard
-        }
+        },
     }
 }
