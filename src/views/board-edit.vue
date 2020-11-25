@@ -54,7 +54,8 @@ export default {
       this.currTask = this.board.lists[listIdx].tasks[taskIdx]
     },
     addTask(ListIdx){
-      var newTask = boardService.getEmptyTask()
+      const user = this.$store.getters.loggedInUser;
+      var newTask = boardService.getEmptyTask(user)
       newTask.name = prompt('Enter Task name')
       this.board.lists[ListIdx].tasks.push(newTask)
       this.$store.dispatch({
