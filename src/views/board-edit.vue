@@ -1,6 +1,6 @@
 <template>
   <div class="board-edit">
-    <nav-tools :board="board"></nav-tools>
+    <nav-tools :board="board" :members="members"></nav-tools>
     <div class="lists-container">
       <ul class="list" v-if="board">
         <li class="list-item" v-for="(list, listIdx) in board.lists" :key="list.id">
