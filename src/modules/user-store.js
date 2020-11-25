@@ -12,13 +12,13 @@ export default {
         users(state) {
             return state.users;
         },
-        loggedinUser(state) {
-            return state.loggedinUser;
+        loggedInUser(state) {
+            return state.loggedInUser;
         },
     },
     mutations: {
         setUser(state, { user }) {
-            state.loggedinUser = user;
+            state.loggedInUser = user;
         },
         setUsers(state, { users }) {
             state.users = users;

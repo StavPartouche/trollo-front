@@ -13,6 +13,11 @@ export default {
   name: 'app',
   components: {
     appHeader
+  },
+  created(){
+      this.$store.dispatch({
+            type: 'loadBoards',
+        })
   }
 }
 </script>
