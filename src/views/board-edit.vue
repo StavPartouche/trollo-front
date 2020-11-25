@@ -1,6 +1,6 @@
 <template>
   <div>
-<nav-tool v-model="board"></nav-tool>
+<nav-tools v-model="board"></nav-tools>
     <ul v-if="board">
       <li v-for="list in board.lists" :key="list.id">
         {{list.name}}
