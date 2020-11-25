@@ -22,13 +22,15 @@
 <script>
 
   import { boardService } from '../services/board.service.js'
+  import { userService } from '../services/user.service.js'
   import navTools from '../cmps/nav-tools.cmp'
 
 export default {
   name: 'board-edit',
   data(){
     return{
-      board: null
+      board: null,
+      members:[]
     }
   },
   methods:{
@@ -49,6 +51,12 @@ export default {
                 type: 'saveBoard',
                 board: this.board
       })
+    },
+    async getMember(memberId){
+      console.log('memberId:',memberId);
+      const member = await userService.getById(memberId)
+      console.log(member);
+      return member
     }
   },
   components:{
@@ -57,6 +65,11 @@ navTools
   async created(){
     const boardId = this.$route.params.id
     const board = await boardService.getById(boardId)
+    board.members.forEach( async (member) => {
+        var memberObject = await this.getMember(member)
+        this.members.push(memberObject)
+    });
+    console.log(this.members);
     this.board = JSON.parse(JSON.stringify(board))
   }
 }
