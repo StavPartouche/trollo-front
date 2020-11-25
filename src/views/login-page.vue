@@ -10,7 +10,7 @@
 				<br />
 				<input
 					type="text"
-					v-model="loginCred.email"
+					v-model="loginCred.fullName"
 					placeholder="Email"
 				/>
 				<br />
@@ -33,7 +33,7 @@
 				<br />
 				<input
 					type="text"
-					v-model="signupCred.email"
+					v-model="signupCred.fullName"
 					placeholder="Email"
 				/>
 				<br />
@@ -97,7 +97,7 @@ export default {
 	methods: {
 		async doLogin() {
 			const cred = this.loginCred;
-			if (!cred.email || !cred.userName) return this.msg = 'Please enter user/password';
+			if (!cred.fullName || !cred.userName) return this.msg = 'Please enter user/fullname';
 			await this.$store.dispatch({ type: 'login', userCred: cred });
             this.loginCred = {};
             this.$router.push('/board');
@@ -105,7 +105,7 @@ export default {
 		doSignup() {
             const cred = this.signupCred;
             if (!this.signupCred.imgUrl) this.signupCred.imgUrl = '';
-			if (!cred.email || !cred.userName) return this.msg = 'Please fill up the form';
+			if (!cred.fullName || !cred.userName) return this.msg = 'Please fill up the form';
 			this.$store.dispatch({ type: 'signup', userCred: cred });
             this.$router.push('/board');
 		},
