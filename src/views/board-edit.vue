@@ -1,13 +1,27 @@
 <template>
   <div class="board-edit">
-    <nav-tools :board="board" :members="members"></nav-tools>
+    <nav-tools
+      @saveBoard="saveBoardSettings"
+      v-if="board"
+      :board="board"
+      :members="members"
+    ></nav-tools>
     <div class="lists-container">
       <ul class="list" v-if="board">
-        <li class="list-item" v-for="(list, listIdx) in board.lists" :key="list.id">
-          <h2>{{list.name}}</h2>
+        <li
+          class="list-item"
+          v-for="(list, listIdx) in board.lists"
+          :key="list.id"
+        >
+          <h2>{{ list.name }}</h2>
           <ul>
-            <li class="task" v-for="(task, taskIdx) in list.tasks" :key="task.id" @click="openTask(listIdx, taskIdx)">
-              <p>{{task.name}}</p>
+            <li
+              class="task"
+              v-for="(task, taskIdx) in list.tasks"
+              :key="task.id"
+              @click="openTask(listIdx, taskIdx)"
+            >
+              <p>{{ task.name }}</p>
             </li>
           </ul>
           <button @click="addTask(listIdx)">Add task</button>
@@ -16,79 +30,100 @@
       </ul>
       <button @click="addList">Add list</button>
     </div>
-    <task-details v-if="currTask" :task="currTask" :activites="board.activities" @close="closeDetails"/>
+    <task-details v-if="currTask" :task="currTask" :activites="board.activities" @updateTask="updateTask" @close="closeDetails"/>
   </div>
 </template>
 
 <script>
-
-  import { boardService } from '../services/board.service.js'
-  import { userService } from '../services/user.service.js'
-  import navTools from '../cmps/nav-tools.cmp'
-  import taskDetails from '../cmps/task-details.cmp'
+import { boardService } from "../services/board.service.js";
+import { userService } from "../services/user.service.js";
+import navTools from "../cmps/nav-tools.cmp";
+import taskDetails from "../cmps/task-details.cmp";
 
 export default {
-  name: 'board-edit',
-  data(){
-    return{
+  name: "board-edit",
+  data() {
+    return {
       board: null,
       members:[],
-      currTask: null
+      currTask: null,
+      currListIdx: null,
+      currTaskIdx: null
     }
   },
-  methods:{
-    addList(){
-      var newList = boardService.getEmptyList()
-      newList.name = prompt('Enter List name')
-      this.board.lists.push(newList)
-      this.$store.dispatch({
-                type: 'saveBoard',
-                board: this.board
-      })
+  methods: {
+    addList() {
+      var newList = boardService.getEmptyList();
+      newList.name = prompt("Enter List name");
+      this.board.lists.push(newList);
+      this.updateBoard();
     },
-    removeList(listIdx){
-        const confirmRemove = confirm('sure?')
-        if(confirmRemove){
-          this.board.lists.splice(listIdx, 1)
-          this.$store.dispatch({
-                type: 'saveBoard',
-                board: this.board
-      })
-        }
+    removeList(listIdx) {
+      const confirmRemove = confirm("sure?");
+      if (confirmRemove) {
+        this.board.lists.splice(listIdx, 1);
+        this.updateBoard();
+      }
     },
     openTask(listIdx, taskIdx){
       this.currTask = this.board.lists[listIdx].tasks[taskIdx]
+      this.currListIdx = listIdx
+      this.currTaskIdx = taskIdx
+
     },
-    addTask(ListIdx){
-      var newTask = boardService.getEmptyTask()
-      newTask.name = prompt('Enter Task name')
-      this.board.lists[ListIdx].tasks.push(newTask)
+    addTask(ListIdx) {
+      var newTask = boardService.getEmptyTask();
+      newTask.name = prompt("Enter Task name");
+      this.board.lists[ListIdx].tasks.push(newTask);
+      this.updateBoard();
+    },
+    closeDetails() {
+      this.currTask = null;
+    },
+    async getMember(memberId) {
+      const member = await userService.getById(memberId);
+      return member;
+    },
+    saveBoardSettings(board) {
+      this.board = board;
+      this.updateBoard();
+    },
+    updateBoard() {
       this.$store.dispatch({
-                type: 'saveBoard',
-                board: this.board
-      })
+        type: "saveBoard",
+        board: this.board,
+      });
     },
-    closeDetails(){
-      this.currTask = null
+    updateTask(updates){
+      console.log("final",updates);
+      if(updates.type === 'checkList'){
+        const currCheckLists = this.board.lists[this.currListIdx].tasks[this.currTaskIdx].checkLists
+        const newChechList = {
+          title: updates.title,
+          items: updates.items
+        }
+          currCheckLists.push(newChechList)
+          this.updateBoard();
+      }
     },
     async getMember(memberId){
       const member = await userService.getById(memberId)
       return member
     }
   },
-  components:{
+  components: {
     navTools,
-    taskDetails
+    taskDetails,
   },
-  async created(){
-    const boardId = this.$route.params.id
-    const board = await boardService.getById(boardId)
-    board.members.forEach( async (member) => {
-        var memberObject = await this.getMember(member)
-        this.members.push(memberObject)
+  async created() {
+    const boardId = this.$route.params.id;
+    const board = await boardService.getById(boardId);
+    board.members.forEach(async (member) => {
+      var memberObject = await this.getMember(member);
+      this.members.push(memberObject);
     });
-    this.board = JSON.parse(JSON.stringify(board))
+    this.board = JSON.parse(JSON.stringify(board));
     // this.currTask = this.board.lists[0].tasks[0]
-  }
-}
+  },
+};
 </script>
