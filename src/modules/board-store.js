@@ -20,7 +20,7 @@ export default {
         },
         updateBoard(state, { savedBoard }){
             const idx = state.boards.findIndex(currBoard => currBoard._id === savedBoard._id)
-            state.toys.splice(idx, 1, savedBoard)
+            state.boards.splice(idx, 1, savedBoard)
         }
     },
     actions: {

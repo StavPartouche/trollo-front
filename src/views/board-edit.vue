@@ -1,10 +1,14 @@
 <template>
-  <div>
-
-    <ul v-if="board">
-      <li v-for="list in board.lists" :key="list.id">
-        {{list.name}}
-        <button>Add task</button>
+  <div class="board-edit">
+    <ul class="list" v-if="board">
+      <li class="list-item" v-for="(list, idx) in board.lists" :key="list.id">
+        <h2>{{list.name}}</h2>
+        <ul>
+          <li class="task" v-for="task in list.tasks" :key="task.id">
+            <p>{{task.name}}</p>
+          </li>
+        </ul>
+        <button @click="addTask(idx)">Add task</button>
       </li>
     </ul>
     <button @click="addList">Add list</button>
@@ -29,7 +33,16 @@ export default {
       this.board.lists.push(newList)
       this.$store.dispatch({
                 type: 'saveBoard',
-                board
+                board: this.board
+      })
+    },
+    addTask(ListIdx){
+      var newTask = boardService.getEmptyTask()
+      newTask.name = prompt('Enter Task name')
+      this.board.lists[ListIdx].tasks.push(newTask)
+      this.$store.dispatch({
+                type: 'saveBoard',
+                board: this.board
       })
     }
   },
