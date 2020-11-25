@@ -1,6 +1,11 @@
 <template>
   <div class="board-edit">
-    <nav-tools v-if="board" :board="board" :members="members"></nav-tools>
+    <nav-tools
+      @saveBoard="saveBoardSettings"
+      v-if="board"
+      :board="board"
+      :members="members"
+    ></nav-tools>
     <div class="lists-container">
       <ul class="list" v-if="board">
         <li
@@ -70,7 +75,7 @@ export default {
       var newTask = boardService.getEmptyTask();
       newTask.name = prompt("Enter Task name");
       this.board.lists[ListIdx].tasks.push(newTask);
-      this.updateBoard()
+      this.updateBoard();
     },
     closeDetails() {
       this.currTask = null;
@@ -78,6 +83,10 @@ export default {
     async getMember(memberId) {
       const member = await userService.getById(memberId);
       return member;
+    },
+    saveBoardSettings(board) {
+      this.board = board;
+      this.updateBoard();
     },
     updateBoard() {
       this.$store.dispatch({

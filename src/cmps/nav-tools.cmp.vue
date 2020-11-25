@@ -48,10 +48,10 @@ export default {
     },
     saveBoardSetting(board) {
       this.boardToEdit = board ;
-      this.updateBoard();
+      this.saveBoard();
     },
-    updateBoard(){
-      this.$emit('updateBoard', this.boardToEdit)
+    saveBoard(){
+      this.$emit('saveBoard', JSON.parse(JSON.stringify(this.boardToEdit)) )
     }
   },
   components: {
