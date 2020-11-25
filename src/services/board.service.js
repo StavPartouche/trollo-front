@@ -12,6 +12,7 @@ export const boardService = {
 };
 
 function query(userId = 'kaki') {
+    debugger
     return httpService.get(`board?creator=${userId}`);
 }
 
