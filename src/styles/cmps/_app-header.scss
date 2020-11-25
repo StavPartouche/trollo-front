@@ -1,22 +1,36 @@
-.app-header {
-    height: 80px;
-    padding: 0 rem(20px);
-    background-color: aliceblue;
-    border-bottom: 1px solid rgb(138, 199, 253);
-
-    & > * {
-        height: 100%;
-    }
-
-    .links * {
-        margin: 0 rem(10px);
-    }
-
-    .logo {
-        height: 80%;
-
-        img {
+    .app-header {
+        position: relative;
+        width: 100vw;
+        z-index: 1;
+        height: 70px;
+        padding: rem(20px) rem(20px);
+        background-color: rgba(0, 0, 0, 0.404);
+        // filter: drop-shadow(0px 0px 0px black);
+        // box-shadow: 0 0 20px rgb(114, 114, 114);
+        box-shadow: 0 0 20px #2e2e2e;
+        ;
+        // box-shadow: 0px 0px 20px 0px #3d3d3d;
+        // background-color: $clrNav;
+        color: $clr1;
+        a {
+            height: fit-content;
+            cursor: pointer;
+            font-size: rem(20px);
+            font-weight: bold;
+            &:hover {
+                text-shadow: 1px 3px 6px rgb(246, 246, 246);
+                // font-size: rem(30px);
+            }
+        }
+        .fa-home {
+            font-size: rem(25px);
+        }
+        // background-color: aliceblue;
+        // border-bottom: 1px solid rgb(138, 199, 253);
+        &>* {
             height: 100%;
         }
+        .links * {
+            margin: 0 rem(10px);
+        }
     }
-}
