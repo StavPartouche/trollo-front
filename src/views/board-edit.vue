@@ -16,7 +16,7 @@
       </ul>
       <button @click="addList">Add list</button>
     </div>
-    <task-details v-if="currTask" :task="currTask" :activites="board.activities" @close="closeDetails"/>
+    <task-details v-if="currTask" :task="currTask" :activites="board.activities" @updateTask="updateTask" @close="closeDetails"/>
   </div>
 </template>
 
@@ -33,7 +33,9 @@ export default {
     return{
       board: null,
       members:[],
-      currTask: null
+      currTask: null,
+      currListIdx: null,
+      currTaskIdx: null
     }
   },
   methods:{
@@ -58,6 +60,9 @@ export default {
     },
     openTask(listIdx, taskIdx){
       this.currTask = this.board.lists[listIdx].tasks[taskIdx]
+      this.currListIdx = listIdx
+      this.currTaskIdx = taskIdx
+
     },
     addTask(ListIdx){
       var newTask = boardService.getEmptyTask()
@@ -70,6 +75,18 @@ export default {
     },
     closeDetails(){
       this.currTask = null
+    },
+    updateTask(updates){
+      console.log("final",updates);
+      if(updates.type === 'checkList'){
+        const currCheckLists = this.board.lists[this.currListIdx].tasks[this.currTaskIdx].checkLists
+        const newChechList = {
+          title: updates.title,
+          items: updates.items
+        }
+          currCheckLists.push(newChechList)
+          console.log(this.board);
+      }
     },
     async getMember(memberId){
       const member = await userService.getById(memberId)
