@@ -1,12 +1,14 @@
 <template>
-  <div class="nav-tools flex center">
+  <div class="board-nav flex center">
     <!-- <pre>{{board}}</pre> -->
+    <div class="board-setting-container">
     <button @click="toggleIsSetting">{{ board.name }}</button>
     <board-setting
       @saveBoard="saveBoardSetting"
       v-if="isSetting"
       :board="boardToEdit"
     />
+    </div>
     <ul>
       <li v-for="member in members" :key="member._id">
         {{ member.userName }}
@@ -24,7 +26,7 @@
 <script>
 import boardSetting from "./board-setting.cmp";
 export default {
-  name: "nav-tools",
+  name: "board-nav",
   props: {
     board: Object,
     members: Array,
@@ -51,7 +53,8 @@ export default {
       this.saveBoard();
     },
     saveBoard(){
-      this.$emit('saveBoard', JSON.parse(JSON.stringify(this.boardToEdit)) )
+      this.$emit('saveBoard', JSON.parse(JSON.stringify(this.boardToEdit)))
+      this.isSetting = false;
     }
   },
   components: {

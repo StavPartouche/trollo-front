@@ -1,11 +1,11 @@
 <template>
   <div class="board-edit">
-    <nav-tools
+    <board-nav
       @saveBoard="saveBoardSettings"
       v-if="board"
       :board="board"
       :members="members"
-    ></nav-tools>
+    ></board-nav>
     <div class="lists-container">
       <ul class="list" v-if="board">
         <li
@@ -42,7 +42,7 @@
 <script>
 import { boardService } from "../services/board.service.js";
 import { userService } from "../services/user.service.js";
-import navTools from "../cmps/nav-tools.cmp";
+import boardNav from "../cmps/board-nav.cmp";
 import taskDetails from "../cmps/task-details.cmp";
 
 export default {
@@ -96,7 +96,7 @@ export default {
     },
   },
   components: {
-    navTools,
+    boardNav,
     taskDetails,
   },
   async created() {
