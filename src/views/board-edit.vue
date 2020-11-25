@@ -16,7 +16,7 @@
       </ul>
       <button @click="addList">Add list</button>
     </div>
-    <task-details v-if="currTask" :task="currTask" :activites="board.activityLog" @close="closeDetails"/>
+    <task-details v-if="currTask" :task="currTask" :activites="board.activities" @close="closeDetails"/>
   </div>
 </template>
 
