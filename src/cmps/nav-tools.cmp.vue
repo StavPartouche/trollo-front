@@ -1,13 +1,14 @@
 <template>
-<div class="nav-tools flex center">
+<div v-if="board" class="nav-tools flex center">
     <!-- <h1>navTools</h1> -->
       <button>{{board.name}}</button>
-      <ul>
+      <!-- <pre>{{board}}</pre> -->
+      <!-- <ul>
         <li v-for="user in members" :key="user._id">{{user}}</li>
-      </ul>
-      <button>{{board.activityLog}}</button>
+      </ul> -->
+      <!-- <button>{{board.activityLog}}</button> -->
             <ul>
-        <li v-for="activity in activityLog" :key="activity.createdAt">
+        <li v-for="activity in board.activityLog" :key="activity.createdAt">
           {{activity.txt}}
         </li>
       </ul>
