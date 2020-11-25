@@ -76,7 +76,8 @@ export default {
   },
   methods: {
     async addBoard() {
-      var newBoard = boardService.getEmptyBoard();
+      const user = this.$store.getters.loggedInUser;
+      var newBoard = boardService.getEmptyBoard(user);
       newBoard.name = prompt("Enter Board name");
       var saveBoard = await this.$store.dispatch({
         type: "saveBoard",
