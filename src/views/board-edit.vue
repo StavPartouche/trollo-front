@@ -103,7 +103,7 @@ export default {
           items: updates.items
         }
           currCheckLists.push(newChechList)
-          console.log(this.board);
+          this.updateBoard();
       }
     },
     async getMember(memberId){
