@@ -15,7 +15,6 @@ export default {
 		appHeader
 	},
 	created() {
-		
 	}
 }
 </script>

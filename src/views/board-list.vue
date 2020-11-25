@@ -2,16 +2,6 @@
   <section>
     <template v-if="userBoards.length">
       <h2>User Boards:</h2>
-      <!-- <ul>
-				<li v-for="board in userBoards" :key="board._id">
-					<router-link :to="'/board/' + board._id">{{
-						board.name
-					}}</router-link>
-				</li>
-				<li>
-					<button @click="addBoard">add board</button>
-				</li>
-			</ul> -->
       <li>
         <button @click="addBoard">add board</button>
       </li>
@@ -24,10 +14,6 @@
         >
           <router-link :to="'/board/' + board._id">
             <el-card :body-style="{ padding: '0px' }">
-              <!-- <img
-							src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
-							class="image"
-						/> -->
               <div style="padding: 14px">
                 <span>{{ board.name }}</span>
                 <div class="bottom clearfix">

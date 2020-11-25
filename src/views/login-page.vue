@@ -11,7 +11,7 @@
 				<input
 					type="text"
 					v-model="loginCred.fullName"
-					placeholder="Email"
+					placeholder="FullName"
 				/>
 				<br />
 				<!-- <input
@@ -34,7 +34,7 @@
 				<input
 					type="text"
 					v-model="signupCred.fullName"
-					placeholder="Email"
+					placeholder="FullName"
 				/>
 				<br />
 				<!-- <input

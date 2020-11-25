@@ -1,6 +1,6 @@
 import { userService } from '@/services/user.service.js';
 
-var localLoggedInUser = null;
+var localLoggedInUser;
 if (sessionStorage.user) localLoggedInUser = JSON.parse(sessionStorage.user);
 
 export default {
