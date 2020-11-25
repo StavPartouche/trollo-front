@@ -1,0 +1,17 @@
+
+.board-edit{
+
+    .lists-container{
+
+        display: flex;
+        .list{
+
+            display: flex;
+            .list-item{
+                
+                margin: 10px;
+                border: 1px solid black;
+            }
+        }
+    }
+}
