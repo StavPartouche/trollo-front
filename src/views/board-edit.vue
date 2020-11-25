@@ -18,6 +18,7 @@
 <script>
 
   import { boardService } from '../services/board.service.js'
+  import navTools from '../cmps/nav-tools.cmp'
 
 export default {
   name: 'board-edit',
@@ -45,6 +46,9 @@ export default {
                 board: this.board
       })
     }
+  },
+  components:{
+navTools
   },
   async created(){
     const boardId = this.$route.params.id

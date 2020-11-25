@@ -1,5 +1,6 @@
 <template>
 <div class="nav-tools">
+    <h1>navTools</h1>
 <button>{{board.name}}</button>
 </div>
 </template>
