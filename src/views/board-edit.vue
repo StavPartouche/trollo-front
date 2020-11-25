@@ -1,11 +1,6 @@
 <template>
   <div class="board-edit">
-    <!-- <nav-tools v-model="board"></nav-tools> -->
-<<<<<<< HEAD
     <nav-tools :board="board" :members="members"></nav-tools>
-=======
-    <!-- <nav-tools :board="board"></nav-tools> -->
->>>>>>> b5c4344e64db1249dab160d161f1275623d48e97
     <div class="lists-container">
       <ul class="list" v-if="board">
         <li class="list-item" v-for="(list, listIdx) in board.lists" :key="list.id">
@@ -16,11 +11,12 @@
             </li>
           </ul>
           <button @click="addTask(listIdx)">Add task</button>
+          <button @click="removeList(listIdx)">Delete List</button>
         </li>
       </ul>
       <button @click="addList">Add list</button>
     </div>
-    <task-details v-if="currTask" :task="currTask" @close="closeDetails"/>
+    <task-details v-if="currTask" :task="currTask" :activites="board.activityLog" @close="closeDetails"/>
   </div>
 </template>
 
@@ -49,6 +45,16 @@ export default {
                 type: 'saveBoard',
                 board: this.board
       })
+    },
+    removeList(listIdx){
+        const confirmRemove = confirm('sure?')
+        if(confirmRemove){
+          this.board.lists.splice(listIdx, 1)
+          this.$store.dispatch({
+                type: 'saveBoard',
+                board: this.board
+      })
+        }
     },
     openTask(listIdx, taskIdx){
       this.currTask = this.board.lists[listIdx].tasks[taskIdx]
@@ -83,6 +89,7 @@ export default {
         this.members.push(memberObject)
     });
     this.board = JSON.parse(JSON.stringify(board))
+    // this.currTask = this.board.lists[0].tasks[0]
   }
 }
 </script>
