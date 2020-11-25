@@ -1,7 +1,7 @@
 <template>
   <div class="board-edit">
     <!-- <nav-tools v-model="board"></nav-tools> -->
-    <!-- <nav-tools :board="board"></nav-tools> -->
+    <nav-tools :board="board"></nav-tools>
     <div class="lists-container">
       <ul class="list" v-if="board">
         <li class="list-item" v-for="(list, listIdx) in board.lists" :key="list.id">
@@ -16,7 +16,7 @@
       </ul>
       <button @click="addList">Add list</button>
     </div>
-    <task-details v-if="currTask" :task="currTask" @close="closeDetails"/>
+    <task-details v-if="currTask" :task="currTask" :activites="board.activityLog" @close="closeDetails"/>
   </div>
 </template>
 
@@ -34,6 +34,7 @@ export default {
       board: null,
       members:[],
       currTask: null
+      // currTask: null
     }
   },
   methods:{
@@ -78,6 +79,7 @@ export default {
         this.members.push(memberObject)
     });
     this.board = JSON.parse(JSON.stringify(board))
+    this.currTask = this.board.lists[0].tasks[0]
   }
 }
 </script>
