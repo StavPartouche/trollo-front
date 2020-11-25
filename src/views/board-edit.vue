@@ -6,12 +6,9 @@
 
 <script>
 
-
-
 export default {
   name: 'board-edit',
   components: {
-    
   }
 }
 </script>
