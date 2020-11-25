@@ -47,8 +47,7 @@ export default {
       })
     },
     openTask(listIdx, taskIdx){
-      // this.currTask = this.board
-      console.log(listIdx, taskIdx);
+      this.currTask = this.board.lists[listIdx].tasks[taskIdx]
     },
     addTask(ListIdx){
       var newTask = boardService.getEmptyTask()

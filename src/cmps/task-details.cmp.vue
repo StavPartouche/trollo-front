@@ -1,6 +1,6 @@
 <template>
   <div class="task-details">
-    
+    {{task.name}}
   </div>
 </template>
 
