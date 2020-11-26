@@ -1,11 +1,11 @@
 <template>
-	<div>
-		<h3>CheckLists</h3>
-		<form @submit.prevent="addCheckList">
+	<div class="task-popup">
+		<h3 class="task-popup-header">CheckLists</h3>
+		<button @click="closePopup" class="exit-popup-btn">X</button>
+		<form class="task-checklist-popup" @submit.prevent="addCheckList">
 			<input type="text" v-model="title">
 			<button>Add</button>
 		</form>
-		<!-- {{title}} -->
 	</div>
 </template>
 
@@ -24,6 +24,9 @@ export default {
 				type: "checkList",
 				value: this.title
 			})
+		},
+		closePopup(){
+			this.$emit("closePopup")
 		}
 	}
 }

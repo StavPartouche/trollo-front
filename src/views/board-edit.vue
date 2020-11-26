@@ -22,6 +22,12 @@
               @click="openTask(listIdx, taskIdx)"
             >
               <p>{{ task.name }}</p>
+              <ul v-if="members.length">
+                <li v-for="member in task.members" :key="member">
+                  {{getMemberById(member)}}
+                </li>
+              </ul>
+              <button @click.stop="removeTask(listIdx, taskIdx)">Delete Task</button>
             </li>
           </ul>
           <button @click="addTask(listIdx)">Add task</button>
@@ -30,7 +36,11 @@
       </ul>
       <button @click="addList">Add list</button>
     </div>
-    <task-details v-if="currTask" :task="currTask" :activites="board.activities" @addItem="addItem" @updateTask="updateTask" @close="closeDetails"/>
+    <task-details 
+      v-if="currTask" 
+      :task="currTask" :activites="board.activities" :members="members"
+      @addItem="addItem" @updateTask="updateTask" @close="closeDetails"
+    />
   </div>
 </template>
 
@@ -52,6 +62,9 @@ export default {
     }
   },
   methods: {
+    getMemberById(id){
+      return this.members.filter(member => member._id === id)[0].fullName
+    },
     addList() {
       var newList = boardService.getEmptyList();
       newList.name = prompt("Enter List name");
@@ -71,10 +84,14 @@ export default {
       this.currTaskIdx = taskIdx
 
     },
-    addTask(ListIdx) {
+    addTask(listIdx) {
       var newTask = boardService.getEmptyTask();
       newTask.name = prompt("Enter Task name");
-      this.board.lists[ListIdx].tasks.push(newTask);
+      this.board.lists[listIdx].tasks.push(newTask);
+      this.updateBoard();
+    },
+    removeTask(listIdx, taskIdx){
+      this.board.lists[listIdx].tasks.splice(taskIdx, 1)
       this.updateBoard();
     },
     closeDetails() {
@@ -95,7 +112,6 @@ export default {
       });
     },
     updateTask(updates){
-      console.log("final",updates);
       if(updates.type === 'checkList'){
         const currCheckLists = this.board.lists[this.currListIdx].tasks[this.currTaskIdx].checkLists
         const newChechList = {
@@ -103,8 +119,12 @@ export default {
           items: updates.items
         }
           currCheckLists.push(newChechList)
-          this.updateBoard();
       }
+      if(updates.type === 'members'){
+        this.board.lists[this.currListIdx].tasks[this.currTaskIdx].members.push(updates.value)
+        console.log(this.board);
+      }
+      this.updateBoard();
     },
     addItem(item){
       const currCheckListItems = this.board.lists[this.currListIdx].tasks[this.currTaskIdx].checkLists[item.checkListIdx].items
@@ -118,6 +138,22 @@ export default {
     async getMember(memberId){
       const member = await userService.getById(memberId)
       return member
+    }
+  },
+  computed:{
+    membersToShow(){
+      console.log(this.members);
+      console.log(this.task.members);
+      var toShow = []
+      this.task.members.forEach(taskMember => {
+        this.members.forEach(boardMember => {
+          if(taskMember === boardMember._id){
+            toShow.push(boardMember)
+          }
+        })
+      })
+      console.log(toShow);
+      return toShow
     }
   },
   components: {

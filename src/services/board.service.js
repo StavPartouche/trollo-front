@@ -60,7 +60,8 @@ function getEmptyList() {
     return {
         id: utilService.makeId(),
         name: '',
-        tasks: [getEmptyTask()]
+        tasks: []
+        // tasks: [getEmptyTask()]
     };
 }
 
