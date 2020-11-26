@@ -8,13 +8,14 @@
       :members="members"
     ></board-nav>
     <div class="lists-container">
-      <ul class="list" v-if="board">
+      <ul class="lists" v-if="board">
         <li
-          class="list-item"
+          class="list"
           v-for="(list, listIdx) in board.lists"
           :key="list.id"
         >
           <h2>{{ list.name }}</h2>
+          <button @click="removeList(listIdx)">Delete List</button>
           <ul>
             <li
               class="task"
@@ -31,11 +32,10 @@
               <button @click.stop="removeTask(listIdx, taskIdx)">Delete Task</button>
             </li>
           </ul>
-          <button @click="addTask(listIdx)">Add task</button>
-          <button @click="removeList(listIdx)">Delete List</button>
+          <button class="add-task-btn" @click="addTask(listIdx)">+ Add task</button>
         </li>
       </ul>
-      <button @click="addList">Add list</button>
+      <button class="add-list-btn" @click="addList">Add list</button>
     </div>
     <task-details 
       v-if="currTask" 
@@ -131,6 +131,9 @@ export default {
       }
       if(updates.type === 'removeMemberToTask'){
         this.board.lists[this.currListIdx].tasks[this.currTaskIdx].members.splice(updates.value , 1)
+      }
+      if(updates.type === 'updateDueDate'){
+        this.board.lists[this.currListIdx].tasks[this.currTaskIdx].dueDate = updates.value
       }
       this.updateBoard();
     },

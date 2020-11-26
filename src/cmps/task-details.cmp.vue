@@ -11,7 +11,11 @@
                     <h3>Description</h3>
                     <p>{{task.description}}</p>
                 </div>
-                <div>
+                <div v-if="task.dueDate">
+                    <h3>Due Date</h3>
+                    <p>{{task.dueDate}}</p>
+                </div>
+                <div v-if="membersToShow.length">
                     <h3>members</h3>
                     <ul>
                         <li v-for="member in membersToShow" :key="member._id">
@@ -54,6 +58,7 @@
 
 import checkList from '../cmps/task-popups/checkList.cmp'
 import members from '../cmps/task-popups/members.cmp'
+import dueDate from '../cmps/task-popups/dueDate.cmp'
 import taskDetailsChecklist from '../cmps/task-details-checklist.cmp'
 
 export default {
@@ -87,6 +92,9 @@ export default {
             this.$emit('updateTask', updates)
         }
         if(updates.type === 'removeMemberToTask'){
+            this.$emit('updateTask', updates)
+        }
+        if(updates.type === 'updateDueDate'){
             this.$emit('updateTask', updates)
         }
     },
@@ -126,6 +134,7 @@ export default {
   components:{
       checkList,
       members,
+      dueDate,
       taskDetailsChecklist
   },
   created() {
