@@ -25,7 +25,8 @@ export default {
     background() {
       if (this.isBgcImg) {
         return {
-          backgroundImage: `url(${require(`@/styles/assets/board-background-imgs/${this.bgcImg}`)})`,
+          // backgroundImage: `url(${require(`@/styles/assets/board-background-imgs/${this.bgcImg}`)})`
+          backgroundImage: `url(${require(`@/styles/assets/board-background-imgs/${this.bgcImg}`)})`
         }
       }
       return '';
@@ -58,7 +59,7 @@ export default {
       //   this.isHome = false;
     }
     eventBusService.$on("boardBgc", (bgc) => {
-      if (!bgc || bgc==='') this.isBgcImg = false;
+      if (!bgc) this.isBgcImg = false;
       else {
         this.isBgcImg = true;
         this.bgcImg = bgc;

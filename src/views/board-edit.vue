@@ -23,9 +23,9 @@
               @click="openTask(listIdx, taskIdx)"
             >
               <p>{{ task.name }}</p>
-              <ul v-if="members.length">
-                <li v-for="member in task.members" :key="member">
-                  {{getMemberById(member)}}
+              <ul v-if="task.members.length">
+                <li v-for="memberId in task.members" :key="memberId">
+                  {{getMemberImgById(memberId)}}
                 </li>
               </ul>
               <button @click.stop="removeTask(listIdx, taskIdx)">Delete Task</button>
@@ -64,8 +64,10 @@ export default {
     };
   },
   methods: {
-    getMemberById(id){
-      return this.members.filter(member => member._id === id)[0].fullName
+    getMemberImgById(id){
+      const arr =  this.members.filter(member => member._id === id)
+      if(!arr.length) return 
+      return arr[0].imgUrl
     },
     addList() {
       var newList = boardService.getEmptyList();
@@ -121,9 +123,12 @@ export default {
         }
           currCheckLists.push(newChechList)
       }
-      if(updates.type === 'members'){
+      if(updates.type === 'addMemberToTask'){
         this.board.lists[this.currListIdx].tasks[this.currTaskIdx].members.push(updates.value)
         console.log(this.board);
+      }
+      if(updates.type === 'removeMemberToTask'){
+        this.board.lists[this.currListIdx].tasks[this.currTaskIdx].members.splice(updates.value , 1)
       }
       this.updateBoard();
     },
@@ -151,20 +156,7 @@ export default {
     }
   },
   computed:{
-    membersToShow(){
-      console.log(this.members);
-      console.log(this.task.members);
-      var toShow = []
-      this.task.members.forEach(taskMember => {
-        this.members.forEach(boardMember => {
-          if(taskMember === boardMember._id){
-            toShow.push(boardMember)
-          }
-        })
-      })
-      console.log(toShow);
-      return toShow
-    }
+
   },
   components: {
     boardNav,
@@ -179,7 +171,7 @@ export default {
     });
     this.board = JSON.parse(JSON.stringify(board));
     eventBusService.$emit('boardBgc', this.board.style.url)
-    // this.currTask = this.board.lists[0].tasks[0]
+    // this.currTask = this.board.lists[1].tasks[0]
   },
 };
 </script>

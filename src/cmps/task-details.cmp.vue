@@ -12,6 +12,14 @@
                     <p>{{task.description}}</p>
                 </div>
                 <div>
+                    <h3>members</h3>
+                    <ul>
+                        <li v-for="member in membersToShow" :key="member._id">
+                            {{member.imgUrl}}
+                        </li>
+                    </ul>
+                </div>
+                <div>
                     <h3>Attachments</h3>
                     <img v-for="(attachment,idx) in task.attachments" :key="idx" :src="attachment"/>
                 </div>
@@ -32,9 +40,10 @@
                 </div>
             </div>
             <div class="side-bar">
-                <component v-if="isPopup" :members="members" :is="cmpType" @taskUpdate="updateTask" @closePopup="closePopup"/>
-                <button @click="openPopup('checkList')">CheckList</button>
-                <button @click="openPopup('members')">Members</button>
+                <component v-if="isPopup" :taskMembersIds="task.members" :boardMembers="members" :is="cmpType" @taskUpdate="updateTask" @closePopup="closePopup"/>
+                <button class="side-bar-btn" @click="openPopup('checkList')">CheckList</button>
+                <button class="side-bar-btn" @click="openPopup('members')">Members</button>
+                <button class="side-bar-btn" @click="openPopup('dueDate')">dueDate</button>
             </div>
         </div>
     </div>
@@ -74,7 +83,10 @@ export default {
             this.$emit('updateTask', newCheckList)
             this.closePopup()
         }
-        if(updates.type === 'members'){
+        if(updates.type === 'addMemberToTask'){
+            this.$emit('updateTask', updates)
+        }
+        if(updates.type === 'removeMemberToTask'){
             this.$emit('updateTask', updates)
         }
     },
@@ -98,6 +110,17 @@ export default {
   computed: {
       taskActivites(){
           return this.activites.filter(activity => activity.taskId === this.task.id)
+      },
+      membersToShow(){
+          var toShow = []
+          this.task.members.forEach(memberId => {
+              this.members.forEach(member => {
+                  if(memberId === member._id){
+                      toShow.push(member)
+                  }
+              })
+          })
+          return toShow
       }
   },
   components:{
@@ -106,7 +129,6 @@ export default {
       taskDetailsChecklist
   },
   created() {
-
   },
 };
 </script>
