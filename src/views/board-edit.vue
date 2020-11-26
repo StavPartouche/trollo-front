@@ -113,6 +113,8 @@ export default {
         type: "saveBoard",
         board: this.board,
       });
+      eventBusService.$emit('boardBgc', this.board.style.url)
+
     },
     updateTask(updates){
       if(updates.type === 'checkList'){
