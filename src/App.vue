@@ -18,7 +18,7 @@ export default {
   data() {
     return {
       isBgcImg: true,
-      bgcImg: "bgc1.jpg",
+      bgcImg: null,
     };
   },
   computed: {
@@ -50,7 +50,7 @@ export default {
   created() {
     if (this.$route.name === "home-page") {
 		this.isBgcImg = true;
-		this.bgcImg= 'bgc1.jpg';
+		this.bgcImg= 'home1.jpg';
     //   this.isHome = true;
     // } else {
     //   this.isHome = false;
