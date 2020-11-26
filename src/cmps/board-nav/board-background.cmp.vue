@@ -1,18 +1,12 @@
 <template>
   <div class="board-background">
-    img
-    <!-- <img src="@/styles/assets/board-background-imgs/bgc1.jpg" alt="" /> -->
     <ul v-for="idx in 4" :key="idx">
       <li class="img-circle">
-        <!-- <img
-          :src="`@/styles/assets/board-background-imgs/bgc${idx}.jpg`"
-          alt="no img"
-        /> -->
         <img
-          src="@/styles/assets/board-background-imgs/bgc1.jpg"
-          alt="no img"
+        @click.stop="saveBoardBgc(idx)"
+          :src="require(`@/styles/assets/board-background-imgs/bgc${idx}.jpg`)"
+          alt="no img background"
         />
-        <!-- <img :src="getUrl(idx)" alt="img" /> -->
       </li>
     </ul>
   </div>
@@ -27,10 +21,9 @@ export default {
     return {};
   },
   methods: {
-    getUrl(idx) {
-      console.log(idx);
-      return `@/styles/assets/board-background-imgs/bgc${idx}.jpg`;
-    },
+saveBoardBgc(idx){
+  this.$emit('saveBoardBgc', `bgc${idx}.jpg`)
+}
   },
 };
 </script>

@@ -2,8 +2,17 @@
     position: absolute;
     top: 20px;
     left: 20px;
-    background-color: rgb(226, 115, 115);
+    background-color: rgba(255, 255, 255, 0.842);
+    border-radius: 5px;
+    padding: 10px;
+    min-width: 250px;
+    font-size: 0.8rem;
+    input {
+        border: 0.5px solid rgb(163, 163, 163);
+        padding: 2px;
+    }
     .img-circle {
-        width: 100px;
+        cursor: pointer;
+        width: 50px;
     }
 }
