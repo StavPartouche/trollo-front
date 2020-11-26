@@ -10,11 +10,12 @@
         :board="boardToEdit"
       />
     </div>
-    <ul>
+    <board-member :boardMembers="members"/>
+    <!-- <ul>
       <li v-for="member in members" :key="member._id">
         {{ member.userName }}
       </li>
-    </ul>
+    </ul> -->
     <button @click="toggleActivityLog">activity log</button>
     <ul v-if="isActivityLog">
       <li v-for="activity in board.activityLog" :key="activity.createdAt">
@@ -26,6 +27,7 @@
 
 <script>
 import boardSetting from "./board-setting.cmp";
+import boardMember from "./board-member.cmp";
 export default {
   name: "board-nav",
   props: {
@@ -61,6 +63,7 @@ export default {
   },
   components: {
     boardSetting,
+    boardMember
   },
   created() {
     console.log(this.board);

@@ -25,10 +25,10 @@ export default {
     background() {
       if (this.isBgcImg) {
         return {
-          backgroundImage: `url(${require(`@/styles/assets/board-background-imgs/${this.bgcImg}`)})`
-        }
+          backgroundImage: `url(${require(`@/styles/assets/board-background-imgs/${this.bgcImg}`)})`,
+        };
       }
-      return '';
+      return "";
     },
   },
   components: {
@@ -43,6 +43,9 @@ export default {
     },
   },
   created() {
+    this.$store.dispatch({
+      type: "loadUsers",
+    });
     if (this.$route.name === "home-page") {
       this.isBgcImg = true;
       this.bgcImg = "home1.jpg";
