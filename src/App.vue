@@ -17,8 +17,8 @@ export default {
   name: "app",
   data() {
     return {
-      isBgcImg: true,
-      bgcImg: null,
+      isBgcImg: false,
+      bgcImg: 'null',
     };
   },
   computed: {
