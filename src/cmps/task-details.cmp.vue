@@ -2,7 +2,7 @@
   <div class="task-editor-container" @click="closeDetails">
     <div @click.stop class="task-editor">
         <div class="task-header">
-            <h2>{{ task.name }}</h2>
+            <h2 contenteditable v-text="taskToEdit.name" @blur="updateTaskName" >{{ task.name }}</h2>
             <button @click.stop="closeDetails">X</button>
         </div>
         <div class="task-editor-main">
@@ -70,6 +70,7 @@ export default {
   },
   data() {
     return {
+        taskToEdit: null,
         isPopup: false,
         cmpType: ''
     };
@@ -77,6 +78,14 @@ export default {
   methods: {
     closeDetails() {
       this.$emit("close");
+    },
+    updateTaskName(evt){
+             var src = evt.target.innerText
+             this.taskToEdit.name = src
+             this.$emit('updateTask', {
+                 type: 'updateTaskName',
+                 value: this.taskToEdit
+             })
     },
     updateTask(updates){
         if(updates.type === 'checkList'){
@@ -138,6 +147,8 @@ export default {
       taskDetailsChecklist
   },
   created() {
+      this.taskToEdit = this.board = JSON.parse(JSON.stringify(this.task))
+      console.log('taskToEdit', this.taskToEdit);
   },
 };
 </script>

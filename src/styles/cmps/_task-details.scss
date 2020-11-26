@@ -27,6 +27,11 @@
             button{
                 background: transparent;
             }
+
+            h2{
+                max-width: 100%;
+                overflow-wrap: break-word;
+            }
         }
 
         .task-editor-main{

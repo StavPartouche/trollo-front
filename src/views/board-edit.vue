@@ -135,6 +135,9 @@ export default {
       if(updates.type === 'updateDueDate'){
         this.board.lists[this.currListIdx].tasks[this.currTaskIdx].dueDate = updates.value
       }
+      if(updates.type === 'updateTaskName'){
+        this.board.lists[this.currListIdx].tasks[this.currTaskIdx] = updates.value
+      }
       this.updateBoard();
     },
     addItem(item) {
