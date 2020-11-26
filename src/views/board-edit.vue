@@ -20,7 +20,8 @@
     <task-details 
       v-if="currTask" 
       :task="currTask" :activites="board.activities" :members="members"
-      @addItem="addItem" @updateTask="updateTask" @close="closeDetails"
+      @addItem="addItem" @updateTask="updateTask" @close="closeDetails" 
+      @removeItem="removeItem"
     />
   </div>
 </template>
@@ -117,14 +118,16 @@ export default {
       this.updateBoard();
     },
     addItem(item) {
-      const currCheckListItems = this.board.lists[this.currListIdx].tasks[
-        this.currTaskIdx
-      ].checkLists[item.checkListIdx].items;
+      const currCheckListItems = this.board.lists[this.currListIdx].tasks[this.currTaskIdx].checkLists[item.checkListIdx].items;
       const newItem = {
         txt: item.txt,
         isDone: item.isDone,
       };
       currCheckListItems.push(newItem);
+      this.updateBoard();
+    },
+    removeItem(idxs){
+      this.board.lists[this.currListIdx].tasks[this.currTaskIdx].checkLists[idxs.checkListIdx].items.splice(idxs.itemIdx, 1);
       this.updateBoard();
     },
     async getMember(memberId) {

@@ -3,7 +3,7 @@
     <h3>Check Lists</h3>
     <ul>
       <li v-for="(checkList, checkListIdx) in checkLists" :key="checkListIdx">
-        <checkList :checkList="checkList" :checkListIdx="checkListIdx" @addItem="addItem"/>
+        <checkList :checkList="checkList" :checkListIdx="checkListIdx" @addItem="addItem" @removeItem="removeItem"/>
       </li>
     </ul>
   </div>
@@ -31,6 +31,10 @@ export default {
           }
           console.log(itemInfo.checkListIdx);
           this.$emit("addItem", itemInfo);
+      },
+      removeItem(idxs){
+        console.log("checklists",idxs.checkListIdx, idxs.itemIdx);
+        this.$emit("removeItem", idxs)
       }
   },
   components:{

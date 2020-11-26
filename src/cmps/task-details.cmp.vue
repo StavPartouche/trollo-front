@@ -27,7 +27,7 @@
                     <h3>Attachments</h3>
                     <img v-for="(attachment,idx) in task.attachments" :key="idx" :src="attachment"/>
                 </div>
-                <taskDetailsChecklists :checkLists="task.checkLists" @addItem="addItem"/>
+                <taskDetailsChecklists :checkLists="task.checkLists" @addItem="addItem" @removeItem="removeItem"/>
                 <div>
                     <h3>Comments</h3>
                      <div v-for="(comment,idx) in task.comments" :key= idx>
@@ -114,6 +114,10 @@ export default {
             isDone: false
         }
         this.$emit('addItem', item)
+    },
+    removeItem(idxs){
+        console.log("details",idxs.checkListIdx, idxs.itemIdx)
+        this.$emit('removeItem', idxs)
     },
     openPopup(type){
         this.cmpType = type,
