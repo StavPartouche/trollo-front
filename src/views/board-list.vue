@@ -70,6 +70,8 @@
 
 <script>
 import { boardService } from "../services/board.service.js";
+import {eventBusService} from '../services/eventBus.service'
+
 
 export default {
 	name: "board-list",
@@ -106,6 +108,8 @@ export default {
 		this.$store.dispatch({
 			type: "loadBoards",
     });
+	eventBusService.$emit('boardBgc', 'bgc1.jpg')
 	},
+
 };
 </script>

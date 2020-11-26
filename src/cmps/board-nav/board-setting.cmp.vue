@@ -12,14 +12,11 @@
       <input type="text" v-model="boardToEdit.description" />
       </label>
       <pre>{{boardToEdit.style.url}}</pre>
-      <!-- <img src="src\styles\assets\board-background-imgs\bgc1.jpg" alt=""> -->
-      <div class="img-circle">
-      <img src="@/styles/assets/board-background-imgs/bgc1.jpg" alt="">
+      <div v-if="boardToEdit" class="img-circle">
+      <img @click="toggleBackground" :src="require(`@/styles/assets/board-background-imgs/${imgUrl}`)" />
       </div>
-      <img @click="toggleBackground" :src="boardToEdit.style.url" />
-      <img :src="imgUrl" />
       <board-background v-if="isBackground" imgUrl="imgUrl"/>
-      <button type="button">Delete Board</button>
+      <button @click="removeBoard" type="button">Delete Board</button>
       <button>save</button>
     </form>
 </template>
@@ -44,6 +41,9 @@ export default {
     },
     toggleBackground(){
       this.isBackground=!this.isBackground
+    },
+    removeBoard(){
+      this.$emit('removeBoard')
     }
   },
   computed:{
@@ -53,7 +53,7 @@ imgUrl(){
   },
   created(){
     this.boardToEdit = JSON.parse(JSON.stringify(this.board));
-    console.log(this.boardToEdit);
+    console.log(this.boardToEdit.style.url);
   },
   components:{
     boardBackground

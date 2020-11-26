@@ -1,6 +1,7 @@
 <template>
   <div class="board-edit">
     <board-nav
+      @removeBoard="removeBoard"
       @saveBoard="saveBoardSettings"
       v-if="board"
       :board="board"
@@ -30,26 +31,34 @@
       </ul>
       <button @click="addList">Add list</button>
     </div>
-    <task-details v-if="currTask" :task="currTask" :activites="board.activities" @addItem="addItem" @updateTask="updateTask" @close="closeDetails"/>
+    <task-details
+      v-if="currTask"
+      :task="currTask"
+      :activites="board.activities"
+      @addItem="addItem"
+      @updateTask="updateTask"
+      @close="closeDetails"
+    />
   </div>
 </template>
 
 <script>
 import { boardService } from "../services/board.service.js";
 import { userService } from "../services/user.service.js";
-import boardNav from "../cmps/board-nav.cmp";
+import boardNav from "../cmps/board-nav/board-nav.cmp";
 import taskDetails from "../cmps/task-details.cmp";
+import {eventBusService} from '../services/eventBus.service'
 
 export default {
   name: "board-edit",
   data() {
     return {
       board: null,
-      members:[],
+      members: [],
       currTask: null,
       currListIdx: null,
-      currTaskIdx: null
-    }
+      currTaskIdx: null,
+    };
   },
   methods: {
     addList() {
@@ -65,11 +74,10 @@ export default {
         this.updateBoard();
       }
     },
-    openTask(listIdx, taskIdx){
-      this.currTask = this.board.lists[listIdx].tasks[taskIdx]
-      this.currListIdx = listIdx
-      this.currTaskIdx = taskIdx
-
+    openTask(listIdx, taskIdx) {
+      this.currTask = this.board.lists[listIdx].tasks[taskIdx];
+      this.currListIdx = listIdx;
+      this.currTaskIdx = taskIdx;
     },
     addTask(ListIdx) {
       var newTask = boardService.getEmptyTask();
@@ -94,30 +102,41 @@ export default {
         board: this.board,
       });
     },
-    updateTask(updates){
-      console.log("final",updates);
-      if(updates.type === 'checkList'){
-        const currCheckLists = this.board.lists[this.currListIdx].tasks[this.currTaskIdx].checkLists
+    updateTask(updates) {
+      console.log("final", updates);
+      if (updates.type === "checkList") {
+        const currCheckLists = this.board.lists[this.currListIdx].tasks[
+          this.currTaskIdx
+        ].checkLists;
         const newChechList = {
           title: updates.title,
-          items: updates.items
-        }
-          currCheckLists.push(newChechList)
-          this.updateBoard();
+          items: updates.items,
+        };
+        currCheckLists.push(newChechList);
+        this.updateBoard();
       }
     },
-    addItem(item){
-      const currCheckListItems = this.board.lists[this.currListIdx].tasks[this.currTaskIdx].checkLists[item.checkListIdx].items
+    addItem(item) {
+      const currCheckListItems = this.board.lists[this.currListIdx].tasks[
+        this.currTaskIdx
+      ].checkLists[item.checkListIdx].items;
       const newItem = {
         txt: item.txt,
-        isDone: item.isDone
-      }
-      currCheckListItems.push(newItem)
+        isDone: item.isDone,
+      };
+      currCheckListItems.push(newItem);
       this.updateBoard();
     },
-    async getMember(memberId){
-      const member = await userService.getById(memberId)
-      return member
+    async getMember(memberId) {
+      const member = await userService.getById(memberId);
+      return member;
+    },
+    async removeBoard(){
+      await this.$store.dispatch({
+        type: 'removeBoard',
+        boardId: this.board._id,
+      })
+      this.$router.push('/board');
     }
   },
   components: {
@@ -132,6 +151,7 @@ export default {
       this.members.push(memberObject);
     });
     this.board = JSON.parse(JSON.stringify(board));
+    eventBusService.$emit('boardBgc', this.board.style.url)
     // this.currTask = this.board.lists[0].tasks[0]
   },
 };
