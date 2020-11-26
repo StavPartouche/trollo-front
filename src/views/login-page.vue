@@ -8,23 +8,23 @@
 					placeholder="Username"
 				/>
 				<br />
-				<input
+				<!-- <input
 					type="text"
 					v-model="loginCred.fullName"
 					placeholder="FullName"
 				/>
-				<br />
-				<!-- <input
+				<br /> -->
+				<input
 					type="text"
 					v-model="loginCred.password"
 					placeholder="Password"
 				/>
-				<br /> -->
+				<br />
 				<button>Login</button>
                 <h5 class="login-signup-txt">Not a user? <a href="#" @click="toggleLogin">Sign Up</a></h5>
 			</form>
 
-			<form @submit.prevent="doSignup" v-else>
+			<form @submit.prevent="doSignup" v-else v-show="!isLoading">
 				<input
 					type="text"
 					v-model="signupCred.userName"
@@ -37,12 +37,12 @@
 					placeholder="FullName"
 				/>
 				<br />
-				<!-- <input
+				<input
 					type="text"
 					v-model="signupCred.password"
 					placeholder="Password"
 				/>
-				<br /> -->
+				<br />
 				<!-- <input
 					type="text"
 					v-model="signupCred.password"
@@ -54,17 +54,12 @@
 					<input type="file" @change="onUploadImg" />
 				</label>
 				<br />
-				<button>Signup</button>
+				<button :disabled="isLoading">Signup</button>
                 <h5 class="login-signup-txt">Already a user? <a href="#" @click="toggleLogin">Login</a></h5>
 			</form>
+				<img v-if="isLoading" src="@/styles/assets/loading.gif" />
 		</div>
 		<hr />
-		<!-- <button @click="getAllUsers">Get All Users</button> -->
-		<!-- <ul>
-			<li v-for="user in users" :key="user._id">
-				<pre>{{ user }}</pre>
-			</li>
-		</ul> -->
 	</section>
 </template>
 
@@ -97,16 +92,17 @@ export default {
 	methods: {
 		async doLogin() {
 			const cred = this.loginCred;
-			if (!cred.fullName || !cred.userName) return this.msg = 'Please enter user/fullname';
+			if (!cred.userName || !cred.password) return this.msg = 'Please enter userName/password';
 			await this.$store.dispatch({ type: 'login', userCred: cred });
             this.loginCred = {};
             this.$router.push('/board');
 		},
 		doSignup() {
-            const cred = this.signupCred;
-            if (!this.signupCred.imgUrl) this.signupCred.imgUrl = '';
-			if (!cred.fullName || !cred.userName) return this.msg = 'Please fill up the form';
+			const cred = this.signupCred;
+            if (!cred.imgUrl) cred.imgUrl = '';
+			if (!cred.userName || !cred.fullName || !cred.password) return this.msg = 'Please fill up the form';
 			this.$store.dispatch({ type: 'signup', userCred: cred });
+            this.signupCred = {};
             this.$router.push('/board');
 		},
 		getAllUsers() {

@@ -3,18 +3,18 @@ import { boardService } from '../services/board.service.js';
 export default {
     state: {
         boards: [],
-        // templates: [],
-        board: {
-        }
+        board: {}
     },
     getters: {
         userBoardsForDisplay(state) {
-            return state.boards.filter(board => board.creator !== 'guest' && board.creator !== 'template');
+            const userBoard = state.boards.find(board => board.creator !== 'template' && board.creator !== 'guest');
+            const userId = (userBoard) ? userBoard.creator : '';
+            return state.boards.filter(board => board.creator === userId || board.members.includes(userId));
         },
         publicBoardsForDisplay(state) {
             return state.boards.filter(board => board.creator === 'guest');
         },
-        templatesFrDisplay(state) {
+        templatesForDisplay(state) {
             return state.boards.filter(board => board.creator === 'template');
         }
     },
@@ -28,6 +28,10 @@ export default {
         updateBoard(state, { savedBoard }) {
             const idx = state.boards.findIndex(currBoard => currBoard._id === savedBoard._id);
             state.boards.splice(idx, 1, savedBoard);
+        },
+        removeBoard(state, { boardId }) {
+            const idx = state.boards.findIndex(board => board._id === boardId);
+            state.boards.splice(idx, 1);
         }
     },
     actions: {
@@ -42,5 +46,15 @@ export default {
             commit({ type: actionType, savedBoard });
             return savedBoard;
         },
+        async removeBoard({ commit }, { boardId }) {
+            console.log(boardId);
+            try {
+                const removedBoard = await boardService.remove(boardId);
+                commit({ type: 'removeBoard', boardId });
+                return removedBoard;
+            } catch (err) {
+                throw err;
+            }
+        }
     }
 };

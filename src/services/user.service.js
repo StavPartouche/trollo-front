@@ -27,17 +27,17 @@ function update(user) {
 }
 
 async function login(userCred) {
-    const user = await httpService.get(`user?userName=${userCred.userName}&fullName=${userCred.fullName}`);
-    return (user.length) ? _handleLogin(user[0]) : false;
+    const user = await httpService.post('auth/login',userCred);
+    return (user) ? _handleLogin(user) : false;
 }
 
 async function signup(userCred) {
-    const user = await httpService.post('user', userCred);
+    const user = await httpService.post('auth/signup', userCred);
     return _handleLogin(user);
 }
 
 async function logout() {
-    // await httpService.post('logout');
+    await httpService.post('auth/logout');
     sessionStorage.clear();
 }
 

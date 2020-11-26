@@ -1,0 +1,29 @@
+.task-popup{
+    position: absolute;
+    top: 30px;
+    right: 175px;
+    width: 240px;
+    height: 170px;
+    background-color: honeydew;
+    border-radius: 10px;
+    border: 1px solid black;
+
+    .task-popup-header{
+        text-align: center;
+        margin-top: 17px;
+        padding-bottom: 17px;
+        border-bottom: 1px solid black;
+    }
+
+    .exit-popup-btn{
+        position: absolute;
+        top: 0;
+        right: 0;
+        background-color: transparent;
+        color: rgb(149, 177, 174);
+    }
+
+    .task-checklist-popup{
+        margin-top: 50px;
+    }
+}

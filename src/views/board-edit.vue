@@ -1,6 +1,7 @@
 <template>
   <div class="board-edit">
     <board-nav
+      @removeBoard="removeBoard"
       @saveBoard="saveBoardSettings"
       v-if="board"
       :board="board"
@@ -22,6 +23,12 @@
               @click="openTask(listIdx, taskIdx)"
             >
               <p>{{ task.name }}</p>
+              <ul v-if="members.length">
+                <li v-for="member in task.members" :key="member">
+                  {{getMemberById(member)}}
+                </li>
+              </ul>
+              <button @click.stop="removeTask(listIdx, taskIdx)">Delete Task</button>
             </li>
           </ul>
           <button @click="addTask(listIdx)">Add task</button>
@@ -30,28 +37,36 @@
       </ul>
       <button @click="addList">Add list</button>
     </div>
-    <task-details v-if="currTask" :task="currTask" :activites="board.activities" @addItem="addItem" @updateTask="updateTask" @close="closeDetails"/>
+    <task-details 
+      v-if="currTask" 
+      :task="currTask" :activites="board.activities" :members="members"
+      @addItem="addItem" @updateTask="updateTask" @close="closeDetails"
+    />
   </div>
 </template>
 
 <script>
 import { boardService } from "../services/board.service.js";
 import { userService } from "../services/user.service.js";
-import boardNav from "../cmps/board-nav.cmp";
+import boardNav from "../cmps/board-nav/board-nav.cmp";
 import taskDetails from "../cmps/task-details.cmp";
+import {eventBusService} from '../services/eventBus.service'
 
 export default {
   name: "board-edit",
   data() {
     return {
       board: null,
-      members:[],
+      members: [],
       currTask: null,
       currListIdx: null,
-      currTaskIdx: null
-    }
+      currTaskIdx: null,
+    };
   },
   methods: {
+    getMemberById(id){
+      return this.members.filter(member => member._id === id)[0].fullName
+    },
     addList() {
       var newList = boardService.getEmptyList();
       newList.name = prompt("Enter List name");
@@ -66,17 +81,19 @@ export default {
         this.updateBoard();
       }
     },
-    openTask(listIdx, taskIdx){
-      this.currTask = this.board.lists[listIdx].tasks[taskIdx]
-      this.currListIdx = listIdx
-      this.currTaskIdx = taskIdx
-
+    openTask(listIdx, taskIdx) {
+      this.currTask = this.board.lists[listIdx].tasks[taskIdx];
+      this.currListIdx = listIdx;
+      this.currTaskIdx = taskIdx;
     },
-    addTask(ListIdx) {
+    addTask(listIdx) {
       var newTask = boardService.getEmptyTask();
       newTask.name = prompt("Enter Task name");
-      if (!newTask.name) return;
-      this.board.lists[ListIdx].tasks.push(newTask);
+      this.board.lists[listIdx].tasks.push(newTask);
+      this.updateBoard();
+    },
+    removeTask(listIdx, taskIdx){
+      this.board.lists[listIdx].tasks.splice(taskIdx, 1)
       this.updateBoard();
     },
     closeDetails() {
@@ -97,7 +114,6 @@ export default {
       });
     },
     updateTask(updates){
-      console.log("final",updates);
       if(updates.type === 'checkList'){
         const currCheckLists = this.board.lists[this.currListIdx].tasks[this.currTaskIdx].checkLists
         const newChechList = {
@@ -105,21 +121,50 @@ export default {
           items: updates.items
         }
           currCheckLists.push(newChechList)
-          this.updateBoard();
       }
-    },
-    addItem(item){
-      const currCheckListItems = this.board.lists[this.currListIdx].tasks[this.currTaskIdx].checkLists[item.checkListIdx].items
-      const newItem = {
-        txt: item.txt,
-        isDone: item.isDone
+      if(updates.type === 'members'){
+        this.board.lists[this.currListIdx].tasks[this.currTaskIdx].members.push(updates.value)
+        console.log(this.board);
       }
-      currCheckListItems.push(newItem)
       this.updateBoard();
     },
-    async getMember(memberId){
-      const member = await userService.getById(memberId)
-      return member
+    addItem(item) {
+      const currCheckListItems = this.board.lists[this.currListIdx].tasks[
+        this.currTaskIdx
+      ].checkLists[item.checkListIdx].items;
+      const newItem = {
+        txt: item.txt,
+        isDone: item.isDone,
+      };
+      currCheckListItems.push(newItem);
+      this.updateBoard();
+    },
+    async getMember(memberId) {
+      const member = await userService.getById(memberId);
+      return member;
+    },
+    async removeBoard(){
+      await this.$store.dispatch({
+        type: 'removeBoard',
+        boardId: this.board._id,
+      })
+      this.$router.push('/board');
+    }
+  },
+  computed:{
+    membersToShow(){
+      console.log(this.members);
+      console.log(this.task.members);
+      var toShow = []
+      this.task.members.forEach(taskMember => {
+        this.members.forEach(boardMember => {
+          if(taskMember === boardMember._id){
+            toShow.push(boardMember)
+          }
+        })
+      })
+      console.log(toShow);
+      return toShow
     }
   },
   components: {
@@ -134,6 +179,7 @@ export default {
       this.members.push(memberObject);
     });
     this.board = JSON.parse(JSON.stringify(board));
+    eventBusService.$emit('boardBgc', this.board.style.url)
     // this.currTask = this.board.lists[0].tasks[0]
   },
 };

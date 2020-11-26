@@ -12,7 +12,8 @@ export const boardService = {
 };
 
 function query(userId = 'guest') {
-    return httpService.get(`board?creator=${userId}&creator=guest&creator=template`);
+    // return httpService.get(`board?creator=${userId}&creator=guest&creator=template&`);
+    return httpService.get(`board?user=${userId}`);
 }
 
 function getById(boardId) {
@@ -60,7 +61,8 @@ function getEmptyList() {
     return {
         id: utilService.makeId(),
         name: '',
-        tasks: [getEmptyTask()]
+        tasks: []
+        // tasks: [getEmptyTask()]
     };
 }
 

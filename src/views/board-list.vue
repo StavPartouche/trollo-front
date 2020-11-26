@@ -1,6 +1,6 @@
 <template>
 	<section class="board-list">
-		<template v-if="userBoards.length">
+		<template v-if="loggedInUser">
 			<h2>User Boards:</h2>
 			<el-row>
 				<el-col :span="2" :offset="0">
@@ -29,7 +29,7 @@
 		</template>
 		<h2>Public Boards:</h2>
 		<el-row>
-			<el-col v-if="!userBoards.length" :span="2" :offset="0">
+			<el-col v-if="!loggedInUser" :span="2" :offset="0">
 				<el-card @click.native="addBoard"
 					><img class="plus-icon" src="../styles/assets/plus.png"
 				/></el-card>
@@ -53,16 +53,16 @@
 		</el-row>
 		<hr />
 		<h2>Templates:</h2>
-		<ul>
+		<!-- <ul>
 			<li v-for="board in templateBoards" :key="board._id">
 				<router-link :to="'/board/' + board._id">{{
 					board.name
 				}}</router-link>
 			</li>
-		</ul>
+		</ul> -->
 		<el-carousel :interval="4000" type="card" height="200px">
-			<el-carousel-item v-for="item in 6" :key="item">
-				<h3 class="medium">{{ item }}</h3>
+			<el-carousel-item v-for="board in templateBoards" :key="board._id">
+				<h3 class="medium">{{ board.name }}</h3>
 			</el-carousel-item>
 		</el-carousel>
 	</section>
@@ -70,6 +70,8 @@
 
 <script>
 import { boardService } from "../services/board.service.js";
+import {eventBusService} from '../services/eventBus.service'
+
 
 export default {
 	name: "board-list",
@@ -80,7 +82,7 @@ export default {
 	},
 	methods: {
 		async addBoard() {
-			const user = this.$store.getters.loggedInUser;
+			const user = this.loggedInUser;
 			var newBoard = (user) ? boardService.getEmptyBoard(user._id) : boardService.getEmptyBoard();
 			newBoard.name = prompt("Enter Board name");
 			if (!newBoard.name) return;
@@ -101,11 +103,16 @@ export default {
 		templateBoards() {
 			return this.$store.getters.templatesForDisplay;
 		},
+		loggedInUser() {
+			return this.$store.getters.loggedInUser;
+		}
 	},
 	created() {
 		this.$store.dispatch({
 			type: "loadBoards",
     });
+	eventBusService.$emit('boardBgc', 'bgc1.jpg')
 	},
+
 };
 </script>

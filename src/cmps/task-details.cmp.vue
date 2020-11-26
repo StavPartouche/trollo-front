@@ -15,21 +15,7 @@
                     <h3>Attachments</h3>
                     <img v-for="(attachment,idx) in task.attachments" :key="idx" :src="attachment"/>
                 </div>
-                <div>
-                    <h3>Check Lists</h3>
-                    <div v-for ="(checkList, checkListIdx) in task.checkLists" :key="checkListIdx">
-                         <h4>{{checkList.title}}</h4>
-                         <ul>
-                             <li v-for="(item,idx) in checkList.items" :key="idx">
-                                 {{item.txt}}
-                             </li>
-                         </ul>
-                         <form  @submit.prevent="addItem(checkListIdx)">
-                            <input type="text" v-model="newItem">
-                            <button>add to list</button>
-                         </form>
-                     </div>
-                </div>
+                <taskDetailsChecklist :checkLists="task.checkLists" @addItem="addItem"/>
                 <div>
                     <h3>Comments</h3>
                      <div v-for="(comment,idx) in task.comments" :key= idx>
@@ -46,8 +32,9 @@
                 </div>
             </div>
             <div class="side-bar">
-                <component v-if="isPopup" :is="cmpType" @taskUpdate="updateTask"/>
-                <button @click="openPopup('checkList')">Add CheckList</button>
+                <component v-if="isPopup" :members="members" :is="cmpType" @taskUpdate="updateTask" @closePopup="closePopup"/>
+                <button @click="openPopup('checkList')">CheckList</button>
+                <button @click="openPopup('members')">Members</button>
             </div>
         </div>
     </div>
@@ -57,22 +44,20 @@
 <script>
 
 import checkList from '../cmps/task-popups/checkList.cmp'
+import members from '../cmps/task-popups/members.cmp'
+import taskDetailsChecklist from '../cmps/task-details-checklist.cmp'
 
 export default {
   name: "task-details",
   props: {
-    task: {
-      type: Object,
-    },
-    activites:{
-        type: Array
-    }
+    task: Object,
+    activites:Array,
+    members: Array
   },
   data() {
     return {
         isPopup: false,
-        cmpType: '',
-        newItem:''
+        cmpType: ''
     };
   },
   methods: {
@@ -87,21 +72,27 @@ export default {
                 items:[]
             }
             this.$emit('updateTask', newCheckList)
+            this.closePopup()
+        }
+        if(updates.type === 'members'){
+            this.$emit('updateTask', updates)
         }
     },
-    addItem(checkListIdx){
-        console.log(checkListIdx);
+    addItem(itemInfo){
         const item = {
-            checkListIdx: checkListIdx,
-            txt: this.newItem,
+            checkListIdx: itemInfo.checkListIdx,
+            txt: itemInfo.txt,
             isDone: false
         }
         this.$emit('addItem', item)
-        this.newItem = ''
     },
     openPopup(type){
         this.cmpType = type,
         this.isPopup = true
+    },
+    closePopup(){
+        this.cmpType = '',
+        this.isPopup = false
     }
   },
   computed: {
@@ -110,7 +101,9 @@ export default {
       }
   },
   components:{
-      checkList
+      checkList,
+      members,
+      taskDetailsChecklist
   },
   created() {
 
