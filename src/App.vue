@@ -18,7 +18,7 @@ export default {
   data() {
     return {
       isBgcImg: false,
-      bgcImg: 'null',
+      bgcImg: "",
     };
   },
   computed: {
@@ -26,12 +26,12 @@ export default {
       if (this.isBgcImg) {
         return {
           backgroundImage: `url(${require(`@/styles/assets/board-background-imgs/${this.bgcImg}`)})`,
-		};
-		return
+        }
       }
+      return '';
     },
-    // backgroundImage() { 
-	// return this.bgcImg;
+    // backgroundImage() {
+    // return this.bgcImg;
     // },
   },
   components: {
@@ -40,25 +40,25 @@ export default {
   watch: {
     $route(to, from) {
       if (this.$route.name === "home-page") {
-		this.isBgcImg = true;
-		this.bgcImg= 'home1.jpg';
+        this.isBgcImg = true;
+        this.bgcImg = "home1.jpg";
         // this.isHome = true;
-    //   } else {
+        //   } else {
         // this.isHome = false;
       }
     },
   },
   created() {
     if (this.$route.name === "home-page") {
-		this.isBgcImg = false;
-		// this.isBgcImg = true;
-		this.bgcImg= 'home1.jpg';
-    //   this.isHome = true;
-    // } else {
-    //   this.isHome = false;
+      this.isBgcImg = true;
+      // this.isBgcImg = true;
+      this.bgcImg = "home1.jpg";
+      //   this.isHome = true;
+      // } else {
+      //   this.isHome = false;
     }
     eventBusService.$on("boardBgc", (bgc) => {
-      if (!bgc) this.isBgcImg = false;
+      if (!bgc || bgc==='') this.isBgcImg = false;
       else {
         this.isBgcImg = true;
         this.bgcImg = bgc;
