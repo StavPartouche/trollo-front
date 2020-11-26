@@ -10,7 +10,7 @@
         :board="boardToEdit"
       />
     </div>
-    <board-member :boardMembers="members"/>
+    <board-member @removeBoardMember="removeBoardMember" @addBoardMember="addBoardMember" :boardMembers="members"/>
     <!-- <ul>
       <li v-for="member in members" :key="member._id">
         {{ member.userName }}
@@ -60,6 +60,12 @@ export default {
     removeBoard() {
       this.$emit('removeBoard');
     },
+    addBoardMember(memberId){
+      this.$emit('addBoardMember', memberId)
+    },
+    removeBoardMember(memberId){
+      this.$emit('removeBoardMember', memberId)
+    }
   },
   components: {
     boardSetting,
