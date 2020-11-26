@@ -5,7 +5,12 @@
 		<div class="task-members-popup">
             <input type="text" placeholder="Serch member" v-model="filterBy">
             <ul>
-                <li @click="addMember(member._id)" v-for="member in membersToShow" :key="member._id">
+                <li @click="removeMember(idx)" v-for="(member, idx) in taskMembersToShow" :key="member._id">
+                    {{member.fullName}} V
+                </li>
+            </ul>
+            <ul>
+                <li @click="addMember(member._id)" v-for="member in boardMembersToShow" :key="member._id">
                     {{member.fullName}}
                 </li>
             </ul>
@@ -18,7 +23,8 @@
 export default {
     name: 'members',
     props:{
-        members: Array
+        boardMembers: Array,
+        taskMembersIds: Array,
     },
 	data() {
 		return {
@@ -26,16 +32,16 @@ export default {
 		}
 	},
 	methods: {
-		addCheckList(){
-			this.$emit("taskUpdate", {
-				type: "checkList",
-				value: this.title
-			})
-        },
         addMember(memberId){
             this.$emit("taskUpdate", {
-				type: "members",
+				type: "addMemberToTask",
 				value: memberId
+			})
+        },
+        removeMember(memberIdx){
+            this.$emit("taskUpdate", {
+				type: "removeMemberToTask",
+				value: memberIdx
 			})
         },
 		closePopup(){
@@ -43,13 +49,25 @@ export default {
 		}
     },
     computed:{
-        membersToShow(){
-            if(this.filterBy === '') return this.members
-            return this.members.filter(member => member.fullName.includes(this.filterBy))
+        boardMembersToShow(){
+            var toShow = this.boardMembers.reduce((acc, member) => {
+                if (!this.taskMembersIds.includes(member._id)) acc.push(member);
+                return acc;
+            },[])
+            if(this.filterBy === '') return toShow
+            return toShow.filter(member => member.fullName.includes(this.filterBy))
+        },
+        taskMembersToShow(){
+            var toShow = this.boardMembers.reduce((acc, member) => {
+                if (this.taskMembersIds.includes(member._id)) acc.push(member);
+                return acc;
+            },[])
+            if(this.filterBy === '') return toShow
+            return toShow.filter(member => member.fullName.includes(this.filterBy))
         }
     },
     created(){
-        console.log(this.members);
+
     }
 }
 </script>

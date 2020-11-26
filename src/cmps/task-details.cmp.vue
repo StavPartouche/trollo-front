@@ -2,7 +2,7 @@
   <div class="task-editor-container" @click="closeDetails">
     <div @click.stop class="task-editor">
         <div class="task-header">
-            <h2>{{ task.name }}</h2>
+            <h2 contenteditable v-text="taskToEdit.name" @blur="updateTaskName" >{{ task.name }}</h2>
             <button @click.stop="closeDetails">X</button>
         </div>
         <div class="task-editor-main">
@@ -10,6 +10,18 @@
                 <div>
                     <h3>Description</h3>
                     <p>{{task.description}}</p>
+                </div>
+                <div v-if="task.dueDate">
+                    <h3>Due Date</h3>
+                    <p>{{task.dueDate}}</p>
+                </div>
+                <div v-if="membersToShow.length">
+                    <h3>members</h3>
+                    <ul>
+                        <li v-for="member in membersToShow" :key="member._id">
+                            {{member.imgUrl}}
+                        </li>
+                    </ul>
                 </div>
                 <div>
                     <h3>Attachments</h3>
@@ -32,9 +44,10 @@
                 </div>
             </div>
             <div class="side-bar">
-                <component v-if="isPopup" :members="members" :is="cmpType" @taskUpdate="updateTask" @closePopup="closePopup"/>
-                <button @click="openPopup('checkList')">CheckList</button>
-                <button @click="openPopup('members')">Members</button>
+                <component v-if="isPopup" :taskMembersIds="task.members" :boardMembers="members" :is="cmpType" @taskUpdate="updateTask" @closePopup="closePopup"/>
+                <button class="side-bar-btn" @click="openPopup('checkList')">CheckList</button>
+                <button class="side-bar-btn" @click="openPopup('members')">Members</button>
+                <button class="side-bar-btn" @click="openPopup('dueDate')">dueDate</button>
             </div>
         </div>
     </div>
@@ -45,6 +58,7 @@
 
 import checkList from '../cmps/task-popups/checkList.cmp'
 import members from '../cmps/task-popups/members.cmp'
+import dueDate from '../cmps/task-popups/dueDate.cmp'
 import taskDetailsChecklist from '../cmps/task-details-checklist.cmp'
 
 export default {
@@ -56,6 +70,7 @@ export default {
   },
   data() {
     return {
+        taskToEdit: null,
         isPopup: false,
         cmpType: ''
     };
@@ -63,6 +78,14 @@ export default {
   methods: {
     closeDetails() {
       this.$emit("close");
+    },
+    updateTaskName(evt){
+             var src = evt.target.innerText
+             this.taskToEdit.name = src
+             this.$emit('updateTask', {
+                 type: 'updateTaskName',
+                 value: this.taskToEdit
+             })
     },
     updateTask(updates){
         if(updates.type === 'checkList'){
@@ -74,7 +97,13 @@ export default {
             this.$emit('updateTask', newCheckList)
             this.closePopup()
         }
-        if(updates.type === 'members'){
+        if(updates.type === 'addMemberToTask'){
+            this.$emit('updateTask', updates)
+        }
+        if(updates.type === 'removeMemberToTask'){
+            this.$emit('updateTask', updates)
+        }
+        if(updates.type === 'updateDueDate'){
             this.$emit('updateTask', updates)
         }
     },
@@ -98,15 +127,28 @@ export default {
   computed: {
       taskActivites(){
           return this.activites.filter(activity => activity.taskId === this.task.id)
+      },
+      membersToShow(){
+          var toShow = []
+          this.task.members.forEach(memberId => {
+              this.members.forEach(member => {
+                  if(memberId === member._id){
+                      toShow.push(member)
+                  }
+              })
+          })
+          return toShow
       }
   },
   components:{
       checkList,
       members,
+      dueDate,
       taskDetailsChecklist
   },
   created() {
-
+      this.taskToEdit = this.board = JSON.parse(JSON.stringify(this.task))
+      console.log('taskToEdit', this.taskToEdit);
   },
 };
 </script>
