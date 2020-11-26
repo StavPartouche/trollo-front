@@ -55,6 +55,7 @@ export default {
     addList() {
       var newList = boardService.getEmptyList();
       newList.name = prompt("Enter List name");
+      if (!newList.name) return;
       this.board.lists.push(newList);
       this.updateBoard();
     },
@@ -74,6 +75,7 @@ export default {
     addTask(ListIdx) {
       var newTask = boardService.getEmptyTask();
       newTask.name = prompt("Enter Task name");
+      if (!newTask.name) return;
       this.board.lists[ListIdx].tasks.push(newTask);
       this.updateBoard();
     },
