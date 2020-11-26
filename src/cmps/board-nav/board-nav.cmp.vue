@@ -2,12 +2,13 @@
   <div class="board-nav flex center">
     <!-- <pre>{{board}}</pre> -->
     <div class="board-setting-container">
-    <button @click="toggleIsSetting">{{ board.name }}</button>
-    <board-setting
-      @saveBoard="saveBoardSetting"
-      v-if="isSetting"
-      :board="boardToEdit"
-    />
+      <button @click="toggleIsSetting">{{ board.name }}</button>
+      <board-setting
+        @removeBoard="removeBoard"
+        @saveBoard="saveBoardSetting"
+        v-if="isSetting"
+        :board="boardToEdit"
+      />
     </div>
     <ul>
       <li v-for="member in members" :key="member._id">
@@ -38,9 +39,7 @@ export default {
       isSetting: false,
     };
   },
-  computed: {
-
-  },
+  computed: {},
   methods: {
     toggleActivityLog() {
       this.isActivityLog = !this.isActivityLog;
@@ -49,20 +48,23 @@ export default {
       this.isSetting = !this.isSetting;
     },
     saveBoardSetting(board) {
-      this.boardToEdit = board ;
+      this.boardToEdit = board;
       this.saveBoard();
     },
-    saveBoard(){
-      this.$emit('saveBoard', JSON.parse(JSON.stringify(this.boardToEdit)))
+    saveBoard() {
+      this.$emit('saveBoard', JSON.parse(JSON.stringify(this.boardToEdit)));
       this.isSetting = false;
-    }
+    },
+    removeBoard() {
+      this.$emit('removeBoard');
+    },
   },
   components: {
     boardSetting,
   },
-  created(){
+  created() {
     console.log(this.board);
-    this.boardToEdit = JSON.parse(JSON.stringify(this.board))
-  }
+    this.boardToEdit = JSON.parse(JSON.stringify(this.board));
+  },
 };
 </script>

@@ -4,8 +4,7 @@ export default {
     state: {
         boards: [],
         // templates: [],
-        board: {
-        }
+        board: {}
     },
     getters: {
         userBoardsForDisplay(state) {
@@ -28,6 +27,10 @@ export default {
         updateBoard(state, { savedBoard }) {
             const idx = state.boards.findIndex(currBoard => currBoard._id === savedBoard._id);
             state.boards.splice(idx, 1, savedBoard);
+        },
+        removeBoard(state, { boardId }) {
+            const idx = state.boards.findIndex(board => board._id === boardId)
+            state.boards.splice(idx, 1)
         }
     },
     actions: {
@@ -42,5 +45,15 @@ export default {
             commit({ type: actionType, savedBoard });
             return savedBoard;
         },
+        async removeBoard({ commit }, { boardId }) {
+            console.log(boardId);
+            try {
+                const removedBoard = await boardService.remove(boardId);
+                commit({ type: 'removeBoard', boardId });
+                return removedBoard;
+            } catch (err) {
+                throw err
+            }
+        }
     }
 };
