@@ -26,13 +26,10 @@ export default {
       if (this.isBgcImg) {
         return {
           backgroundImage: `url(${require(`@/styles/assets/board-background-imgs/${this.bgcImg}`)})`,
-        }
+        };
       }
-      return '';
+      return "";
     },
-    // backgroundImage() {
-    // return this.bgcImg;
-    // },
   },
   components: {
     appHeader,
@@ -42,23 +39,19 @@ export default {
       if (this.$route.name === "home-page") {
         this.isBgcImg = true;
         this.bgcImg = "home1.jpg";
-        // this.isHome = true;
-        //   } else {
-        // this.isHome = false;
       }
     },
   },
   created() {
+    this.$store.dispatch({
+      type: "loadUsers",
+    });
     if (this.$route.name === "home-page") {
       this.isBgcImg = true;
-      // this.isBgcImg = true;
       this.bgcImg = "home1.jpg";
-      //   this.isHome = true;
-      // } else {
-      //   this.isHome = false;
     }
     eventBusService.$on("boardBgc", (bgc) => {
-      if (!bgc || bgc==='') this.isBgcImg = false;
+      if (!bgc) this.isBgcImg = false;
       else {
         this.isBgcImg = true;
         this.bgcImg = bgc;

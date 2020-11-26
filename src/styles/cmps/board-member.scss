@@ -1,0 +1,19 @@
+.board-member {
+    position: relative;
+    .invite {
+        position: absolute;
+        top: 40px;
+        background-color: rgba(255, 255, 255, 0.767);
+    }
+    .userToShow {
+        padding: 2px;
+        cursor: pointer;
+    }
+    .user-card-container {
+        position: relative;
+        .user-card {
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.781);
+        }
+    }
+}

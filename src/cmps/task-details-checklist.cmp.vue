@@ -1,45 +1,57 @@
 <template>
-  <div>
-    <h3>Check Lists</h3>
-    <div
-      v-for="(checkList, checkListIdx) in checkLists"
-      :key="checkListIdx"
-    >
+	<div>
       <h4>{{ checkList.title }}</h4>
       <ul>
-        <li v-for="(item, idx) in checkList.items" :key="idx">
+        <li v-for="(item, itemIdx) in checkList.items" :key="itemIdx">
           {{ item.txt }}
+          <button @click="removeItem(checkListIdx, itemIdx)">X</button>
         </li>
       </ul>
-      <form @submit.prevent="addItem(checkListIdx)">
+      <button v-if="!isAddInput" @click="toggleAdd">Add item to list</button>
+      <form v-else @submit.prevent="addItem(checkListIdx)">
         <input type="text" v-model="txt" />
-        <button>add to list</button>
+        <button>Add</button>
       </form>
     </div>
-  </div>
 </template>
 
 <script>
+
 export default {
-  name: "task-details-checklist",
-  props:{
-      checkLists: Array
-  },
-  data() {
-    return {
-        txt: ''
-    };
-  },
-  methods: {
-      addItem(checkListIdx){
-          const itemInfo = {
-              checkListIdx: checkListIdx ,
-              txt: this.txt
-          }
-          console.log(itemInfo.checkListIdx);
-          this.$emit("addItem", itemInfo);
-          this.txt = ''
-      }
-  },
-};
+    name: 'task-details-checklist',
+    props: {
+        checkList: Object,
+        checkListIdx: Number
+    },
+	data() {
+		return {
+            txt: '',
+            isAddInput: false
+		}
+    },
+	methods: {
+		addItem(checkListIdx){
+            if(this.txt === ''){
+                this.toggleAdd()
+                return 
+            }
+            this.$emit('addItem', {
+                checkListIdx,
+                txt: this.txt
+            })
+            this.txt = ''
+            this.toggleAdd()
+        },
+        toggleAdd(){
+            this.isAddInput = !this.isAddInput
+        },
+        removeItem(checkListIdx, itemIdx){
+            console.log("checklist",checkListIdx, itemIdx);
+            this.$emit('removeItem', {
+                checkListIdx,
+                itemIdx
+            })
+        }
+	}
+}
 </script>
