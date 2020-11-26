@@ -9,30 +9,10 @@
     ></board-nav>
     <div class="lists-container">
       <ul class="lists" v-if="board">
-        <li
-          class="list"
-          v-for="(list, listIdx) in board.lists"
-          :key="list.id"
-        >
-          <h2>{{ list.name }}</h2>
-          <button @click="removeList(listIdx)">Delete List</button>
-          <ul>
-            <li
-              class="task"
-              v-for="(task, taskIdx) in list.tasks"
-              :key="task.id"
-              @click="openTask(listIdx, taskIdx)"
-            >
-              <p>{{ task.name }}</p>
-              <ul v-if="task.members.length">
-                <li v-for="memberId in task.members" :key="memberId">
-                  {{getMemberImgById(memberId)}}
-                </li>
-              </ul>
-              <button @click.stop="removeTask(listIdx, taskIdx)">Delete Task</button>
-            </li>
-          </ul>
-          <button class="add-task-btn" @click="addTask(listIdx)">+ Add task</button>
+        <li class="list" v-for="(list, listIdx) in board.lists" :key="list.id">
+          <list :list="list" :listIdx="listIdx" :members="members" 
+            @removeList="removeList" @openTask="openTask" 
+            @removeTask="removeTask" @addTask="addTask"/>
         </li>
       </ul>
       <button class="add-list-btn" @click="addList">Add list</button>
@@ -50,6 +30,7 @@ import { boardService } from "../services/board.service.js";
 import { userService } from "../services/user.service.js";
 import boardNav from "../cmps/board-nav/board-nav.cmp";
 import taskDetails from "../cmps/task-details.cmp";
+import list from '../cmps/list.cmp'
 import {eventBusService} from '../services/eventBus.service'
 
 export default {
@@ -60,15 +41,10 @@ export default {
       members: [],
       currTask: null,
       currListIdx: null,
-      currTaskIdx: null,
+      currTaskIdx: null
     };
   },
   methods: {
-    getMemberImgById(id){
-      const arr =  this.members.filter(member => member._id === id)
-      if(!arr.length) return 
-      return arr[0].imgUrl
-    },
     addList() {
       var newList = boardService.getEmptyList();
       newList.name = prompt("Enter List name");
@@ -82,19 +58,19 @@ export default {
         this.updateBoard();
       }
     },
-    openTask(listIdx, taskIdx) {
-      this.currTask = this.board.lists[listIdx].tasks[taskIdx];
-      this.currListIdx = listIdx;
-      this.currTaskIdx = taskIdx;
+    openTask(idxs) {
+      this.currTask = this.board.lists[idxs.listIdx].tasks[idxs.taskIdx];
+      this.currListIdx = idxs.listIdx;
+      this.currTaskIdx = idxs.taskIdx;
     },
-    addTask(listIdx) {
+    addTask(updates) {
       var newTask = boardService.getEmptyTask();
-      newTask.name = prompt("Enter Task name");
-      this.board.lists[listIdx].tasks.push(newTask);
+      newTask.name = updates.title;
+      this.board.lists[updates.listIdx].tasks.push(newTask);
       this.updateBoard();
     },
-    removeTask(listIdx, taskIdx){
-      this.board.lists[listIdx].tasks.splice(taskIdx, 1)
+    removeTask(idxs){
+      this.board.lists[idxs.listIdx].tasks.splice(idxs.taskIdx, 1)
       this.updateBoard();
     },
     closeDetails() {
@@ -169,6 +145,7 @@ export default {
   components: {
     boardNav,
     taskDetails,
+    list
   },
   async created() {
     const boardId = this.$route.params.id;

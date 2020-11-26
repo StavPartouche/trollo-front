@@ -27,7 +27,7 @@
                     <h3>Attachments</h3>
                     <img v-for="(attachment,idx) in task.attachments" :key="idx" :src="attachment"/>
                 </div>
-                <taskDetailsChecklist :checkLists="task.checkLists" @addItem="addItem"/>
+                <taskDetailsChecklists :checkLists="task.checkLists" @addItem="addItem"/>
                 <div>
                     <h3>Comments</h3>
                      <div v-for="(comment,idx) in task.comments" :key= idx>
@@ -59,7 +59,7 @@
 import checkList from '../cmps/task-popups/checkList.cmp'
 import members from '../cmps/task-popups/members.cmp'
 import dueDate from '../cmps/task-popups/dueDate.cmp'
-import taskDetailsChecklist from '../cmps/task-details-checklist.cmp'
+import taskDetailsChecklists from '../cmps/task-details-checklists.cmp'
 
 export default {
   name: "task-details",
@@ -144,7 +144,7 @@ export default {
       checkList,
       members,
       dueDate,
-      taskDetailsChecklist
+      taskDetailsChecklists
   },
   created() {
       this.taskToEdit = this.board = JSON.parse(JSON.stringify(this.task))
