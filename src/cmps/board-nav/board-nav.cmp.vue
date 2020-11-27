@@ -1,14 +1,17 @@
 <template>
-  <div class="board-nav flex center">
+  <div class="board-nav flex justify-space-between align-center">
     <!-- <pre>{{board}}</pre> -->
+    <div class="flex center">
+      <h2 @click="toggleIsSetting">{{ board.name }}</h2>
     <div class="board-setting-container">
-      <button @click="toggleIsSetting">{{ board.name }}</button>
+      <button @click="toggleIsSetting"><i class="el-icon-more"></i></button>
       <board-setting
         @removeBoard="removeBoard"
         @saveBoard="saveBoardSetting"
         v-if="isSetting"
         :board="boardToEdit"
       />
+    </div>
     </div>
     <board-member @removeBoardMember="removeBoardMember" @addBoardMember="addBoardMember" :boardMembers="members"/>
     <!-- <ul>

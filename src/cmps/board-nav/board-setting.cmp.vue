@@ -1,6 +1,6 @@
 <template>
   <form
-    class="board-setting flex-column .justify-center "
+    class="board-setting flex-column .justify-center"
     v-if="boardToEdit"
     @submit.prevent="saveChanges"
     action=""
@@ -8,30 +8,39 @@
     <label for="">
       <input type="text" v-model="boardToEdit.name" />
     </label>
-    <label class="flex align-center"  for="">
+    <label class="flex align-center" for="">
       Due Date:
       <input class="justify-end" type="date" v-model="boardToEdit.dueDate" />
     </label>
     <label class="flex align-center" for="">
       Description:
-      <input class="justify-end" type="text" v-model="boardToEdit.description" />
-    </label>
-    <div v-if="imgUrl==='color'">
-      <button @click="toggleBackground">choose your background</button>
-    </div>
-    <div v-else class="img-circle">
-      <img
-        @click="toggleBackground"
-        :src="require(`@/styles/assets/board-background-imgs/${imgUrl}`)"
+      <input
+        class="justify-end"
+        type="text"
+        v-model="boardToEdit.description"
       />
+    </label>
+    <div class="flex center">
+      <p @click="toggleBackground">choose your background:  </p>
+      <div v-if="imgUrl === 'color'"></div>
+      <div v-else class="img-circle">
+        <img
+          @click="toggleBackground"
+          :src="require(`@/styles/assets/board-background-imgs/${imgUrl}`)"
+        />
+      </div>
     </div>
     <board-background
       @saveBoardBgc="saveBoardBgc"
       v-if="isBackground"
       imgUrl="imgUrl"
     />
-    <button @click="removeBoard" type="button">Delete Board</button>
-    <button>save</button>
+    <div class="flex center">
+      <button @click="removeBoard" type="button">
+        <i class="el-icon-delete-solid"></i>
+      </button>
+      <button>save</button>
+    </div>
   </form>
 </template>
 
