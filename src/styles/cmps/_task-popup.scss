@@ -26,4 +26,13 @@
     .task-checklist-popup{
         margin-top: 50px;
     }
+
+    .task-members-popup{
+        overflow-y: auto;
+        height: 90px;
+
+        li{
+            cursor: pointer;
+        }
+    }
 }

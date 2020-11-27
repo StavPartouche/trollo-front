@@ -37,6 +37,7 @@
 
 <script>
 import boardBackground from "./board-background.cmp";
+
 export default {
   name: "board-setting",
   props: {
