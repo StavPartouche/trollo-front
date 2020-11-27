@@ -85,7 +85,7 @@
 
 <script>
 
-import checkList from '../task-popups/members.cmp'
+import checkList from '../task-popups/checkList.cmp'
 import members from '../task-popups/members.cmp'
 import dueDate from '../task-popups/dueDate.cmp'
 import taskDetailsChecklists from '../task-details/task-details-checklists.cmp'
@@ -174,9 +174,11 @@ export default {
         this.$emit('removeItem', idxs)
     },
     toggleCheck(idxs){
+      console.log(idxs);
       this.$emit('toggleCheck', idxs)
     },
     openPopup(type){
+      console.log(type);
         this.cmpType = type,
         this.isPopup = true
     },

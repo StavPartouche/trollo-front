@@ -1,5 +1,5 @@
 <template>
-	<div class="board-edit">
+	<div class="board-edit flex-column">
 		<board-nav
 			@removeBoardMember="removeBoardMember"
 			@addBoardMember="addBoardMember"
@@ -25,7 +25,7 @@
 							@openTask="openTask"
 							@removeTask="removeTask"
 							@addTask="addTask"
-              @updateList="updateBoard"
+             				@updateList="updateBoard"
 						/>
 					</li>
 				</draggable>
@@ -41,6 +41,7 @@
 			@updateTask="updateTask"
 			@close="closeDetails"
 			@removeItem="removeItem"
+			@toggleCheck="toggleCheck"
 		/>
 	</div>
 </template>
@@ -159,12 +160,13 @@ export default {
       };
       currCheckListItems.push(newItem);
       this.updateBoard();
-    },
+	},
     removeItem(idxs){
       this.currTask.checkLists[idxs.checkListIdx].items.splice(idxs.itemIdx, 1);
       this.updateBoard();
     },
     toggleCheck(idxs){
+		console.log(idxs);
       this.currTask.checkLists[idxs.checkListIdx].items[idxs.itemIdx].isDone = 
       !this.currTask.checkLists[idxs.checkListIdx].items[idxs.itemIdx].isDone
       this.updateBoard();
@@ -202,7 +204,8 @@ export default {
   components: {
     boardNav,
     taskDetails,
-    list
+	list,
+	draggable
   },
   async created() {
     const boardId = this.$route.params.id;
@@ -214,143 +217,6 @@ export default {
     this.board = JSON.parse(JSON.stringify(board));
     eventBusService.$emit("boardBgc", this.board.style.url);
     this.currTask = this.board.lists[0].tasks[0]
-  },
-	methods: {
-		addList() {
-			var newList = boardService.getEmptyList();
-			newList.name = prompt("Enter List name");
-			if (!newList.name) return;
-			this.board.lists.push(newList);
-			this.updateBoard();
-		},
-		removeList(listIdx) {
-			const confirmRemove = confirm("sure?");
-			if (confirmRemove) {
-				this.board.lists.splice(listIdx, 1);
-				this.updateBoard();
-			}
-    },
-		openTask(idxs) {
-			this.currTask = this.board.lists[idxs.listIdx].tasks[idxs.taskIdx];
-			this.currListIdx = idxs.listIdx;
-			this.currTaskIdx = idxs.taskIdx;
-		},
-		addTask(updates) {
-			var newTask = boardService.getEmptyTask();
-			newTask.name = updates.title;
-			this.board.lists[updates.listIdx].tasks.push(newTask);
-			this.updateBoard();
-		},
-		removeTask(idxs) {
-			this.board.lists[idxs.listIdx].tasks.splice(idxs.taskIdx, 1);
-			this.updateBoard();
-		},
-		closeDetails() {
-			this.currTask = null;
-		},
-		async getMember(memberId) {
-			const member = await userService.getById(memberId);
-			return member;
-		},
-		saveBoardSettings(board) {
-			this.board = board;
-			this.updateBoard();
-		},
-		updateBoard() {
-			this.$store.dispatch({
-				type: "saveBoard",
-				board: this.board,
-			});
-			eventBusService.$emit("boardBgc", this.board.style.url);
-		},
-		updateTask(updates) {
-			if (updates.type === "checkList") {
-				const currCheckLists = this.board.lists[this.currListIdx].tasks[
-					this.currTaskIdx
-				].checkLists;
-				const newChechList = {
-					title: updates.title,
-					items: updates.items,
-				};
-				currCheckLists.push(newChechList);
-			}
-			if (updates.type === "addMemberToTask") {
-				this.board.lists[this.currListIdx].tasks[this.currTaskIdx].members.push(
-					updates.value
-				);
-				console.log(this.board);
-			}
-			if (updates.type === "removeMemberToTask") {
-				this.board.lists[this.currListIdx].tasks[
-					this.currTaskIdx
-				].members.splice(updates.value, 1);
-			}
-			if (updates.type === "updateDueDate") {
-				this.board.lists[this.currListIdx].tasks[this.currTaskIdx].dueDate =
-					updates.value;
-			}
-			if (updates.type === "updateTaskName" || updates.type === "updateTaskDesc") {
-				this.board.lists[this.currListIdx].tasks[this.currTaskIdx] =
-					updates.value;
-			}
-			this.updateBoard();
-		},
-		addItem(item) {
-			const currCheckListItems = this.board.lists[this.currListIdx].tasks[this.currTaskIdx].checkLists[item.checkListIdx].items;
-			const newItem = {
-				txt: item.txt,
-				isDone: item.isDone,
-			};
-			currCheckListItems.push(newItem);
-			this.updateBoard();
-		},
-		removeItem(idxs) {
-			this.board.lists[this.currListIdx].tasks[this.currTaskIdx].checkLists[idxs.checkListIdx].items.splice(idxs.itemIdx, 1);
-			this.updateBoard();
-		},
-		async getMember(memberId) {
-			const member = await userService.getById(memberId);
-			return member;
-		},
-		async removeBoard() {
-			await this.$store.dispatch({
-				type: "removeBoard",
-				boardId: this.board._id,
-			});
-			this.$router.push("/board");
-		},
-		async addBoardMember(memberId) {
-			console.log(memberId);
-			this.board.members.push(memberId);
-			this.updateBoard();
-			const memberObject = await this.getMember(memberId);
-			this.members.push(memberObject);
-		},
-		removeBoardMember(memberId) {
-			const idx = this.board.members.findIndex((member) => member === memberId);
-			this.board.members.splice(idx, 1);
-			this.updateBoard();
-			this.members.findIndex((member) => member._id === memberId);
-			this.members.splice(idx, 1);
-		},
-	},
-	computed: {},
-	components: {
-		boardNav,
-		taskDetails,
-		list,
-		draggable
-	},
-	async created() {
-		const boardId = this.$route.params.id;
-		const board = await boardService.getById(boardId);
-		board.members.forEach(async (member) => {
-			var memberObject = await this.getMember(member);
-			this.members.push(memberObject);
-		});
-		this.board = JSON.parse(JSON.stringify(board));
-		eventBusService.$emit("boardBgc", this.board.style.url);
-		// this.currTask = this.board.lists[1].tasks[0]
-	},
+  }
 };
 </script>
