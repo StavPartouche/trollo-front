@@ -42,7 +42,7 @@ function getEmptyBoard(userId = 'guest') {
         name: '',
         members: [],
         labels: [],
-        style: { backgroundColor: '', url: '' },
+        style: { backgroundColor: '', url: 'bgc1.jpg' },
         creator: userId,
         dueDate: '',
         description: '',
