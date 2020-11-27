@@ -124,7 +124,6 @@ export default {
     updateTaskName(evt){
              var src = evt.target.innerText
              this.taskToEdit.name = src
-             console.log(this.taskToEdit.name);
              this.$emit('updateTask', {
                  type: 'updateTaskName',
                  value: this.taskToEdit
@@ -146,9 +145,18 @@ export default {
             this.$emit('updateTask', newCheckList)
             this.closePopup()
         }
-        else{
+        if(updates.type === 'addMemberToTask'){
             this.$emit('updateTask', updates)
         }
+        if(updates.type === 'removeMemberToTask'){
+            this.$emit('updateTask', updates)
+        }
+        if(updates.type === 'updateDueDate'){
+            this.$emit('updateTask', updates)
+        }
+        // else{
+        //     this.$emit('updateTask', updates)
+        // }
     },
     addComment(commentTxt){
       this.$emit('addComment', commentTxt)
