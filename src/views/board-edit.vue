@@ -11,7 +11,12 @@
 		></board-nav>
 		<div class="lists-container">
 			<ul class="lists" v-if="board">
-				<draggable class="flex" :list="board.lists" group="lists" @sort="updateBoard">
+				<draggable
+					class="flex"
+					:list="board.lists"
+					group="lists"
+					@sort="updateBoard"
+				>
 					<li
 						class="list"
 						v-for="(list, listIdx) in board.lists"
@@ -37,11 +42,11 @@
 			:task="currTask"
 			:activites="board.activities"
 			:members="members"
+			@toggleCheck="toggleCheck"
 			@addItem="addItem"
 			@updateTask="updateTask"
 			@close="closeDetails"
 			@removeItem="removeItem"
-			@toggleCheck="toggleCheck"
 		/>
 	</div>
 </template>
