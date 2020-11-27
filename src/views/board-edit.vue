@@ -32,7 +32,7 @@
 import { boardService } from "../services/board.service.js";
 import { userService } from "../services/user.service.js";
 import boardNav from "../cmps/board-nav/board-nav.cmp";
-import taskDetails from "../cmps/task-details.cmp";
+import taskDetails from "../cmps/task-details/task-details.cmp";
 import list from '../cmps/list.cmp'
 import {eventBusService} from '../services/eventBus.service'
 
@@ -128,6 +128,9 @@ export default {
       if (updates.type === "updateTaskDesc") {
         this.currTask.description = updates.value.description;
       }
+      if(updates.type === "UploadImg"){
+        this.currTask.attachments.push(updates.value)
+      }
       this.updateBoard();
     },
     addItem(item) {
@@ -192,8 +195,7 @@ export default {
     });
     this.board = JSON.parse(JSON.stringify(board));
     eventBusService.$emit("boardBgc", this.board.style.url);
-    // this.currTask = this.board.lists[1].tasks[0]
-    console.log("fghjklkjgfdhjkj");
+    this.currTask = this.board.lists[0].tasks[0]
   },
 };
 </script>

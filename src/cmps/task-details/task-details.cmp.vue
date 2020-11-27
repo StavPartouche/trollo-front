@@ -31,27 +31,21 @@
               </li>
             </ul>
           </div>
-          <div>
+          <!-- <div>
             <h3>Attachments</h3>
-            <img
+            <img class="img-attachments"
               v-for="(attachment, idx) in task.attachments"
               :key="idx"
               :src="attachment"
             />
-          </div>
+          </div> -->
+          <taskDetailsAttachments :attachments="task.attachments"/>
           <taskDetailsChecklists
             :checkLists="task.checkLists"
             @addItem="addItem"
             @removeItem="removeItem"
             @toggleCheck="toggleCheck"
           />
-          <!-- <div>
-            <h3>Comments</h3>
-            <div v-for="(comment, idx) in task.comments" :key="idx">
-              <h4>By: {{ comment.creator }}</h4>
-              <p>{{ comment.txt }}</p>
-            </div>
-          </div> -->
             <taskDetailsComments :comments="task.comments" @addComment="addComment"/>
           <div>
             <h3>Activity</h3>
@@ -79,6 +73,10 @@
           <button class="side-bar-btn" @click="openPopup('dueDate')">
             dueDate
           </button>
+          <label for="file-upload">
+            <button class="side-bar-btn">Add Attachments</button>
+            <input id="file-upload" type="file" @change="onUploadImg" />
+          </label>
         </div>
       </div>
     </div>
@@ -87,11 +85,14 @@
 
 <script>
 
-import checkList from '../cmps/task-popups/checkList.cmp'
-import members from '../cmps/task-popups/members.cmp'
-import dueDate from '../cmps/task-popups/dueDate.cmp'
-import taskDetailsChecklists from '../cmps/task-details-checklists.cmp'
-import taskDetailsComments from '../cmps/task-details-comments.cmp'
+import checkList from '../task-popups/members.cmp'
+import members from '../task-popups/members.cmp'
+import dueDate from '../task-popups/dueDate.cmp'
+import taskDetailsChecklists from '../task-details/task-details-checklists.cmp'
+import taskDetailsComments from '../task-details/task-details-comments.cmp'
+import taskDetailsAttachments from '../task-details/task-details-attachments.cmp'
+import { uploadImg } from '../../services/img-upload.service.js'
+
 
 export default {
   name: "task-details",
@@ -110,6 +111,15 @@ export default {
   methods: {
     closeDetails() {
       this.$emit("close");
+    },
+    async onUploadImg(ev){
+			this.isLoading = true;
+			const res = await uploadImg(ev);
+      // this.signupCred.imgUrl = res.url;
+      this.$emit('updateTask', {
+                 type: 'UploadImg',
+                 value: res.url
+             })  
     },
     updateTaskName(evt){
              var src = evt.target.innerText
@@ -188,7 +198,8 @@ export default {
       members,
       dueDate,
       taskDetailsChecklists,
-      taskDetailsComments
+      taskDetailsComments,
+      taskDetailsAttachments
   },
   created() {
       this.taskToEdit = JSON.parse(JSON.stringify(this.task))
