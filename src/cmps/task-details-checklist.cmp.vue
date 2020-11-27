@@ -4,10 +4,9 @@
       <ul>
         <li v-for="(item, itemIdx) in checkList.items" :key="itemIdx">
             <label>
-                {{ item.txt }}
+            <span :class="{'line-through': item.isDone}">{{ item.txt }}</span>
                 <input class="checkbox" type="checkbox" @change="toggleCheck(checkListIdx, itemIdx)">
             </label>
-          {{item}}
           <button @click="removeItem(checkListIdx, itemIdx)">X</button>
         </li>
       </ul>

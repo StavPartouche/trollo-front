@@ -26,6 +26,7 @@ export default {
   methods: {
       addComment(){
           this.$emit('addComment', this.commentTxt)
+          this.commentTxt = ''
       }
   },
   computed: {},

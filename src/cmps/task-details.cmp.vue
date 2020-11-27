@@ -140,7 +140,7 @@ export default {
             this.$emit('updateTask', updates)
         }
     },
-    addComment(){
+    addComment(commentTxt){
       this.$emit('addComment', commentTxt)
     },
     addItem(itemInfo){

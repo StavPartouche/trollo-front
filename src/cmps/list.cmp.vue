@@ -1,7 +1,6 @@
 <template>
 <section v-if="list">
           <h2>{{ list.name }}</h2>
-          <pre>{{list}}</pre>
           <button @click="removeList(listIdx)">Delete List</button>
           <ul>
             <li

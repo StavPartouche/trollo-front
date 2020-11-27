@@ -63,12 +63,13 @@ export default {
       }
     },
     addComment(commentTxt){
-      const comment = {
+      var comment = {
         txt: commentTxt,
         createdAt: Date.now(),
-        creator: this.$store.getters.loggedInUser
+        creator: this.$store.getters.loggedInUser ? this.$store.getters.loggedInUser.fullName : "Guest"
       }
-      console.log(comment);
+      this.currTask.comments.push(comment)
+      this.updateBoard();
     },
     openTask(idxs) {
       this.currTask = this.board.lists[idxs.listIdx].tasks[idxs.taskIdx];
@@ -105,9 +106,7 @@ export default {
     },
     updateTask(updates) {
       if (updates.type === "checkList") {
-        const currCheckLists = this.board.lists[this.currListIdx].tasks[
-          this.currTaskIdx
-        ].checkLists;
+        const currCheckLists = this.currTask.checkLists;
         const newChechList = {
           title: updates.title,
           items: updates.items,
@@ -115,26 +114,24 @@ export default {
         currCheckLists.push(newChechList);
       }
       if (updates.type === "addMemberToTask") {
-        this.board.lists[this.currListIdx].tasks[this.currTaskIdx].members.push(updates.value);
+        this.currTask.members.push(updates.value);
       }
       if (updates.type === "removeMemberToTask") {
-        this.board.lists[this.currListIdx].tasks[
-          this.currTaskIdx
-        ].members.splice(updates.value, 1);
+        this.currTask.members.splice(updates.value, 1);
       }
       if (updates.type === "updateDueDate") {
-        this.board.lists[this.currListIdx].tasks[this.currTaskIdx].dueDate =
-          updates.value;
+        this.currTask.dueDate = updates.value;
       }
-      if (updates.type === "updateTaskName" || updates.type === "updateTaskDesc") {
-        this.board.lists[this.currListIdx].tasks[this.currTaskIdx]=
-          updates.value;
-          console.log(this.board);
+      if (updates.type === "updateTaskName") {
+        this.currTask.name = updates.value.name;
+      }
+      if (updates.type === "updateTaskDesc") {
+        this.currTask.description = updates.value.description;
       }
       this.updateBoard();
     },
     addItem(item) {
-      const currCheckListItems = this.board.lists[this.currListIdx].tasks[this.currTaskIdx].checkLists[item.checkListIdx].items;
+      const currCheckListItems = this.currTask.checkLists[item.checkListIdx].items;
       const newItem = {
         txt: item.txt,
         isDone: item.isDone,
@@ -143,12 +140,12 @@ export default {
       this.updateBoard();
     },
     removeItem(idxs){
-      this.board.lists[this.currListIdx].tasks[this.currTaskIdx].checkLists[idxs.checkListIdx].items.splice(idxs.itemIdx, 1);
+      this.currTask.checkLists[idxs.checkListIdx].items.splice(idxs.itemIdx, 1);
       this.updateBoard();
     },
     toggleCheck(idxs){
-      this.board.lists[this.currListIdx].tasks[this.currTaskIdx].checkLists[idxs.checkListIdx].items[idxs.itemIdx].isDone = 
-      !this.board.lists[this.currListIdx].tasks[this.currTaskIdx].checkLists[idxs.checkListIdx].items[idxs.itemIdx].isDone
+      this.currTask.checkLists[idxs.checkListIdx].items[idxs.itemIdx].isDone = 
+      !this.currTask.checkLists[idxs.checkListIdx].items[idxs.itemIdx].isDone
       this.updateBoard();
     },
     async getMember(memberId) {
