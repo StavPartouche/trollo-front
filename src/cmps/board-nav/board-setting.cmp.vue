@@ -16,7 +16,10 @@
       Description:
       <input class="justify-end" type="text" v-model="boardToEdit.description" />
     </label>
-    <div v-if="boardToEdit" class="img-circle">
+    <div v-if="imgUrl==='color'">
+      <button @click="toggleBackground">choose your background</button>
+    </div>
+    <div v-else class="img-circle">
       <img
         @click="toggleBackground"
         :src="require(`@/styles/assets/board-background-imgs/${imgUrl}`)"
