@@ -7,7 +7,7 @@
 				<li
 					class="task"
 					v-for="(task, taskIdx) in list.tasks"
-					:key="task.id"
+					:key="taskIdx"
 					@click="openTask(listIdx, taskIdx)"
 				>
 					<p>{{ task.name }}</p>
