@@ -8,7 +8,7 @@
         :member="member"
       ></board-member-card>
     </ul>
-    <button v-if="allMembers" @click="toggleShowInvite">+</button>
+    <button v-if="allMembers" @click="toggleShowInvite"><i class="el-icon-plus"></i></button>
     <div class="invite" v-if="showInvite">
       <input type="text" placeholder="Search member" v-model="filterBy" />
       <ul>

@@ -1,18 +1,25 @@
 .board-setting {
+    z-index: 1;
     position: absolute;
     top: 20px;
     left: 20px;
-    background-color: rgba(255, 255, 255, 0.842);
+    background-color: rgb(235, 235, 235);
     border-radius: 5px;
     padding: 10px;
     min-width: 250px;
     font-size: 0.8rem;
     input {
         border: 0.5px solid rgb(163, 163, 163);
-        padding: 2px;
+        padding: 2px 0px 5px;
     }
     .img-circle {
         cursor: pointer;
-        width: 50px;
+        width: 30px;
+        img {
+            width: 30px;
+        }
+    }
+    p {
+        margin-right: 7px;
     }
 }
