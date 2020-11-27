@@ -8,7 +8,6 @@
                 <input class="checkbox" type="checkbox" @change="toggleCheck(checkListIdx, itemIdx)">
             </label>
           <button @click="removeItem(checkListIdx, itemIdx)">X</button>
-          {{item}}
         </li>
       </ul>
       <button v-if="!isAddInput" @click="toggleAdd">Add item to list</button>

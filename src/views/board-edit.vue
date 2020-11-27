@@ -30,7 +30,8 @@
 							@openTask="openTask"
 							@removeTask="removeTask"
 							@addTask="addTask"
-             				@updateList="updateBoard"
+             	@updateList="updateBoard"
+              @updateListName="updateListName"
 						/>
 					</li>
 				</draggable>
@@ -47,6 +48,9 @@
 			@updateTask="updateTask"
 			@close="closeDetails"
 			@removeItem="removeItem"
+      @removeAttachment="removeAttachment"
+      @setPreviewImg="setPreviewImg"
+      @removePreviewImg="removePreviewImg"
 		/>
 	</div>
 </template>
@@ -72,6 +76,22 @@ export default {
     };
   },
   methods: {
+    updateListName(updates){
+      this.board.lists[updates.listIdx].name = updates.newName
+      this.updateBoard();
+    },
+    removePreviewImg(){
+      this.currTask.previewImg = ''
+      this.updateBoard();
+    },
+    setPreviewImg(idx){
+      this.currTask.previewImg = this.currTask.attachments[idx]
+      this.updateBoard();
+    },
+    removeAttachment(idx){
+      this.currTask.attachments.splice(idx, 1)
+      this.updateBoard();
+    },
     addList() {
       var newList = boardService.getEmptyList();
       newList.name = prompt("Enter List name");
@@ -221,7 +241,7 @@ export default {
     });
     this.board = JSON.parse(JSON.stringify(board));
     eventBusService.$emit("boardBgc", this.board.style.url);
-    this.currTask = this.board.lists[0].tasks[0]
+    // this.currTask = this.board.lists[0].tasks[0]
   }
 };
 </script>

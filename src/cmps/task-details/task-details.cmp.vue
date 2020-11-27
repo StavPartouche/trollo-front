@@ -31,22 +31,22 @@
               </li>
             </ul>
           </div>
-          <!-- <div>
-            <h3>Attachments</h3>
-            <img class="img-attachments"
-              v-for="(attachment, idx) in task.attachments"
-              :key="idx"
-              :src="attachment"
-            />
-          </div> -->
-          <taskDetailsAttachments :attachments="task.attachments"/>
+          <taskDetailsAttachments 
+            :attachments="task.attachments"
+            @removeAttachment="removeAttachment"
+            @setPreviewImg="setPreviewImg"
+            @removePreviewImg="removePreviewImg"
+          />
           <taskDetailsChecklists
             :checkLists="task.checkLists"
             @addItem="addItem"
             @removeItem="removeItem"
             @toggleCheck="toggleCheck"
           />
-            <taskDetailsComments :comments="task.comments" @addComment="addComment"/>
+            <taskDetailsComments 
+              :comments="task.comments" 
+              @addComment="addComment"
+            />
           <div>
             <h3>Activity</h3>
             <div v-for="(activity, idx) in taskActivites" :key="idx">
@@ -109,6 +109,12 @@ export default {
     };
   },
   methods: {
+    removePreviewImg(){
+      this.$emit('removePreviewImg')
+    },
+    setPreviewImg(idx){
+      this.$emit('setPreviewImg', idx)
+    },
     closeDetails() {
       this.$emit("close");
     },
@@ -177,6 +183,9 @@ export default {
       console.log(idxs);
       this.$emit('toggleCheck', idxs)
     },
+    removeAttachment(idx){
+      this.$emit('removeAttachment', idx)
+    },
     openPopup(type){
       console.log(type);
         this.cmpType = type,
@@ -213,7 +222,6 @@ export default {
   },
   created() {
       this.taskToEdit = JSON.parse(JSON.stringify(this.task))
-      console.log('taskToEdit', this.taskToEdit);
   },
 };
 </script>
