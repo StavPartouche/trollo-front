@@ -45,13 +45,23 @@
     border-radius: 50%;
 }
 
-.avatar{
+.avatar {
     border-radius: 50%;
     height: 30px;
     width: 30px;
     margin: 5px;
 }
 
-.line-through{
+.line-through {
     text-decoration: line-through;
+}
+
+.diable-page-container {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 2;
+    background-color: rgba(0, 0, 0, 0.151);
+    width: 100vw;
+    height: 100vh;
 }
