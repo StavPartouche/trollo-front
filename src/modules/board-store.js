@@ -47,9 +47,9 @@ export default {
             return savedBoard;
         },
         async removeBoard({ commit }, { boardId }) {
-            console.log(boardId);
             try {
-                const removedBoard = await boardService.remove(boardId);
+                const board = await boardService.getById(boardId);
+                const removedBoard = await boardService.remove(board);
                 commit({ type: 'removeBoard', boardId });
                 return removedBoard;
             } catch (err) {

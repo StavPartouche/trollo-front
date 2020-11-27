@@ -20,8 +20,8 @@ function getById(boardId) {
     return httpService.get(`board/${boardId}`);
 }
 
-function remove(boardId) {
-    return httpService.delete(`board/${boardId}`);
+function remove(board) {
+    return httpService.delete(`board/${board._id}`, board);
 }
 
 function save(board) {
