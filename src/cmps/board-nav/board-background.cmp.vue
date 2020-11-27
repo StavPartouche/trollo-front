@@ -1,10 +1,10 @@
 <template>
   <div class="board-background">
-    <ul v-for="idx in 4" :key="idx">
-      <li class="img-circle">
+    <ul class="flex wrap center">
+      <li class="img-circle"  v-for="idx in 8" :key="idx">
         <img
         @click.stop="saveBoardBgc(idx)"
-          :src="require(`@/styles/assets/board-background-imgs/bgc${idx}.jpg`)"
+          :src="require(`@/styles/assets/board-background-imgs/bgc${idx}-mini.jpg`)"
           alt="no img background"
         />
       </li>

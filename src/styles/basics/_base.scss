@@ -3,7 +3,7 @@
 }
 
 html {
-    font-family: sans-serif;
+    font-family: quicksand, sans-serif;
 }
 
 body {
@@ -77,4 +77,16 @@ input {
 
 .app-container {
     min-height: 100vh;
+}
+
+.logo {
+    color: rgb(230, 230, 230);
+    // font-family: orbitron;
+    // font-family: audi;
+    // font-family: aclonica;
+    font-family: megrim;
+    // font-family: surfer;
+    span {
+        font-size: 1.1em // color: rgb(136, 199, 183)
+    }
 }
