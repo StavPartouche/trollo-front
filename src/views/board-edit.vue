@@ -1,5 +1,5 @@
 <template>
-  <div class="board-edit">
+  <div class="board-edit flex-column">
     <board-nav
       @removeBoardMember="removeBoardMember"
       @addBoardMember="addBoardMember"

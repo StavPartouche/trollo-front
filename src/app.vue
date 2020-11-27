@@ -40,6 +40,10 @@ export default {
         this.isBgcImg = true;
         this.bgcImg = "home1.jpg";
       }
+      if (this.$route.name === "login-page") {
+        this.isBgcImg = true;
+        this.bgcImg = "home1.jpg";
+      }
     },
   },
   created() {
@@ -47,6 +51,10 @@ export default {
       type: "loadUsers",
     });
     if (this.$route.name === "home-page") {
+      this.isBgcImg = true;
+      this.bgcImg = "home1.jpg";
+    }
+    if (this.$route.name === "login-page") {
       this.isBgcImg = true;
       this.bgcImg = "home1.jpg";
     }
