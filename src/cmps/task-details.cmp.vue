@@ -43,14 +43,16 @@
             :checkLists="task.checkLists"
             @addItem="addItem"
             @removeItem="removeItem"
+            @toggleCheck="toggleCheck"
           />
-          <div>
+          <!-- <div>
             <h3>Comments</h3>
             <div v-for="(comment, idx) in task.comments" :key="idx">
               <h4>By: {{ comment.creator }}</h4>
               <p>{{ comment.txt }}</p>
             </div>
-          </div>
+          </div> -->
+            <taskDetailsComments :comments="task.comments" @addComment="addComment"/>
           <div>
             <h3>Activity</h3>
             <div v-for="(activity, idx) in taskActivites" :key="idx">
@@ -89,6 +91,7 @@ import checkList from '../cmps/task-popups/checkList.cmp'
 import members from '../cmps/task-popups/members.cmp'
 import dueDate from '../cmps/task-popups/dueDate.cmp'
 import taskDetailsChecklists from '../cmps/task-details-checklists.cmp'
+import taskDetailsComments from '../cmps/task-details-comments.cmp'
 
 export default {
   name: "task-details",
@@ -133,18 +136,12 @@ export default {
             this.$emit('updateTask', newCheckList)
             this.closePopup()
         }
-        // if(updates.type === 'addMemberToTask'){
-        //     this.$emit('updateTask', updates)
-        // }
-        // if(updates.type === 'removeMemberToTask'){
-        //     this.$emit('updateTask', updates)
-        // }
-        // if(updates.type === 'updateDueDate'){
-        //     this.$emit('updateTask', updates)
-        // }
         else{
             this.$emit('updateTask', updates)
         }
+    },
+    addComment(commentTxt){
+      this.$emit('addComment', commentTxt)
     },
     addItem(itemInfo){
         const item = {
@@ -157,6 +154,9 @@ export default {
     removeItem(idxs){
         console.log("details",idxs.checkListIdx, idxs.itemIdx)
         this.$emit('removeItem', idxs)
+    },
+    toggleCheck(idxs){
+      this.$emit('toggleCheck', idxs)
     },
     openPopup(type){
         this.cmpType = type,
@@ -187,10 +187,11 @@ export default {
       checkList,
       members,
       dueDate,
-      taskDetailsChecklists
+      taskDetailsChecklists,
+      taskDetailsComments
   },
   created() {
-      this.taskToEdit = this.board = JSON.parse(JSON.stringify(this.task))
+      this.taskToEdit = JSON.parse(JSON.stringify(this.task))
       console.log('taskToEdit', this.taskToEdit);
   },
 };

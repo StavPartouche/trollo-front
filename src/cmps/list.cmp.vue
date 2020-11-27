@@ -1,16 +1,16 @@
 <template>
-<section>
+<section v-if="list">
           <h2>{{ list.name }}</h2>
           <button @click="removeList(listIdx)">Delete List</button>
           <ul>
             <li
               class="task"
               v-for="(task, taskIdx) in list.tasks"
-              :key="task.id"
+              :key="taskIdx"
               @click="openTask(listIdx, taskIdx)"
             >
               <p>{{ task.name }}</p>
-              <ul class="flex" v-if="task.members.length">
+              <ul class="flex" v-if="task.members && task.members.length">
                 <li v-for="memberId in task.members" :key="memberId">
                     <img  class="avatar" :src="getMemberImgById(memberId)"/>
                 </li>
@@ -40,7 +40,9 @@ export default {
             isAddInput: false,
             newTaskTitle: ''
 		}
-	},
+    },
+    watch:{
+    },
 	computed: {},
 	methods: {
             toggleAdd(){
@@ -78,6 +80,9 @@ export default {
         removeList(listIdx){
             this.$emit('removeList', listIdx)
         }
-	}
+    },
+    created(){
+        
+    }
 }
 </script>

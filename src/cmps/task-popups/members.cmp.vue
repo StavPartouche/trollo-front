@@ -33,6 +33,7 @@ export default {
 	},
 	methods: {
         addMember(memberId){
+            console.log("member", memberId);
             this.$emit("taskUpdate", {
 				type: "addMemberToTask",
 				value: memberId

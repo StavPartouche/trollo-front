@@ -1,9 +1,12 @@
 <template>
-	<div>
+	<div class="task-details-checklist">
       <h4>{{ checkList.title }}</h4>
       <ul>
         <li v-for="(item, itemIdx) in checkList.items" :key="itemIdx">
-          {{ item.txt }}
+            <label>
+            <span :class="{'line-through': item.isDone}">{{ item.txt }}</span>
+                <input class="checkbox" type="checkbox" @change="toggleCheck(checkListIdx, itemIdx)">
+            </label>
           <button @click="removeItem(checkListIdx, itemIdx)">X</button>
         </li>
       </ul>
@@ -46,12 +49,21 @@ export default {
             this.isAddInput = !this.isAddInput
         },
         removeItem(checkListIdx, itemIdx){
-            console.log("checklist",checkListIdx, itemIdx);
             this.$emit('removeItem', {
                 checkListIdx,
                 itemIdx
             })
+        },
+        toggleCheck(checkListIdx, itemIdx){
+            // this.checkList.items[itemIdx].isDone = !this.checkList.items[itemIdx].isDone
+            this.$emit('toggleCheck', {
+                checkListIdx,
+                itemIdx
+            })
         }
-	}
+    },
+    computed:{
+        
+    }
 }
 </script>
