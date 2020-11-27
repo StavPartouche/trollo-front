@@ -6,12 +6,12 @@
             <input type="text" placeholder="Serch member" v-model="filterBy">
             <ul>
                 <li @click="removeMember(idx)" v-for="(member, idx) in taskMembersToShow" :key="member._id">
-                    {{member.fullName}} V
+                    <img  class="avatar" :src="member.imgUrl"/> {{member.fullName}} V
                 </li>
             </ul>
             <ul>
                 <li @click="addMember(member._id)" v-for="member in boardMembersToShow" :key="member._id">
-                    {{member.fullName}}
+                    <img  class="avatar" :src="member.imgUrl"/> {{member.fullName}}
                 </li>
             </ul>
         </div>

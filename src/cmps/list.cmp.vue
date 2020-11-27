@@ -10,9 +10,9 @@
               @click="openTask(listIdx, taskIdx)"
             >
               <p>{{ task.name }}</p>
-              <ul v-if="task.members.length">
+              <ul class="flex" v-if="task.members.length">
                 <li v-for="memberId in task.members" :key="memberId">
-                  {{getMemberImgById(memberId)}}
+                    <img  class="avatar" :src="getMemberImgById(memberId)"/>
                 </li>
               </ul>
               <button @click.stop="removeTask(listIdx, taskIdx)">Delete Task</button>
