@@ -37,6 +37,7 @@ export default {
         this.$emit("removeItem", idxs)
       },
       toggleCheck(idxs){
+        console.log(idxs);
         this.$emit("toggleCheck", idxs)
       }
   },

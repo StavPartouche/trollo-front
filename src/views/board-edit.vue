@@ -1,40 +1,64 @@
 <template>
-  <div class="board-edit flex-column">
-    <board-nav
-      @removeBoardMember="removeBoardMember"
-      @addBoardMember="addBoardMember"
-      @removeBoard="removeBoard"
-      @saveBoard="saveBoardSettings"
-      v-if="board"
-      :board="board"
-      :members="members"
-    ></board-nav>
-    <div class="lists-container">
-      <ul class="lists" v-if="board">
-        <li class="list" v-for="(list, listIdx) in lists" :key="list.id">
-          <list :list="list" :listIdx="listIdx" :members="members" 
-            @removeList="removeList" @openTask="openTask" 
-            @removeTask="removeTask" @addTask="addTask"/>
-        </li>
-      </ul>
-      <button class="add-list-btn" @click="addList">Add list</button>
-    </div>
-    <task-details 
-      v-if="currTask" 
-      :task="currTask" :activites="board.activities" :members="members"
-      @addItem="addItem" @updateTask="updateTask" @close="closeDetails" 
-      @removeItem="removeItem" @toggleCheck="toggleCheck" @addComment="addComment"
-    />
-  </div>
+	<div class="board-edit flex-column">
+		<board-nav
+			@removeBoardMember="removeBoardMember"
+			@addBoardMember="addBoardMember"
+			@removeBoard="removeBoard"
+			@saveBoard="saveBoardSettings"
+			v-if="board"
+			:board="board"
+			:members="members"
+		></board-nav>
+		<div class="lists-container">
+			<ul class="lists" v-if="board">
+				<draggable
+					class="flex"
+					:list="board.lists"
+					group="lists"
+					@sort="updateBoard"
+				>
+					<li
+						class="list"
+						v-for="(list, listIdx) in board.lists"
+						:key="list.id"
+					>
+						<list
+							:list="list"
+							:listIdx="listIdx"
+							:members="members"
+							@removeList="removeList"
+							@openTask="openTask"
+							@removeTask="removeTask"
+							@addTask="addTask"
+             				@updateList="updateBoard"
+						/>
+					</li>
+				</draggable>
+			</ul>
+			<button class="add-list-btn" @click="addList">Add list</button>
+		</div>
+		<task-details
+			v-if="currTask"
+			:task="currTask"
+			:activites="board.activities"
+			:members="members"
+			@toggleCheck="toggleCheck"
+			@addItem="addItem"
+			@updateTask="updateTask"
+			@close="closeDetails"
+			@removeItem="removeItem"
+		/>
+	</div>
 </template>
 
 <script>
 import { boardService } from "../services/board.service.js";
 import { userService } from "../services/user.service.js";
 import boardNav from "../cmps/board-nav/board-nav.cmp";
-import taskDetails from "../cmps/task-details.cmp";
+import taskDetails from "../cmps/task-details/task-details.cmp";
 import list from '../cmps/list.cmp'
 import {eventBusService} from '../services/eventBus.service'
+import draggable from 'vuedraggable';
 
 export default {
   name: "board-edit",
@@ -128,6 +152,9 @@ export default {
       if (updates.type === "updateTaskDesc") {
         this.currTask.description = updates.value.description;
       }
+      if(updates.type === "UploadImg"){
+        this.currTask.attachments.push(updates.value)
+      }
       this.updateBoard();
     },
     addItem(item) {
@@ -138,12 +165,13 @@ export default {
       };
       currCheckListItems.push(newItem);
       this.updateBoard();
-    },
+	},
     removeItem(idxs){
       this.currTask.checkLists[idxs.checkListIdx].items.splice(idxs.itemIdx, 1);
       this.updateBoard();
     },
     toggleCheck(idxs){
+		console.log(idxs);
       this.currTask.checkLists[idxs.checkListIdx].items[idxs.itemIdx].isDone = 
       !this.currTask.checkLists[idxs.checkListIdx].items[idxs.itemIdx].isDone
       this.updateBoard();
@@ -181,7 +209,8 @@ export default {
   components: {
     boardNav,
     taskDetails,
-    list
+	list,
+	draggable
   },
   async created() {
     const boardId = this.$route.params.id;
@@ -192,8 +221,7 @@ export default {
     });
     this.board = JSON.parse(JSON.stringify(board));
     eventBusService.$emit("boardBgc", this.board.style.url);
-    // this.currTask = this.board.lists[1].tasks[0]
-    console.log("fghjklkjgfdhjkj");
-  },
+    this.currTask = this.board.lists[0].tasks[0]
+  }
 };
 </script>
