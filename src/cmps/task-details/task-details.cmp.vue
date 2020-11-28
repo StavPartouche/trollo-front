@@ -35,7 +35,8 @@
 									v-for="member in membersToShow"
 									:key="member._id"
 								>
-									<img class="avatar" :src="member.imgUrl" />
+                <user-avatar :user="member"></user-avatar>
+									<!-- <img class="avatar" :src="member.imgUrl" /> -->
 								</li>
 							</ul>
 						</div>
@@ -256,7 +257,8 @@ export default {
 		dueDate,
 		taskDetailsChecklists,
 		taskDetailsComments,
-		taskDetailsAttachments
+    taskDetailsAttachments,
+    userAvatar
 	},
 	created() {
 		this.taskToEdit = JSON.parse(JSON.stringify(this.task));
