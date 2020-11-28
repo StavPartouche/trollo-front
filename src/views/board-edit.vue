@@ -89,7 +89,7 @@ export default {
 					background: 'aliceblue',
 					size: '15px',
 					opacity: '0.7',
-					minSize: 0
+					minSize: 0,
 				},
 			}
 		};
