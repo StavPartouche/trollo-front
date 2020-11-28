@@ -27,7 +27,9 @@
             <h3>members</h3>
             <ul class="flex">
               <li v-for="member in membersToShow" :key="member._id">
-                <img class="avatar" :src="member.imgUrl" />
+          <user-avatar :user="member"></user-avatar>
+
+                <!-- <img class="avatar" :src="member.imgUrl" /> -->
               </li>
             </ul>
           </div>
@@ -92,6 +94,8 @@ import taskDetailsChecklists from '../task-details/task-details-checklists.cmp'
 import taskDetailsComments from '../task-details/task-details-comments.cmp'
 import taskDetailsAttachments from '../task-details/task-details-attachments.cmp'
 import { uploadImg } from '../../services/img-upload.service.js'
+import userAvatar from '../user-avatar.cmp';
+
 
 
 export default {
@@ -209,7 +213,8 @@ export default {
       dueDate,
       taskDetailsChecklists,
       taskDetailsComments,
-      taskDetailsAttachments
+      taskDetailsAttachments,
+      userAvatar
   },
   created() {
       this.taskToEdit = JSON.parse(JSON.stringify(this.task))
