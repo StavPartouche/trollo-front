@@ -1,6 +1,13 @@
 <template>
 	<section>
-		<h2 class="list-header" contenteditable @blur="updateListName" v-text="listName">{{ list.name }}</h2>
+		<h2
+			class="list-header"
+			contenteditable
+			@blur="updateListName"
+			v-text="listName"
+		>
+			{{ list.name }}
+		</h2>
 		<button @click="removeList(listIdx)">Delete List</button>
 		<ul>
 			<draggable :list="list.tasks" group="tasks" @sort="emitUpdateList">
@@ -11,10 +18,16 @@
 					@click="openTask(listIdx, taskIdx)"
 				>
 					<h4 class="task-header">{{ task.name }}</h4>
-					<img class="preview-img" v-if="task.previewImg" :src="task.previewImg" >
+					<img
+						class="preview-img"
+						v-if="task.previewImg"
+						:src="task.previewImg"
+					/>
 					<ul class="flex" v-if="task.members.length">
 						<li v-for="memberId in task.members" :key="memberId">
-							<user-avatar :user="getMemberById(memberId)"></user-avatar>
+							<user-avatar
+								:user="getMemberById(memberId)"
+							></user-avatar>
 							<!-- <img
 								class="avatar"
 								:src="getMemberImgById(memberId)"
@@ -30,22 +43,14 @@
 		<button v-if="!isAddInput" class="add-task-btn" @click="toggleAdd">
 			+ Add task
 		</button>
-		<form v-else @submit.prevent="addTask(listIdx)">
-			<input
-                autofocus
-				ref="cusomo"
-				type="text"
-				placeholder="Task Title"
-				v-model="newTaskTitle"
-			/>
-			<button>Add</button>
-		</form>
+		<add-item-input v-else @add="addTask(listIdx, $event)" />
 	</section>
 </template>
 
 <script>
 import draggable from 'vuedraggable';
-import userAvatar from './user-avatar.cmp'
+import userAvatar from './user-avatar.cmp';
+import addItemInput from './add-item-input.cmp';
 export default {
 	name: 'list',
 	props: {
@@ -56,21 +61,20 @@ export default {
 	data() {
 		return {
 			isAddInput: false,
-			newTaskTitle: '',
 			listName: null
 		};
-    },
+	},
 	methods: {
-		updateListName(evt){
-			var src = evt.target.innerText
-            this.listName = src
+		updateListName(evt) {
+			var src = evt.target.innerText;
+			this.listName = src;
 			this.$emit('updateListName', {
 				newName: this.listName,
 				listIdx: this.listIdx
-			})
+			});
 		},
-        toggleAdd() {
-            this.isAddInput = !this.isAddInput;
+		toggleAdd() {
+			this.isAddInput = !this.isAddInput;
 		},
 		getMemberById(id) {
 			const arr = this.members.filter(member => member._id === id);
@@ -89,31 +93,31 @@ export default {
 				taskIdx
 			});
 		},
-		addTask(listIdx) {
-			if (this.newTaskTitle === '') {
-                this.toggleAdd();
+		addTask(listIdx, itemTxt) {
+			if (itemTxt === '') {
+				this.toggleAdd();
 				return;
 			}
 			this.$emit('addTask', {
 				listIdx,
-				title: this.newTaskTitle
+				title: itemTxt
 			});
-            this.newTaskTitle = '';
 			this.toggleAdd();
 		},
 		removeList(listIdx) {
 			this.$emit('removeList', listIdx);
-        },
-        emitUpdateList() {
-            this.$emit('updateList', this.list)
-        }
+		},
+		emitUpdateList() {
+			this.$emit('updateList', this.list);
+		}
 	},
 	components: {
 		draggable,
-		userAvatar
+		userAvatar,
+		addItemInput
 	},
-	created(){
-		this.listName = this.list.name
+	created() {
+		this.listName = this.list.name;
 	}
 }
 </script>

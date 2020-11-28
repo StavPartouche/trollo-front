@@ -3,7 +3,7 @@
     <h3 class="task-popup-header">Members</h3>
     <button @click="closePopup" class="exit-popup-btn">X</button>
     <div class="task-members-popup">
-      <input type="text" placeholder="Serch member" v-model="filterBy" />
+      <input type="text" placeholder="Search member" v-model="filterBy" />
       <ul>
         <li
           @click="removeMember(idx)"
