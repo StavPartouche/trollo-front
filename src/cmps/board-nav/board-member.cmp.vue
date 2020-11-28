@@ -14,14 +14,14 @@
           v-if="allMembers"
           @click="toggleShowInvite"
         >
-          <i class="fas fa-plus"></i>
+          <i class="fas fa-user-plus"></i>
         </button>
       </li>
     </ul>
     <div class="invite" v-if="showInvite">
       <!-- <pre>{{membersToInvite}}</pre>
       <pre>{{membersToInvite === []}}</pre> -->
-      <p  v-if="membersToInvite === []" >No users to show</p>
+      <p  v-if="!membersToInvite" >No users to show</p>
       <input v-else  type="text" placeholder="Search member" v-model="filterBy" />
       <ul>
         <li
@@ -69,7 +69,7 @@ export default {
     // },
     toggleShowInvite() {
       this.showInvite = !this.showInvite;
-      console.log(this.showInvite);
+      // console.log(this.showInvite);
     },
   },
   computed: {
@@ -79,10 +79,9 @@ export default {
           return boardMember._id === member._id;
         });
       });
+      if (!toInvite.length) return;
       return toInvite.filter((member) => {
         return member.userName.includes(this.filterBy);
-        //  ||
-        // member.fullName.includes(this.filterBy)
       });
     },
     allMembers() {

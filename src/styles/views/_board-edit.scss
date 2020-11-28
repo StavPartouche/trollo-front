@@ -5,16 +5,14 @@
         flex-direction: column;
         flex: 1;
         max-height: calc(100vh - 90px);
-
-        .__rail-is-vertical, .__rail-is-horizontal {
+        .__rail-is-vertical,
+        .__rail-is-horizontal {
             border-radius: 0 !important;
         }
-
         .__rail-is-vertical {
             margin-inline-end: -2px;
         }
     }
-
     .lists-container {
         // flex: 1;
         display: flex;
@@ -24,10 +22,19 @@
         // overflow-x: auto;
         // height: 86vh;
         .add-list-btn {
+            background-color: #ebecf0;
             min-width: 250px;
             text-align: center;
             height: 30px;
             margin: 10px;
+            .fa-plus {
+                margin-right: 3px;
+                margin-bottom: 1px;
+            }
+            span {
+                font-size: 16px;
+                font-weight: bold;
+            }
         }
         .lists {
             display: flex;
@@ -56,10 +63,7 @@
             padding: 8px;
             margin-bottom: 10px;
             cursor: pointer;
-
-            .task-header {
-            }
-
+            .task-header {}
             .preview-img {
                 width: 80%;
             }
