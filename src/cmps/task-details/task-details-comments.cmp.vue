@@ -25,6 +25,7 @@ export default {
   },
   methods: {
       addComment(){
+        console.log('comments',this.commentTxt);
           this.$emit('addComment', this.commentTxt)
           this.commentTxt = ''
       }

@@ -200,6 +200,7 @@ export default {
 			// }
 		},
 		addComment(commentTxt) {
+      console.log('dets',commentTxt);
 			this.$emit('addComment', commentTxt);
 		},
 		addItem(itemInfo) {

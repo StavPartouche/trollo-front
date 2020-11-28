@@ -53,6 +53,7 @@
 			@removeAttachment="removeAttachment"
 			@setPreviewImg="setPreviewImg"
 			@removePreviewImg="removePreviewImg"
+      @addComment="addComment"
 		/>
 	</div>
 </template>
@@ -129,7 +130,8 @@ export default {
 				txt: commentTxt,
 				createdAt: Date.now(),
 				creator: this.$store.getters.loggedInUser ? this.$store.getters.loggedInUser.fullName : "Guest"
-			};
+      };
+      console.log('dets', comment);
 			this.currTask.comments.push(comment);
 			this.updateBoard();
 		},
