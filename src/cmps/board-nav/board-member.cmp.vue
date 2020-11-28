@@ -71,6 +71,9 @@ export default {
       this.showInvite = !this.showInvite;
       // console.log(this.showInvite);
     },
+    onKeyUp(ev) {
+      if (ev.keyCode === 27 && this.showInvite) this.toggleShowInvite();
+    }
   },
   computed: {
     membersToInvite() {
@@ -87,6 +90,12 @@ export default {
     allMembers() {
       return this.$store.getters.users;
     },
+  },
+  created() {
+    document.body.addEventListener('keyup', this.onKeyUp)
+  },
+  destroyed() {
+    document.body.removeEventListener('keyup', this.onKeyUp)
   },
   components: {
     boardMemberCard,

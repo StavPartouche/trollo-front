@@ -76,6 +76,12 @@ export default {
     removeBoardMember(memberId) {
       this.$emit("removeBoardMember", memberId);
     },
+    onKeyUp(ev) {
+      if (ev.keyCode === 27) {
+				if (this.isSetting) this.toggleIsSetting();
+				else if (this.isActivityLog) this.toggleActivityLog();
+			}
+    },
   },
   components: {
     boardSetting,
@@ -84,6 +90,10 @@ export default {
   created() {
     console.log(this.board);
     this.boardToEdit = JSON.parse(JSON.stringify(this.board));
+     document.body.addEventListener('keyup', this.onKeyUp)
+  },
+  destroyed() {
+    document.body.removeEventListener('keyup', this.onKeyUp)
   },
 };
 </script>

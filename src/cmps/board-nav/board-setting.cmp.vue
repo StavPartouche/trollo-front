@@ -80,6 +80,7 @@ export default {
   created() {
     this.boardToEdit = JSON.parse(JSON.stringify(this.board));
     console.log(this.boardToEdit.style.url);
+    document.body.addEventListener('keyup', this.onKeyUp)
   },
   components: {
     boardBackground,
