@@ -1,6 +1,7 @@
 <template>
 	<div class="task-details-checklist">
       <h4>{{ checkList.title }}</h4>
+      <el-progress :text-inside="true" :stroke-width="17" :percentage="donePercent" :status="doneStatus"></el-progress>
       <ul>
         <li v-for="(item, itemIdx) in checkList.items" :key="itemIdx">
             <label>
@@ -64,7 +65,19 @@ export default {
         }
     },
     computed:{
-        
+        donePercent() {
+            const res = this.checkList.items.reduce((doneCount, item) => {
+                if (item.isDone) doneCount++;
+                return doneCount;
+            },0);
+            return (res) ? Math.round((res / this.checkList.items.length) * 100) : res;
+        },
+        doneStatus() {
+            const percent = this.donePercent;
+            if (percent === 100) return 'success';
+            if (percent >= 75) return '';
+            return 'warning';
+        }
     },
     components: {
         addItemInput
