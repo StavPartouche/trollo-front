@@ -27,11 +27,11 @@
       </li>
     </ul> -->
     <button @click="toggleActivityLog">activity log</button>
-    <ul v-if="isActivityLog">
+    <!-- <ul v-if="isActivityLog">
       <li v-for="activity in board.activityLog" :key="activity.createdAt">
         {{ activity.userId }}:{{ activity.txt }} {{ activity.createdAt }}
       </li>
-    </ul>
+    </ul> -->
   </div>
 </template>
 
