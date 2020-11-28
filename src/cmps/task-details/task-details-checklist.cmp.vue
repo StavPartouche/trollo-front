@@ -11,14 +11,16 @@
         </li>
       </ul>
       <button v-if="!isAddInput" @click="toggleAdd">Add item to list</button>
-      <form v-else @submit.prevent="addItem(checkListIdx)">
+      <!-- <form v-else @submit.prevent="addItem(checkListIdx)">
         <input type="text" v-model="txt" />
         <button>Add</button>
-      </form>
+      </form> -->
+      <add-item-input v-else @add="addItem(checkListIdx, $event)" />
     </div>
 </template>
 
 <script>
+import addItemInput from '../add-item-input.cmp';
 
 export default {
     name: 'task-details-checklist',
@@ -28,21 +30,21 @@ export default {
     },
 	data() {
 		return {
-            txt: '',
+            // txt: '',
             isAddInput: false
 		}
     },
 	methods: {
-		addItem(checkListIdx){
-            if(this.txt === ''){
+		addItem(checkListIdx, itemTxt){
+            if(itemTxt === ''){
                 this.toggleAdd()
                 return 
             }
             this.$emit('addItem', {
                 checkListIdx,
-                txt: this.txt
+                txt: itemTxt
             })
-            this.txt = ''
+            // this.txt = ''
             this.toggleAdd()
         },
         toggleAdd(){
@@ -63,6 +65,9 @@ export default {
     },
     computed:{
         
+    },
+    components: {
+        addItemInput
     }
 }
 </script>
