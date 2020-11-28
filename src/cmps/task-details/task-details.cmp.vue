@@ -100,13 +100,15 @@
 
 <script>
 
-import checkList from '../task-popups/checkList.cmp';
-import members from '../task-popups/members.cmp';
-import dueDate from '../task-popups/dueDate.cmp';
-import taskDetailsChecklists from '../task-details/task-details-checklists.cmp';
-import taskDetailsComments from '../task-details/task-details-comments.cmp';
-import taskDetailsAttachments from '../task-details/task-details-attachments.cmp';
-import { uploadImg } from '../../services/img-upload.service.js';
+import checkList from '../task-popups/checkList.cmp'
+import members from '../task-popups/members.cmp'
+import dueDate from '../task-popups/dueDate.cmp'
+import taskDetailsChecklists from '../task-details/task-details-checklists.cmp'
+import taskDetailsComments from '../task-details/task-details-comments.cmp'
+import taskDetailsAttachments from '../task-details/task-details-attachments.cmp'
+import { uploadImg } from '../../services/img-upload.service.js'
+import userAvatar from '../user-avatar.cmp';
+
 
 
 export default {

@@ -14,10 +14,11 @@
 					<img class="preview-img" v-if="task.previewImg" :src="task.previewImg" >
 					<ul class="flex" v-if="task.members.length">
 						<li v-for="memberId in task.members" :key="memberId">
-							<img
+							<user-avatar :user="getMemberById(memberId)"></user-avatar>
+							<!-- <img
 								class="avatar"
 								:src="getMemberImgById(memberId)"
-							/>
+							/> -->
 						</li>
 					</ul>
 					<button @click.stop="removeTask(listIdx, taskIdx)">
@@ -44,6 +45,7 @@
 
 <script>
 import draggable from 'vuedraggable';
+import userAvatar from './user-avatar.cmp'
 export default {
 	name: 'list',
 	props: {
@@ -70,10 +72,10 @@ export default {
         toggleAdd() {
             this.isAddInput = !this.isAddInput;
 		},
-		getMemberImgById(id) {
+		getMemberById(id) {
 			const arr = this.members.filter(member => member._id === id);
 			if (!arr.length) return;
-			return arr[0].imgUrl;
+			return arr[0];
 		},
 		openTask(listIdx, taskIdx) {
 			this.$emit('openTask', {
@@ -107,7 +109,8 @@ export default {
         }
 	},
 	components: {
-		draggable
+		draggable,
+		userAvatar
 	},
 	created(){
 		this.listName = this.list.name
