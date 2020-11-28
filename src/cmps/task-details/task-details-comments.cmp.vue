@@ -1,6 +1,6 @@
 <template>
   <div class="task-details-comments">
-    <h3>Commentsssssss</h3>
+    <h3>Comments</h3>
     <div v-for="(comment, idx) in comments" :key="idx">
       <h4>By: {{ comment.creator }}</h4>
       <p>{{ comment.txt }}</p>
@@ -25,13 +25,14 @@ export default {
   },
   methods: {
       addComment(){
+        console.log('comments',this.commentTxt);
           this.$emit('addComment', this.commentTxt)
           this.commentTxt = ''
       }
   },
   computed: {},
   created(){
-      console.log(this.comments);
+
   }
 };
 </script>

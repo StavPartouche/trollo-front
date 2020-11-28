@@ -1,6 +1,6 @@
 <template>
 	<section>
-		<h2>{{ list.name }}</h2>
+		<h2 contenteditable @blur="updateListName" v-text="listName">{{ list.name }}</h2>
 		<button @click="removeList(listIdx)">Delete List</button>
 		<ul>
 			<draggable :list="list.tasks" group="tasks" @sort="emitUpdateList">
@@ -11,6 +11,7 @@
 					@click="openTask(listIdx, taskIdx)"
 				>
 					<p>{{ task.name }}</p>
+					<img class="preview-img" v-if="task.previewImg" :src="task.previewImg" >
 					<ul class="flex" v-if="task.members.length">
 						<li v-for="memberId in task.members" :key="memberId">
 							<user-avatar :user="getMemberById(memberId)"></user-avatar>
@@ -55,10 +56,19 @@ export default {
 	data() {
 		return {
 			isAddInput: false,
-			newTaskTitle: ''
+			newTaskTitle: '',
+			listName: null
 		};
     },
 	methods: {
+		updateListName(evt){
+			var src = evt.target.innerText
+            this.listName = src
+			this.$emit('updateListName', {
+				newName: this.listName,
+				listIdx: this.listIdx
+			})
+		},
         toggleAdd() {
             this.isAddInput = !this.isAddInput;
 		},
@@ -101,6 +111,9 @@ export default {
 	components: {
 		draggable,
 		userAvatar
+	},
+	created(){
+		this.listName = this.list.name
 	}
 }
 </script>
