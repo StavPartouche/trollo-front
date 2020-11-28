@@ -1,6 +1,9 @@
 .board-list {
     flex: 1;
     padding: 15px 30px;
+    hr {
+        margin: 18px
+    }
     h2 {
         margin-bottom: 15px;
     }
@@ -12,6 +15,11 @@
         .plus-icon {
             margin: 0 auto;
             height: 20px;
+        }
+        .el-card__body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
     }
     .bottom {
