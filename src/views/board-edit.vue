@@ -131,7 +131,6 @@ export default {
 				createdAt: Date.now(),
 				creator: this.$store.getters.loggedInUser ? this.$store.getters.loggedInUser.fullName : "Guest"
       };
-      console.log('dets', comment);
 			this.currTask.comments.push(comment);
 			this.updateBoard();
 		},
@@ -211,7 +210,6 @@ export default {
 			this.updateBoard();
 		},
 		toggleCheck(idxs) {
-			console.log(idxs);
 			this.currTask.checkLists[idxs.checkListIdx].items[idxs.itemIdx].isDone =
 				!this.currTask.checkLists[idxs.checkListIdx].items[idxs.itemIdx].isDone;
 			this.updateBoard();
