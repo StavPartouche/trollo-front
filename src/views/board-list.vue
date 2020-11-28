@@ -28,9 +28,9 @@
 			<hr />
 		</template>
 		<h2>Public Boards:</h2>
-		<el-row>
+		<el-row class="flex justify-center wrap">
 			<el-col v-if="!loggedInUser" :span="2" :offset="0">
-				<el-card @click.native="addBoard"
+				<el-card class="flex center"  :body-style="{height: '75px'}"  @click.native="addBoard"
 					><img class="plus-icon" src="../styles/assets/plus.png"
 				/></el-card>
 			</el-col>
@@ -41,7 +41,7 @@
 				:offset="1"
 			>
 				<router-link :to="'/board/' + board._id">
-					<el-card :body-style="{ padding: '0px' }">
+					<el-card :body-style="{ padding: '0px', height: '75px' }">
 						<div style="padding: 14px">
 							<span>{{ board.name }}</span>
 							<div class="bottom clearfix">

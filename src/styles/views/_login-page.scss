@@ -1,9 +1,17 @@
-.login-signup-txt {
-    a {
-        text-decoration: underline;
-        
-        &:hover {
-            color: grey;
+.login-page {
+    .login-signup-txt {
+        a {
+            text-decoration: underline;
+            &:hover {
+                color: grey;
+            }
+        }
+    }
+    form {
+        margin: 40px;
+        text-align: center;
+        input[type=file] {
+            width: 82px;
         }
     }
 }
