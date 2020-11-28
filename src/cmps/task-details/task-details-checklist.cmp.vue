@@ -75,7 +75,7 @@ export default {
         doneColor() {
             const percent = this.donePercent;
             if (percent === 100) return '#20D160';
-            if (percent >= 75) return '#008DD2';
+            if (percent >= 50) return '#008DD2';
             if (percent > 25) return '#FFDD57';
             return '#FF385F';
         }
