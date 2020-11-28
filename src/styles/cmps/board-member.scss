@@ -5,6 +5,7 @@
         top: 40px;
         background-color: rgb(235, 235, 235);
         border-radius: 5px;
+        z-index: 1;
     }
     .userToShow {
         padding: 2px;
@@ -18,3 +19,4 @@
         }
     }
 }
+

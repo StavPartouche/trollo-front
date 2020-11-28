@@ -1,6 +1,6 @@
 <template>
 	<section>
-		<h2 contenteditable @blur="updateListName" v-text="listName">{{ list.name }}</h2>
+		<h2 class="list-header" contenteditable @blur="updateListName" v-text="listName">{{ list.name }}</h2>
 		<button @click="removeList(listIdx)">Delete List</button>
 		<ul>
 			<draggable :list="list.tasks" group="tasks" @sort="emitUpdateList">
@@ -10,7 +10,7 @@
 					:key="taskIdx"
 					@click="openTask(listIdx, taskIdx)"
 				>
-					<p>{{ task.name }}</p>
+					<h4 class="task-header">{{ task.name }}</h4>
 					<img class="preview-img" v-if="task.previewImg" :src="task.previewImg" >
 					<ul class="flex" v-if="task.members.length">
 						<li v-for="memberId in task.members" :key="memberId">
