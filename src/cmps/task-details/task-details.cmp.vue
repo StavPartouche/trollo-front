@@ -36,7 +36,6 @@
 									:key="member._id"
 								>
                 <user-avatar :user="member"></user-avatar>
-									<!-- <img class="avatar" :src="member.imgUrl" /> -->
 								</li>
 							</ul>
 						</div>

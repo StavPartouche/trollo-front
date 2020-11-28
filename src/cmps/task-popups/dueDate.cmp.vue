@@ -3,7 +3,6 @@
     <h3 class="task-popup-header">dueDate</h3>
     <button @click="closePopup" class="exit-popup-btn">X</button>
     <input @input="updateDueDate" type="date" v-model="date" />
-    {{ date }}
   </div>
 </template>
 
