@@ -56,12 +56,18 @@
     text-decoration: line-through;
 }
 
-.diable-page-container {
-    position: absolute;
+.disable-page-container {
+    position: fixed;
     top: 0;
     right: 0;
-    z-index: 2;
-    background-color: rgba(0, 0, 0, 0.151);
+    z-index: 1;
+    background-color: rgba(0, 0, 0, 0.04);
     width: 100vw;
     height: 100vh;
+    cursor: auto;
+    display: block;
+}
+
+.hide {
+    display: none;
 }

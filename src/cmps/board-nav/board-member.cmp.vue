@@ -1,5 +1,6 @@
 <template>
-  <div class="board-member flex">
+  <div class="board-member">
+    <div @click="toggleShowInvite" :class="{'disable-page-container': showInvite}"></div>
     <ul class="flex center">
       <board-member-card
         v-for="member in boardMembers"
@@ -7,18 +8,30 @@
         @removeBoardMember="removeBoardMember"
         :member="member"
       ></board-member-card>
+      <li>
+        <button
+          class="btn-add-board-user"
+          v-if="allMembers"
+          @click="toggleShowInvite"
+        >
+          <i class="fas fa-plus"></i>
+        </button>
+      </li>
     </ul>
-    <button v-if="allMembers" @click="toggleShowInvite"><i class="el-icon-plus"></i></button>
     <div class="invite" v-if="showInvite">
-      <input type="text" placeholder="Search member" v-model="filterBy" />
+      <!-- <pre>{{membersToInvite}}</pre>
+      <pre>{{membersToInvite === []}}</pre> -->
+      <p  v-if="membersToInvite === []" >No users to show</p>
+      <input v-else  type="text" placeholder="Search member" v-model="filterBy" />
       <ul>
         <li
-          class="userToShow"
+          class="userToShow flex align-center"
           @click="addBoardBMember(member._id)"
           v-for="member in membersToInvite"
           :key="member._id"
         >
-          {{ member.userName }}
+        <user-avatar :user="member"></user-avatar>
+          <p>{{ member.userName }}</p>
         </li>
         <!-- <li v-for="member in allMembers" :key="member._id">member {{ member.userName }}</li> -->
       </ul>
@@ -28,6 +41,8 @@
 
 <script>
 import boardMemberCard from "./board-member-card.cmp";
+import userAvatar from '../user-avatar.cmp'
+
 export default {
   name: "board-members",
   props: {
@@ -54,6 +69,7 @@ export default {
     // },
     toggleShowInvite() {
       this.showInvite = !this.showInvite;
+      console.log(this.showInvite);
     },
   },
   computed: {
@@ -64,11 +80,9 @@ export default {
         });
       });
       return toInvite.filter((member) => {
-        return (
-          member.userName.includes(this.filterBy)
-          //  ||
-          // member.fullName.includes(this.filterBy)
-        );
+        return member.userName.includes(this.filterBy);
+        //  ||
+        // member.fullName.includes(this.filterBy)
       });
     },
     allMembers() {
@@ -77,6 +91,7 @@ export default {
   },
   components: {
     boardMemberCard,
+    userAvatar
   },
 };
 </script>

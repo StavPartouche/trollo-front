@@ -36,8 +36,8 @@
       imgUrl="imgUrl"
     />
     <div class="flex center">
-      <button @click="removeBoard" type="button">
-        <i class="el-icon-delete-solid"></i>
+      <button title="delete board" @click="removeBoard" type="button">
+        <i class="fas fa-trash"></i>
       </button>
       <button>save</button>
     </div>

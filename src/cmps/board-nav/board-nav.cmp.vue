@@ -1,19 +1,26 @@
 <template>
   <div class="board-nav flex justify-space-between align-center">
-    <!-- <pre>{{board}}</pre> -->
+    <div
+      @click="toggleIsSetting"
+      :class="{ 'hide': !isSetting, 'disable-page-container': isSetting }"
+    ></div>
     <div class="flex center">
       <h2 @click="toggleIsSetting">{{ board.name }}</h2>
-    <div class="board-setting-container">
-      <button @click="toggleIsSetting"><i class="el-icon-more"></i></button>
-      <board-setting
-        @removeBoard="removeBoard"
-        @saveBoard="saveBoardSetting"
-        v-if="isSetting"
-        :board="boardToEdit"
-      />
+      <div class="board-setting-container">
+        <button @click="toggleIsSetting"><i class="el-icon-more"></i></button>
+        <board-setting
+          @removeBoard="removeBoard"
+          @saveBoard="saveBoardSetting"
+          v-if="isSetting"
+          :board="boardToEdit"
+        />
+      </div>
     </div>
-    </div>
-    <board-member @removeBoardMember="removeBoardMember" @addBoardMember="addBoardMember" :boardMembers="members"/>
+    <board-member
+      @removeBoardMember="removeBoardMember"
+      @addBoardMember="addBoardMember"
+      :boardMembers="members"
+    />
     <!-- <ul>
       <li v-for="member in members" :key="member._id">
         {{ member.userName }}
@@ -57,22 +64,22 @@ export default {
       this.saveBoard();
     },
     saveBoard() {
-      this.$emit('saveBoard', JSON.parse(JSON.stringify(this.boardToEdit)));
+      this.$emit("saveBoard", JSON.parse(JSON.stringify(this.boardToEdit)));
       this.isSetting = false;
     },
     removeBoard() {
-      this.$emit('removeBoard');
+      this.$emit("removeBoard");
     },
-    addBoardMember(memberId){
-      this.$emit('addBoardMember', memberId)
+    addBoardMember(memberId) {
+      this.$emit("addBoardMember", memberId);
     },
-    removeBoardMember(memberId){
-      this.$emit('removeBoardMember', memberId)
-    }
+    removeBoardMember(memberId) {
+      this.$emit("removeBoardMember", memberId);
+    },
   },
   components: {
     boardSetting,
-    boardMember
+    boardMember,
   },
   created() {
     console.log(this.board);
