@@ -44,12 +44,14 @@ h6 {
 }
 
 p {
+    margin: 0 0 10px 0;
 }
 
 img {
 }
 
-.btn, button {
+.btn,
+button {
     cursor: pointer;
     border: none;
     outline: none;
@@ -85,7 +87,7 @@ input {
     margin: 5px;
 }
 
-textarea{
+textarea {
     font-family: quicksand, sans-serif;
     outline: none;
 }
