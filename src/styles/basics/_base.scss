@@ -5,15 +5,16 @@
 html {
     color: rgb(29, 29, 29);
     font-family: quicksand, sans-serif;
+    // -ms-overflow-style: none;
+    // scrollbar-width: none;
+    ::-webkit-scrollbar {
+        display: none;
+    }
 }
 
 body {
     margin: 0;
 }
-
-::-webkit-scrollbar {
-    display: none;
-  }
 
 a,
 a:visited,
@@ -42,9 +43,11 @@ h6 {
     margin: 0 0 10px 0;
 }
 
-p {}
+p {
+}
 
-img {}
+img {
+}
 
 button {
     cursor: pointer;
@@ -63,7 +66,6 @@ button {
 .light-btn {
     background-color: whitesmoke;
     color: rgb(65, 65, 65);
-    ;
 }
 
 select {
@@ -94,6 +96,6 @@ input {
     font-family: megrim;
     // font-family: surfer;
     span {
-        font-size: 1.1em // color: rgb(136, 199, 183)
+        font-size: 1.1em; // color: rgb(136, 199, 183)
     }
 }
