@@ -40,7 +40,7 @@ function put(board) {
 function getEmptyBoard(userId = 'guest') {
     return {
         name: '',
-        members: [],
+        members: [userId],
         labels: [],
         style: { backgroundColor: '', url: 'bgc1.jpg' },
         creator: userId,
@@ -53,16 +53,23 @@ function getEmptyBoard(userId = 'guest') {
             taskId: ''
         }
         ],
-        lists: [getEmptyList()]
+        lists: _getEmptyLists()
     };
 }
 
-function getEmptyList() {
+function _getEmptyLists(){
+    return [
+        getEmptyList('To do'),
+        getEmptyList('In Progress'),
+        getEmptyList('Done')
+    ]
+}
+
+function getEmptyList(listName = '') {
     return {
         id: utilService.makeId(),
-        name: '',
+        name: listName,
         tasks: []
-        // tasks: [getEmptyTask()]
     };
 }
 

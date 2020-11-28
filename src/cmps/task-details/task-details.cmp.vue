@@ -16,7 +16,7 @@
 					<div class="task-details">
 						<div>
 							<h3>Description</h3>
-							<textarea
+							<textarea class="description-textarea"
 								contenteditable
 								v-model="taskToEdit.description"
 								@blur="updateTaskDesc"
@@ -88,14 +88,10 @@
 					<button class="side-bar-btn" @click="openPopup('dueDate')">
 						dueDate
 					</button>
-					<label for="file-upload">
-						<button class="side-bar-btn">Add Attachments</button>
-						<input
-							id="file-upload"
-							type="file"
-							@change="onUploadImg"
-						/>
-					</label>
+						<label  class="btn side-bar-btn">
+              Attachments
+						<input class="add-attachments-input" type="file" @change="onUploadImg"/>
+            </label>
 				</div>
 			</div>
 		</div>
@@ -212,24 +208,21 @@ export default {
 			this.$emit('addItem', item);
 		},
 		removeItem(idxs) {
-			console.log("details", idxs.checkListIdx, idxs.itemIdx);
 			this.$emit('removeItem', idxs);
 		},
 		toggleCheck(idxs) {
-			console.log(idxs);
 			this.$emit('toggleCheck', idxs);
 		},
 		removeAttachment(idx) {
 			this.$emit('removeAttachment', idx);
 		},
 		openPopup(type) {
-			console.log(type);
 			this.cmpType = type,
-				this.isPopup = true;
+			this.isPopup = true;
 		},
 		closePopup() {
 			this.cmpType = '',
-				this.isPopup = false;
+			this.isPopup = false;
 		}
 	},
 	computed: {

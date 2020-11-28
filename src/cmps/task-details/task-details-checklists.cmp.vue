@@ -30,14 +30,12 @@ export default {
               checkListIdx: updates.checkListIdx ,
               txt: updates.txt
           }
-          console.log(itemInfo.checkListIdx);
           this.$emit("addItem", itemInfo);
       },
       removeItem(idxs){
         this.$emit("removeItem", idxs)
       },
       toggleCheck(idxs){
-        console.log(idxs);
         this.$emit("toggleCheck", idxs)
       }
   },

@@ -4,8 +4,8 @@
       <ul>
         <li v-for="(item, itemIdx) in checkList.items" :key="itemIdx">
             <label>
-            <span :class="{'line-through': item.isDone}">{{ item.txt }}</span>
-                <input class="checkbox" type="checkbox" @change="toggleCheck(checkListIdx, itemIdx)">
+                <input class="checkbox" type="checkbox" @change="toggleCheck(checkListIdx, itemIdx)" :checked="item.isDone">
+                <span :class="{'line-through': item.isDone}">{{ item.txt }}</span>
             </label>
           <button @click="removeItem(checkListIdx, itemIdx)">X</button>
         </li>
@@ -55,8 +55,6 @@ export default {
             })
         },
         toggleCheck(checkListIdx, itemIdx){
-            // this.checkList.items[itemIdx].isDone = !this.checkList.items[itemIdx].isDone
-            console.log(checkListIdx, itemIdx);
             this.$emit('toggleCheck', {
                 checkListIdx,
                 itemIdx
