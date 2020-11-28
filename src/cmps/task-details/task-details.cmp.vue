@@ -225,6 +225,12 @@ export default {
 		closePopup() {
 			this.cmpType = '',
 			this.isPopup = false;
+		},
+		onKeyUp(ev) {
+			if (ev.keyCode === 27) {
+				if (this.isPopup) this.closePopup();
+				else this.closeDetails();
+			}
 		}
 	},
 	computed: {
@@ -254,6 +260,10 @@ export default {
 	},
 	created() {
 		this.taskToEdit = JSON.parse(JSON.stringify(this.task));
+		document.body.addEventListener('keyup', this.onKeyUp);
 	},
+	destroyed() {
+		document.body.removeEventListener('keyup', this.onKeyUp);
+	}
 };
 </script>
