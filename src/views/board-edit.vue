@@ -76,18 +76,6 @@ export default {
 			currListIdx: null,
 			currTaskIdx: null,
 			ops: {
-				vuescroll: {
-					mode: 'slide',
-					zooming: false,
-					scroller: {
-						bouncing: {
-							top: 0,
-							left: 0,
-							right: 0,
-							bottom: 0
-						}
-					}
-				},
 				scrollPanel: {},
 				rail: {
 					background: 'rgba(0, 0, 0, 0.404)',
@@ -100,8 +88,8 @@ export default {
 					background: 'aliceblue',
 					size: '15px',
 					opacity: '0.7',
-					minSize: 0.2
-				}
+					minSize: 0
+				},
 			}
 		};
 	},
