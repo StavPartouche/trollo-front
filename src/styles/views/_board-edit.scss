@@ -54,6 +54,7 @@
                 border-bottom: gray solid 0.5px;
             }
             .list-header-container {
+                width: 94%;
                 margin-bottom: 5px;
                 margin-top: 5px;
                 .list-header {
@@ -72,30 +73,14 @@
                 cursor: pointer;
                 .task-preview-header {
                     h4 {
-                        margin: 0;
+                        margin-bottom: 10px;
+                        font-weight: normal;
                     }
                     button {
-                        color: #535353;
+                        background-color: transparent;
+                        opacity: 0;
                     }
                 }
-                .task {
-                    // width: 94%;
-                    border-radius: 5px;
-                    background-color: #fdfdfd;
-                    box-shadow: 0px 1px 1px #888888;
-                    padding: 8px;
-                    margin-bottom: 10px;
-                    cursor: pointer;
-                    .task-preview-header {
-                        h4 {
-                            margin-bottom: 10px;
-                            font-weight: normal;
-                        }
-                        button {
-                            background-color: transparent;
-                            opacity: 0;
-                        }
-                    }
                     &:hover {
                         button {
                             opacity: 0.7;
@@ -105,7 +90,7 @@
                         width: 100%;
                         margin-top: 5px;
                     }
-                }
+                
             }
         }
     }
