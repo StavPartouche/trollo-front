@@ -40,9 +40,9 @@
         padding-left: 12px;
         height: fit-content;
 
-        // .delete-list-btn{
-        //   position: absolute;
-        // }
+        .delete-list-btn{
+          opacity: 0.4;
+        }
         .add-task-btn {
             background-color: transparent;
             font-size: rem(16px);
@@ -54,21 +54,6 @@
             border-radius: 0px;
             border-bottom: gray solid 0.5px;
         }
-    //     .add-list-btn {
-    //       background-color: #ebecf0;
-    //       min-width: 250px;
-    //       text-align: center;
-    //       height: 30px;
-    //       margin: 10px;
-    //       .fa-plus {
-    //           margin-right: 3px;
-    //           margin-bottom: 1px;
-    //       }
-    //       span {
-    //           font-size: 16px;
-    //           font-weight: bold;
-    //       }
-    //   }
         .list-header-container{
           margin-bottom: 5px;
           margin-top: 5px;
