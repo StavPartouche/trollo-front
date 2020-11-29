@@ -1,5 +1,9 @@
 <template>
   <div class="task-editor-container" @click="closeDetails">
+        <div
+      @click.stop="closePopup"
+      :class="{ 'hide': !isPopup, 'disable-page-container': isPopup }"
+    ></div>
     <div @click.stop class="task-editor">
       <div class="task-header">
         <h2 contenteditable v-text="taskToEdit.name" @blur="updateTaskName">
@@ -215,6 +219,7 @@ export default {
       (this.cmpType = type), (this.isPopup = true);
     },
     closePopup() {
+      console.log('close popup');
       (this.cmpType = ""), (this.isPopup = false);
     },
     onKeyUp(ev) {
