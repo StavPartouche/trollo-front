@@ -8,7 +8,7 @@
 		>
 			{{ list.name }}
 		</h2>
-		<button @click="removeList(listIdx)">Delete List</button>
+		<button class="delete-list-btn" @click="removeList(listIdx)"><i class="fas fa-trash"></i></button>
 		<ul>
 			<draggable :list="list.tasks" group="tasks" :move="tiltCard" v-bind="dragOptions" @sort="emitUpdateList">
 				<li
@@ -106,6 +106,7 @@ export default {
 			this.toggleAdd();
 		},
 		removeList(listIdx) {
+			console.log('removeList');
 			this.$emit('removeList', listIdx);
 		},
 		emitUpdateList() {

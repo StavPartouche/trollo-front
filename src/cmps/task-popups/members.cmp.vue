@@ -9,10 +9,13 @@
           @click="removeMember(idx)"
           v-for="(member, idx) in taskMembersToShow"
           :key="member._id"
+          class="flex justify-space-between align-center"
         >
-          <user-avatar :user="member"></user-avatar>
-          {{ member.fullName }} V
-          <!-- <img  class="avatar" :src="member.imgUrl"/> {{member.fullName}} V -->
+          <div class="flex align-center task-members-popup-member">
+            <user-avatar :user="member"></user-avatar>
+            <h4>{{ member.fullName }}</h4>
+          </div>
+          <i class="fas fa-check check"></i>
         </li>
       </ul>
       <ul>
@@ -20,10 +23,10 @@
           @click="addMember(member._id)"
           v-for="member in boardMembersToShow"
           :key="member._id"
+          class="flex align-center task-members-popup-member"
         >
           <user-avatar :user="member"></user-avatar>
-          {{ member.fullName }}
-          <!-- <img  class="avatar" :src="member.imgUrl"/> {{member.fullName}} -->
+          <h4>{{ member.fullName }}</h4>
         </li>
       </ul>
     </div>
