@@ -31,7 +31,6 @@ export default {
   },
   methods: {
     saveBoardBgc(idx) {
-      console.log(this.type);
       if (this.type==='img'){
         this.$emit("saveBoardBgc", {type: 'img', img:`bgc${idx}.jpg`})
       }else{
@@ -39,5 +38,8 @@ export default {
       }
     },
   },
+  created(){
+    console.log('background creared');
+  }
 };
 </script>

@@ -2,7 +2,7 @@
 	<section class="board-list">
 		<template v-if="loggedInUser">
 			<h2>User Boards:</h2>
-			<el-row>
+			<el-row class="flex justify-center wrap">
 				<el-col :span="2" :offset="0">
 					<el-card @click.native="addBoard"
 						><img class="plus-icon" src="../styles/assets/plus.png"
@@ -15,7 +15,7 @@
 					:offset="1"
 				>
 					<router-link :to="'/board/' + board._id">
-						<el-card :body-style="{ padding: '0px' }">
+						<el-card class="flex center"  :body-style="{ padding: '0px' }">
 							<div style="padding: 14px">
 								<span>{{ board.name }}</span>
 								<div class="bottom clearfix">

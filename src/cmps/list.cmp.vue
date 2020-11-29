@@ -1,14 +1,16 @@
 <template>
 	<section>
-		<h2
-			class="list-header"
-			contenteditable
-			@blur="updateListName"
-			v-text="listName"
-		>
-			{{ list.name }}
-		</h2>
-		<button @click="removeList(listIdx)">Delete List</button>
+		<div class="list-header-container flex justify-space-between align-center">
+			<h2
+				class="list-header"
+				contenteditable
+				@blur="updateListName"
+				v-text="listName"
+			>
+				{{ list.name }}
+			</h2>
+			<button class="delete-list-btn" @click="removeList(listIdx)"><i class="fas fa-trash"></i></button>
+		</div>
 		<ul>
 			<draggable :list="list.tasks" group="tasks" :move="tiltCard" v-bind="dragOptions" @sort="emitUpdateList">
 				<li
@@ -106,6 +108,7 @@ export default {
 			this.toggleAdd();
 		},
 		removeList(listIdx) {
+			console.log('removeList');
 			this.$emit('removeList', listIdx);
 		},
 		emitUpdateList() {
