@@ -53,6 +53,31 @@
           height: 100px;
           margin: 5px;
         }
+
+        .task-details-comments{
+
+          .comment-input{
+            width: 85%;
+            height: 32px;
+          }
+
+          .comment{
+            font-size: 0.8rem;
+            margin-bottom: 10px;
+
+            .comment-creator{
+              color:#181818;
+              padding-left: 5px;
+              margin-bottom: 0;
+            }
+            .comment-txt{
+              padding-left: 5px;
+              margin-bottom: 0;
+            }
+
+          }
+            
+        }
       }
 
       .side-bar {

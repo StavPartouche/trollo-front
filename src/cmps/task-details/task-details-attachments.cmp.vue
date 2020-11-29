@@ -6,7 +6,7 @@
             <li v-for="(attachment, idx) in attachments" :key="idx">
                 <img :src="attachment" class="img-attachments">
                 <button @click="removeAttachment(idx)">X</button>
-                <button @click="setPreviewImg(idx)">set a cover</button>
+                <button @click="setPreviewImg(idx)">set as cover</button>
             </li>
         </ul>
     </div>
