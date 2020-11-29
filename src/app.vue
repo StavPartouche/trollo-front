@@ -18,15 +18,22 @@ export default {
   data() {
     return {
       isBgcImg: false,
+      isBgcColor: false,
       bgcImg: "",
+      bgcColor: "",
     };
   },
   computed: {
     background() {
+      console.log('computed');
       if (this.isBgcImg) {
         return {
           backgroundImage: `url(${require(`@/styles/assets/board-background-imgs/${this.bgcImg}`)})`,
         };
+      }else if (this.isBgcColor){
+        return{
+          backgroundColor: `${this.bgcColor}`
+        }
       }
       return "";
     },
@@ -59,11 +66,36 @@ export default {
       this.bgcImg = "home1.jpg";
     }
     eventBusService.$on("boardBgc", (bgc) => {
-      if (!bgc) this.isBgcImg = false;
-      else {
-        this.isBgcImg = true;
-        this.bgcImg = bgc;
+      console.log(bgc);
+      if(!bgc.url){
+        this.isBgcImg = false;
       }
+      if (bgc.url==='color'){
+        this.isBgcImg = false;
+        this.isBgcColor = true;
+        this.bgcColor = bgc.backgroundColor;
+      } else{
+        this.isBgcImg = true;
+        this.isBgcColor = false;
+        this.bgcImg = bgc.url;
+        
+      }
+
+      // if (bgc.type==='img'){
+      //   this.isBgcImg = true;
+      //   this.bgcImg = bgc.img;
+      // } else if (bgc.type==='color'){
+      //   this.isBgcColor = true;
+      //   this.bgcColor = bgc.color;
+      // }else{
+      //   this.isBgcImg = false;
+      // }
+      // if (!bgc) this.isBgcImg = false;
+      // this.isBgcImg = false;
+      // else {
+      //   this.isBgcImg = true;
+      //   this.bgcImg = bgc;
+      // }
     });
   },
 };

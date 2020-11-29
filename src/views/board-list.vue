@@ -111,7 +111,8 @@ export default {
 		this.$store.dispatch({
 			type: "loadBoards",
     });
-	eventBusService.$emit('boardBgc', 'desk3.jpg')
+	// eventBusService.$emit('boardBgc', {type: 'img', img:'desk3.jpg'})
+	eventBusService.$emit('boardBgc', {url: 'desk5.jpg'})
 	},
 
 };

@@ -21,11 +21,6 @@
       @addBoardMember="addBoardMember"
       :boardMembers="members"
     />
-    <!-- <ul>
-      <li v-for="member in members" :key="member._id">
-        {{ member.userName }}
-      </li>
-    </ul> -->
     <button @click="toggleActivityLog">activity log</button>
     <!-- <ul v-if="isActivityLog">
       <li v-for="activity in board.activityLog" :key="activity.createdAt">
@@ -57,15 +52,16 @@ export default {
       this.isActivityLog = !this.isActivityLog;
     },
     toggleIsSetting() {
+      console.log('toggle');
       this.isSetting = !this.isSetting;
     },
-    saveBoardSetting(board) {
-      this.boardToEdit = board;
-      this.saveBoard();
+    saveBoardSetting(ev) {
+      this.boardToEdit = ev.board;
+      this.saveBoard(ev.close);
     },
-    saveBoard() {
+    saveBoard(close=true) {
       this.$emit("saveBoard", JSON.parse(JSON.stringify(this.boardToEdit)));
-      this.isSetting = false;
+      if (close) this.isSetting = false;
     },
     removeBoard() {
       this.$emit("removeBoard");

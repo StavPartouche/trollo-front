@@ -1,6 +1,6 @@
 <template>
   <form
-    class="board-setting flex-column .justify-center"
+    class="board-setting flex-column justify-center"
     v-if="boardToEdit"
     @submit.prevent="saveChanges"
     action=""
@@ -21,19 +21,15 @@
       />
     </label>
     <div class="flex center">
-      <p @click="toggleBackground">choose your background:  </p>
-      <div v-if="imgUrl === 'color'"></div>
-      <div v-else class="img-circle">
-        <img
-          @click="toggleBackground"
-          :src="require(`@/styles/assets/board-background-imgs/${imgUrl}`)"
-        />
-      </div>
+      <!-- <p @click="toggleBackground">choose your background:  </p> -->
+      <p>choose your background:</p>
+    <p @click="toggleBackground('color')" title="colors"><i class="fas fa-palette"></i></p>
+    <p @click="toggleBackground('img')" title="photos"><i class="fas fa-image"></i></p>
     </div>
     <board-background
       @saveBoardBgc="saveBoardBgc"
       v-if="isBackground"
-      imgUrl="imgUrl"
+      :type="bgcType"
     />
     <div class="flex center">
       <button title="delete board" @click="removeBoard" type="button">
@@ -46,6 +42,7 @@
 
 <script>
 import boardBackground from "./board-background.cmp";
+import { eventBusService } from '../../services/eventBus.service';
 
 export default {
   name: "board-setting",
@@ -56,17 +53,32 @@ export default {
     return {
       boardToEdit: null,
       isBackground: false,
+      bgcType: null,
     };
   },
   methods: {
-    saveChanges() {
-      this.$emit("saveBoard", this.boardToEdit);
+    saveChanges(close=true) {
+      this.$emit("saveBoard", {board: this.boardToEdit, close});
     },
-    saveBoardBgc(imgUrl) {
-      this.boardToEdit.style.url = imgUrl;
+    saveBoardBgc(bgc) {
+      if (bgc.type === "img") {
+        this.boardToEdit.style.url = bgc.img;
+      } else {
+        this.boardToEdit.style.url = "color";
+        this.boardToEdit.style.backgroundColor = bgc.color;
+      }
+      eventBusService.$emit("boardBgc", this.boardToEdit.style);
+      this.saveChanges(false)
     },
-    toggleBackground() {
-      this.isBackground = !this.isBackground;
+    toggleBackground(type) {
+      if (this.bgcType === null) {
+        this.bgcType = type;
+      }
+      if (this.bgcType === type) {
+        this.isBackground = !this.isBackground;
+      } else {
+        this.bgcType = type;
+      }
     },
     removeBoard() {
       this.$emit("removeBoard");
@@ -74,13 +86,28 @@ export default {
   },
   computed: {
     imgUrl() {
-      return this.boardToEdit.style.url;
+      // if(!this.boardToEdit.style.url) return
+      // else if (this.boardToEdit.style.url==='color'){
+        return 'bgc1.jpg'
+      // }
+      // return this.boardToEdit.style.url;
+    },
+    bgcColor() {
+      // if (this.boardToEdit.style.url==='color'){
+      //   return {
+      //     backgroundColor: `${this.boardToEdit.style.backgroundColor}`
+      //     }
+      // }
+      return {
+          backgroundColor: `#39A7E1`
+      }
     },
   },
   created() {
+    console.log('setting');
     this.boardToEdit = JSON.parse(JSON.stringify(this.board));
     console.log(this.boardToEdit.style.url);
-    document.body.addEventListener('keyup', this.onKeyUp)
+    document.body.addEventListener("keyup", this.onKeyUp);
   },
   components: {
     boardBackground,
