@@ -1,53 +1,57 @@
-.task-popup{
+.task-popup {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
     position: absolute;
     top: 30px;
     right: 175px;
     width: 240px;
     height: 170px;
-    background-color: honeydew;
+    background-color: #efefef;
     border-radius: 10px;
-    border: 1px solid black;
-
-    .task-popup-header{
+    box-shadow: 0px 0px 8px 0px #888888;
+    // border: 1px solid black;
+    .task-popup-header {
         text-align: center;
-        margin-top: 17px;
-        padding-bottom: 17px;
-        border-bottom: 1px solid black;
+        // margin-top: 17px;
+        padding: 15px 0;
+        // border-bottom: 1px solid black;
     }
-
-    .exit-popup-btn{
+    .exit-popup-btn {
         position: absolute;
         top: 0;
         right: 0;
         background-color: transparent;
         color: rgb(149, 177, 174);
     }
-
-    .task-checklist-popup{
-        margin-top: 50px;
+    .task-checklist-popup {
+        margin-top: 5px;
     }
-
-    .task-members-popup{
+    .task-members-popup {
         overflow-y: auto;
         height: 90px;
-
-        li{
+        width: 90%;
+        li {
             cursor: pointer;
-
-            .check{
+            .check {
                 margin-right: 5px;
             }
         }
-        
-        
-        .task-members-popup-member{
+        .task-members-popup-member {
             padding-left: 5px;
             margin-bottom: 5px;
-            h4{
+            h4 {
                 margin: 0;
                 padding-left: 5px;
             }
-
         }
+    }
+}
+
+.task-popup {
+    input {
+        border: 0.5px solid gray
     }
 }
