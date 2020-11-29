@@ -13,7 +13,7 @@
             margin-inline-end: -2px;
         }
     }
-    .lists-container{
+    .lists-container {
         .add-list-btn {
             background-color: #ebecf0;
             min-width: 250px;
@@ -31,82 +31,85 @@
         }
     }
     .lists {
-      display: flex;
-      .list {
-        background-color: #ebecf0;
-        width: 250px;
-        margin: 10px 5px;
-        border-radius: 4px;
-        padding-left: 12px;
-        height: fit-content;
-
-        // .delete-list-btn{
-        //   position: absolute;
-        // }
-        .add-task-btn {
-            background-color: transparent;
-            font-size: rem(16px);
-            padding: 10px 0;
-        }
-        input {
-            background-color: transparent;
-            border: none;
-            border-radius: 0px;
-            border-bottom: gray solid 0.5px;
-        }
-    //     .add-list-btn {
-    //       background-color: #ebecf0;
-    //       min-width: 250px;
-    //       text-align: center;
-    //       height: 30px;
-    //       margin: 10px;
-    //       .fa-plus {
-    //           margin-right: 3px;
-    //           margin-bottom: 1px;
-    //       }
-    //       span {
-    //           font-size: 16px;
-    //           font-weight: bold;
-    //       }
-    //   }
-        .list-header-container{
-          margin-bottom: 5px;
-          margin-top: 5px;
-          
-          .list-header {
-            padding: 5px;
-            font-size: 1rem;
-            margin: 0;
-          }
-        }
-        .task {
-            width: 94%;
-            border-radius: 5px;
-            background-color: #f7f7f7;
-            box-shadow: 0px 1px 1px #888888;
-            padding: 8px;
-            margin-bottom: 10px;
-            cursor: pointer;
-            .task-preview-header{
-                h4{
+        display: flex;
+        .list {
+            background-color: $list-bgc;
+            width: 250px;
+            margin: 10px 5px;
+            border-radius: 4px;
+            padding: 0 12px;
+            // padding-left: 12px;
+            height: fit-content;
+            // .delete-list-btn{
+            //   position: absolute;
+            // }
+            .add-task-btn {
+                background-color: transparent;
+                font-size: rem(16px);
+                padding: 10px 0;
+            }
+            input {
+                background-color: transparent;
+                border: none;
+                border-radius: 0px;
+                border-bottom: gray solid 0.5px;
+            }
+            //     .add-list-btn {
+            //       background-color: #ebecf0;
+            //       min-width: 250px;
+            //       text-align: center;
+            //       height: 30px;
+            //       margin: 10px;
+            //       .fa-plus {
+            //           margin-right: 3px;
+            //           margin-bottom: 1px;
+            //       }
+            //       span {
+            //           font-size: 16px;
+            //           font-weight: bold;
+            //       }
+            //   }
+            .list-header-container {
+                margin-bottom: 5px;
+                margin-top: 5px;
+                // color: #535353;
+                .list-header {
+                    padding: 5px;
+                    font-size: 1rem;
                     margin: 0;
                 }
-                button{
-                    background-color: transparent;
-                    opacity: 0;
+                button {
+                    color: #535353;
                 }
             }
-            &:hover{
-                button{
-                    opacity: 0.7;
-                }    
-            }
-            .preview-img {
-                width: 100%;
-                margin-top: 5px;
+            .task {
+                // width: 94%;
+                border-radius: 5px;
+                background-color: #fdfdfd;
+                box-shadow: 0px 1px 1px #888888;
+                padding: 8px;
+                margin-bottom: 10px;
+                cursor: pointer;
+                .task-preview-header {
+                    h4 {
+                        margin-bottom: 10px;
+                        font-weight: normal;
+                    }
+                    button {
+                        background-color: transparent;
+                        opacity: 0;
+                    }
+                }
+                &:hover {
+                    button {
+                        opacity: 0.7;
+                    }
+                }
+                .preview-img {
+                    width: 100%;
+                    margin-top: 5px;
+                }
             }
         }
-        }
-
     }
 }

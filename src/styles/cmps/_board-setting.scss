@@ -8,9 +8,11 @@
     padding: 10px;
     min-width: 300px;
     font-size: rem(15px);
+    color: #292929d9;
     input {
         border: 0.5px solid rgb(163, 163, 163);
         padding: 2px 0px 5px;
+        color: #292929d9;
     }
     .img-circle {
         cursor: pointer;
@@ -27,7 +29,10 @@
     }
     svg {
         font-size: rem(25px);
-        color: rgb(36, 36, 36);
+        color: #292929d9;
         cursor: pointer;
+    }
+    button {
+        color: #292929d9;
     }
 }

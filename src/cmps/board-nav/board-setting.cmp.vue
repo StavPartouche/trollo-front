@@ -74,7 +74,7 @@ export default {
     },
     toggleBackground(type) {
       console.log('toggle backround');
-      if (this.bgcType === null) {
+      if ( !this.isBackground) {
         this.bgcType = type;
       }
       if (this.bgcType === type) {

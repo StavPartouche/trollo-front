@@ -40,6 +40,10 @@
     justify-content: flex-end;
 }
 
+.justify-start {
+    justify-content: flex-start;
+}
+
 .img-circle {
     @include aspect-ratio(100, 100);
     border-radius: 50%;
