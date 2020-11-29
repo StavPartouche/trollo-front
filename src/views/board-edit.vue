@@ -86,7 +86,6 @@ export default {
 				bar: {
 					onlyShowBarOnScroll: false,
 					keepShow: true,
-					background: 'aliceblue',
 					size: '15px',
 					opacity: '0.7',
 					minSize: 0,
@@ -129,7 +128,7 @@ export default {
 			var comment = {
 				txt: commentTxt,
 				createdAt: Date.now(),
-				creator: this.$store.getters.loggedInUser ? this.$store.getters.loggedInUser.fullName : "Guest"
+				creator: this.$store.getters.loggedInUser ? this.$store.getters.loggedInUser.fullName : {fullName: "Guest" }
       };
       this.currTask.comments.push(comment);
       this.updateBoard();
@@ -269,7 +268,7 @@ export default {
     console.log(board.members);
     this.board = JSON.parse(JSON.stringify(board));
     eventBusService.$emit("boardBgc", this.board.style.url);
-    // this.currTask = this.board.lists[0].tasks[0]
+    this.currTask = this.board.lists[0].tasks[0]
   },
 };
 </script>

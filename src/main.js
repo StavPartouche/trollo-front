@@ -20,6 +20,9 @@ Vue.use(vuescroll, {
       mode: 'native',
       easing: 'easeInOutQuad',
       wheelScrollDuration: 600,
+    },
+    bar: {
+      background: 'rgb(128, 132, 136)'
     }
   }
 });
