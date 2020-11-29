@@ -22,9 +22,9 @@
     </label>
     <div class="flex center">
       <!-- <p @click="toggleBackground">choose your background:  </p> -->
-      <p>choose your background:</p>
-    <p @click="toggleBackground('color')" title="colors"><i class="fas fa-palette"></i></p>
-    <p @click="toggleBackground('img')" title="photos"><i class="fas fa-image"></i></p>
+      <p>Choose your background:</p>
+    <button type="button" @click.stop="toggleBackground('color')" title="colors"><i class="fas fa-palette"></i></button>
+    <button type="button" @click.stop="toggleBackground('img')" title="photos"><i class="fas fa-image"></i></button>
     </div>
     <board-background
       @saveBoardBgc="saveBoardBgc"
@@ -58,6 +58,7 @@ export default {
   },
   methods: {
     saveChanges(close=true) {
+      console.log('saveChanges');
       this.$emit("saveBoard", {board: this.boardToEdit, close});
     },
     saveBoardBgc(bgc) {
@@ -68,9 +69,11 @@ export default {
         this.boardToEdit.style.backgroundColor = bgc.color;
       }
       eventBusService.$emit("boardBgc", this.boardToEdit.style);
+      console.log('save board bgc');
       this.saveChanges(false)
     },
     toggleBackground(type) {
+      console.log('toggle backround');
       if (this.bgcType === null) {
         this.bgcType = type;
       }
@@ -79,35 +82,17 @@ export default {
       } else {
         this.bgcType = type;
       }
+      console.log((this.isBackground));
     },
     removeBoard() {
       this.$emit("removeBoard");
     },
   },
   computed: {
-    imgUrl() {
-      // if(!this.boardToEdit.style.url) return
-      // else if (this.boardToEdit.style.url==='color'){
-        return 'bgc1.jpg'
-      // }
-      // return this.boardToEdit.style.url;
-    },
-    bgcColor() {
-      // if (this.boardToEdit.style.url==='color'){
-      //   return {
-      //     backgroundColor: `${this.boardToEdit.style.backgroundColor}`
-      //     }
-      // }
-      return {
-          backgroundColor: `#39A7E1`
-      }
-    },
   },
   created() {
-    console.log('setting');
     this.boardToEdit = JSON.parse(JSON.stringify(this.board));
     console.log(this.boardToEdit.style.url);
-    document.body.addEventListener("keyup", this.onKeyUp);
   },
   components: {
     boardBackground,

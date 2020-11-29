@@ -27,6 +27,9 @@
     .user-card-container {
         position: relative;
         .user-card {
+            p {
+                margin: 0px;
+            }
             position: absolute;
             border-radius: 3px;
             z-index: 1;

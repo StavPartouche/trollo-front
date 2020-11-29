@@ -52,7 +52,6 @@ export default {
       this.isActivityLog = !this.isActivityLog;
     },
     toggleIsSetting() {
-      console.log('toggle');
       this.isSetting = !this.isSetting;
     },
     saveBoardSetting(ev) {
@@ -84,7 +83,6 @@ export default {
     boardMember,
   },
   created() {
-    console.log(this.board);
     this.boardToEdit = JSON.parse(JSON.stringify(this.board));
      document.body.addEventListener('keyup', this.onKeyUp)
   },
