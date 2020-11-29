@@ -15,10 +15,13 @@
 				/>
 				<br /> -->
 				<input
-					type="text"
+					:type="passwordType"
 					v-model="loginCred.password"
 					placeholder="Password"
 				/>
+				<button ref="passwordBtn" type="button" class="password-btn" @click="togglePassword">
+					<i  class="far fa-eye"></i>
+				</button>
 				<br />
 				<button>Login</button>
                 <h5 class="login-signup-txt">Not a user? <a href="#" @click="toggleLogin">Sign Up</a></h5>
@@ -38,10 +41,13 @@
 				/>
 				<br />
 				<input
-					type="text"
+					:type="passwordType"
 					v-model="signupCred.password"
 					placeholder="Password"
 				/>
+				<button ref="passwordBtn" type="button" class="password-btn" @click="togglePassword">
+					<i  class="far fa-eye"></i>
+				</button>
 				<br />
 				<!-- <input
 					type="text"
@@ -75,7 +81,8 @@ export default {
 			msg: '',
             userToEdit: {},
             isLoading: false,
-            isLogin: true
+			isLogin: true,
+			passwordType: 'password',
 		};
 	},
 	computed: {
@@ -84,7 +91,7 @@ export default {
 		},
 		loggedinUser() {
 			return this.$store.getters.loggedinUser;
-		}
+		},
 	},
 	created() {
 		console.log('this.loggedinUser', this.loggedinUser);
@@ -122,7 +129,12 @@ export default {
         },
         toggleLogin() {
             this.isLogin = !this.isLogin;
-        }
+		},
+		togglePassword() {
+			this.passwordType = (this.passwordType === 'password') ? 'text' : 'password';
+			const passwordClass = (this.passwordType === 'password') ? 'fa-eye' : 'fa-eye-slash';
+			this.$refs.passwordBtn.innerHTML = `<i  class="far ${passwordClass}"></i>`;
+		}
 	},
 	watch: {
 		loggedinUser() {

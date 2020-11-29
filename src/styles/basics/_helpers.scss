@@ -78,8 +78,14 @@
     border-radius: 50%;
 }
 
-.tilt {
-    // transform: rotate(20deg);
-    // transition: .25s;
+.ghost {
     // background-color: crimson;
+    @apply --tilt;
+}
+
+:root {
+    --tilt: {
+        transform: rotate(20deg);
+        transition: .25s;
+    }
 }
