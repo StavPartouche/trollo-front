@@ -1,10 +1,10 @@
 <template>
   <div>
-    <h3>Check Lists</h3>
+    <h3 v-if="checkLists.length">CheckLists</h3>
     <ul>
       <li v-for="(checkList, checkListIdx) in checkLists" :key="checkListIdx">
         <checkList :checkList="checkList" :checkListIdx="checkListIdx" 
-          @addItem="addItem" @removeItem="removeItem" @toggleCheck="toggleCheck"/>
+          @addItem="addItem" @removeItem="removeItem" @toggleCheck="toggleCheck" @removeCheckList="removeCheckList"/>
       </li>
     </ul>
   </div>
@@ -37,6 +37,9 @@ export default {
       },
       toggleCheck(idxs){
         this.$emit("toggleCheck", idxs)
+      },
+      removeCheckList(idx){
+        this.$emit('removeCheckList', idx)
       }
   },
   components:{

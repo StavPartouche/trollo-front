@@ -35,6 +35,7 @@
             </div>
             <taskDetailsAttachments
               :attachments="task.attachments"
+              :previewImg="task.previewImg"
               @removeAttachment="removeAttachment"
               @setPreviewImg="setPreviewImg"
               @removePreviewImg="removePreviewImg"
@@ -44,6 +45,7 @@
               @addItem="addItem"
               @removeItem="removeItem"
               @toggleCheck="toggleCheck"
+			  @removeCheckList="removeCheckList"
             />
             <taskDetailsComments
               :comments="task.comments"
@@ -130,6 +132,9 @@ export default {
     };
   },
   methods: {
+	  removeCheckList(idx){
+		  this.$emit('removeCheckList', idx)
+	  },
     removePreviewImg() {
       this.$emit("removePreviewImg");
     },

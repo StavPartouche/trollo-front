@@ -1,7 +1,7 @@
 <template>
-	<div>
+	<div v-if="attachments.length">
         <h3>Attachments</h3>
-        <button @click="removePreviewImg">remove preview img</button>
+        <button v-if="previewImg" @click="removePreviewImg">remove preview img</button>
         <ul class="flex warp" v-if="attachments">
             <li v-for="(attachment, idx) in attachments" :key="idx">
                 <img :src="attachment" class="img-attachments">
@@ -17,7 +17,8 @@
 export default {
     name: 'task-details-attachments',
     props:{
-        attachments: Array
+        attachments: Array,
+        previewImg: String
     },
 	data() {
 		return {
@@ -34,6 +35,6 @@ export default {
         removePreviewImg(){
             this.$emit('removePreviewImg')
         }
-	}
+    }
 }
 </script>

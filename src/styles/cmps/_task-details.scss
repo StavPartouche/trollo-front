@@ -89,7 +89,11 @@
         .side-bar-btn {
           width: 100%;
           margin-bottom: 5px;
-          background-color: rgb(146, 132, 132);
+          border: 1px solid #808488;
+          color: #808488;
+          font-weight: bold;
+          background-color: transparent;
+          font-size: 0.9rem;
         }
         .add-attachments-input {
           position: absolute;

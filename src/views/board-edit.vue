@@ -55,6 +55,7 @@
       @setPreviewImg="setPreviewImg"
       @removePreviewImg="removePreviewImg"
       @addComment="addComment"
+      @removeCheckList="removeCheckList"
     />
   </div>
 </template>
@@ -95,6 +96,10 @@ export default {
 		};
 	},
 	methods: {
+    removeCheckList(idx){
+      this.currTask.checkLists.splice(idx, 1)
+      this.updateBoard();
+    },
 		updateListName(updates) {
 			this.board.lists[updates.listIdx].name = updates.newName;
 			this.updateBoard();

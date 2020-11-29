@@ -1,12 +1,13 @@
 <template>
   <div class="task-details-comments">
+    <h3>Comments</h3>
     <div class="flex comment align-center" v-for="(comment, idx) in comments" :key="idx">
       <user-avatar :user="comment.creator"></user-avatar>
       <h4 class="comment-creator">{{ comment.creator.fullName }}: </h4>
       <p class="comment-txt">{{ comment.txt }}</p>
     </div>
       <form @submit.prevent="addComment">
-          <input class="comment-input" type="text" placeholder="Comment" v-model="commentTxt">
+          <input class="comment-input" type="text" placeholder="Write a comment" v-model="commentTxt">
           <button>Send</button>
       </form>
   </div>
@@ -38,9 +39,6 @@ export default {
   },
   components:{
     userAvatar
-  },
-  created(){
-    console.log(this.comments);
   }
 };
 </script>
