@@ -30,7 +30,6 @@
                 :members="members"
                 @removeList="removeList"
                 @openTask="openTask"
-                @removeTask="removeTask"
                 @addTask="addTask"
                 @updateList="updateBoard"
                 @updateListName="updateListName"
@@ -48,6 +47,7 @@
       :task="currTask"
       :activites="board.activities"
       :members="members"
+      :labels="board.labels"
       @toggleCheck="toggleCheck"
       @addItem="addItem"
       @updateTask="updateTask"
@@ -58,6 +58,9 @@
       @removePreviewImg="removePreviewImg"
       @addComment="addComment"
       @removeCheckList="removeCheckList"
+      @toggleLabel="toggleLabel"
+      @setTaskColor="setTaskColor"
+      @removeTask="removeTask"
     />
   </div>
 </template>
@@ -98,6 +101,22 @@ export default {
 		};
 	},
 	methods: {
+    removeTask(){
+      this.board.lists[this.currListIdx].tasks.splice(this.currTaskIdx, 1)
+      this.currTask = null
+      this.updateBoard();
+    },
+    setTaskColor(bgc){
+      this.currTask.backgroundColor = bgc
+      console.log('this.currTask.backgroundColor',this.currTask.backgroundColor);
+      this.updateBoard();
+    },
+    toggleLabel(label){
+      const idx = this.currTask.labels.findIndex(currLabel => currLabel.backgroundColor === label.backgroundColor)
+      if(idx === -1) this.currTask.labels.push(label)
+      else this.currTask.labels.splice(idx, 1)
+      this.updateBoard();
+    },
     removeCheckList(idx){
       this.currTask.checkLists.splice(idx, 1)
       this.updateBoard();
@@ -150,10 +169,6 @@ export default {
       var newTask = boardService.getEmptyTask();
       newTask.name = updates.title;
       this.board.lists[updates.listIdx].tasks.push(newTask);
-      this.updateBoard();
-    },
-    removeTask(idxs) {
-      this.board.lists[idxs.listIdx].tasks.splice(idxs.taskIdx, 1);
       this.updateBoard();
     },
     closeDetails() {

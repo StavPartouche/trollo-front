@@ -41,7 +41,14 @@ function getEmptyBoard(userId = 'guest') {
     return {
         name: '',
         members: [userId],
-        labels: [],
+        labels: [
+            {backgroundColor: 'rgb(97, 189, 79)', txt: 'Entertainment'},
+            {backgroundColor: 'rgb(242, 214, 0)', txt: 'Extras'},
+            {backgroundColor: 'rgb(255, 159, 26)', txt: 'First priority'},
+            {backgroundColor: 'rgb(235, 90, 70)', txt: 'Must Have'},
+            {backgroundColor: 'rgb(195, 119, 224', txt: 'Pending'},
+            {backgroundColor: 'rgb(0, 121, 191)', txt: 'Expensive'}
+    ],
         style: { backgroundColor: '', url: 'bgc1.jpg' },
         creator: userId,
         dueDate: '',
