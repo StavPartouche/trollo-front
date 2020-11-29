@@ -10,7 +10,7 @@
 		</h2>
 		<button @click="removeList(listIdx)">Delete List</button>
 		<ul>
-			<draggable :list="list.tasks" group="tasks" @sort="emitUpdateList">
+			<draggable :list="list.tasks" group="tasks" :move="tiltCard" v-bind="dragOptions" @sort="emitUpdateList">
 				<li
 					class="task"
 					v-for="(task, taskIdx) in list.tasks"
@@ -93,7 +93,8 @@ export default {
 				taskIdx
 			});
 		},
-		addTask(listIdx, itemTxt) {
+		addTask(listIdx, itemTxt
+		) {
 			if (itemTxt === '') {
 				this.toggleAdd();
 				return;
@@ -109,7 +110,23 @@ export default {
 		},
 		emitUpdateList() {
 			this.$emit('updateList', this.list);
+		},
+		tiltCard(ev) {
+			// console.log(ev)
+			// console.log(ev.dragged)
+			// ev.dragged.classList.add('tilt');
+			// ev.item.classList.toggle('tilt');
 		}
+	},
+	computed: {
+		dragOptions() {
+      return {
+        animation: 300,
+        group: 'tasks',
+        disabled: false,
+		ghostClass: 'ghost',
+      };
+    }
 	},
 	components: {
 		draggable,

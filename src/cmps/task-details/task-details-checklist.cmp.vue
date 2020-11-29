@@ -1,6 +1,7 @@
 <template>
 	<div class="task-details-checklist">
       <h4>{{ checkList.title }}</h4>
+      <button @click="removeCheckList">DeleteCheckList</button>
       <el-progress :text-inside="true" :stroke-width="17" :percentage="donePercent" :color="doneColor"></el-progress>
       <ul>
         <li v-for="(item, itemIdx) in checkList.items" :key="itemIdx">
@@ -62,6 +63,9 @@ export default {
                 checkListIdx,
                 itemIdx
             })
+        },
+        removeCheckList(){
+            this.$emit('removeCheckList', this.checkListIdx)
         }
     },
     computed:{

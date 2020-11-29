@@ -1,18 +1,22 @@
 <template>
   <div class="task-details-comments">
     <h3>Comments</h3>
-    <div v-for="(comment, idx) in comments" :key="idx">
-      <h4>By: {{ comment.creator }}</h4>
-      <p>{{ comment.txt }}</p>
+    <div class="flex comment align-center" v-for="(comment, idx) in comments" :key="idx">
+      <user-avatar :user="comment.creator"></user-avatar>
+      <h4 class="comment-creator">{{ comment.creator.fullName }}: </h4>
+      <p class="comment-txt">{{ comment.txt }}</p>
     </div>
       <form @submit.prevent="addComment">
-          <input type="text" placeholder="Comment" v-model="commentTxt">
+          <input class="comment-input" type="text" placeholder="Write a comment" v-model="commentTxt">
           <button>Send</button>
       </form>
   </div>
 </template>
 
 <script>
+
+import userAvatar from "../user-avatar.cmp";
+
 export default {
   name: "task-details-comments",
   props: {
@@ -30,9 +34,11 @@ export default {
           this.commentTxt = ''
       }
   },
-  computed: {},
-  created(){
+  computed: {
 
+  },
+  components:{
+    userAvatar
   }
 };
 </script>

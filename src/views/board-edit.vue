@@ -15,6 +15,7 @@
           <draggable
             class="flex"
             :list="board.lists"
+            v-bind="dragOptions"
             group="lists"
             @sort="updateBoard"
           >
@@ -56,6 +57,7 @@
       @setPreviewImg="setPreviewImg"
       @removePreviewImg="removePreviewImg"
       @addComment="addComment"
+      @removeCheckList="removeCheckList"
     />
   </div>
 </template>
@@ -70,70 +72,71 @@ import { eventBusService } from "../services/eventBus.service";
 import draggable from "vuedraggable";
 
 export default {
-  name: "board-edit",
-  data() {
-    return {
-      board: null,
-      members: [],
-      currTask: null,
-      currListIdx: null,
-      currTaskIdx: null,
-      ops: {
-        scrollPanel: {},
-        rail: {
-          background: "rgba(0, 0, 0, 0.404)",
-          size: "20px",
-          opacity: "0.1",
-        },
-        bar: {
-          onlyShowBarOnScroll: false,
-          keepShow: true,
-          background: "aliceblue",
-          size: "15px",
-          opacity: "0.7",
-          minSize: 0,
-        },
-      },
-    };
-  },
-  methods: {
-    updateListName(updates) {
-      this.board.lists[updates.listIdx].name = updates.newName;
+	name: "board-edit",
+	data() {
+		return {
+			board: null,
+			members: [],
+			currTask: null,
+			currListIdx: null,
+			currTaskIdx: null,
+			ops: {
+				scrollPanel: {},
+				rail: {
+					background: 'rgba(0, 0, 0, 0.404)',
+					size: '20px',
+					opacity: '0.1',
+				},
+				bar: {
+					onlyShowBarOnScroll: false,
+					keepShow: true,
+					size: '15px',
+					opacity: '0.7',
+					minSize: 0,
+				},
+			}
+		};
+	},
+	methods: {
+    removeCheckList(idx){
+      this.currTask.checkLists.splice(idx, 1)
       this.updateBoard();
     },
-    removePreviewImg() {
-      this.currTask.previewImg = "";
-      this.updateBoard();
-    },
-    setPreviewImg(idx) {
-      this.currTask.previewImg = this.currTask.attachments[idx];
-      this.updateBoard();
-    },
-    removeAttachment(idx) {
-      this.currTask.attachments.splice(idx, 1);
-      this.updateBoard();
-    },
-    addList() {
-      var newList = boardService.getEmptyList();
-      newList.name = prompt("Enter List name");
-      if (!newList.name) return;
-      this.board.lists.push(newList);
-      this.updateBoard();
-    },
-    removeList(listIdx) {
-      const confirmRemove = confirm("sure?");
-      if (confirmRemove) {
-        this.board.lists.splice(listIdx, 1);
-        this.updateBoard();
-      }
-    },
-    addComment(commentTxt) {
-      var comment = {
-        txt: commentTxt,
-        createdAt: Date.now(),
-        creator: this.$store.getters.loggedInUser
-          ? this.$store.getters.loggedInUser.fullName
-          : "Guest",
+		updateListName(updates) {
+			this.board.lists[updates.listIdx].name = updates.newName;
+			this.updateBoard();
+		},
+		removePreviewImg() {
+			this.currTask.previewImg = '';
+			this.updateBoard();
+		},
+		setPreviewImg(idx) {
+			this.currTask.previewImg = this.currTask.attachments[idx];
+			this.updateBoard();
+		},
+		removeAttachment(idx) {
+			this.currTask.attachments.splice(idx, 1);
+			this.updateBoard();
+		},
+		addList() {
+			var newList = boardService.getEmptyList();
+			newList.name = prompt("Enter List name");
+			if (!newList.name) return;
+			this.board.lists.push(newList);
+			this.updateBoard();
+		},
+		removeList(listIdx) {
+			const confirmRemove = confirm("sure?");
+			if (confirmRemove) {
+				this.board.lists.splice(listIdx, 1);
+				this.updateBoard();
+			}
+		},
+		addComment(commentTxt) {
+			var comment = {
+				txt: commentTxt,
+				createdAt: Date.now(),
+				creator: this.$store.getters.loggedInUser ? this.$store.getters.loggedInUser.fullName : {fullName: "Guest" }
       };
       this.currTask.comments.push(comment);
       this.updateBoard();
@@ -255,6 +258,14 @@ export default {
     lists() {
       return this.board.lists;
     },
+    dragOptions() {
+      return {
+        animation: 200,
+        group: "lists",
+        disabled: false,
+        ghostClass: "ghost"
+      };
+    }
   },
   components: {
     boardNav,
@@ -273,10 +284,8 @@ export default {
     });
     console.log(board.members);
     this.board = JSON.parse(JSON.stringify(board));
-    eventBusService.$emit("boardBgc", this.board.style);
-
-    // eventBusService.$emit("boardBgc", {type: 'img', img:this.board.style.url});
-    // this.currTask = this.board.lists[0].tasks[0]
+    eventBusService.$emit("boardBgc", this.board.style.url);
+    this.currTask = this.board.lists[0].tasks[0]
   },
 };
 </script>
