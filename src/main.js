@@ -15,20 +15,20 @@ import './styles/styles.scss';
 Vue.config.productionTip = false;
 Vue.use(ElementUI);
 Vue.use(vuescroll, {
-  ops: {
-    vuescroll: {
-      mode: 'native',
-      easing: 'easeInOutQuad',
-      wheelScrollDuration: 600,
-    },
-    bar: {
-      background: 'rgb(128, 132, 136)'
+    ops: {
+        vuescroll: {
+            mode: 'native',
+            easing: 'easeInOutQuad',
+            wheelScrollDuration: 600,
+        },
+        bar: {
+            background: 'rgb(136, 136, 136)'
+        }
     }
-  }
 });
 
 new Vue({
-  router,
-  store,
-  render: h => h(app)
+    router,
+    store,
+    render: h => h(app)
 }).$mount('#app');
