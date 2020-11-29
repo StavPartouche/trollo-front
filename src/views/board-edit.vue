@@ -10,7 +10,7 @@
       :members="members"
     ></board-nav>
     <vue-scroll class="vuescroll" :ops="ops">
-      <div class="lists-container">
+      <div class="lists-container flex">
         <ul class="lists" v-if="board">
           <draggable
             class="flex"
