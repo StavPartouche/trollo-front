@@ -126,7 +126,7 @@ export default {
 			ops: {
 				scrollPanel: {},
 				rail: {
-          background: '#92848421',
+          			background: '#92848421',
 					size: '20px',
 					opacity: 0.1,
 				},

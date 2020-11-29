@@ -15,6 +15,7 @@
           <draggable
             class="flex"
             :list="board.lists"
+            v-bind="dragOptions"
             group="lists"
             @sort="updateBoard"
           >
@@ -250,6 +251,14 @@ export default {
     lists() {
       return this.board.lists;
     },
+    dragOptions() {
+      return {
+        animation: 200,
+        group: "lists",
+        disabled: false,
+        ghostClass: "ghost"
+      };
+    }
   },
   components: {
     boardNav,
