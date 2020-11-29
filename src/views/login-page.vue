@@ -19,12 +19,19 @@
 					v-model="loginCred.password"
 					placeholder="Password"
 				/>
-				<button ref="passwordBtn" type="button" class="password-btn" @click="togglePassword">
-					<i  class="far fa-eye"></i>
+				<button
+					ref="passwordBtn"
+					type="button"
+					class="password-btn"
+					@click="togglePassword"
+				>
+					<i class="far fa-eye"></i>
 				</button>
 				<br />
 				<button>Login</button>
-                <h5 class="login-signup-txt">Not a user? <a href="#" @click="toggleLogin">Sign Up</a></h5>
+				<h5 class="login-signup-txt">
+					Not a user? <a href="#" @click="toggleLogin">Sign Up</a>
+				</h5>
 			</form>
 
 			<form @submit.prevent="doSignup" v-else v-show="!isLoading">
@@ -45,8 +52,13 @@
 					v-model="signupCred.password"
 					placeholder="Password"
 				/>
-				<button ref="passwordBtn" type="button" class="password-btn" @click="togglePassword">
-					<i  class="far fa-eye"></i>
+				<button
+					ref="passwordBtn"
+					type="button"
+					class="password-btn"
+					@click="togglePassword"
+				>
+					<i class="far fa-eye"></i>
 				</button>
 				<br />
 				<!-- <input
@@ -59,11 +71,14 @@
 					Image:
 					<input type="file" @change="onUploadImg" />
 				</label>
+				<user-avatar v-if="signupCred.imgUrl" :width="80" :user="{imgUrl: signupCred.imgUrl}"></user-avatar>
 				<br />
-				<button :disabled="isLoading">Signup</button>
-                <h5 class="login-signup-txt">Already a user? <a href="#" @click="toggleLogin">Login</a></h5>
+				<button>Signup</button>
+				<h5 class="login-signup-txt">
+					Already a user? <a href="#" @click="toggleLogin">Login</a>
+				</h5>
 			</form>
-				<img v-if="isLoading" src="@/styles/assets/loading.gif" />
+			<img v-if="isLoading" src="@/styles/assets/loading.gif" />
 		</div>
 		<hr />
 	</section>
@@ -71,6 +86,7 @@
 
 <script>
 import { uploadImg } from '@/services/img-upload.service.js';
+import userAvatar from '../cmps/user-avatar.cmp';
 
 export default {
 	name: 'login-page',
@@ -79,8 +95,8 @@ export default {
 			loginCred: {},
 			signupCred: {},
 			msg: '',
-            userToEdit: {},
-            isLoading: false,
+			userToEdit: {},
+			isLoading: false,
 			isLogin: true,
 			passwordType: 'password',
 		};
@@ -101,16 +117,16 @@ export default {
 			const cred = this.loginCred;
 			if (!cred.userName || !cred.password) return this.msg = 'Please enter userName/password';
 			await this.$store.dispatch({ type: 'login', userCred: cred });
-            this.loginCred = {};
-            this.$router.push('/board');
+			this.loginCred = {};
+			this.$router.push('/board');
 		},
 		doSignup() {
 			const cred = this.signupCred;
-            if (!cred.imgUrl) cred.imgUrl = '';
+			if (!cred.imgUrl) cred.imgUrl = '';
 			if (!cred.userName || !cred.fullName || !cred.password) return this.msg = 'Please fill up the form';
 			this.$store.dispatch({ type: 'signup', userCred: cred });
-            this.signupCred = {};
-            this.$router.push('/board');
+			this.signupCred = {};
+			this.$router.push('/board');
 		},
 		getAllUsers() {
 			this.$store.dispatch({ type: 'loadUsers' });
@@ -120,15 +136,15 @@ export default {
 		},
 		updateUser() {
 			this.$store.dispatch({ type: 'updateUser', user: this.userToEdit });
-        },
-        async onUploadImg(ev) {
+		},
+		async onUploadImg(ev) {
 			this.isLoading = true;
 			const res = await uploadImg(ev);
 			this.signupCred.imgUrl = res.url;
 			this.isLoading = false;
-        },
-        toggleLogin() {
-            this.isLogin = !this.isLogin;
+		},
+		toggleLogin() {
+			this.isLogin = !this.isLogin;
 		},
 		togglePassword() {
 			this.passwordType = (this.passwordType === 'password') ? 'text' : 'password';
@@ -140,6 +156,9 @@ export default {
 		loggedinUser() {
 			this.userToEdit = { ...this.loggedinUser };
 		}
+	},
+	components: {
+		userAvatar
 	}
 }
 </script>
