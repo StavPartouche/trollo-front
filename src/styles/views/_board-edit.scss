@@ -87,9 +87,23 @@
             padding: 8px;
             margin-bottom: 10px;
             cursor: pointer;
-            .task-header {}
+            .task-preview-header{
+                h4{
+                    margin: 0;
+                }
+                button{
+                    background-color: transparent;
+                    opacity: 0;
+                }
+            }
+            &:hover{
+                button{
+                    opacity: 0.7;
+                }    
+            }
             .preview-img {
                 width: 100%;
+                margin-top: 5px;
             }
         }
         }

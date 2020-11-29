@@ -19,7 +19,12 @@
 					:key="taskIdx"
 					@click="openTask(listIdx, taskIdx)"
 				>
-					<h4 class="task-header">{{ task.name }}</h4>
+					<div class="task-preview-header flex align-center justify-space-between">
+						<h4>{{ task.name }}</h4>
+						<button class="delete-task-btn" @click.stop="removeTask(listIdx, taskIdx)">
+							<i class="far fa-trash-alt"></i>
+						</button>
+					</div>
 					<img
 						class="preview-img"
 						v-if="task.previewImg"
@@ -36,9 +41,6 @@
 							/> -->
 						</li>
 					</ul>
-					<button @click.stop="removeTask(listIdx, taskIdx)">
-						Delete Task
-					</button>
 				</li>
 			</draggable>
 		</ul>
