@@ -1,0 +1,23 @@
+.board-menu {
+    z-index: 1;
+    position: fixed;
+    right: 0;
+    // top: 70px;
+    // padding-top: $board-nav-height;
+    width: 250px;
+    flex: 1;
+    // height: -webkit-calc(100% - 70px);
+    height: 100%;
+    background-color: $task-details-bgc;
+    .menu-btn {
+        cursor: pointer;
+    }
+}
+
+.img-circle {
+    cursor: pointer;
+    width: 30px;
+    img {
+        width: 30px;
+    }
+}

@@ -1,8 +1,12 @@
 .board-nav {
+    position: relative;
     padding: 10px;
-    height: 40px;
+    height: $board-nav-height;
     background-color: rgba(255, 255, 255, 0.548);
     color: #292929d9;
+    .open-menu-btn {
+        z-index: 2;
+    }
     h2 {
         margin-bottom: 5px
     }

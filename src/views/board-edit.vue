@@ -1,14 +1,25 @@
 <template>
   <div class="board-edit flex-column">
     <board-nav
+      @toggleMenu="isMenu = $event"
       @removeBoardMember="removeBoardMember"
       @addBoardMember="addBoardMember"
-      @removeBoard="removeBoard"
       @saveBoard="saveBoardSettings"
       v-if="board"
-      :board="board"
+      :name="board.name"
       :members="members"
     ></board-nav>
+    <board-menu
+      v-if="isMenu"
+      @removeBoard="removeBoard"
+      @saveBoardBgc="saveBoardBgc"
+      @changeName="changeName"
+      @changeDesc="changeDesc"
+      @changeDueDate="changeDueDate"
+      :name="board.name"
+      :description="board.description"
+      :dueDate="board.dueDate"
+    ></board-menu>
     <vue-scroll class="vuescroll" :ops="ops">
       <div class="lists-container flex">
         <ul class="lists" v-if="board">
@@ -66,77 +77,81 @@
 import { boardService } from "../services/board.service.js";
 import { userService } from "../services/user.service.js";
 import boardNav from "../cmps/board-nav/board-nav.cmp";
+import boardMenu from "../cmps/board-menu/board-menu.cmp";
 import taskDetails from "../cmps/task-details/task-details.cmp";
 import list from "../cmps/list.cmp";
 import { eventBusService } from "../services/eventBus.service";
 import draggable from "vuedraggable";
 
 export default {
-	name: "board-edit",
-	data() {
-		return {
-			board: null,
-			members: [],
-			currTask: null,
-			currListIdx: null,
-			currTaskIdx: null,
-			ops: {
-				scrollPanel: {},
-				rail: {
-					background: 'rgba(0, 0, 0, 0.404)',
-					size: '20px',
-					opacity: '0.1',
-				},
-				bar: {
-					onlyShowBarOnScroll: false,
-					keepShow: true,
-					size: '15px',
-					opacity: '0.7',
-					minSize: 0,
-				},
-			}
-		};
-	},
-	methods: {
-    removeCheckList(idx){
-      this.currTask.checkLists.splice(idx, 1)
+  name: "board-edit",
+  data() {
+    return {
+      board: null,
+      members: [],
+      currTask: null,
+      currListIdx: null,
+      currTaskIdx: null,
+      ops: {
+        scrollPanel: {},
+        rail: {
+          background: "rgba(0, 0, 0, 0.404)",
+          size: "20px",
+          opacity: "0.1",
+        },
+        bar: {
+          onlyShowBarOnScroll: false,
+          keepShow: true,
+          size: "15px",
+          opacity: "0.7",
+          minSize: 0,
+        },
+      },
+      isMenu: false,
+    };
+  },
+  methods: {
+    removeCheckList(idx) {
+      this.currTask.checkLists.splice(idx, 1);
       this.updateBoard();
     },
-		updateListName(updates) {
-			this.board.lists[updates.listIdx].name = updates.newName;
-			this.updateBoard();
-		},
-		removePreviewImg() {
-			this.currTask.previewImg = '';
-			this.updateBoard();
-		},
-		setPreviewImg(idx) {
-			this.currTask.previewImg = this.currTask.attachments[idx];
-			this.updateBoard();
-		},
-		removeAttachment(idx) {
-			this.currTask.attachments.splice(idx, 1);
-			this.updateBoard();
-		},
-		addList() {
-			var newList = boardService.getEmptyList();
-			newList.name = prompt("Enter List name");
-			if (!newList.name) return;
-			this.board.lists.push(newList);
-			this.updateBoard();
-		},
-		removeList(listIdx) {
-			const confirmRemove = confirm("sure?");
-			if (confirmRemove) {
-				this.board.lists.splice(listIdx, 1);
-				this.updateBoard();
-			}
-		},
-		addComment(commentTxt) {
-			var comment = {
-				txt: commentTxt,
-				createdAt: Date.now(),
-				creator: this.$store.getters.loggedInUser ? this.$store.getters.loggedInUser.fullName : {fullName: "Guest" }
+    updateListName(updates) {
+      this.board.lists[updates.listIdx].name = updates.newName;
+      this.updateBoard();
+    },
+    removePreviewImg() {
+      this.currTask.previewImg = "";
+      this.updateBoard();
+    },
+    setPreviewImg(idx) {
+      this.currTask.previewImg = this.currTask.attachments[idx];
+      this.updateBoard();
+    },
+    removeAttachment(idx) {
+      this.currTask.attachments.splice(idx, 1);
+      this.updateBoard();
+    },
+    addList() {
+      var newList = boardService.getEmptyList();
+      newList.name = prompt("Enter List name");
+      if (!newList.name) return;
+      this.board.lists.push(newList);
+      this.updateBoard();
+    },
+    removeList(listIdx) {
+      const confirmRemove = confirm("sure?");
+      if (confirmRemove) {
+        this.board.lists.splice(listIdx, 1);
+        this.updateBoard();
+      }
+    },
+    addComment(commentTxt) {
+      var comment = {
+        txt: commentTxt,
+        createdAt: Date.now(),
+        creator: this.$store.getters.loggedInUser
+          ? this.$store.getters.loggedInUser.fullName
+          : { fullName: "Guest" },
       };
       this.currTask.comments.push(comment);
       this.updateBoard();
@@ -253,6 +268,31 @@ export default {
       idx = this.members.findIndex((member) => member._id === memberId);
       this.members.splice(idx, 1);
     },
+    changeName(name) {
+      this.board.name = name;
+      this.updateBoard();
+    },
+    changeDesc(desc) {
+      console.log("desc");
+      this.board.description = desc;
+      this.updateBoard();
+    },
+    changeDueDate(dueDate) {
+      console.log("due");
+      this.board.dueDate = dueDate;
+      this.updateBoard();
+    },
+    saveBoardBgc(bgc) {
+      if (bgc.type === "img") {
+        this.board.style.url = bgc.img;
+      } else {
+        this.board.style.url = "color";
+        this.board.style.backgroundColor = bgc.color;
+      }
+      eventBusService.$emit("boardBgc", this.board.style);
+      console.log("save board bgc");
+      this.updateBoard();
+    },
   },
   computed: {
     lists() {
@@ -263,15 +303,16 @@ export default {
         animation: 200,
         group: "lists",
         disabled: false,
-        ghostClass: "ghost"
+        ghostClass: "ghost",
       };
-    }
+    },
   },
   components: {
     boardNav,
     taskDetails,
     list,
     draggable,
+    boardMenu,
   },
   async created() {
     const boardId = this.$route.params.id;
@@ -282,6 +323,7 @@ export default {
     });
     this.board = JSON.parse(JSON.stringify(board));
     eventBusService.$emit("boardBgc", this.board.style);
+    console.log(this.board.dueDate);
     // this.currTask = this.board.lists[0].tasks[0]
   },
 };

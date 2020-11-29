@@ -1,25 +1,21 @@
 .board-setting {
-    z-index: 1;
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    background-color: rgb(235, 235, 235);
-    border-radius: 5px;
+    // z-index: 1;
+    // position: absolute;
+    // top: 20px;
+    // left: 20px;
+    // background-color: rgb(235, 235, 235);
+    // border-radius: 5px;
     padding: 10px;
-    min-width: 300px;
+    // min-width: 300px;
     font-size: rem(15px);
     color: #292929d9;
     input {
-        border: 0.5px solid rgb(163, 163, 163);
+        background-color: transparent;
+        border-radius: 0;
+        border: none;
+        border-bottom: 0.5px solid rgb(163, 163, 163);
         padding: 2px 0px 5px;
         color: #292929d9;
-    }
-    .img-circle {
-        cursor: pointer;
-        width: 30px;
-        img {
-            width: 30px;
-        }
     }
     p {
         margin-right: 7px;

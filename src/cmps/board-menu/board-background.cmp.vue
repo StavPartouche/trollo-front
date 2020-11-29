@@ -1,5 +1,19 @@
 <template>
   <div class="board-background">
+      <button
+        type="button"
+        @click.stop="setType('color')"
+        title="colors"
+      >
+        <i class="fas fa-palette"></i>
+      </button>
+      <button
+        type="button"
+        @click.stop="setType('img')"
+        title="photos"
+      >
+        <i class="fas fa-image"></i>
+      </button>
     <ul v-if="type === 'img'" class="flex wrap center">
       <li class="img-circle" v-for="idx in 8" :key="idx">
         <img
@@ -22,10 +36,10 @@
 <script>
 export default {
   props: {
-    type: String,
   },
   data() {
     return {
+      type:null,
       colors: ['#39A7E1', '#D684B4', '#85AEE1', '#40C08C', '#E99B27', '#F34B4B', '#9E4B97', '#FFE100']
     };
   },
@@ -37,8 +51,13 @@ export default {
         this.$emit("saveBoardBgc", {type: 'color', color:`${this.colors[idx-1]}`})
       }
     },
+    setType(type){
+      this.type=type
+      console.log(this.type);
+    }
   },
   created(){
+    // this.type=this.boardType;
     console.log('background creared');
   }
 };
