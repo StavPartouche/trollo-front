@@ -276,13 +276,10 @@ export default {
   async created() {
     const boardId = this.$route.params.id;
     const board = await boardService.getById(boardId);
-    console.log(board.members);
     board.members.forEach(async (member) => {
       var memberObject = await this.getMember(member);
-      console.log(memberObject);
       this.members.push(memberObject);
     });
-    console.log(board.members);
     this.board = JSON.parse(JSON.stringify(board));
     eventBusService.$emit("boardBgc", this.board.style);
     // this.currTask = this.board.lists[0].tasks[0]

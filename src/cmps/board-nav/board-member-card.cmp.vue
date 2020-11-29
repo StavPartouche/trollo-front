@@ -4,7 +4,8 @@
       <user-avatar @click.native="togggleMember" :user="member"></user-avatar>
         <!-- <button @click="togggleMember">{{ member.userName}} </button> -->
     <div v-if="showMember"  class="user-card flex-column">
-            <p>{{member.userName}}</p>
+            <h4>{{member.userName}}</h4>
+            <p>{{member.fullName}}</p>
             <!-- <h3>{{member.fullName}}</h3> -->
             <button @click="removeBoardMember(member._id)"><i class="fas fa-trash"></i></button>
         </div>
