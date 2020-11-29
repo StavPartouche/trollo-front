@@ -7,7 +7,6 @@
 			<router-link to="/login" v-if="!loggedInUser">Login</router-link>
 			<template v-if="loggedInUser">
 				<router-link to="/user">User Page</router-link> |
-				<!-- <router-link to="/logout">Logout</router-link> -->
 				<a href="#" @click="onLogout">Logout</a>
 			</template>
 		</div>
@@ -31,7 +30,7 @@ export default {
 	methods: {
 		onLogout() {
 			this.$store.dispatch({type: 'logout'})
-			// this.$router.push('/');
+			if (this.$router.currentRoute.path !== '/') this.$router.push('/');
 		}
 	}
 }

@@ -10,8 +10,18 @@
     form {
         margin: 40px;
         text-align: center;
+        input {
+            position: relative;
+        }
         input[type=file] {
             width: 82px;
+        }
+        button.password-btn {
+            position: absolute;
+            margin-top: 4px;
+            margin-left: -28px;
+            background-color: transparent;
+            // cursor: pointer;
         }
     }
 }
