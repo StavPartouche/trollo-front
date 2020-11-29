@@ -282,7 +282,7 @@ export default {
     });
     this.board = JSON.parse(JSON.stringify(board));
     eventBusService.$emit("boardBgc", this.board.style);
-    this.currTask = this.board.lists[0].tasks[0]
+    // this.currTask = this.board.lists[0].tasks[0]
   },
 };
 </script>
