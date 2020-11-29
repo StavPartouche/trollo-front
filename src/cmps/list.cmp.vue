@@ -18,12 +18,15 @@
 					v-for="(task, taskIdx) in list.tasks"
 					:key="taskIdx"
 					@click="openTask(listIdx, taskIdx)"
+					:style='{backgroundColor: task.backgroundColor}'
 				>
+					<ul class="flex">
+						<li v-for="(label, idx) in task.labels" :key="idx">
+							<div class="label-preview" :style='{backgroundColor: label.backgroundColor}'></div>
+						</li>
+					</ul>
 					<div class="task-preview-header flex align-center justify-space-between">
 						<h4>{{ task.name }}</h4>
-						<button class="delete-task-btn" @click.stop="removeTask(listIdx, taskIdx)">
-							<i class="far fa-trash-alt"></i>
-						</button>
 					</div>
 					<img
 						class="preview-img"
@@ -35,10 +38,6 @@
 							<user-avatar
 								:user="getMemberById(memberId)"
 							></user-avatar>
-							<!-- <img
-								class="avatar"
-								:src="getMemberImgById(memberId)"
-							/> -->
 						</li>
 					</ul>
 				</li>
@@ -87,12 +86,6 @@ export default {
 		},
 		openTask(listIdx, taskIdx) {
 			this.$emit('openTask', {
-				listIdx,
-				taskIdx
-			});
-		},
-		removeTask(listIdx, taskIdx) {
-			this.$emit('removeTask', {
 				listIdx,
 				taskIdx
 			});

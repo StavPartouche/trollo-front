@@ -14,6 +14,7 @@
       <div class="task-editor-main">
         <vue-scroll class="vuescroll" :ops="ops">
           <div class="task-details">
+            <task-details-labels :labels="task.labels"/>
             <div>
               <h3>Description</h3>
               <textarea
@@ -69,18 +70,27 @@
             v-if="isPopup"
             :taskMembersIds="task.members"
             :boardMembers="members"
+            :labels="labels"
             :is="cmpType"
             @taskUpdate="updateTask"
             @closePopup="closePopup"
+            @toggleLabel="toggleLabel"
+            @setTaskColor="setTaskColor"
           />
           <button class="side-bar-btn" @click="openPopup('checkList')">
             CheckList
+          </button>
+          <button class="side-bar-btn" @click="openPopup('labels')">
+            Labels
           </button>
           <button class="side-bar-btn" @click="openPopup('members')">
             Members
           </button>
           <button class="side-bar-btn" @click="openPopup('dueDate')">
             dueDate
+          </button>
+          <button class="side-bar-btn" @click="openPopup('backgroundColor')">
+            BackgroundColor
           </button>
           <label class="btn side-bar-btn">
             Attachments
@@ -90,6 +100,9 @@
               @change="onUploadImg"
             />
           </label>
+          <button class="side-bar-btn delete-task-btn" @click="removeTask()">
+            Delete Task
+          </button>
         </div>
       </div>
     </div>
@@ -100,11 +113,15 @@
 import checkList from "../task-popups/checkList.cmp";
 import members from "../task-popups/members.cmp";
 import dueDate from "../task-popups/dueDate.cmp";
+import labels from '../task-popups/labels.cmp';
+import backgroundColor from '../task-popups/backgroundColor.cmp'
 import taskDetailsChecklists from "../task-details/task-details-checklists.cmp";
 import taskDetailsComments from "../task-details/task-details-comments.cmp";
 import taskDetailsAttachments from "../task-details/task-details-attachments.cmp";
+import taskDetailsLabels from '../task-details/task-details-labels.cmp'
 import { uploadImg } from "../../services/img-upload.service.js";
 import userAvatar from "../user-avatar.cmp";
+import taskDetailsLabelsCmp from './task-details-labels.cmp.vue';
 
 export default {
   name: "task-details",
@@ -112,6 +129,7 @@ export default {
     task: Object,
     activites: Array,
     members: Array,
+    labels:Array
   },
   data() {
     return {
@@ -136,6 +154,17 @@ export default {
     };
   },
   methods: {
+    removeTask(){
+      const isSure = confirm('are you sure?')
+      if(isSure) this.$emit('removeTask')
+    },
+    setTaskColor(bgc){
+      console.log(bgc);
+      this.$emit('setTaskColor', bgc)
+    },
+    toggleLabel(label){
+      this.$emit('toggleLabel', label)
+    },
 	  removeCheckList(idx){
 		  this.$emit('removeCheckList', idx)
 	  },
@@ -251,14 +280,18 @@ export default {
     checkList,
     members,
     dueDate,
+    labels,
+    backgroundColor,
     taskDetailsChecklists,
     taskDetailsComments,
     taskDetailsAttachments,
-    userAvatar,
+    taskDetailsLabels,
+    userAvatar
   },
   created() {
     this.taskToEdit = JSON.parse(JSON.stringify(this.task));
     document.body.addEventListener("keyup", this.onKeyUp);
+    // console.log('this.task',this.task.labels);
   },
   destroyed() {
     document.body.removeEventListener("keyup", this.onKeyUp);

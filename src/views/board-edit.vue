@@ -41,7 +41,6 @@
                 :members="members"
                 @removeList="removeList"
                 @openTask="openTask"
-                @removeTask="removeTask"
                 @addTask="addTask"
                 @updateList="updateBoard"
                 @updateListName="updateListName"
@@ -59,6 +58,7 @@
       :task="currTask"
       :activites="board.activities"
       :members="members"
+      :labels="board.labels"
       @toggleCheck="toggleCheck"
       @addItem="addItem"
       @updateTask="updateTask"
@@ -69,6 +69,9 @@
       @removePreviewImg="removePreviewImg"
       @addComment="addComment"
       @removeCheckList="removeCheckList"
+      @toggleLabel="toggleLabel"
+      @setTaskColor="setTaskColor"
+      @removeTask="removeTask"
     />
   </div>
 </template>
@@ -84,58 +87,51 @@ import { eventBusService } from "../services/eventBus.service";
 import draggable from "vuedraggable";
 
 export default {
-  name: "board-edit",
-  data() {
-    return {
-      board: null,
-      members: [],
-      currTask: null,
-      currListIdx: null,
-      currTaskIdx: null,
-      ops: {
-        scrollPanel: {},
-        rail: {
-          background: "rgba(0, 0, 0, 0.404)",
-          size: "20px",
-          opacity: "0.1",
-        },
-        bar: {
-          onlyShowBarOnScroll: false,
-          keepShow: true,
-          size: "15px",
-          opacity: "0.7",
-          minSize: 0,
-        },
+	name: "board-edit",
+	data() {
+		return {
+			board: null,
+			members: [],
+			currTask: null,
+			currListIdx: null,
+			currTaskIdx: null,
+			ops: {
+				scrollPanel: {},
+				rail: {
+					background: 'rgba(0, 0, 0, 0.404)',
+					size: '20px',
+					opacity: '0.1',
+				},
+				bar: {
+					onlyShowBarOnScroll: false,
+					keepShow: true,
+					size: '15px',
+					opacity: '0.7',
+					minSize: 0,
+				},
       },
-      isMenu: false,
-    };
-  },
-  methods: {
-    removeCheckList(idx) {
-      this.currTask.checkLists.splice(idx, 1);
+      isMenu:false,
+		};
+	},
+	methods: {
+    removeTask(){
+      this.board.lists[this.currListIdx].tasks.splice(this.currTaskIdx, 1)
+      this.currTask = null
       this.updateBoard();
     },
-    updateListName(updates) {
-      this.board.lists[updates.listIdx].name = updates.newName;
+    setTaskColor(bgc){
+      this.currTask.backgroundColor = bgc
+      console.log('this.currTask.backgroundColor',this.currTask.backgroundColor);
       this.updateBoard();
     },
-    removePreviewImg() {
-      this.currTask.previewImg = "";
+    toggleLabel(label){
+      const idx = this.currTask.labels.findIndex(currLabel => currLabel.backgroundColor === label.backgroundColor)
+      if(idx === -1) this.currTask.labels.push(label)
+      else this.currTask.labels.splice(idx, 1)
       this.updateBoard();
     },
-    setPreviewImg(idx) {
-      this.currTask.previewImg = this.currTask.attachments[idx];
-      this.updateBoard();
-    },
-    removeAttachment(idx) {
-      this.currTask.attachments.splice(idx, 1);
-      this.updateBoard();
-    },
-    addList() {
-      var newList = boardService.getEmptyList();
-      newList.name = prompt("Enter List name");
-      if (!newList.name) return;
-      this.board.lists.push(newList);
+    removeCheckList(idx){
+      this.currTask.checkLists.splice(idx, 1)
       this.updateBoard();
     },
     removeList(listIdx) {
@@ -165,10 +161,6 @@ export default {
       var newTask = boardService.getEmptyTask();
       newTask.name = updates.title;
       this.board.lists[updates.listIdx].tasks.push(newTask);
-      this.updateBoard();
-    },
-    removeTask(idxs) {
-      this.board.lists[idxs.listIdx].tasks.splice(idxs.taskIdx, 1);
       this.updateBoard();
     },
     closeDetails() {
