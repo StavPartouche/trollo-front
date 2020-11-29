@@ -7,9 +7,9 @@ html {
     font-family: quicksand, sans-serif;
     // -ms-overflow-style: none;
     // scrollbar-width: none;
-    ::-webkit-scrollbar {
-        display: none;
-    }
+}
+ .vuescroll ::-webkit-scrollbar {
+    display: none;
 }
 
 body {
