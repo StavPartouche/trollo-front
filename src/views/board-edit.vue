@@ -137,10 +137,6 @@ export default {
       const memberObject = await this.getMember(memberId);
       this.members.push(memberObject);
     },
-    // saveBoardSettings(board) {
-    //   this.board = board;
-    //   this.updateBoard();
-    // },
 
     // BOARD-MENU
     async removeBoard() {

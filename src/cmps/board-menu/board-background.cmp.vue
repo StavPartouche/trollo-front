@@ -66,8 +66,6 @@ export default {
     },
   },
   created(){
-    // this.type=this.boardType;
-    console.log('background creared');
   }
 };
 </script>
