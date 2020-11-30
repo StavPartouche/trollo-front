@@ -13,6 +13,34 @@
         // background-color: $clrNav;
         // color: $clr1;
         color: rgb(211, 211, 211);
+        .nav-avatar{
+            margin: 0;
+        }
+        .user-menu{
+            position: absolute;
+            background-color: white;
+            border-radius: 5px;
+            top: 29px;
+            right: 57px;
+            width: fit-content;
+            height: fit-content;
+            z-index: 3;
+            padding: 5px 5px 10px 5px;
+            text-align: center;
+            button{
+                background-color: transparent;
+                color: black;
+                display: block;
+                margin-top: 3px;
+                font-size: 1rem;
+            }
+            h3{
+                color: black;
+                font-weight: normal;
+                border-bottom: 1px solid black;
+                margin: 0;
+            }
+        }
         a {
             height: fit-content;
             cursor: pointer;
