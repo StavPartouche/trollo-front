@@ -103,7 +103,7 @@
               @change="onUploadImg"
             />
           </label>
-          <button class="side-bar-btn delete-task-btn" @click="open">
+          <button class="side-bar-btn delete-task-btn" @click="openWarning">
             Delete Task
           </button>
         </div>
@@ -239,7 +239,7 @@ export default {
         else this.closeDetails();
       }
     },
-    open() {
+    openWarning() {
         this.$confirm('This will permanently delete the task. Continue?', 'Warning', {
           confirmButtonText: 'Delete',
           cancelButtonText: 'Cancel',
