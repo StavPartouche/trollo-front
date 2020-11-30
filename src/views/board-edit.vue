@@ -89,11 +89,11 @@
 <script>
 import { boardService } from "../services/board.service.js";
 import { userService } from "../services/user.service.js";
+import { eventBusService } from "../services/eventBus.service";
 import boardNav from "../cmps/board-nav/board-nav.cmp";
 import boardMenu from "../cmps/board-menu/board-menu.cmp";
 import taskDetails from "../cmps/task-details/task-details.cmp";
 import list from "../cmps/list.cmp";
-import { eventBusService } from "../services/eventBus.service";
 import draggable from "vuedraggable";
 
 export default {
