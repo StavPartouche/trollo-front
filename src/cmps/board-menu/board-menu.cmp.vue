@@ -17,7 +17,7 @@
     </div>
           <board-about
         @backToMenu="backToMenu"
-        @changeDesc="changeDesc"
+        @updateBoardDesc="updateBoardDesc"
         @changeDueDate="changeDueDate"
         @removeBoard="removeBoard"
         v-if="isAbout"
@@ -77,8 +77,9 @@ export default {
       console.log(this.isMainMenu);
     },
 
-    changeDesc(desc) {
-      this.$emit("changeDesc", desc);
+    updateBoardDesc(desc) {
+      console.log('update desc');
+      this.$emit("updateBoardDesc", desc);
     },
     changeDueDate(dueDate) {
       this.$emit("changeDueDate", dueDate);
