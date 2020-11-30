@@ -155,7 +155,7 @@ export default {
 			var comment = {
 				txt: commentTxt,
 				createdAt: Date.now(),
-				creator: this.$store.getters.loggedInUser ? this.$store.getters.loggedInUser.fullName : {fullName: "Guest" }
+				creator: this.$store.getters.loggedInUser ? this.$store.getters.loggedInUser : {fullName: "Guest" }
       };
       this.currTask.comments.push(comment);
       this.updateBoard();

@@ -39,6 +39,9 @@ export default {
   },
   components:{
     userAvatar
+  },
+  created(){
+    console.log(this.comments);
   }
 };
 </script>
