@@ -17,10 +17,8 @@ export default {
 	},
 	methods: {
 		addCheckList(value){
-			this.$emit("taskUpdate", {
-				type: "checkList",
-				value
-			})
+			console.log('value');
+			this.$emit('addCheckList', value)
 		},
 		closePopup(){
 			this.$emit("closePopup")

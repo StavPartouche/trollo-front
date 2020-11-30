@@ -62,7 +62,13 @@
       :labels="board.labels"
       @toggleCheck="toggleCheck"
       @addItem="addItem"
-      @updateTask="updateTask"
+      @addCheckList="addCheckList"
+      @addMemberToTask="addMemberToTask"
+      @removeMemberfromTask="removeMemberfromTask"
+      @updateDueDate="updateDueDate"
+      @updateTaskName="updateTaskName"
+      @updateTaskDesc="updateTaskDesc"
+      @UploadImg="UploadImg"
       @close="closeDetails"
       @removeItem="removeItem"
       @removeAttachment="removeAttachment"
@@ -208,33 +214,38 @@ export default {
       currCheckListItems.push(newItem);
       this.updateBoard();
     },
-    updateTask(updates) {
-      if (updates.type === "checkList") {
-        const currCheckLists = this.currTask.checkLists;
+    addCheckList(checkListData){
+      console.log('1');
+      const currCheckLists = this.currTask.checkLists;
         const newChechList = {
-          title: updates.title,
-          items: updates.items,
+          title: checkListData.title,
+          items: checkListData.items,
         };
         currCheckLists.push(newChechList);
-      }
-      if (updates.type === "addMemberToTask") {
-        this.currTask.members.push(updates.value);
-      }
-      if (updates.type === "removeMemberToTask") {
-        this.currTask.members.splice(updates.value, 1);
-      }
-      if (updates.type === "updateDueDate") {
-        this.currTask.dueDate = updates.value;
-      }
-      if (updates.type === "updateTaskName") {
-        this.currTask.name = updates.value.name;
-      }
-      if (updates.type === "updateTaskDesc") {
-        this.currTask.description = updates.value.description;
-      }
-      if (updates.type === "UploadImg") {
-        this.currTask.attachments.push(updates.value);
-      }
+        this.updateBoard();
+    },
+    addMemberToTask(memberId){
+      this.currTask.members.push(memberId);
+      this.updateBoard();
+    },
+    removeMemberfromTask(memberIdx){
+      this.currTask.members.splice(memberIdx, 1);
+      this.updateBoard();
+    },
+    updateDueDate(newDate){
+      this.currTask.dueDate = newDate;
+      this.updateBoard();
+    },
+    updateTaskName(newName){
+      this.currTask.name = newName;
+      this.updateBoard();
+    },
+    updateTaskDesc(newDwsc){
+      this.currTask.description = newDwsc;
+      this.updateBoard();
+    },
+    UploadImg(imgUrl){
+      this.currTask.attachments.push(imgUrl);
       this.updateBoard();
     },
     closeDetails() {

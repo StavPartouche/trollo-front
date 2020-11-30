@@ -72,7 +72,10 @@
             :boardMembers="members"
             :labels="labels"
             :is="cmpType"
-            @taskUpdate="updateTask"
+            @addCheckList="addCheckList"
+            @addMemberToTask="addMemberToTask"
+            @removeMemberfromTask="removeMemberfromTask"
+            @updateDueDate="updateDueDate"
             @closePopup="closePopup"
             @toggleLabel="toggleLabel"
             @setTaskColor="setTaskColor"
@@ -180,48 +183,31 @@ export default {
     async onUploadImg(ev) {
       this.isLoading = true;
       const res = await uploadImg(ev);
-      // this.signupCred.imgUrl = res.url;
-      this.$emit("updateTask", {
-        type: "UploadImg",
-        value: res.url,
-      });
+      this.$emit("UploadImg", res.url);
     },
     updateTaskName(evt) {
       var src = evt.target.innerText;
-      this.taskToEdit.name = src;
-      this.$emit("updateTask", {
-        type: "updateTaskName",
-        value: this.taskToEdit,
-      });
+      this.$emit("updateTaskName", src);
     },
     updateTaskDesc() {
-      this.$emit("updateTask", {
-        type: "updateTaskDesc",
-        value: this.taskToEdit,
-      });
+      this.$emit("updateTaskDesc", this.taskToEdit.description);
     },
-    updateTask(updates) {
-      if (updates.type === "checkList") {
-        var newCheckList = {
-          type: updates.type,
-          title: updates.value,
+    addCheckList(title){
+      var newCheckList = {
+          title: title,
           items: [],
         };
-        this.$emit("updateTask", newCheckList);
+        this.$emit("addCheckList", newCheckList);
         this.closePopup();
-      }
-      if (updates.type === "addMemberToTask") {
-        this.$emit("updateTask", updates);
-      }
-      if (updates.type === "removeMemberToTask") {
-        this.$emit("updateTask", updates);
-      }
-      if (updates.type === "updateDueDate") {
-        this.$emit("updateTask", updates);
-      }
-      // else{
-      //     this.$emit('updateTask', updates)
-      // }
+    },
+    addMemberToTask(memberId){
+      this.$emit("addMemberToTask", memberId);
+    },
+    removeMemberfromTask(memberIdx){
+      this.$emit("removeMemberfromTask", memberIdx);
+    },
+    updateDueDate(newDate){
+      this.$emit("updateDueDate", newDate);
     },
     addComment(commentTxt) {
       console.log("dets", commentTxt);

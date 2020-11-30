@@ -49,17 +49,10 @@ export default {
   },
   methods: {
     addMember(memberId) {
-      console.log("member", memberId);
-      this.$emit("taskUpdate", {
-        type: "addMemberToTask",
-        value: memberId,
-      });
+      this.$emit("addMemberToTask", memberId);
     },
     removeMember(memberIdx) {
-      this.$emit("taskUpdate", {
-        type: "removeMemberToTask",
-        value: memberIdx,
-      });
+      this.$emit("removeMemberfromTask", memberIdx);
     },
     closePopup() {
       this.$emit("closePopup");
