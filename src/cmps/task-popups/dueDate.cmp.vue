@@ -16,10 +16,7 @@ export default {
   },
   methods: {
       updateDueDate() {
-        this.$emit("taskUpdate", {
-          type: "updateDueDate",
-          value: this.date,
-        });
+        this.$emit("updateDueDate", this.date);
       },
     closePopup() {
       this.$emit("closePopup");
