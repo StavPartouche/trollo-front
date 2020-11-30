@@ -8,12 +8,6 @@
 					placeholder="Username"
 				/>
 				<br />
-				<!-- <input
-					type="text"
-					v-model="loginCred.fullName"
-					placeholder="FullName"
-				/>
-				<br /> -->
 				<input
 					:type="passwordType"
 					v-model="loginCred.password"

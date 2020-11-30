@@ -1,6 +1,5 @@
 <template>
 	<nav class="app-header flex align-center justify-space-between">
-		<!-- <router-link to="/" class="logo"><img src="@/styles/assets/logo.png"/>Trollo</router-link> -->
 		<router-link to="/" class="logo"><span>T</span>rollo</router-link>
 		<div class="links flex align-center">
 			<router-link to="/board">Boards</router-link> |
@@ -19,7 +18,6 @@ export default {
 	name: 'app-header',
 	data() {
 		return {
-			// loggedInUser: null
 		}
 	},
 	computed: {

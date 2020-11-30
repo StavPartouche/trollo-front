@@ -13,10 +13,6 @@
         </li>
       </ul>
       <button v-if="!isAddInput" @click="toggleAdd">Add item to list</button>
-      <!-- <form v-else @submit.prevent="addItem(checkListIdx)">
-        <input type="text" v-model="txt" />
-        <button>Add</button>
-      </form> -->
       <add-item-input v-else @add="addItem(checkListIdx, $event)" />
     </div>
 </template>
@@ -32,7 +28,6 @@ export default {
     },
 	data() {
 		return {
-            // txt: '',
             isAddInput: false
 		}
     },
@@ -46,7 +41,6 @@ export default {
                 checkListIdx,
                 txt: itemTxt
             })
-            // this.txt = ''
             this.toggleAdd()
         },
         toggleAdd(){

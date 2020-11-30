@@ -291,7 +291,6 @@ export default {
   created() {
     this.taskToEdit = JSON.parse(JSON.stringify(this.task));
     document.body.addEventListener("keyup", this.onKeyUp);
-    // console.log('this.task',this.task.labels);
   },
   destroyed() {
     document.body.removeEventListener("keyup", this.onKeyUp);

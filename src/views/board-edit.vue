@@ -5,11 +5,11 @@
       @updateBoardName="updateBoardName"
       @removeBoardMember="removeBoardMember"
       @addBoardMember="addBoardMember"
-      @saveBoard="saveBoardSettings"
       v-if="board"
       :name="board.name"
       :members="members"
     ></board-nav>
+      <!-- @saveBoard="saveBoardSettings" -->
     <board-menu
       v-if="isMenu"
       @removeBoard="removeBoard"
@@ -45,7 +45,6 @@
                 @addTask="addTask"
                 @updateList="updateBoard"
                 @updateListName="updateListName"
-                @toggleDisable="toggleDisable"
               />
             </li>
           </draggable>
@@ -116,71 +115,67 @@ export default {
     };
   },
   methods: {
-    removeTask() {
-      this.board.lists[this.currListIdx].tasks.splice(this.currTaskIdx, 1);
-      this.currTask = null;
+    // BOARD-NAV
+    toggleMenu(ev) {
+      this.isMenu = ev;
+    },
+    updateBoardName(name) {
+      this.board.name = name;
       this.updateBoard();
     },
-    setTaskColor(bgc) {
-      this.currTask.backgroundColor = bgc;
-      console.log(
-        "this.currTask.backgroundColor",
-        this.currTask.backgroundColor
-      );
+    removeBoardMember(memberId) {
+      var idx = this.board.members.findIndex((member) => member === memberId);
+      if (idx === -1) return;
+      this.board.members.splice(idx, 1);
+      this.updateBoard();
+      idx = this.members.findIndex((member) => member._id === memberId);
+      this.members.splice(idx, 1);
+    },
+    async addBoardMember(memberId) {
+      this.board.members.push(memberId);
+      this.updateBoard();
+      const memberObject = await this.getMember(memberId);
+      this.members.push(memberObject);
+    },
+    // saveBoardSettings(board) {
+    //   this.board = board;
+    //   this.updateBoard();
+    // },
+
+    // BOARD-MENU
+    async removeBoard() {
+      await this.$store.dispatch({
+        type: "removeBoard",
+        boardId: this.board._id,
+      });
+      this.$router.push("/board");
+    },
+    changeDesc(desc) {
+      this.board.description = desc;
       this.updateBoard();
     },
-    toggleLabel(label) {
-      const idx = this.currTask.labels.findIndex(
-        (currLabel) => currLabel.backgroundColor === label.backgroundColor
-      );
-      if (idx === -1) this.currTask.labels.push(label);
-      else this.currTask.labels.splice(idx, 1);
+    changeDueDate(dueDate) {
+      this.board.dueDate = dueDate;
       this.updateBoard();
     },
-    removeCheckList(idx) {
-      this.currTask.checkLists.splice(idx, 1);
+    saveBoardBgc(bgc) {
+      if (bgc.type === "img") {
+        this.board.style.url = bgc.img;
+      } else {
+        this.board.style.url = "color";
+        this.board.style.backgroundColor = bgc.color;
+      }
+      eventBusService.$emit("boardBgc", this.board.style);
       this.updateBoard();
     },
-    updateListName(updates) {
-      this.board.lists[updates.listIdx].name = updates.newName;
-      this.updateBoard();
-    },
-    removePreviewImg() {
-      this.currTask.previewImg = "";
-      this.updateBoard();
-    },
-    setPreviewImg(idx) {
-      this.currTask.previewImg = this.currTask.attachments[idx];
-      this.updateBoard();
-    },
-    removeAttachment(idx) {
-      this.currTask.attachments.splice(idx, 1);
-      this.updateBoard();
-    },
-    addList() {
-      var newList = boardService.getEmptyList();
-      newList.name = prompt("Enter List name");
-      if (!newList.name) return;
-      this.board.lists.push(newList);
-      this.updateBoard();
-    },
+
+    // LIST
     removeList(listIdx) {
       const confirmRemove = confirm("sure?");
       if (confirmRemove) {
         this.board.lists.splice(listIdx, 1);
         this.updateBoard();
       }
-    },
-    addComment(commentTxt) {
-      var comment = {
-        txt: commentTxt,
-        createdAt: Date.now(),
-        creator: this.$store.getters.loggedInUser
-          ? this.$store.getters.loggedInUser
-          : { fullName: "Guest" },
-      };
-      this.currTask.comments.push(comment);
-      this.updateBoard();
     },
     openTask(idxs) {
       this.currTask = this.board.lists[idxs.listIdx].tasks[idxs.taskIdx];
@@ -193,24 +188,29 @@ export default {
       this.board.lists[updates.listIdx].tasks.push(newTask);
       this.updateBoard();
     },
-    closeDetails() {
-      this.currTask = null;
-    },
-    async getMember(memberId) {
-      const member = await userService.getById(memberId);
-      return member;
-    },
-    saveBoardSettings(board) {
-      this.board = board;
+    updateListName(updates) {
+      this.board.lists[updates.listIdx].name = updates.newName;
       this.updateBoard();
     },
-    updateBoard() {
-      this.$store.dispatch({
-        type: "saveBoard",
-        board: this.board,
-      });
-      // eventBusService.$emit("boardBgc", { type:'img', img:this.board.style.url});
-      eventBusService.$emit("boardBgc", this.board.style);
+
+    // TASK-DETAILS
+  toggleCheck(idxs) {
+      this.currTask.checkLists[idxs.checkListIdx].items[
+        idxs.itemIdx
+      ].isDone = !this.currTask.checkLists[idxs.checkListIdx].items[
+        idxs.itemIdx
+      ].isDone;
+      this.updateBoard();
+    },
+    addItem(item) {
+      const currCheckListItems = this.currTask.checkLists[item.checkListIdx]
+        .items;
+      const newItem = {
+        txt: item.txt,
+        isDone: item.isDone,
+      };
+      currCheckListItems.push(newItem);
+      this.updateBoard();
     },
     updateTask(updates) {
       if (updates.type === "checkList") {
@@ -241,84 +241,77 @@ export default {
       }
       this.updateBoard();
     },
-    addItem(item) {
-      const currCheckListItems = this.currTask.checkLists[item.checkListIdx]
-        .items;
-      const newItem = {
-        txt: item.txt,
-        isDone: item.isDone,
-      };
-      currCheckListItems.push(newItem);
-      this.updateBoard();
+    closeDetails() {
+      this.currTask = null;
     },
     removeItem(idxs) {
       this.currTask.checkLists[idxs.checkListIdx].items.splice(idxs.itemIdx, 1);
       this.updateBoard();
     },
-    toggleCheck(idxs) {
-      this.currTask.checkLists[idxs.checkListIdx].items[
-        idxs.itemIdx
-      ].isDone = !this.currTask.checkLists[idxs.checkListIdx].items[
-        idxs.itemIdx
-      ].isDone;
+    removeAttachment(idx) {
+      this.currTask.attachments.splice(idx, 1);
+      this.updateBoard();
+    },
+    setPreviewImg(idx) {
+      this.currTask.previewImg = this.currTask.attachments[idx];
+      this.updateBoard();
+    },
+    addComment(commentTxt) {
+      var comment = {
+        txt: commentTxt,
+        createdAt: Date.now(),
+        creator: this.$store.getters.loggedInUser
+          ? this.$store.getters.loggedInUser
+          : { fullName: "Guest" },
+      };
+      this.currTask.comments.push(comment);
+      this.updateBoard();
+    },
+    removeCheckList(idx) {
+      this.currTask.checkLists.splice(idx, 1);
+      this.updateBoard();
+    },
+    toggleLabel(label) {
+      const idx = this.currTask.labels.findIndex(
+        (currLabel) => currLabel.backgroundColor === label.backgroundColor
+      );
+      if (idx === -1) this.currTask.labels.push(label);
+      else this.currTask.labels.splice(idx, 1);
+      this.updateBoard();
+    },
+    setTaskColor(bgc) {
+      this.currTask.backgroundColor = bgc;
+      this.updateBoard();
+    },
+    removeTask() {
+      this.board.lists[this.currListIdx].tasks.splice(this.currTaskIdx, 1);
+      this.currTask = null;
+      this.updateBoard();
+    },
+    removePreviewImg() {
+      this.currTask.previewImg = "";
+      this.updateBoard();
+    },
+    
+    // GENERAL BOARD
+    addList() {
+      var newList = boardService.getEmptyList();
+      newList.name = prompt("Enter List name");
+      if (!newList.name) return;
+      this.board.lists.push(newList);
       this.updateBoard();
     },
     async getMember(memberId) {
       const member = await userService.getById(memberId);
       return member;
     },
-    async removeBoard() {
-      await this.$store.dispatch({
-        type: "removeBoard",
-        boardId: this.board._id,
+    updateBoard() {
+      this.$store.dispatch({
+        type: "saveBoard",
+        board: this.board,
       });
-      this.$router.push("/board");
-    },
-    async addBoardMember(memberId) {
-      this.board.members.push(memberId);
-      this.updateBoard();
-      const memberObject = await this.getMember(memberId);
-      this.members.push(memberObject);
-    },
-    removeBoardMember(memberId) {
-      console.log(memberId);
-      //   console.log(this.board.members);
-      var idx = this.board.members.findIndex((member) => member === memberId);
-      if (idx === -1) return;
-      this.board.members.splice(idx, 1);
-      this.updateBoard();
-      idx = this.members.findIndex((member) => member._id === memberId);
-      this.members.splice(idx, 1);
-    },
-    updateBoardName(name) {
-      console.log(name);
-      this.board.name = name;
-      this.updateBoard();
-      console.log(this.board.name);
-    },
-    changeDesc(desc) {
-      console.log("desc");
-      this.board.description = desc;
-      this.updateBoard();
-    },
-    changeDueDate(dueDate) {
-      console.log("due");
-      this.board.dueDate = dueDate;
-      this.updateBoard();
-    },
-    saveBoardBgc(bgc) {
-      if (bgc.type === "img") {
-        this.board.style.url = bgc.img;
-      } else {
-        this.board.style.url = "color";
-        this.board.style.backgroundColor = bgc.color;
-      }
+      // eventBusService.$emit("boardBgc", { type:'img', img:this.board.style.url});
       eventBusService.$emit("boardBgc", this.board.style);
-      console.log("save board bgc");
-      this.updateBoard();
-    },
-    toggleMenu(ev) {
-      this.isMenu = ev;
     },
   },
   computed: {
@@ -350,7 +343,6 @@ export default {
     });
     this.board = JSON.parse(JSON.stringify(board));
     eventBusService.$emit("boardBgc", this.board.style);
-    console.log(this.board.dueDate);
     // this.currTask = this.board.lists[0].tasks[0]
   },
 };

@@ -65,11 +65,9 @@ export default {
     },
     // openUser() {
     //     this.showUser= !this.showUser
-    // //   console.log(member);
     // },
     toggleShowInvite() {
       this.showInvite = !this.showInvite;
-      // console.log(this.showInvite);
     },
     onKeyUp(ev) {
       if (ev.keyCode === 27 && this.showInvite) this.toggleShowInvite();

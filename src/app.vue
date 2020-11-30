@@ -56,16 +56,15 @@ export default {
     this.$store.dispatch({
       type: "loadUsers",
     });
-    if (this.$route.name === "home-page") {
+    if (this.$route.name === "home-page" || this.$route.name === "login-page") {
       this.isBgcImg = true;
       this.bgcImg = "home1.jpg";
     }
-    if (this.$route.name === "login-page") {
-      this.isBgcImg = true;
-      this.bgcImg = "home1.jpg";
-    }
+    // if (this.$route.name === "login-page") {
+    //   this.isBgcImg = true;
+    //   this.bgcImg = "home1.jpg";
+    // }
     eventBusService.$on("boardBgc", (bgc) => {
-      // console.log(bgc);
       if(!bgc.url){
         this.isBgcImg = false;
         this.isBgcColor = false;

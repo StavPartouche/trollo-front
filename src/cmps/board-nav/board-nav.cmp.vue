@@ -56,17 +56,6 @@ export default {
       this.isMenu = !this.isMenu;
       this.$emit('toggleMenu', this.isMenu)
     },
-    // saveBoardSetting(ev) {
-    //   this.boardToEdit = ev.board;
-    //   this.saveBoard(ev.close);
-    // },
-    // saveBoard(close = true) {
-    //   this.$emit("saveBoard", JSON.parse(JSON.stringify(this.boardToEdit)));
-    //   if (close) this.isSetting = false;
-    // },
-    // removeBoard() {
-    //   this.$emit("removeBoard");
-    // },
     addBoardMember(memberId) {
       this.$emit("addBoardMember", memberId);
     },
