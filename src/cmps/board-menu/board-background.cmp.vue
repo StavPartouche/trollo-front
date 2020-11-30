@@ -1,5 +1,11 @@
 <template>
+
   <div class="board-background">
+        <div class="menu-header">
+      <h3>Background</h3>
+      <button class="btn-back-to-menu" @click="backToMenu">Back</button>
+    </div>
+    <hr />
       <button
         type="button"
         @click.stop="setType('color')"
@@ -54,7 +60,10 @@ export default {
     setType(type){
       this.type=type
       console.log(this.type);
-    }
+    },
+        backToMenu() {
+      this.$emit("backToMenu");
+    },
   },
   created(){
     // this.type=this.boardType;
