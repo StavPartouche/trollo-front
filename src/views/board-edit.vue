@@ -9,7 +9,6 @@
       :name="board.name"
       :members="members"
     ></board-nav>
-      <!-- @saveBoard="saveBoardSettings" -->
     <board-menu
       v-if="isMenu"
       @removeBoard="removeBoard"
@@ -44,7 +43,7 @@
                 @removeList="removeList"
                 @openTask="openTask"
                 @addTask="addTask"
-                @updateList="updateBoard"
+                @updateList="onDrag"
                 @updateListName="updateListName"
               />
             </li>
@@ -97,6 +96,7 @@ import list from "../cmps/list.cmp";
 import draggable from "vuedraggable";
 import socket from '@/services/socket.service';
 import io from 'socket.io-client';
+import _ from 'lodash';
 
 export default {
 	name: "board-edit",
@@ -313,8 +313,8 @@ export default {
       const member = await userService.getById(memberId);
       return member;
     },
-    async updateBoard() {
-      console.log(this.board.name)
+    async updateBoard(ev) {
+      console.log(ev)
       await this.$store.dispatch({
         type: "saveBoard",
 				board: this.board,
@@ -325,7 +325,7 @@ export default {
 		// alertEnter(user) {
       //   alert(user.userName + ' has entered the board!');
 		// },
-		async loadBoard() {
+		async loadBoard(ev) {
       const updatedBoard = await boardService.getById(this.board._id);
 			this.board = updatedBoard;
       await eventBusService.$emit("boardBgc", this.board.style);
@@ -335,7 +335,10 @@ export default {
 			this.members.push(memberObject);
 		});
       if (this.currTask) this.currTask = this.board.lists[this.currListIdx].tasks[this.currTaskIdx];
-		}
+    },
+    onDrag() {
+      this.updateBoard();
+    }
 	},
 	computed: {
 		lists() {
@@ -361,7 +364,8 @@ export default {
 		const boardId = this.$route.params.id;
 		const board = await boardService.getById(boardId);
 		socket.setup();
-		socket.emit('enter board', board._id);
+    socket.emit('enter board', board._id);
+    this.onDrag = _.debounce(this.onDrag, 500);
 		socket.on('update board', this.loadBoard);
 		board.members.forEach(async (member) => {
 			var memberObject = await this.getMember(member);
