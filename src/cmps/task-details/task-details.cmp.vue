@@ -103,7 +103,7 @@
               @change="onUploadImg"
             />
           </label>
-          <button class="side-bar-btn delete-task-btn" @click="removeTask()">
+          <button class="side-bar-btn delete-task-btn" @click="open">
             Delete Task
           </button>
         </div>
@@ -158,11 +158,9 @@ export default {
   },
   methods: {
     removeTask(){
-      const isSure = confirm('are you sure?')
-      if(isSure) this.$emit('removeTask')
+      this.$emit('removeTask')
     },
     setTaskColor(bgc){
-      console.log(bgc);
       this.$emit('setTaskColor', bgc)
     },
     toggleLabel(label){
@@ -210,7 +208,6 @@ export default {
       this.$emit("updateDueDate", newDate);
     },
     addComment(commentTxt) {
-      console.log("dets", commentTxt);
       this.$emit("addComment", commentTxt);
     },
     addItem(itemInfo) {
@@ -234,7 +231,6 @@ export default {
       (this.cmpType = type), (this.isPopup = true);
     },
     closePopup() {
-      console.log('close popup');
       (this.cmpType = ""), (this.isPopup = false);
     },
     onKeyUp(ev) {
@@ -243,6 +239,24 @@ export default {
         else this.closeDetails();
       }
     },
+    open() {
+        this.$confirm('This will permanently delete the task. Continue?', 'Warning', {
+          confirmButtonText: 'Delete',
+          cancelButtonText: 'Cancel',
+          type: 'warning'
+        }).then(() => {
+          this.removeTask()
+          this.$message({
+            type: 'success',
+            message: 'Delete completed'
+          });
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: 'Delete canceled'
+          });          
+        });
+      }
   },
   computed: {
     taskActivites() {

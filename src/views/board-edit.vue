@@ -215,7 +215,6 @@ export default {
       this.updateBoard();
     },
     addCheckList(checkListData){
-      console.log('1');
       const currCheckLists = this.currTask.checkLists;
         const newChechList = {
           title: checkListData.title,
