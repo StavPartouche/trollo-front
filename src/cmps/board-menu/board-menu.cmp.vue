@@ -18,7 +18,7 @@
           <board-about
         @backToMenu="backToMenu"
         @updateBoardDesc="updateBoardDesc"
-        @changeDueDate="changeDueDate"
+        @updateBoardDueDate="updateBoardDueDate"
         @removeBoard="removeBoard"
         v-if="isAbout"
         :name="name"
@@ -81,8 +81,8 @@ export default {
       console.log('update desc');
       this.$emit("updateBoardDesc", desc);
     },
-    changeDueDate(dueDate) {
-      this.$emit("changeDueDate", dueDate);
+    updateBoardDueDate(dueDate) {
+      this.$emit("updateBoardDueDate", dueDate);
     },
     removeBoard() {
       if (prompt("sure?")) this.$emit("removeBoard");

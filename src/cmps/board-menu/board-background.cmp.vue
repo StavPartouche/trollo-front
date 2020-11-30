@@ -1,25 +1,18 @@
 <template>
-
   <div class="board-background">
-        <div class="menu-header">
+    <div class="menu-header">
       <h3>Background</h3>
-      <button class="btn-back-to-menu" @click="backToMenu">Back</button>
+      <button class="btn-back-to-menu" @click="backToMenu">
+        <font-awesome-icon :icon="['fas', 'chevron-left']" />
+      </button>
     </div>
     <hr />
-      <button
-        type="button"
-        @click.stop="setType('color')"
-        title="colors"
-      >
-        <i class="fas fa-palette"></i>
-      </button>
-      <button
-        type="button"
-        @click.stop="setType('img')"
-        title="photos"
-      >
-        <i class="fas fa-image"></i>
-      </button>
+    <button type="button" @click.stop="setType('color')" title="colors">
+      <i class="fas fa-palette"></i>
+    </button>
+    <button type="button" @click.stop="setType('img')" title="photos">
+      <i class="fas fa-image"></i>
+    </button>
     <ul v-if="type === 'img'" class="flex wrap center">
       <li class="img-circle" v-for="idx in 8" :key="idx">
         <img
@@ -32,8 +25,12 @@
       </li>
     </ul>
     <ul v-if="type === 'color'" class="flex wrap center">
-      <li  v-for="idx in 8" :key="idx">
-        <div @click.stop="saveBoardBgc(idx)" class="circle-30" :style="{backgroundColor: `${colors[idx-1]}`}"></div>
+      <li v-for="idx in 8" :key="idx">
+        <div
+          @click.stop="saveBoardBgc(idx)"
+          class="circle-30"
+          :style="{ backgroundColor: `${colors[idx - 1]}` }"
+        ></div>
       </li>
     </ul>
   </div>
@@ -41,31 +38,41 @@
 
 <script>
 export default {
-  props: {
-  },
+  props: {},
   data() {
     return {
-      type:null,
-      colors: ['#39A7E1', '#D684B4', '#85AEE1', '#40C08C', '#E99B27', '#F34B4B', '#9E4B97', '#FFE100']
+      type: null,
+      colors: [
+        "#39A7E1",
+        "#D684B4",
+        "#85AEE1",
+        "#40C08C",
+        "#E99B27",
+        "#F34B4B",
+        "#9E4B97",
+        "#FFE100",
+      ],
     };
   },
   methods: {
     saveBoardBgc(idx) {
-      if (this.type==='img'){
-        this.$emit("saveBoardBgc", {type: 'img', img:`bgc${idx}.jpg`})
-      }else{
-        this.$emit("saveBoardBgc", {type: 'color', color:`${this.colors[idx-1]}`})
+      if (this.type === "img") {
+        this.$emit("saveBoardBgc", { type: "img", img: `bgc${idx}.jpg` });
+      } else {
+        this.$emit("saveBoardBgc", {
+          type: "color",
+          color: `${this.colors[idx - 1]}`,
+        });
       }
     },
-    setType(type){
-      this.type=type
+    setType(type) {
+      this.type = type;
       console.log(this.type);
     },
-        backToMenu() {
+    backToMenu() {
       this.$emit("backToMenu");
     },
   },
-  created(){
-  }
+  created() {},
 };
 </script>
