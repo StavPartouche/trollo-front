@@ -300,12 +300,12 @@ export default {
     },
     
     // GENERAL BOARD
-    addList() {
-      var newList = boardService.getEmptyList();
-      newList.name = prompt("Enter List name");
-      if (!newList.name) return;
+    async addList() {
+      var newList = boardService.getEmptyList('Enter list name');
       this.board.lists.push(newList);
-      this.updateBoard();
+      await this.updateBoard();
+      const newListIdx = this.board.lists.length - 1
+      document.getElementById(`list${newListIdx}`).focus();
     },
     async getMember(memberId) {
       const member = await userService.getById(memberId);
