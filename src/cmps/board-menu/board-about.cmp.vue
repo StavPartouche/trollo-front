@@ -1,12 +1,18 @@
 <template>
   <form
-    class="board-setting flex-column justify-center"
+    class="board-setting"
     @submit.prevent="saveChanges"
     action=""
   >
-    <label for="">
-      <input type="text" v-model="name" @change="changeName" />
-    </label>
+    <div class="menu-header">
+      <h3>About this board</h3>
+      <button class="btn-back-to-menu" @click="backToMenu">Back</button>
+    </div>
+
+    <hr>
+
+    <h5>{{ name }}</h5>
+    <h5>Made By</h5>
     <label class="flex align-center" for="">
       Due Date:
       <input
@@ -18,7 +24,7 @@
     </label>
     <label class="flex align-center" for="">
       Description:
-      <input
+      <textarea
         class="justify-end"
         type="text"
         v-model="description"
@@ -29,7 +35,6 @@
 </template>
 
 <script>
-
 export default {
   name: "board-about",
   props: {
@@ -38,18 +43,20 @@ export default {
     dueDate: String,
   },
   data() {
-    return {
-    };
+    return {};
   },
   methods: {
-    changeName() {
-      this.$emit("changeName", this.name);
-    },
+    // updateBoardName() {
+    //   this.$emit("updateBoardName", this.name);
+    // },
     changeDesc() {
       this.$emit("changeDesc", this.description);
     },
     changeDueDate() {
       this.$emit("changeDueDate", this.dueDate);
+    },
+    backToMenu() {
+      this.$emit("backToMenu");
     },
   },
   computed: {},

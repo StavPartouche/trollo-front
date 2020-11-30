@@ -2,18 +2,42 @@
     z-index: 1;
     position: fixed;
     right: 0;
+    padding: 22px;
     // top: 70px;
     // padding-top: $board-nav-height;
     width: 250px;
-    flex: 1;
     // height: -webkit-calc(100% - 70px);
     height: 100%;
     background-color: $task-details-bgc;
     .menu-btn {
         cursor: pointer;
     }
+    li {
+        padding: 10px;
+    }
 }
 
+.board-menu .menu-header {
+    font-size: rem(18px);
+    height: 30px;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+    .btn-back-to-menu {
+        position: absolute;
+        left: 0;
+    }
+}
+
+// .board-menu-child {
+//     background-color: $task-details-bgc;
+//     position: fixed;
+//     top: 50px;
+//     right: 0px;
+//     height: 100%;
+//     width: 250px;
+//     padding: 22px;
+// }
 .img-circle {
     cursor: pointer;
     width: 30px;

@@ -1,10 +1,8 @@
 <template>
   <div class="board-nav flex justify-space-between align-center">
     <div class="widht-200 flex justify-start align-center">
-      <!-- <h2 @click="toggleIsSetting">{{ board.name }}</h2> -->
-      <h2>{{name }}</h2>
+      <h2 contenteditable @blur="updateBoardName" v-text="nameToEdit">{{name }}</h2>
       <div class="board-setting-container">
-        <!-- <button @click="toggleIsSetting"><i class="el-icon-more"></i></button> -->
       </div>
     </div>
     <board-member
@@ -35,33 +33,21 @@
       MORE
     </button>
     </div>
-
-
-    <!-- <button class="widht-200  flex justify-end" @click="toggleActivityLog"><i class="fas fa-ellipsis-h"></i></button> -->
-    <!-- <ul v-if="isActivityLog">
-      <li v-for="activity in board.activityLog" :key="activity.createdAt">
-        {{ activity.userId }}:{{ activity.txt }} {{ activity.createdAt }}
-      </li>
-    </ul> -->
   </div>
 </template>
 
 <script>
-// import boardSetting from "./board-setting.cmp";
 import boardMember from "./board-member.cmp";
 export default {
   name: "board-nav",
   props: {
-    // board: Object,
     name: String,
     members: Array,
   },
   data() {
     return {
-      // boardToEdit: null,
-      // isActivityLog: false,
-      // isSetting: false,
       isMenu: false,
+      nameToEdit: null
     };
   },
   computed: {},
@@ -70,29 +56,34 @@ export default {
       this.isMenu = !this.isMenu;
       this.$emit('toggleMenu', this.isMenu)
     },
-    saveBoardSetting(ev) {
-      this.boardToEdit = ev.board;
-      this.saveBoard(ev.close);
-    },
-    saveBoard(close = true) {
-      this.$emit("saveBoard", JSON.parse(JSON.stringify(this.boardToEdit)));
-      if (close) this.isSetting = false;
-    },
-    removeBoard() {
-      this.$emit("removeBoard");
-    },
+    // saveBoardSetting(ev) {
+    //   this.boardToEdit = ev.board;
+    //   this.saveBoard(ev.close);
+    // },
+    // saveBoard(close = true) {
+    //   this.$emit("saveBoard", JSON.parse(JSON.stringify(this.boardToEdit)));
+    //   if (close) this.isSetting = false;
+    // },
+    // removeBoard() {
+    //   this.$emit("removeBoard");
+    // },
     addBoardMember(memberId) {
       this.$emit("addBoardMember", memberId);
     },
     removeBoardMember(memberId) {
       this.$emit("removeBoardMember", memberId);
     },
+    updateBoardName(evt){
+      	var src = evt.target.innerText;
+			this.nameToEdit = src;
+      this.$emit('updateBoardName', this.nameToEdit)
+    }
   },
   components: {
     boardMember,
   },
   created() {
-
+this.nameToEdit=this.name
   },
   destroyed() {
   },

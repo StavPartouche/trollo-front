@@ -1,10 +1,23 @@
 <template>
   <div class="board-menu">
-    MENU
-    <ul>
-      <li @click.stop="toggleIsAbout" class="menu-btn">about this board</li>
-      <board-about
-        @changeName="changeName"
+    <div v-if="isMainMenu">
+      <div class="menu-header">
+      <h3 >Menu</h3>
+      </div>
+      <hr />
+      <ul>
+        <li @click.stop="toggleIsAbout" class="menu-btn">About this board</li>
+
+        <li @click="toggleIsBackground" class="menu-btn">Change background</li>
+
+        <li @click.stop="removeBoard" class="menu-btn">Delete board</li>
+        <hr />
+        <li class="menu-btn" @backToMenu="backToMenu">Activity-log</li>
+      </ul>
+    </div>
+    <!-- {{isMainMenu}} -->
+          <board-about
+        @backToMenu="backToMenu"
         @changeDesc="changeDesc"
         @changeDueDate="changeDueDate"
         @removeBoard="removeBoard"
@@ -13,12 +26,11 @@
         :description="description"
         :dueDate="dueDate"
       />
-      <li @click="toggleIsBackground" class="menu-btn">change background</li>
-      <board-background @saveBoardBgc="saveBoardBgc" v-if="isBackground"></board-background>
-      <li @click.stop="removeBoard" class="menu-btn">Delete board</li>
-
-      <li class="menu-btn">Activity-log</li>
-    </ul>
+            <board-background
+        @backToMenu="backToMenu"
+        @saveBoardBgc="saveBoardBgc"
+        v-if="isBackground"
+      ></board-background>
     <!-- <div
       @click="toggleMenu"
       :class="{ 'hide': !isMenu, 'disable-page-container': isMenu }"
@@ -42,26 +54,36 @@ export default {
       isActivityLog: false,
       isAbout: false,
       isBackground: false,
+      isMainMenu: true,
     };
   },
-  computed: {},
+  computed: {
+    // isMainMenu(){
+    //   // return (!(this.isActivityLog || this.isAbout || this.isBackground))
+    // }
+  },
   methods: {
     saveBoardBgc(bgc) {
-        this.$emit('saveBoardBgc', bgc)
-      },
+      this.$emit("saveBoardBgc", bgc);
+    },
     toggleActivityLog() {
       this.isActivityLog = !this.isActivityLog;
+      this.isMainMenu = !this.isMainMenu;
+      console.log(this.isMainMenu);
     },
     toggleIsAbout() {
       this.isAbout = !this.isAbout;
-      console.log(this.isAbout);
+      this.isMainMenu = !this.isMainMenu;
+      console.log(this.isMainMenu);
     },
     toggleIsBackground() {
       this.isBackground = !this.isBackground;
+      this.isMainMenu = !this.isMainMenu;
+      console.log(this.isMainMenu);
     },
-    changeName(name) {
-      this.$emit("changeName", name);
-    },
+    // updateBoardName(name) {
+    //   this.$emit("updateBoardName", name);
+    // },
     changeDesc(desc) {
       this.$emit("changeDesc", desc);
     },
@@ -69,7 +91,14 @@ export default {
       this.$emit("changeDueDate", dueDate);
     },
     removeBoard() {
-      this.$emit("removeBoard");
+      if (prompt("sure?")) this.$emit("removeBoard");
+    },
+    backToMenu() {
+      this.isActivityLog = false;
+      this.isAbout = false;
+      this.isBackground = false;
+      this.isMainMenu = true;
+      console.log(this.isMainMenu);
     },
   },
   components: {
@@ -77,7 +106,7 @@ export default {
     boardBackground,
   },
   created() {
-    console.log(this.dueDate);
+    console.log(this.isMainMenu);
     // this.boardToEdit = JSON.parse(JSON.stringify(this.board));
     // document.body.addEventListener("keyup", this.onKeyUp);
   },
