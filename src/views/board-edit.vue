@@ -329,6 +329,12 @@ export default {
       const updatedBoard = await boardService.getById(this.board._id);
 			this.board = updatedBoard;
       await eventBusService.$emit("boardBgc", this.board.style);
+      this.members = [];
+      this.board.members.forEach(async (member) => {
+			var memberObject = await this.getMember(member);
+			this.members.push(memberObject);
+		});
+      if (this.currTask) this.currTask = this.board.lists[this.currListIdx].tasks[this.currTaskIdx];
 		}
 	},
 	computed: {

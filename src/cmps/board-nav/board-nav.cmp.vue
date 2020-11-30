@@ -59,6 +59,11 @@ export default {
       this.$emit("updateBoardName", this.nameToEdit);
     },
   },
+  watch: {
+    name() {
+      this.nameToEdit = this.name;
+    }
+  },
   components: {
     boardMember,
   },

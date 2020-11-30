@@ -258,6 +258,14 @@ export default {
         });
       }
   },
+  watch: {
+    'task.name'() {
+      this.taskToEdit.name = this.task.name;
+    },
+    'task.description'() {
+      this.taskToEdit.description = this.task.description;
+    }
+  },
   computed: {
     taskActivites() {
       return this.activites.filter(

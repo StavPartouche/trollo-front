@@ -33,7 +33,6 @@
         >
           {{ descToEdit }}
         </p>
-
         <!-- <textarea
             class="justify-end"
             type="text"
@@ -69,6 +68,12 @@ export default {
       var src = evt.target.innerText;
       this.descToEdit = src;
       this.$emit("updateBoardDesc", this.descToEdit);
+    },
+  },
+  watch: {
+    description() {
+      console.log('watchinggg');
+      this.descToEdit = this.description;
     },
   },
   computed: {},

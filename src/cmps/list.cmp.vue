@@ -142,6 +142,11 @@ export default {
       // ev.item.classList.toggle('tilt');
     },
   },
+  watch: {
+    'list.name'() {
+      this.listName = this.list.name;
+    }
+  },
   computed: {
     dragOptions() {
       return {
