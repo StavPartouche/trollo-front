@@ -90,6 +90,7 @@ export default {
   methods: {
     toggleListEdit() {
       this.isListEdit = !this.isListEdit;
+      this.$emit('toggleDisable')
     },
     updateListName(evt) {
       var src = evt.target.innerText;

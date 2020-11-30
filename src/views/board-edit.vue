@@ -45,6 +45,7 @@
                 @addTask="addTask"
                 @updateList="updateBoard"
                 @updateListName="updateListName"
+                @toggleDisable="toggleDisable"
               />
             </li>
           </draggable>

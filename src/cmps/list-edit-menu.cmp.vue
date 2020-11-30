@@ -1,11 +1,11 @@
 <template>
-  <div @click="closeMenu" class="list-edit-menu-container">
+  <!-- <div @click="closeMenu" class="list-edit-menu-container"> -->
     <div class="list-edit-menu">
       <h3>Edit List</h3>
       <button @click="removeList(listIdx)">Delete List</button>
       <button @click="toggleAdd">Add card</button>
     </div>
-  </div>
+  <!-- </div> -->
 </template>
 
 <script>
