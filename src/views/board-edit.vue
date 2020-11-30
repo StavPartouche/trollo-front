@@ -15,8 +15,8 @@
       @removeBoard="removeBoard"
       @saveBoardBgc="saveBoardBgc"
       @updateBoardName="updateBoardName"
-      @changeDesc="changeDesc"
-      @changeDueDate="changeDueDate"
+      @updateBoardDesc="updateBoardDesc"
+      @updateBoardDueDate="updateBoardDueDate"
       :name="board.name"
       :description="board.description"
       :dueDate="board.dueDate"
@@ -155,11 +155,11 @@ export default {
       });
       this.$router.push("/board");
     },
-    changeDesc(desc) {
+    updateBoardDesc(desc) {
       this.board.description = desc;
       this.updateBoard();
     },
-    changeDueDate(dueDate) {
+    updateBoardDueDate(dueDate) {
       this.board.dueDate = dueDate;
       this.updateBoard();
     },

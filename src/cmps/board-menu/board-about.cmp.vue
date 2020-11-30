@@ -1,37 +1,48 @@
 <template>
-  <form
-    class="board-setting"
-    @submit.prevent="saveChanges"
-    action=""
-  >
+  <div class="board-about" action="">
     <div class="menu-header">
       <h3>About this board</h3>
-      <button class="btn-back-to-menu" @click="backToMenu">Back</button>
+      <button class="btn-back-to-menu" @click="backToMenu">
+        <font-awesome-icon :icon="['fas', 'chevron-left']" />
+      </button>
     </div>
 
-    <hr>
+    <hr />
+    <ul>
+      <li class="bold">
+        <h3>{{ name }}</h3>
+      </li>
+      <!-- <li>Made By</li> -->
+      <li>
+        <h4>Due Date:</h4>
 
-    <h5>{{ name }}</h5>
-    <h5>Made By</h5>
-    <label class="flex align-center" for="">
-      Due Date:
-      <input
-        class="justify-end"
-        type="date"
-        v-model="dueDate"
-        @change="changeDueDate"
-      />
-    </label>
-    <label class="flex align-center" for="">
-      Description:
-      <textarea
-        class="justify-end"
-        type="text"
-        v-model="description"
-        @change="changeDesc"
-      />
-    </label>
-  </form>
+        <input
+          class="justify-end"
+          type="date"
+          v-model="dueDateEdit"
+          @change="updateBoardDueDate"
+        />
+      </li>
+      <li>
+        <h4>Description:</h4>
+        <p
+          class="board-desc-content"
+          contenteditable
+          @blur="updateBoardDesc"
+          v-text="descToEdit"
+        >
+          {{ descToEdit }}
+        </p>
+
+        <!-- <textarea
+            class="justify-end"
+            type="text"
+            v-model="description"
+            @change="changeDesc"
+          /> -->
+      </li>
+    </ul>
+  </div>
 </template>
 
 <script>
@@ -43,23 +54,28 @@ export default {
     dueDate: String,
   },
   data() {
-    return {};
+    return {
+      descToEdit: null,
+    };
   },
   methods: {
-    changeDesc() {
-      this.$emit("changeDesc", this.description);
-    },
-    changeDueDate() {
-      this.$emit("changeDueDate", this.dueDate);
+    updateBoardDueDate() {
+      this.$emit("updateBoardDueDate", this.dueDateEdit);
     },
     backToMenu() {
       this.$emit("backToMenu");
     },
+    updateBoardDesc(evt) {
+      var src = evt.target.innerText;
+      this.descToEdit = src;
+      this.$emit("updateBoardDesc", this.descToEdit);
+    },
   },
   computed: {},
   created() {
+    this.descToEdit = this.description;
+    this.dueDateEdit = this.dueDate;
   },
-  components: {
-  },
+  components: {},
 };
 </script>

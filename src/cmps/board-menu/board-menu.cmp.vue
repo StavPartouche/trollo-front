@@ -1,6 +1,6 @@
 <template>
   <div class="board-menu">
-    <div v-if="isMainMenu">
+    <div v-if="isMainMenu" class="main-menu">
       <div class="menu-header">
       <h3 >Menu</h3>
       </div>
@@ -17,8 +17,8 @@
     </div>
           <board-about
         @backToMenu="backToMenu"
-        @changeDesc="changeDesc"
-        @changeDueDate="changeDueDate"
+        @updateBoardDesc="updateBoardDesc"
+        @updateBoardDueDate="updateBoardDueDate"
         @removeBoard="removeBoard"
         v-if="isAbout"
         :name="name"
@@ -77,11 +77,12 @@ export default {
       console.log(this.isMainMenu);
     },
 
-    changeDesc(desc) {
-      this.$emit("changeDesc", desc);
+    updateBoardDesc(desc) {
+      console.log('update desc');
+      this.$emit("updateBoardDesc", desc);
     },
-    changeDueDate(dueDate) {
-      this.$emit("changeDueDate", dueDate);
+    updateBoardDueDate(dueDate) {
+      this.$emit("updateBoardDueDate", dueDate);
     },
     removeBoard() {
       if (prompt("sure?")) this.$emit("removeBoard");
