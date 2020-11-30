@@ -1,4 +1,8 @@
 .login-page {
+    .login-err-msg{
+        color: #e80000;
+        font-weight: bold;
+    }
     .login-signup-txt {
         a {
             text-decoration: underline;
