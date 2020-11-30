@@ -29,9 +29,8 @@ export default {
   },
   methods: {
       addComment(){
-        console.log('comments',this.commentTxt);
-          this.$emit('addComment', this.commentTxt)
-          this.commentTxt = ''
+        this.$emit('addComment', this.commentTxt)
+        this.commentTxt = ''
       }
   },
   computed: {
@@ -41,7 +40,7 @@ export default {
     userAvatar
   },
   created(){
-    console.log(this.comments);
+
   }
 };
 </script>

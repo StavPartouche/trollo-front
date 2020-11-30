@@ -2,7 +2,7 @@
   <!-- <div @click="closeMenu" class="list-edit-menu-container"> -->
     <div class="list-edit-menu">
       <h3>Edit List</h3>
-      <button @click="removeList(listIdx)">Delete List</button>
+      <button @click="openWarning(listIdx)">Delete List</button>
       <button @click="toggleAdd">Add card</button>
     </div>
   <!-- </div> -->
@@ -28,7 +28,25 @@ export default {
     toggleAdd() {
       this.$emit("toggleListEdit");
       this.$emit("toggleAdd");
-    }
+    },
+    openWarning(listIdx) {
+        this.$confirm('This will permanently delete the task. Continue?', 'Warning', {
+          confirmButtonText: 'Delete',
+          cancelButtonText: 'Cancel',
+          type: 'warning'
+        }).then(() => {
+          this.removeList(listIdx)
+          this.$message({
+            type: 'success',
+            message: 'Delete completed'
+          });
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: 'Delete canceled'
+          });          
+        });
+      }
   },
 };
 </script>

@@ -104,7 +104,6 @@ export default {
 		},
 	},
 	created() {
-		console.log('this.loggedinUser', this.loggedinUser);
 	},
 	methods: {
 		async doLogin() {

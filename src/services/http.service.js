@@ -21,7 +21,6 @@ export const httpService =  {
         return ajax(endpoint, 'PUT', data)
     },
     delete(endpoint, data){
-        console.log("http-service");
         return ajax(endpoint, 'DELETE', data)
     }
 }

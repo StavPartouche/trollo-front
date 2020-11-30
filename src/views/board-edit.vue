@@ -177,11 +177,8 @@ export default {
 
     // LIST
     removeList(listIdx) {
-      const confirmRemove = confirm("sure?");
-      if (confirmRemove) {
-        this.board.lists.splice(listIdx, 1);
-        this.updateBoard();
-      }
+      this.board.lists.splice(listIdx, 1);
+      this.updateBoard();
     },
     openTask(idxs) {
       this.currTask = this.board.lists[idxs.listIdx].tasks[idxs.taskIdx];
@@ -219,7 +216,6 @@ export default {
       this.updateBoard();
     },
     addCheckList(checkListData){
-      console.log('1');
       const currCheckLists = this.currTask.checkLists;
         const newChechList = {
           title: checkListData.title,

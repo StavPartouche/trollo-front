@@ -17,7 +17,6 @@ export default {
 	},
 	methods: {
 		addCheckList(value){
-			console.log('value');
 			this.$emit('addCheckList', value)
 		},
 		closePopup(){

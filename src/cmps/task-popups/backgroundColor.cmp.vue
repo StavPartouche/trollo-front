@@ -34,8 +34,8 @@ export default {
       this.$emit("closePopup");
     },
     setTaskColor(ev){
-        console.log(event.target.style.backgroundColor);
         this.$emit('setTaskColor', event.target.style.backgroundColor)
+        closePopup()
     }
   },
 };
