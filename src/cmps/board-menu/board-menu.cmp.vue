@@ -15,7 +15,6 @@
         <li class="menu-btn" @backToMenu="backToMenu">Activity-log</li>
       </ul>
     </div>
-    <!-- {{isMainMenu}} -->
           <board-about
         @backToMenu="backToMenu"
         @changeDesc="changeDesc"
@@ -54,13 +53,12 @@ export default {
       isActivityLog: false,
       isAbout: false,
       isBackground: false,
-      isMainMenu: true,
     };
   },
   computed: {
-    // isMainMenu(){
-    //   // return (!(this.isActivityLog || this.isAbout || this.isBackground))
-    // }
+    isMainMenu(){
+      return (!(this.isActivityLog || this.isAbout || this.isBackground))
+    }
   },
   methods: {
     saveBoardBgc(bgc) {
@@ -68,22 +66,17 @@ export default {
     },
     toggleActivityLog() {
       this.isActivityLog = !this.isActivityLog;
-      this.isMainMenu = !this.isMainMenu;
       console.log(this.isMainMenu);
     },
     toggleIsAbout() {
       this.isAbout = !this.isAbout;
-      this.isMainMenu = !this.isMainMenu;
       console.log(this.isMainMenu);
     },
     toggleIsBackground() {
       this.isBackground = !this.isBackground;
-      this.isMainMenu = !this.isMainMenu;
       console.log(this.isMainMenu);
     },
-    // updateBoardName(name) {
-    //   this.$emit("updateBoardName", name);
-    // },
+
     changeDesc(desc) {
       this.$emit("changeDesc", desc);
     },
@@ -97,7 +90,6 @@ export default {
       this.isActivityLog = false;
       this.isAbout = false;
       this.isBackground = false;
-      this.isMainMenu = true;
       console.log(this.isMainMenu);
     },
   },

@@ -46,9 +46,6 @@ export default {
     return {};
   },
   methods: {
-    // updateBoardName() {
-    //   this.$emit("updateBoardName", this.name);
-    // },
     changeDesc() {
       this.$emit("changeDesc", this.description);
     },
@@ -61,11 +58,8 @@ export default {
   },
   computed: {},
   created() {
-    // this.boardToEdit = JSON.parse(JSON.stringify(this.board));
-    // console.log(this.boardToEdit.style.url);
   },
   components: {
-    // boardBackground,
   },
 };
 </script>

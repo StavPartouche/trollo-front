@@ -19,8 +19,6 @@
       </li>
     </ul>
     <div class="invite" v-if="showInvite">
-      <!-- <pre>{{membersToInvite}}</pre>
-      <pre>{{membersToInvite === []}}</pre> -->
       <p  v-if="!membersToInvite" >No users to show</p>
       <input v-else  type="text" placeholder="Search member" v-model="filterBy" />
       <ul>
@@ -33,7 +31,6 @@
         <user-avatar :user="member"></user-avatar>
           <p>{{ member.userName }}</p>
         </li>
-        <!-- <li v-for="member in allMembers" :key="member._id">member {{ member.userName }}</li> -->
       </ul>
     </div>
   </div>
