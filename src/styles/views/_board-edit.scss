@@ -1,134 +1,132 @@
 .board-edit {
-  flex: 1;
-  & > .vuescroll {
-    display: flex;
-    flex-direction: column;
     flex: 1;
-    max-height: calc(100vh - 90px);
-    .__rail-is-vertical,
-    .__rail-is-horizontal {
-      border-radius: 0 !important;
+    &>.vuescroll {
+        // background-color: black;
+        // display: flex;
+        // flex-direction: column;
+        flex: 1;
+        // max-height: calc(100vh - 90px);
+        .__rail-is-vertical,
+        .__rail-is-horizontal {
+            border-radius: 0 !important;
+        }
+        .__rail-is-vertical {
+            margin-inline-end: -2px;
+        }
     }
-    .__rail-is-vertical {
-      margin-inline-end: -2px;
-    }
-  }
-  .lists-container {
-    height: 546px;
     .add-list-btn {
-      background-color: #ebecf0;
-      min-width: 250px;
-      text-align: center;
-      height: 30px;
-      margin: 10px;
-      .fa-plus {
-        margin-right: 3px;
-        margin-bottom: 1px;
-      }
-      span {
-        font-size: 16px;
-        font-weight: bold;
-      }
+        background-color: #ebecf0;
+        min-width: 250px;
+        text-align: center;
+        height: 30px;
+        margin: 10px;
+        .fa-plus {
+            margin-right: 3px;
+            margin-bottom: 1px;
+        }
+        span {
+            font-size: 16px;
+            font-weight: bold;
+        }
     }
-  }
-  .lists {
-    display: flex;
-    .list {
-      background-color: #ebecf0;
-      width: 250px;
-      margin: 10px 5px;
-      border-radius: 4px;
-      padding: 0 12px;
-      height: fit-content;
-      .add-item-input{
-        padding-bottom: 5px;
-      }
-      .list-edit-btn {
-        opacity: 0.4;
-      }
-        // .list-edit-menu-container{
-        //   position: absolute;
-        //   top: 0;
-        //   height: 100vh;
-        //   width: 100vw;
-        //   background-color: rgba(0, 0, 0, 0.411);
-        //   // background-color: transparent;
-        //   z-index: 2;
-        // }
-      .list-edit-menu {
-        position: absolute;
-        top: 30px;
-        transform: translateX(219px);
-        width: 150px;
-        border-radius: 5px;
-        background-color: #fff;
-        z-index: 3;
+    .lists {
         display: flex;
-        flex-direction: column;
-        h3 {
-          text-align: center;
-          width: 100%;
-          border-bottom: 1px solid rgba(9, 30, 66, 0.13);
-          color: #5e6c84;
-          font-size: 1rem;
-          padding-top: 9px;
-          padding-bottom: 9px;
-          margin-bottom: 0;
+        .list {
+            background-color: #ebecf0;
+            width: 250px;
+            margin: 10px 5px;
+            border-radius: 4px;
+            padding: 0 12px;
+            height: fit-content;
+            .add-item-input {
+                padding-bottom: 5px;
+            }
+            .list-edit-btn {
+                opacity: 0.4;
+            }
+            // .list-edit-menu-container{
+            //   position: absolute;
+            //   top: 0;
+            //   height: 100vh;
+            //   width: 100vw;
+            //   background-color: rgba(0, 0, 0, 0.411);
+            //   // background-color: transparent;
+            //   z-index: 2;
+            // }
+            .list-edit-menu {
+                position: absolute;
+                top: 30px;
+                transform: translateX(219px);
+                width: 150px;
+                border-radius: 5px;
+                background-color: #fff;
+                z-index: 3;
+                display: flex;
+                flex-direction: column;
+                h3 {
+                    text-align: center;
+                    width: 100%;
+                    border-bottom: 1px solid rgba(9, 30, 66, 0.13);
+                    color: #5e6c84;
+                    font-size: 1rem;
+                    padding-top: 9px;
+                    padding-bottom: 9px;
+                    margin-bottom: 0;
+                }
+                button {
+                    text-align: start;
+                    background-color: transparent;
+                    padding: 6px 12px;
+                    font-size: 0.875rem;
+                    line-height: 1.25rem;
+                    color: #172b4d;
+                }
+            }
+            .add-task-btn {
+                background-color: transparent;
+                font-size: rem(16px);
+                padding: 10px 0;
+            }
+            input {
+                background-color: transparent;
+                border: none;
+                border-radius: 0px;
+                border-bottom: gray solid 0.5px;
+                font-size: 1rem;
+            }
+            .list-header-container {
+                // width: 94%;
+                margin-bottom: 5px;
+                margin-top: 5px;
+                .list-header {
+                    padding: 5px;
+                    font-size: 1rem;
+                    margin: 0;
+                }
+            }
+            .task-preview {
+                width: 100%;
+                border-radius: 5px;
+                background-color: #f7f7f7;
+                box-shadow: 0px 1px 1px #888888;
+                padding: 8px;
+                margin-bottom: 10px;
+                cursor: pointer;
+                .task-preview-header {
+                    h4 {
+                        margin-bottom: 10px;
+                        font-weight: normal;
+                    }
+                }
+                .preview-img {
+                    width: 100%;
+                    margin-top: 5px;
+                }
+            }
+            .preview-img {
+                width: 100%;
+                margin-top: 5px;
+            }
         }
-        button {
-          text-align: start;
-          background-color: transparent;
-          padding: 6px 12px;
-          font-size: 0.875rem;
-          line-height: 1.25rem;
-          color: #172b4d;
-        }
-      }
-      .add-task-btn {
-        background-color: transparent;
-        font-size: rem(16px);
-        padding: 10px 0;
-      }
-      input {
-        background-color: transparent;
-        border: none;
-        border-radius: 0px;
-        border-bottom: gray solid 0.5px;
-        font-size: 1rem;
-      }
-      .list-header-container {
-        // width: 94%;
-        margin-bottom: 5px;
-        margin-top: 5px;
-        .list-header {
-          padding: 5px;
-          font-size: 1rem;
-          margin: 0;
-        }
-      }
-      .task-preview {
-        width: 100%;
-        border-radius: 5px;
-        background-color: #f7f7f7;
-        box-shadow: 0px 1px 1px #888888;
-        padding: 8px;
-        margin-bottom: 10px;
-        cursor: pointer;
-        .task-preview-header {
-          h4 {
-            margin-bottom: 10px;
-            font-weight: normal;
-          }
-        }
-        .preview-img {
-          width: 100%;
-          margin-top: 5px;
-        }
-      }
-      .preview-img {
-        width: 100%;
-        margin-top: 5px;
-      }
     }
-  }
 }

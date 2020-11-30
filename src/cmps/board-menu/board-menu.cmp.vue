@@ -1,6 +1,6 @@
 <template>
   <div class="board-menu">
-    <div v-if="isMainMenu">
+    <div v-if="isMainMenu" class="main-menu">
       <div class="menu-header">
       <h3 >Menu</h3>
       </div>
@@ -15,11 +15,10 @@
         <li class="menu-btn" @backToMenu="backToMenu">Activity-log</li>
       </ul>
     </div>
-    <!-- {{isMainMenu}} -->
           <board-about
         @backToMenu="backToMenu"
-        @changeDesc="changeDesc"
-        @changeDueDate="changeDueDate"
+        @updateBoardDesc="updateBoardDesc"
+        @updateBoardDueDate="updateBoardDueDate"
         @removeBoard="removeBoard"
         v-if="isAbout"
         :name="name"
@@ -54,13 +53,12 @@ export default {
       isActivityLog: false,
       isAbout: false,
       isBackground: false,
-      isMainMenu: true,
     };
   },
   computed: {
-    // isMainMenu(){
-    //   // return (!(this.isActivityLog || this.isAbout || this.isBackground))
-    // }
+    isMainMenu(){
+      return (!(this.isActivityLog || this.isAbout || this.isBackground))
+    }
   },
   methods: {
     saveBoardBgc(bgc) {
@@ -68,27 +66,23 @@ export default {
     },
     toggleActivityLog() {
       this.isActivityLog = !this.isActivityLog;
-      this.isMainMenu = !this.isMainMenu;
       console.log(this.isMainMenu);
     },
     toggleIsAbout() {
       this.isAbout = !this.isAbout;
-      this.isMainMenu = !this.isMainMenu;
       console.log(this.isMainMenu);
     },
     toggleIsBackground() {
       this.isBackground = !this.isBackground;
-      this.isMainMenu = !this.isMainMenu;
       console.log(this.isMainMenu);
     },
-    // updateBoardName(name) {
-    //   this.$emit("updateBoardName", name);
-    // },
-    changeDesc(desc) {
-      this.$emit("changeDesc", desc);
+
+    updateBoardDesc(desc) {
+      console.log('update desc');
+      this.$emit("updateBoardDesc", desc);
     },
-    changeDueDate(dueDate) {
-      this.$emit("changeDueDate", dueDate);
+    updateBoardDueDate(dueDate) {
+      this.$emit("updateBoardDueDate", dueDate);
     },
     removeBoard() {
       if (prompt("sure?")) this.$emit("removeBoard");
@@ -97,7 +91,6 @@ export default {
       this.isActivityLog = false;
       this.isAbout = false;
       this.isBackground = false;
-      this.isMainMenu = true;
       console.log(this.isMainMenu);
     },
   },

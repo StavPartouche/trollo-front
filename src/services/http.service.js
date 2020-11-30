@@ -21,7 +21,6 @@ export const httpService =  {
         return ajax(endpoint, 'PUT', data)
     },
     delete(endpoint, data){
-        console.log("http-service");
         return ajax(endpoint, 'DELETE', data)
     }
 }
@@ -37,7 +36,7 @@ async function ajax(endpoint, method='get', data=null) {
         return res.data;
     } catch (err) {
         if (err.response.status === 401) {
-            router.push('/');
+            if(!endpoint.contains('auth')) router.push('/');
         }
         console.log(`Had issues ${method}ing to server`, err)
         throw err;

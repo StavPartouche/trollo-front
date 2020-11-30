@@ -72,7 +72,10 @@
             :boardMembers="members"
             :labels="labels"
             :is="cmpType"
-            @taskUpdate="updateTask"
+            @addCheckList="addCheckList"
+            @addMemberToTask="addMemberToTask"
+            @removeMemberfromTask="removeMemberfromTask"
+            @updateDueDate="updateDueDate"
             @closePopup="closePopup"
             @toggleLabel="toggleLabel"
             @setTaskColor="setTaskColor"
@@ -100,7 +103,7 @@
               @change="onUploadImg"
             />
           </label>
-          <button class="side-bar-btn delete-task-btn" @click="removeTask()">
+          <button class="side-bar-btn delete-task-btn" @click="openWarning">
             Delete Task
           </button>
         </div>
@@ -155,11 +158,9 @@ export default {
   },
   methods: {
     removeTask(){
-      const isSure = confirm('are you sure?')
-      if(isSure) this.$emit('removeTask')
+      this.$emit('removeTask')
     },
     setTaskColor(bgc){
-      console.log(bgc);
       this.$emit('setTaskColor', bgc)
     },
     toggleLabel(label){
@@ -180,51 +181,33 @@ export default {
     async onUploadImg(ev) {
       this.isLoading = true;
       const res = await uploadImg(ev);
-      // this.signupCred.imgUrl = res.url;
-      this.$emit("updateTask", {
-        type: "UploadImg",
-        value: res.url,
-      });
+      this.$emit("UploadImg", res.url);
     },
     updateTaskName(evt) {
       var src = evt.target.innerText;
-      this.taskToEdit.name = src;
-      this.$emit("updateTask", {
-        type: "updateTaskName",
-        value: this.taskToEdit,
-      });
+      this.$emit("updateTaskName", src);
     },
     updateTaskDesc() {
-      this.$emit("updateTask", {
-        type: "updateTaskDesc",
-        value: this.taskToEdit,
-      });
+      this.$emit("updateTaskDesc", this.taskToEdit.description);
     },
-    updateTask(updates) {
-      if (updates.type === "checkList") {
-        var newCheckList = {
-          type: updates.type,
-          title: updates.value,
+    addCheckList(title){
+      var newCheckList = {
+          title: title,
           items: [],
         };
-        this.$emit("updateTask", newCheckList);
+        this.$emit("addCheckList", newCheckList);
         this.closePopup();
-      }
-      if (updates.type === "addMemberToTask") {
-        this.$emit("updateTask", updates);
-      }
-      if (updates.type === "removeMemberToTask") {
-        this.$emit("updateTask", updates);
-      }
-      if (updates.type === "updateDueDate") {
-        this.$emit("updateTask", updates);
-      }
-      // else{
-      //     this.$emit('updateTask', updates)
-      // }
+    },
+    addMemberToTask(memberId){
+      this.$emit("addMemberToTask", memberId);
+    },
+    removeMemberfromTask(memberIdx){
+      this.$emit("removeMemberfromTask", memberIdx);
+    },
+    updateDueDate(newDate){
+      this.$emit("updateDueDate", newDate);
     },
     addComment(commentTxt) {
-      console.log("dets", commentTxt);
       this.$emit("addComment", commentTxt);
     },
     addItem(itemInfo) {
@@ -248,7 +231,6 @@ export default {
       (this.cmpType = type), (this.isPopup = true);
     },
     closePopup() {
-      console.log('close popup');
       (this.cmpType = ""), (this.isPopup = false);
     },
     onKeyUp(ev) {
@@ -257,6 +239,24 @@ export default {
         else this.closeDetails();
       }
     },
+    openWarning() {
+        this.$confirm('This will permanently delete the task. Continue?', 'Warning', {
+          confirmButtonText: 'Delete',
+          cancelButtonText: 'Cancel',
+          type: 'warning'
+        }).then(() => {
+          this.removeTask()
+          this.$message({
+            type: 'success',
+            message: 'Delete completed'
+          });
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: 'Delete canceled'
+          });          
+        });
+      }
   },
   computed: {
     taskActivites() {

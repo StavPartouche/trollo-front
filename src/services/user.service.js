@@ -27,8 +27,13 @@ function update(user) {
 }
 
 async function login(userCred) {
-    const user = await httpService.post('auth/login',userCred);
-    return (user) ? _handleLogin(user) : false;
+    try{
+        const user = await httpService.post('auth/login',userCred);
+        return (user) ? _handleLogin(user) : false;
+    }
+    catch{
+        return false
+    }
 }
 
 async function signup(userCred) {

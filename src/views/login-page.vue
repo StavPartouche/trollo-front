@@ -22,6 +22,7 @@
 					<i class="far fa-eye"></i>
 				</button>
 				<br />
+				<p class="login-err-msg" v-if="msg">{{msg}}</p>
 				<button>Login</button>
 				<h5 class="login-signup-txt">
 					Not a user? <a href="#" @click="toggleLogin">Sign Up</a>
@@ -67,6 +68,7 @@
 				</label>
 				<user-avatar v-if="signupCred.imgUrl" :width="80" :user="{imgUrl: signupCred.imgUrl}"></user-avatar>
 				<br />
+				<p class="login-err-msg" v-if="msg">{{msg}}</p>
 				<button>Signup</button>
 				<h5 class="login-signup-txt">
 					Already a user? <a href="#" @click="toggleLogin">Login</a>
@@ -103,18 +105,22 @@ export default {
 			return this.$store.getters.loggedinUser;
 		},
 	},
+	created() {
+	},
 	methods: {
 		async doLogin() {
 			const cred = this.loginCred;
 			if (!cred.userName || !cred.password) return this.msg = 'Please enter userName/password';
-			await this.$store.dispatch({ type: 'login', userCred: cred });
-			this.loginCred = {};
-			this.$router.push('/board');
+			const user = await this.$store.dispatch({ type: 'login', userCred: cred });
+			if(user){
+				this.loginCred = {};
+				this.$router.push('/board');
+			}else this.msg = 'Invalid userName/password'
 		},
 		doSignup() {
 			const cred = this.signupCred;
 			if (!cred.imgUrl) cred.imgUrl = '';
-			if (!cred.userName || !cred.fullName || !cred.password) return this.msg = 'Please fill up the form';
+			if (!cred.userName || !cred.fullName || !cred.password) return this.msg = 'Please fill up all the fields ';
 			this.$store.dispatch({ type: 'signup', userCred: cred });
 			this.signupCred = {};
 			this.$router.push('/board');
@@ -135,6 +141,7 @@ export default {
 			this.isLoading = false;
 		},
 		toggleLogin() {
+			this.msg = ''
 			this.isLogin = !this.isLogin;
 		},
 		togglePassword() {
