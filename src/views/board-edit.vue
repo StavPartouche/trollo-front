@@ -22,8 +22,8 @@
       :dueDate="board.dueDate"
     ></board-menu>
     <vue-scroll class="vuescroll" :ops="ops">
-      <div class="lists-container flex">
-        <ul class="lists" v-if="board">
+      <!-- <div class=""> -->
+        <ul class="lists lists-container flex" v-if="board">
           <draggable
             class="flex"
             :list="board.lists"
@@ -52,7 +52,7 @@
         <button class="add-list-btn" @click="addList">
           <i class="fas fa-plus"></i><span>Add list</span>
         </button>
-      </div>
+      <!-- </div> -->
     </vue-scroll>
     <task-details
       v-if="currTask"
