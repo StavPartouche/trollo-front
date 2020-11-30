@@ -85,7 +85,7 @@ export default {
       this.$emit("updateBoardDueDate", dueDate);
     },
     removeBoard() {
-      if (prompt("sure?")) this.$emit("removeBoard");
+      if (confirm("sure?")) this.$emit("removeBoard");
     },
     backToMenu() {
       this.isActivityLog = false;
