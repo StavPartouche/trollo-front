@@ -141,6 +141,17 @@ export default {
         this.updateBoard();
       }
     },
+    addList() {
+      var newList = boardService.getEmptyList();
+      newList.name = prompt("Enter List name");
+      if (!newList.name) return;
+      this.board.lists.push(newList);
+      this.updateBoard();
+    },
+    updateListName(updates) {
+      this.board.lists[updates.listIdx].name = updates.newName;
+      this.updateBoard();
+    },
     addComment(commentTxt) {
       var comment = {
         txt: commentTxt,
