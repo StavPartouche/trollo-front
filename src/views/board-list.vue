@@ -15,11 +15,13 @@
 					:offset="1"
 				>
 					<router-link :to="'/board/' + board._id">
-						<el-card class="flex center"  :body-style="{ padding: '0px' }">
+						<el-card
+							class="flex center"
+							:body-style="{ padding: '0px' }"
+						>
 							<div style="padding: 14px">
 								<span>{{ board.name }}</span>
-								<div class="bottom clearfix">
-								</div>
+								<div class="bottom clearfix"></div>
 							</div>
 						</el-card>
 					</router-link>
@@ -30,7 +32,10 @@
 		<h2>Public Boards:</h2>
 		<el-row class="flex justify-center wrap">
 			<el-col v-if="!loggedInUser" :span="2" :offset="0">
-				<el-card class="flex center"  :body-style="{height: '75px'}"  @click.native="addBoard"
+				<el-card
+					class="flex center"
+					:body-style="{ height: '75px' }"
+					@click.native="addBoard"
 					><img class="plus-icon" src="../styles/assets/plus.png"
 				/></el-card>
 			</el-col>
@@ -44,8 +49,7 @@
 					<el-card :body-style="{ padding: '0px', height: '75px' }">
 						<div style="padding: 14px">
 							<span>{{ board.name }}</span>
-							<div class="bottom clearfix">
-							</div>
+							<div class="bottom clearfix"></div>
 						</div>
 					</el-card>
 				</router-link>
@@ -70,8 +74,9 @@
 
 <script>
 import { boardService } from "../services/board.service.js";
-import {eventBusService} from '../services/eventBus.service'
-
+import { eventBusService } from '../services/eventBus.service';
+import socket from '@/services/socket.service';
+import io from 'socket.io-client';
 
 export default {
 	name: "board-list",
@@ -108,12 +113,17 @@ export default {
 		}
 	},
 	created() {
+		const user = (sessionStorage.getItem('user')) ? JSON.parse(sessionStorage.getItem('user')) : {userName: 'guest'}
+		socket.setup(user);
+		socket.emit('user connect', user);
 		this.$store.dispatch({
 			type: "loadBoards",
-    });
-	// eventBusService.$emit('boardBgc', {type: 'img', img:'desk3.jpg'})
-	eventBusService.$emit('boardBgc', {url: 'desk5.jpg'})
+		});
+		// eventBusService.$emit('boardBgc', {type: 'img', img:'desk3.jpg'})
+		eventBusService.$emit('boardBgc', { url: 'desk5.jpg' });
 	},
-
+	destroyed() {
+		socket.terminate();
+	}
 };
 </script>

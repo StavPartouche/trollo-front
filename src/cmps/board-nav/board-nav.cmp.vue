@@ -1,7 +1,7 @@
 <template>
   <div class="board-nav flex justify-space-between align-center">
     <div class="widht-200 flex justify-start align-center">
-      <h2 contenteditable @blur="updateBoardName" v-text="nameToEdit">{{name }}</h2>
+      <h2 contenteditable @blur="updateBoardName" v-text="nameToEdit">{{name}}</h2>
       <div class="board-setting-container">
       </div>
     </div>

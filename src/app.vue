@@ -12,6 +12,8 @@
 <script>
 import appHeader from "../src/cmps/app-header.cmp";
 import { eventBusService } from "./services/eventBus.service";
+import socket from '@/services/socket.service';
+import io from 'socket.io-client';
 
 export default {
   name: "app",
@@ -36,9 +38,9 @@ export default {
       }
       return "";
     },
-  },
-  components: {
-    appHeader,
+    loggedInUser() {
+      return this.$store.getters.loggedInUser;
+    }
   },
   watch: {
     $route(to, from) {
@@ -53,6 +55,9 @@ export default {
     },
   },
   created() {
+    const user = this.loggedInUser || {userName: 'guest'};
+		socket.setup(user);
+		socket.emit('user connect', user)
     this.$store.dispatch({
       type: "loadUsers",
     });
@@ -79,6 +84,12 @@ export default {
         this.bgcImg = bgc.url;
       }
     });
+  },
+  destroyed() {
+		socket.terminate();
+  },
+  components: {
+    appHeader,
   },
 };
 </script>
