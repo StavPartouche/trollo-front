@@ -32,6 +32,7 @@ export default {
 	},
 	methods: {
 		onLogout() {
+			this.toggleMenu()
 			this.$store.dispatch({type: 'logout'})
 			if (this.$router.currentRoute.path !== '/') this.$router.push('/');
 		},
