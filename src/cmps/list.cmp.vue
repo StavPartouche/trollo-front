@@ -6,6 +6,7 @@
         contenteditable
         @blur="updateListName"
         v-text="listName"
+        :id="'list'+listIdx"
       >
         {{ list.name }}
       </h2>

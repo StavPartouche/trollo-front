@@ -89,11 +89,11 @@
 <script>
 import { boardService } from "../services/board.service.js";
 import { userService } from "../services/user.service.js";
+import { eventBusService } from "../services/eventBus.service";
 import boardNav from "../cmps/board-nav/board-nav.cmp";
 import boardMenu from "../cmps/board-menu/board-menu.cmp";
 import taskDetails from "../cmps/task-details/task-details.cmp";
 import list from "../cmps/list.cmp";
-import { eventBusService } from "../services/eventBus.service";
 import draggable from "vuedraggable";
 
 export default {
@@ -300,12 +300,12 @@ export default {
     },
     
     // GENERAL BOARD
-    addList() {
-      var newList = boardService.getEmptyList();
-      newList.name = prompt("Enter List name");
-      if (!newList.name) return;
+    async addList() {
+      var newList = boardService.getEmptyList('Enter list name');
       this.board.lists.push(newList);
-      this.updateBoard();
+      await this.updateBoard();
+      const newListIdx = this.board.lists.length - 1
+      document.getElementById(`list${newListIdx}`).focus();
     },
     async getMember(memberId) {
       const member = await userService.getById(memberId);
