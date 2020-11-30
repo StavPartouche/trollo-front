@@ -7,15 +7,11 @@
       </button>
     </div>
     <hr />
-    <button type="button" @click.stop="setType('color')" title="colors">
-      <i class="fas fa-palette"></i>
-    </button>
-    <button type="button" @click.stop="setType('img')" title="photos">
-      <i class="fas fa-image"></i>
-    </button>
+    <img class="bgc-img-preview" title="photos" @click="setType('img')" src="@/styles/assets/photos2.jpg" alt="">
+    <img class="bgc-img-preview" title="colors" @click="setType('color')" src="@/styles/assets/colors.png" alt="">
     <ul v-if="type === 'img'" class="flex wrap center">
-      <li class="img-circle" v-for="idx in 8" :key="idx">
-        <img
+      <li v-for="idx in 8" :key="idx">
+        <img class="bgc-img-preview"
           @click.stop="saveBoardBgc(idx)"
           :src="
             require(`@/styles/assets/board-background-imgs/bgc${idx}-mini.jpg`)
@@ -28,7 +24,7 @@
       <li v-for="idx in 8" :key="idx">
         <div
           @click.stop="saveBoardBgc(idx)"
-          class="circle-30"
+          class="bgc-img-preview"
           :style="{ backgroundColor: `${colors[idx - 1]}` }"
         ></div>
       </li>

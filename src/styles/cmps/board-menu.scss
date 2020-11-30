@@ -2,7 +2,7 @@
     z-index: 1;
     position: fixed;
     right: 0;
-    padding: 22px;
+    padding: 7px;
     // top: 70px;
     // padding-top: $board-nav-height;
     width: 300px;
@@ -12,15 +12,19 @@
     .menu-btn {
         cursor: pointer;
     }
-    li {
-        font-size: rem(18px);
-        padding: 10px;
-        &.bold {
-            font-size: rem(20px);
-            font-weight: bold;
-        }
-        .board-desc-content {
-            font-size: rem(15px);
+    .main-menu,
+    .board-about {
+        padding: 0 15px 15px 15px;
+        li {
+            font-size: rem(18px);
+            padding: 10px;
+            &.bold {
+                font-size: rem(20px);
+                font-weight: bold;
+            }
+            .board-desc-content {
+                font-size: rem(15px);
+            }
         }
     }
 }
@@ -31,12 +35,13 @@
     display: flex;
     flex-direction: row-reverse;
     justify-content: center;
-    margin-top: 23px;
+    margin-top: 37px;
     .btn-back-to-menu {
         background-color: transparent;
         position: absolute;
         left: 10px;
-        top: 40px;
+        top: 44px;
+        font-size: 18px;
         // &::before {
         //     content: ''
         // }
@@ -52,10 +57,10 @@
 //     width: 250px;
 //     padding: 22px;
 // }
-.img-circle {
-    cursor: pointer;
-    width: 30px;
-    img {
-        width: 30px;
-    }
-}
+// .img-circle {
+//     cursor: pointer;
+//     width: 30px;
+//     img {
+//         width: 30px;
+//     }
+// }

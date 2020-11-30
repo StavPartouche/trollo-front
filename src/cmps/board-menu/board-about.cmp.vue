@@ -2,11 +2,9 @@
   <div class="board-about" action="">
     <div class="menu-header">
       <h3>About this board</h3>
-      <!-- <button class="btn-back-to-menu" @click="backToMenu">Back</button> -->
-      <!-- <button class="btn-back-to-menu" @click="backToMenu"><i class="fas fa-chevron-left"></i></button> -->
-      <!-- <button class="btn-back-to-menu" @click="backToMenu"><font-awesome-icon icon="user-secret" /></button> -->
-      <!-- <button class="btn-back-to-menu" @click="backToMenu"><font-awesome-icon :icon="['fas', 'user-secret']" /></button> -->
-      <button class="btn-back-to-menu" @click="backToMenu"><font-awesome-icon :icon="['fas', 'chevron-left']" /></button>
+      <button class="btn-back-to-menu" @click="backToMenu">
+        <font-awesome-icon :icon="['fas', 'chevron-left']" />
+      </button>
     </div>
 
     <hr />

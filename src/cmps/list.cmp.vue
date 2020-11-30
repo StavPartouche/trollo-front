@@ -11,7 +11,9 @@
         {{ list.name }}
       </h2>
       <button class="list-edit-btn" @click="toggleListEdit">
-        <i class="fas fa-ellipsis-v"></i>
+        <font-awesome-icon
+        :icon="['fas', 'ellipsis-v']"
+      />
       </button>
       <list-edit-menu
         v-if="isListEdit"

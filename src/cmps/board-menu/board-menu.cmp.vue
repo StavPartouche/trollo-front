@@ -1,6 +1,6 @@
 <template>
   <div class="board-menu">
-    <div v-if="isMainMenu">
+    <div v-if="isMainMenu" class="main-menu">
       <div class="menu-header">
       <h3 >Menu</h3>
       </div>
