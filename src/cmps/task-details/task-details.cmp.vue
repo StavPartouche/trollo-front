@@ -65,7 +65,6 @@
             </div>
           </div>
         </vue-scroll>
-        <div class="side-bar">
           <component
             v-if="isPopup"
             :taskMembersIds="task.members"
@@ -80,29 +79,32 @@
             @toggleLabel="toggleLabel"
             @setTaskColor="setTaskColor"
           />
-          <button class="side-bar-btn" @click="openPopup('checkList')">
-            CheckList
-          </button>
-          <button class="side-bar-btn" @click="openPopup('labels')">
-            Labels
-          </button>
-          <button class="side-bar-btn" @click="openPopup('members')">
-            Members
-          </button>
-          <button class="side-bar-btn" @click="openPopup('dueDate')">
-            dueDate
-          </button>
-          <button class="side-bar-btn" @click="openPopup('backgroundColor')">
-            BackgroundColor
-          </button>
-          <label class="btn side-bar-btn">
-            Attachments
-            <input
-              class="add-attachments-input"
-              type="file"
-              @change="onUploadImg"
-            />
-          </label>
+        <div class="flex-column justify-space-between">
+          <div class="side-bar">
+            <button class="side-bar-btn" @click="openPopup('checkList')">
+              CheckList
+            </button>
+            <button class="side-bar-btn" @click="openPopup('labels')">
+              Labels
+            </button>
+            <button class="side-bar-btn" @click="openPopup('members')">
+              Members
+            </button>
+            <button class="side-bar-btn" @click="openPopup('dueDate')">
+              dueDate
+            </button>
+            <button class="side-bar-btn" @click="openPopup('backgroundColor')">
+              BackgroundColor
+            </button>
+            <label class="btn side-bar-btn">
+              Attachments
+              <input
+                class="add-attachments-input"
+                type="file"
+                @change="onUploadImg"
+              />
+            </label>
+          </div>
           <button class="side-bar-btn delete-task-btn" @click="openWarning">
             Delete Task
           </button>

@@ -21,7 +21,7 @@
         top: 50%;
         right: 50%;
         transform: translate(50%, -50%);
-        width: 800px;
+        width: 80%;
         height: 80%;
         background-color: $task-details-bgc;
         border-radius: 10px;
@@ -84,7 +84,6 @@
             .side-bar {
                 display: flex;
                 flex-direction: column;
-                width: 25%;
                 padding-left: 5px;
                 font-size: rem(15px);
                 .side-bar-btn {
@@ -104,10 +103,11 @@
                     opacity: 0;
                     cursor: pointer;
                 }
-                .delete-task-btn{
-                    color: white;
-                    background-color: #940000;
-                }
+            }
+            .delete-task-btn{
+                color: white;
+                background-color: #940000;
+            
             }
         }
     }

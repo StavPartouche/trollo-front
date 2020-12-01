@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h3>Lables</h3>
+    <h3>Labels</h3>
     <ul class="flex">
       <li v-for="(label, idx) in labels" :key="idx">
         <div class="label-preview" :style='{backgroundColor: label.backgroundColor}'></div>
