@@ -48,7 +48,12 @@
           <i class="fas fa-plus"></i><span>Add list</span>
         </button>
       </li>
-    </ul>
+    </ul>        
+    <div
+    v-if="currTask"
+      @click="closeDetails"
+      class="disable-page-container"
+    ></div>
     <task-details
       v-if="currTask"
       :task="currTask"

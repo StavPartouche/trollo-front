@@ -5,119 +5,120 @@
     margin-right: 3px;
 }
 
-.task-editor-container {
+// .task-editor-container {
+// position: absolute;
+// top: 0;
+// right: 0;
+// z-index: 2;
+// background-color: rgba(0, 0, 0, 0.151);
+// width: 100vw;
+// height: 100vh;
+// .disable-page-container {
+//     // z-index: 4;
+// }
+.task-editor {
     position: absolute;
-    top: 0;
-    right: 0;
-    z-index: 2;
-    background-color: rgba(0, 0, 0, 0.151);
-    width: 100vw;
-    height: 100vh;
-    .disable-page-container {
-        // z-index: 4;
+    top: 50%;
+    right: 50%;
+    transform: translate(50%, -50%);
+    width: 70%;
+    height: 80%;
+    background-color: $task-details-bgc;
+    border-radius: 10px;
+    padding: 15px;
+    z-index: 3;
+    .task-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        button {
+            background: transparent;
+            margin-bottom: 31px;
+        }
+        h2 {
+            max-width: 100%;
+            overflow-wrap: break-word;
+            font-size: rem(38px);
+        }
     }
-    .task-editor {
-        position: absolute;
-        top: 50%;
-        right: 50%;
-        transform: translate(50%, -50%);
-        width: 70%;
-        height: 80%;
-        background-color: $task-details-bgc;
-        border-radius: 10px;
-        padding: 15px;
-        z-index: 3;
-        .task-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            button {
-                background: transparent;
-                margin-bottom: 31px;
+    .task-editor-main {
+        height: 90%;
+        display: flex;
+        padding-left: 15px;
+        .task-details {
+            min-width: 80%;
+            overflow-y: auto;
+            margin-block-end: 13px;
+            // .task-preview-label{
+            //     width: 30px;
+            //     height: 5px;
+            //     border-radius: 20px;
+            //     margin-right: 3px;
+            // }
+            .data-layout {
+                margin-bottom: 10px;
             }
-            h2 {
-                max-width: 100%;
-                overflow-wrap: break-word;
-                font-size: rem(38px);
+            .description-textarea {
+                background-color: transparent;
+                font-size: rem(16px)
+            }
+            .img-attachments {
+                width: 100px;
+                height: 100px;
+                margin: 5px;
+            }
+            .task-details-comments {
+                .comment-input {
+                    width: 85%;
+                    height: 32px;
+                    margin-left: 0;
+                }
+                .comment {
+                    font-size: 0.8rem;
+                    margin-bottom: 10px;
+                    .comment-creator {
+                        color: #181818;
+                        padding-left: 5px;
+                        margin-bottom: 0;
+                    }
+                    .comment-txt {
+                        padding-left: 5px;
+                        margin-bottom: 0;
+                    }
+                }
             }
         }
-        .task-editor-main {
-            height: 90%;
+        .side-bar-container {
+            width: 100%;
+        }
+        .side-bar {
             display: flex;
-            padding-left: 15px;
-            .task-details {
-                min-width: 80%;
-                overflow-y: auto;
-                margin-block-end: 13px;
-                // .task-preview-label{
-                //     width: 30px;
-                //     height: 5px;
-                //     border-radius: 20px;
-                //     margin-right: 3px;
-                // }
-                .data-layout {
-                    margin-bottom: 10px;
-                }
-                .description-textarea {
-                    background-color: transparent;
-                    font-size: rem(16px)
-                }
-                .img-attachments {
-                    width: 100px;
-                    height: 100px;
-                    margin: 5px;
-                }
-                .task-details-comments {
-                    .comment-input {
-                        width: 85%;
-                        height: 32px;
-                        margin-left: 0;
-                    }
-                    .comment {
-                        font-size: 0.8rem;
-                        margin-bottom: 10px;
-                        .comment-creator {
-                            color: #181818;
-                            padding-left: 5px;
-                            margin-bottom: 0;
-                        }
-                        .comment-txt {
-                            padding-left: 5px;
-                            margin-bottom: 0;
-                        }
-                    }
-                }
-            }
-            .side-bar-container {
+            flex-direction: column;
+            padding-left: 5px;
+            font-size: rem(15px);
+            .side-bar-btn {
                 width: 100%;
+                margin-bottom: 5px;
+                border: 1px solid rgb(136, 136, 136);
+                color: rgb(136, 136, 136);
+                font-weight: bold;
+                background-color: transparent;
+                font-size: 0.9rem;
             }
-            .side-bar {
-                display: flex;
-                flex-direction: column;
-                padding-left: 5px;
-                font-size: rem(15px);
-                .side-bar-btn {
-                    width: 100%;
-                    margin-bottom: 5px;
-                    border: 1px solid rgb(136, 136, 136);
-                    color: rgb(136, 136, 136);
-                    font-weight: bold;
-                    background-color: transparent;
-                    font-size: 0.9rem;
-                }
-                .add-attachments-input {
-                    position: absolute;
-                    right: 5px;
-                    top: 143px;
-                    width: 0;
-                    opacity: 0;
-                    cursor: pointer;
-                }
+            .add-attachments-input {
+                position: absolute;
+                right: 5px;
+                top: 143px;
+                width: 0;
+                opacity: 0;
+                cursor: pointer;
             }
-            .delete-task-btn {
-                color: white;
-                background-color: #940000;
-            }
+        }
+        .delete-task-btn {
+            color: white;
+            background-color: #940000;
         }
     }
 }
+
+// }
