@@ -41,14 +41,11 @@
 					@click="openTask(listIdx, taskIdx)"
 					:style="{ backgroundColor: task.backgroundColor }"
 				>
-					<ul class="flex">
-						<li v-for="(label, idx) in task.labels" :key="idx">
-							<div
-								class="label-preview"
+					<ul class="task-preview-labels flex">
+						<li v-for="(label, idx) in task.labels" :key="idx" class="task-preview-label"
 								:style="{
 									backgroundColor: label.backgroundColor,
-								}"
-							></div>
+								}">
 						</li>
 					</ul>
 					<div
@@ -95,7 +92,7 @@ export default {
 		list: Object,
 		listIdx: Number,
 		members: Array,
-		listsCount: Number
+		isNewList: Number
 	},
 	data() {
 		return {
@@ -181,9 +178,7 @@ export default {
 		listEditMenu,
 	},
 	mounted(){
-		if(this.listIdx === this.listsCount - 1 && this.list.name === 'Enter list name'){
-			this.$refs.header.focus()
-		}
+		if (this.isNewList) this.$refs.header.focus()
 	},
 	created() {
 		this.listName = this.list.name;
