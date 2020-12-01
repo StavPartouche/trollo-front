@@ -9,7 +9,7 @@
       :name="board.name"
       :members="members"
     ></board-nav>
-      <!-- @saveBoard="saveBoardSettings" -->
+    <!-- @saveBoard="saveBoardSettings" -->
     <board-menu
       v-if="isMenu"
       @removeBoard="removeBoard"
@@ -23,39 +23,38 @@
     ></board-menu>
     <vue-scroll class="vuescroll" :ops="ops">
       <!-- <div class=""> -->
-        <!-- <ul class="lists lists-container flex" v-if="board"> -->
-        <ul class="lists" v-if="board">
-          <draggable
-            class="flex"
-            :list="board.lists"
-            v-bind="dragOptions"
-            group="lists"
-            @sort="updateBoard"
+      <!-- <ul class="lists lists-container flex" v-if="board"> -->
+      <ul class="lists" v-if="board">
+        <draggable
+          class="flex"
+          :list="board.lists"
+          v-bind="dragOptions"
+          group="lists"
+          @sort="updateBoard"
+        >
+          <li
+            class="list"
+            v-for="(list, listIdx) in board.lists"
+            :key="list.id"
           >
-            <li
-              class="list"
-              v-for="(list, listIdx) in board.lists"
-              :key="list.id"
-            >
-              <list
-                :list="list"
-                :listIdx="listIdx"
-                :members="members"
-                @removeList="removeList"
-                @openTask="openTask"
-                @addTask="addTask"
-                @updateList="updateBoard"
-                @updateListName="updateListName"
-              />
-            </li>
-          </draggable>
-          <li>
-
-        <button class="add-list-btn" @click="addList">
-          <i class="fas fa-plus"></i><span>Add list</span>
-        </button>
+            <list
+              :list="list"
+              :listIdx="listIdx"
+              :members="members"
+              @removeList="removeList"
+              @openTask="openTask"
+              @addTask="addTask"
+              @updateList="updateBoard"
+              @updateListName="updateListName"
+            />
           </li>
-        </ul>
+        </draggable>
+        <li>
+          <button class="add-list-btn" @click="addList">
+            <i class="fas fa-plus"></i><span>Add list</span>
+          </button>
+        </li>
+      </ul>
     </vue-scroll>
     <task-details
       v-if="currTask"
@@ -95,42 +94,42 @@ import boardMenu from "../cmps/board-menu/board-menu.cmp";
 import taskDetails from "../cmps/task-details/task-details.cmp";
 import list from "../cmps/list.cmp";
 import draggable from "vuedraggable";
-import socket from '@/services/socket.service';
-import io from 'socket.io-client';
+import socket from "@/services/socket.service";
+import io from "socket.io-client";
 
 export default {
-	name: "board-edit",
-	data() {
-		return {
-			board: null,
-			members: [],
-			currTask: null,
-			currListIdx: null,
-			currTaskIdx: null,
-			ops: {
-				scrollPanel: {},
-				rail: {
-					background: "rgba(0, 0, 0, 0.404)",
-					size: "20px",
-					opacity: "0.1",
-				},
-				bar: {
-					onlyShowBarOnScroll: false,
-					keepShow: true,
-					size: "15px",
-					opacity: "0.7",
-					minSize: 0,
-				},
-			},
-			isMenu: false,
-		};
-	},
-	methods: {
-		// BOARD-NAV
-		toggleMenu(ev) {
-			this.isMenu = ev;
-		},
-		updateBoardName(name) {
+  name: "board-edit",
+  data() {
+    return {
+      board: null,
+      members: [],
+      currTask: null,
+      currListIdx: null,
+      currTaskIdx: null,
+      ops: {
+        scrollPanel: {},
+        rail: {
+          background: "rgba(0, 0, 0, 0.404)",
+          size: "20px",
+          opacity: "0.1",
+        },
+        bar: {
+          onlyShowBarOnScroll: false,
+          keepShow: true,
+          size: "15px",
+          opacity: "0.7",
+          minSize: 0,
+        },
+      },
+      isMenu: false,
+    };
+  },
+  methods: {
+    // BOARD-NAV
+    toggleMenu(ev) {
+      this.isMenu = ev;
+    },
+    updateBoardName(name) {
       this.board.name = name;
       this.updateBoard();
     },
@@ -198,7 +197,7 @@ export default {
     },
 
     // TASK-DETAILS
-  toggleCheck(idxs) {
+    toggleCheck(idxs) {
       this.currTask.checkLists[idxs.checkListIdx].items[
         idxs.itemIdx
       ].isDone = !this.currTask.checkLists[idxs.checkListIdx].items[
@@ -216,36 +215,36 @@ export default {
       currCheckListItems.push(newItem);
       this.updateBoard();
     },
-    addCheckList(checkListData){
+    addCheckList(checkListData) {
       const currCheckLists = this.currTask.checkLists;
-        const newChechList = {
-          title: checkListData.title,
-          items: checkListData.items,
-        };
-        currCheckLists.push(newChechList);
-        this.updateBoard();
+      const newChechList = {
+        title: checkListData.title,
+        items: checkListData.items,
+      };
+      currCheckLists.push(newChechList);
+      this.updateBoard();
     },
-    addMemberToTask(memberId){
+    addMemberToTask(memberId) {
       this.currTask.members.push(memberId);
       this.updateBoard();
     },
-    removeMemberfromTask(memberIdx){
+    removeMemberfromTask(memberIdx) {
       this.currTask.members.splice(memberIdx, 1);
       this.updateBoard();
     },
-    updateDueDate(newDate){
+    updateDueDate(newDate) {
       this.currTask.dueDate = newDate;
       this.updateBoard();
     },
-    updateTaskName(newName){
+    updateTaskName(newName) {
       this.currTask.name = newName;
       this.updateBoard();
     },
-    updateTaskDesc(newDwsc){
+    updateTaskDesc(newDwsc) {
       this.currTask.description = newDwsc;
       this.updateBoard();
     },
-    UploadImg(imgUrl){
+    UploadImg(imgUrl) {
       this.currTask.attachments.push(imgUrl);
       this.updateBoard();
     },
@@ -300,13 +299,13 @@ export default {
       this.currTask.previewImg = "";
       this.updateBoard();
     },
-    
+
     // GENERAL BOARD
     async addList() {
-      var newList = boardService.getEmptyList('Enter list name');
+      var newList = boardService.getEmptyList("Enter list name");
       this.board.lists.push(newList);
       await this.updateBoard();
-      const newListIdx = this.board.lists.length - 1
+      const newListIdx = this.board.lists.length - 1;
       document.getElementById(`list${newListIdx}`).focus();
     },
     async getMember(memberId) {
@@ -314,66 +313,72 @@ export default {
       return member;
     },
     async updateBoard() {
-      console.log(this.board.name)
+      console.log(this.board.name);
       await this.$store.dispatch({
         type: "saveBoard",
-				board: this.board,
-			});
-			socket.emit('update board');
+        board: this.board,
+      });
+      socket.emit("update board");
       // await eventBusService.$emit("boardBgc", this.board.style);
-		},
-		// alertEnter(user) {
-      //   alert(user.userName + ' has entered the board!');
-		// },
-		async loadBoard() {
+    },
+    // alertEnter(user) {
+    //   alert(user.userName + ' has entered the board!');
+    // },
+    async loadBoard() {
       const updatedBoard = await boardService.getById(this.board._id);
-			this.board = updatedBoard;
+      this.board = updatedBoard;
       await eventBusService.$emit("boardBgc", this.board.style);
       this.members = [];
+      console.log('this members', this.members);
+      console.log('board members', this.board.members);
       this.board.members.forEach(async (member) => {
-			var memberObject = await this.getMember(member);
-			this.members.push(memberObject);
-		});
-      if (this.currTask) this.currTask = this.board.lists[this.currListIdx].tasks[this.currTaskIdx];
-		}
-	},
-	computed: {
-		lists() {
-			return this.board.lists;
-		},
-		dragOptions() {
-			return {
-				animation: 200,
-				group: "lists",
-				disabled: false,
-				ghostClass: "ghost",
-			};
-		},
-	},
-	components: {
-		boardNav,
-		taskDetails,
-		list,
-		draggable,
-		boardMenu,
-	},
-	async created() {
-		const boardId = this.$route.params.id;
-		const board = await boardService.getById(boardId);
-		socket.setup();
-		socket.emit('enter board', board._id);
-		socket.on('update board', this.loadBoard);
-		board.members.forEach(async (member) => {
-			var memberObject = await this.getMember(member);
-			this.members.push(memberObject);
-		});
-		this.board = JSON.parse(JSON.stringify(board));
-		eventBusService.$emit("boardBgc", this.board.style);
-		// this.currTask = this.board.lists[0].tasks[0]
-	},
-	destroyed() {
-		socket.emit('user left board');
-		socket.terminate();
-	}
+        var memberObject = await this.getMember(member);
+        this.members.push(memberObject);
+        console.log("foreach");
+      });
+      if (this.currTask)
+        this.currTask = this.board.lists[this.currListIdx].tasks[
+          this.currTaskIdx
+        ];
+    },
+  },
+  computed: {
+    lists() {
+      return this.board.lists;
+    },
+    dragOptions() {
+      return {
+        animation: 200,
+        group: "lists",
+        disabled: false,
+        ghostClass: "ghost",
+      };
+    },
+  },
+  components: {
+    boardNav,
+    taskDetails,
+    list,
+    draggable,
+    boardMenu,
+  },
+  async created() {
+    const boardId = this.$route.params.id;
+    const board = await boardService.getById(boardId);
+    socket.setup();
+    socket.emit("enter board", board._id);
+    socket.on("update board", this.loadBoard);
+    board.members.forEach(async (member) => {
+      var memberObject = await this.getMember(member);
+      this.members.push(memberObject);
+    });
+    this.board = JSON.parse(JSON.stringify(board));
+    eventBusService.$emit("boardBgc", this.board.style);
+    // this.currTask = this.board.lists[0].tasks[0]
+  },
+  destroyed() {
+    socket.emit("user left board");
+    socket.terminate();
+  },
 };
 </script>
