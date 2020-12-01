@@ -35,7 +35,7 @@
 				<el-card
 					class="flex center"
 					:body-style="{ height: '75px' }"
-					@click.native="addBoard"
+					@click.native="openPrompt"
 					><img class="plus-icon" src="../styles/assets/plus.png"
 				/></el-card>
 			</el-col>
@@ -97,6 +97,7 @@ export default {
 			this.$router.push(`/board/${saveBoard._id}`);
 		},
 		openPrompt() {
+		console.log('here');
         this.$prompt('Please enter new board name', 'Create new board', {
           confirmButtonText: 'Create',
 		  cancelButtonText: 'Cancel',
