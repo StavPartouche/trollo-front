@@ -113,9 +113,11 @@ export default {
 		}
 	},
 	created() {
-		const user = (sessionStorage.getItem('user')) ? JSON.parse(sessionStorage.getItem('user')) : {userName: 'guest'}
+		const user = (sessionStorage.getItem('user')) ? JSON.parse(sessionStorage.getItem('user')) : { userName: 'guest' };
 		socket.setup(user);
-		socket.emit('user connect', user);
+		socket.emit('userConnect', user);
+		socket.on('removeBoard', id => this.$store.dispatch({type: 'loadBoards'}));
+
 		this.$store.dispatch({
 			type: "loadBoards",
 		});

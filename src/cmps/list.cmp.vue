@@ -95,7 +95,7 @@ export default {
 		list: Object,
 		listIdx: Number,
 		members: Array,
-		isNewList: Number
+		isNewList: Boolean
 	},
 	data() {
 		return {
