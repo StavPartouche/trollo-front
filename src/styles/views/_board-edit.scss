@@ -1,19 +1,6 @@
 .board-edit {
     flex: 1;
-    &>.vuescroll {
-        // background-color: black;
-        display: flex;
-        flex-direction: column;
-        flex: 1;
-        max-height: calc(100vh - 90px);
-        .__rail-is-vertical,
-        .__rail-is-horizontal {
-            border-radius: 0 !important;
-        }
-        .__rail-is-vertical {
-            margin-inline-end: -2px;
-        }
-    }
+    
     .add-list-btn {
         background-color: #ebecf0;
         min-width: 250px;
