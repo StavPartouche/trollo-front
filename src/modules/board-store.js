@@ -36,9 +36,14 @@ export default {
     },
     actions: {
         async loadBoards({ commit, getters }) {
-            const user = (getters.loggedInUser) ? getters.loggedInUser._id : undefined;
-            const boards = await boardService.query(user);
-            commit({ type: 'setBoards', boards });
+            try{
+                const user = (getters.loggedInUser) ? getters.loggedInUser._id : undefined;
+                const boards = await boardService.query(user);
+                commit({ type: 'setBoards', boards });
+            } catch (err){
+                console.error('Cannot load boards', err);
+                throw err;
+            }
         },
         async saveBoard({ commit }, { board }) {
             try {
@@ -48,7 +53,6 @@ export default {
                 return savedBoard;
             } catch (err) {
                 console.error('Cannot save board', err);
-                // $swal.error()
                 throw err;
             }
         },

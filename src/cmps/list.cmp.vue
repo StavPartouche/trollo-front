@@ -92,7 +92,7 @@ export default {
 		list: Object,
 		listIdx: Number,
 		members: Array,
-		listsCount: Number
+		isNewList: Number
 	},
 	data() {
 		return {
@@ -178,9 +178,7 @@ export default {
 		listEditMenu,
 	},
 	mounted(){
-		if(this.listIdx === this.listsCount - 1 && this.list.name === 'Enter list name'){
-			this.$refs.header.focus()
-		}
+		if (this.isNewList) this.$refs.header.focus()
 	},
 	created() {
 		this.listName = this.list.name;

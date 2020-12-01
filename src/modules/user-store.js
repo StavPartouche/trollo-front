@@ -29,32 +29,62 @@ export default {
     },
     actions: {
         async login({ commit }, { userCred }) {
-            const user = await userService.login(userCred);
-            commit({ type: 'setUser', user });
-            return user;
+            try{
+                const user = await userService.login(userCred);
+                commit({ type: 'setUser', user });
+                return user;
+            } catch (err){
+                console.error('Cannot login', err);
+                throw err;
+            }
         },
         async signup({ commit }, { userCred }) {
-            const user = await userService.signup(userCred);
-            commit({ type: 'setUser', user });
-            return user;
+            try{
+                const user = await userService.signup(userCred);
+                commit({ type: 'setUser', user });
+                return user;
+            } catch (err){
+                console.error('Cannot signup', err);
+                throw err;
+            }
 
         },
         async logout({ commit }) {
-            await userService.logout();
-            commit({ type: 'setUsers', users: [] });
-            commit({ type: 'setUser', user: null });
+            try{
+                await userService.logout();
+                commit({ type: 'setUsers', users: [] });
+                commit({ type: 'setUser', user: null });
+            } catch (err){
+                console.error('Cannot logout', err);
+                throw err;
+            }
         },
         async loadUsers({ commit }) {
-            const users = await userService.getUsers();
-            commit({ type: 'setUsers', users });
+            try {
+                const users = await userService.getUsers();
+                commit({ type: 'setUsers', users });
+            } catch (err){
+                console.error('Cannot load users', err);
+                throw err;
+            }
         },
         async removeUser({ commit }, { userId }) {
-            await userService.remove(userId);
-            commit({ type: 'removeUser', userId });
+            try{
+                await userService.remove(userId);
+                commit({ type: 'removeUser', userId });
+            } catch (err){
+                console.error('Cannot remove user', err);
+                throw err;
+            }
         },
         async updateUser({ commit }, { user }) {
-            user = await userService.update(user);
-            commit({ type: 'setUser', user });
+            try{
+                user = await userService.update(user);
+                commit({ type: 'setUser', user });
+            } catch (err){
+                console.error('Cannot update user', err);
+                throw err;
+            }
         },
     }
 
