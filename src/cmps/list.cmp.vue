@@ -148,7 +148,7 @@ export default {
 			this.toggleAdd();
 		},
 		removeList(listIdx) {
-			this.toggleListEdit();
+			this.closeListEdit();
 			this.$emit("removeList", listIdx);
 		},
 		emitUpdateList() {
