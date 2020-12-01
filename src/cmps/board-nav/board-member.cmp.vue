@@ -105,6 +105,7 @@ export default {
   },
   destroyed() {
     document.body.removeEventListener("keyup", this.onKeyUp);
+    eventBusService.$off("disablePage-userInvite");
   },
   components: {
     boardMemberCard,

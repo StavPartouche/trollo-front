@@ -46,5 +46,8 @@ export default {
   created() {
     eventBusService.$on("disablePage-userCard", this.closeMember);
   },
+  created() {
+    eventBusService.$off("disablePage-userCard");
+  },
 };
 </script>
