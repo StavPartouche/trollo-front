@@ -1,9 +1,9 @@
 <template>
   <div class="board-member">
-    <!-- <div
-      @click="openShowInvite"
+    <div
+      @click="closeShowInvite"
       :class="{ 'disable-page-container': showInvite }"
-    ></div> -->
+    ></div>
     <ul class="flex center">
       <board-member-card
         v-for="member in boardMembers"
@@ -47,7 +47,6 @@
 <script>
 import boardMemberCard from "./board-member-card.cmp";
 import userAvatar from "../user-avatar.cmp";
-import { eventBusService } from "../../services/eventBus.service";
 
 export default {
   name: "board-members",
@@ -74,7 +73,6 @@ export default {
     // },
     openShowInvite() {
       this.showInvite = true;
-      eventBusService.$emit("disablePage", { to: "userInvite" });
     },
     closeShowInvite() {
       this.showInvite = false;
@@ -101,11 +99,9 @@ export default {
   },
   created() {
     document.body.addEventListener("keyup", this.onKeyUp);
-    eventBusService.$on("disablePage-userInvite", this.closeShowInvite);
   },
   destroyed() {
     document.body.removeEventListener("keyup", this.onKeyUp);
-    eventBusService.$off("disablePage-userInvite");
   },
   components: {
     boardMemberCard,

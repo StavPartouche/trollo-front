@@ -1,5 +1,9 @@
 <template>
 	<li>
+    <div
+      @click="closeListEdit"
+      :class="{ 'hide': !isListEdit,'disable-page-container': isListEdit }"
+    ></div>
 		<div
 			class="list-header-container flex justify-space-between align-center"
 		>
@@ -85,7 +89,6 @@ import draggable from "vuedraggable";
 import userAvatar from "./user-avatar.cmp";
 import addItemInput from "./add-item-input.cmp";
 import listEditMenu from "./list-edit-menu.cmp";
-import { eventBusService } from "../services/eventBus.service";
 export default {
 	name: "list",
 	props: {
@@ -109,7 +112,6 @@ export default {
 	methods: {
 		openListEdit(){
 			this.isListEdit = true
-			eventBusService.$emit("disablePage", { to: "listEdit" });
 		},
 		closeListEdit(){
 			this.isListEdit = false
@@ -185,10 +187,8 @@ export default {
 	},
 	created() {
 		this.listName = this.list.name;
-		eventBusService.$on("disablePage-listEdit", this.closeListEdit);
 	},
 	destroyed(){
-		eventBusService.$off("disablePage-listEdit");
 	}
 };
 </script>

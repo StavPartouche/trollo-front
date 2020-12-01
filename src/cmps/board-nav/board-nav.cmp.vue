@@ -1,5 +1,6 @@
 <template>
   <div class="board-nav flex justify-space-between align-center">
+        <div @click="closeMenu" :class="{'hide': !isMenu,'disable-page-container': isMenu}"></div>
     <div class="widht-200 flex justify-start align-center">
       <!-- <h2 contenteditable @blur="updateBoardName" v-text="nameToEdit">{{name }}</h2> -->
       <h2 contenteditable @blur="updateBoardName" v-text="nameToEdit">
@@ -29,7 +30,6 @@
 
 <script>
 import boardMember from "./board-member.cmp";
-import { eventBusService } from "../../services/eventBus.service";
 
 export default {
   name: "board-nav",
@@ -48,7 +48,6 @@ export default {
     openMenu() {
       this.isMenu = true;
       this.$emit("toggleMenu", this.isMenu);
-      eventBusService.$emit("disablePage", { to: "boardMenu" });
 
     },
     closeMenu() {
@@ -81,12 +80,10 @@ export default {
   created() {
     this.nameToEdit = this.name;
     document.body.addEventListener("keyup", this.onKeyUp);
-        eventBusService.$on("disablePage-boardMenu", this.closeMenu);
 
   },
   destroyed() {
     document.body.removeEventListener("keyup", this.onKeyUp);
-        eventBusService.$off("disablePage-boardMenu");
 
   },
 };

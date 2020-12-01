@@ -4,12 +4,12 @@
     class="flex-column app-container background-image"
     :style="background"
   >
-    <div
+    <!-- <div
       @click="closeDisable"
       v-if="disablePage.isDisable"
       class="disable-page-container"
       :style="{ 'z-index': disablePage.zIndex }"
-    ></div>
+    ></div> -->
     <app-header />
     <router-view />
   </div>
@@ -29,20 +29,20 @@ export default {
       isBgcColor: false,
       bgcImg: "",
       bgcColor: "",
-      disablePage: {
-        isDisable: false,
-        zIndex: 1,
-        to: null
-      },
+      // disablePage: {
+      //   isDisable: false,
+      //   zIndex: 1,
+      //   to: null
+      // },
     };
   },
-  methods: {
-    closeDisable() {
-      this.disablePage.isDisable = false;
-      eventBusService.$emit(`disablePage-${this.disablePage.to}`)
-      console.log('closeDisable');
-    },
-  },
+  // methods: {
+  //   closeDisable() {
+  //     this.disablePage.isDisable = false;
+  //     eventBusService.$emit(`disablePage-${this.disablePage.to}`)
+  //     console.log('closeDisable');
+  //   },
+  // },
   computed: {
     background() {
       if (this.isBgcImg) {
@@ -102,11 +102,11 @@ export default {
         this.bgcImg = bgc.url;
       }
     });
-    eventBusService.$on("disablePage", (info) => {
-      this.disablePage.zIndex = info.zIndex ? info.zIndex : 1;
-      this.disablePage.isDisable = true;
-      this.disablePage.to = info.to
-    });
+    // eventBusService.$on("disablePage", (info) => {
+    //   this.disablePage.zIndex = info.zIndex ? info.zIndex : 1;
+    //   this.disablePage.isDisable = true;
+    //   this.disablePage.to = info.to
+    // });
   },
   destroyed() {
     eventBusService.$off("boardBgc");
