@@ -148,7 +148,7 @@ export default {
 		eventBusService.$emit('boardBgc', { url: 'desk5.jpg' });
 	},
 	destroyed() {
-		socket.off('removeBoard')
+		socket.off('removeBoard', id => this.$store.dispatch({type: 'loadBoards'}));
 		socket.terminate();
 	}
 };
