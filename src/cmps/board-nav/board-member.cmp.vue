@@ -1,6 +1,9 @@
 <template>
   <div class="board-member">
-    <div @click="toggleShowInvite" :class="{'disable-page-container': showInvite}"></div>
+    <!-- <div
+      @click="openShowInvite"
+      :class="{ 'disable-page-container': showInvite }"
+    ></div> -->
     <ul class="flex center">
       <board-member-card
         v-for="member in boardMembers"
@@ -12,15 +15,20 @@
         <button
           class="btn-add-board-user"
           v-if="allMembers"
-          @click="toggleShowInvite"
+          @click="openShowInvite"
         >
           <i class="fas fa-user-plus"></i>
         </button>
       </li>
     </ul>
     <div class="invite" v-if="showInvite">
-      <p  v-if="!membersToInvite" >No users to show</p>
-      <input v-else  type="text" placeholder="Search member" v-model="filterBy" />
+      <p v-if="!membersToInvite">No users to show</p>
+      <input
+        v-else
+        type="text"
+        placeholder="Search member"
+        v-model="filterBy"
+      />
       <ul>
         <li
           class="userToShow flex align-center"
@@ -28,7 +36,7 @@
           v-for="member in membersToInvite"
           :key="member._id"
         >
-        <user-avatar :user="member"></user-avatar>
+          <user-avatar :user="member"></user-avatar>
           <p>{{ member.userName }}</p>
         </li>
       </ul>
@@ -38,7 +46,8 @@
 
 <script>
 import boardMemberCard from "./board-member-card.cmp";
-import userAvatar from '../user-avatar.cmp'
+import userAvatar from "../user-avatar.cmp";
+import { eventBusService } from "../../services/eventBus.service";
 
 export default {
   name: "board-members",
@@ -63,12 +72,16 @@ export default {
     // openUser() {
     //     this.showUser= !this.showUser
     // },
-    toggleShowInvite() {
-      this.showInvite = !this.showInvite;
+    openShowInvite() {
+      this.showInvite = true;
+      eventBusService.$emit("disablePage", { to: "userInvite" });
+    },
+    closeShowInvite() {
+      this.showInvite = false;
     },
     onKeyUp(ev) {
-      if (ev.keyCode === 27 && this.showInvite) this.toggleShowInvite();
-    }
+      if (ev.keyCode === 27 && this.showInvite) this.closeShowInvite();
+    },
   },
   computed: {
     membersToInvite() {
@@ -87,14 +100,15 @@ export default {
     },
   },
   created() {
-    document.body.addEventListener('keyup', this.onKeyUp)
+    document.body.addEventListener("keyup", this.onKeyUp);
+    eventBusService.$on("disablePage-userInvite", this.closeShowInvite);
   },
   destroyed() {
-    document.body.removeEventListener('keyup', this.onKeyUp)
+    document.body.removeEventListener("keyup", this.onKeyUp);
   },
   components: {
     boardMemberCard,
-    userAvatar
+    userAvatar,
   },
 };
 </script>
