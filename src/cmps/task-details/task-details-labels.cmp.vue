@@ -1,7 +1,7 @@
 <template>
   <div>
-    <h3>Labels</h3>
-    <ul class="flex">
+    <h3 v-if="labels.length">Labels</h3>
+    <ul class="flex data-layout">
       <li v-for="(label, idx) in labels" :key="idx">
         <div class="label-preview" :style='{backgroundColor: label.backgroundColor}'></div>
       </li>

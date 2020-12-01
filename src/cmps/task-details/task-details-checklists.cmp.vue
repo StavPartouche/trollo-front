@@ -1,7 +1,7 @@
 <template>
   <div>
     <h3 v-if="checkLists.length">CheckLists</h3>
-    <ul>
+    <ul class="data-layout">
       <li v-for="(checkList, checkListIdx) in checkLists" :key="checkListIdx">
         <checkList :checkList="checkList" :checkListIdx="checkListIdx" 
           @addItem="addItem" @removeItem="removeItem" @toggleCheck="toggleCheck" @removeCheckList="removeCheckList"/>

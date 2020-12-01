@@ -2,7 +2,7 @@
 	<div v-if="attachments.length">
         <h3>Attachments</h3>
         <button v-if="previewImg" @click="removePreviewImg">remove preview img</button>
-        <ul class="flex warp" v-if="attachments">
+        <ul class="flex warp data-layout" v-if="attachments">
             <li v-for="(attachment, idx) in attachments" :key="idx">
                 <img :src="attachment" class="img-attachments">
                 <button @click="removeAttachment(idx)">X</button>
