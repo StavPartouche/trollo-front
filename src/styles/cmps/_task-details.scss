@@ -21,7 +21,7 @@
         top: 50%;
         right: 50%;
         transform: translate(50%, -50%);
-        width: 80%;
+        width: 70%;
         height: 80%;
         background-color: $task-details-bgc;
         border-radius: 10px;
@@ -33,17 +33,20 @@
             justify-content: space-between;
             button {
                 background: transparent;
+                margin-bottom: 31px;
             }
             h2 {
                 max-width: 100%;
                 overflow-wrap: break-word;
+                font-size: rem(38px);
             }
         }
         .task-editor-main {
             height: 90%;
             display: flex;
+            padding-left: 15px;
             .task-details {
-                width: 75%;
+                min-width: 80%;
                 overflow-y: auto;
                 margin-block-end: 13px;
                 // .label-preview{
@@ -52,6 +55,9 @@
                 //     border-radius: 20px;
                 //     margin-right: 3px;
                 // }
+                .data-layout{
+                    margin-bottom: 10px;
+                }
                 .description-textarea {
                     background-color: transparent;
                     font-size: rem(16px)
@@ -65,6 +71,7 @@
                     .comment-input {
                         width: 85%;
                         height: 32px;
+                        margin-left: 0;
                     }
                     .comment {
                         font-size: 0.8rem;
@@ -80,6 +87,9 @@
                         }
                     }
                 }
+            }
+            .side-bar-container{
+                width: 100%;
             }
             .side-bar {
                 display: flex;

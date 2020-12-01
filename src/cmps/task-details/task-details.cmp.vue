@@ -17,7 +17,7 @@
             <div>
               <h3>Description</h3>
               <textarea
-                class="description-textarea"
+                class="description-textarea data-layout"
                 contenteditable
                 v-model="taskToEdit.description"
                 @blur="updateTaskDesc"
@@ -31,7 +31,7 @@
             </div>
             <div v-if="membersToShow.length">
               <h3>members</h3>
-              <ul class="flex">
+              <ul class="flex data-layout">
                 <li v-for="member in membersToShow" :key="member._id">
                   <user-avatar :user="member"></user-avatar>
                 </li>
@@ -77,7 +77,7 @@
             @toggleLabel="toggleLabel"
             @setTaskColor="setTaskColor"
           />
-        <div class="flex-column justify-space-between">
+        <div class="side-bar-container flex-column justify-space-between">
           <div class="side-bar">
             <button class="side-bar-btn" @click="openPopup('checkList')">
               CheckList
