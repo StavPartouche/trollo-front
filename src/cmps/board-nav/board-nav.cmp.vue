@@ -58,6 +58,9 @@ export default {
       this.nameToEdit = src;
       this.$emit("updateBoardName", this.nameToEdit);
     },
+    onKeyUp(ev){
+      if (ev.keyCode === 27 && this.isMenu) this.toggleMenu()
+    },
   },
   watch: {
     name() {
@@ -69,7 +72,10 @@ export default {
   },
   created() {
     this.nameToEdit = this.name;
+    document.body.addEventListener("keyup", this.onKeyUp);
   },
-  destroyed() {},
+  destroyed() {
+    document.body.removeEventListener("keyup", this.onKeyUp);
+  },
 };
 </script>
