@@ -1,10 +1,16 @@
 <template>
   <div class="task-editor-container" @click="closeDetails">
-        <div
+        <!-- <div
       @click.stop="closePopup"
       :class="{ 'hide': !isPopup, 'disable-page-container': isPopup }"
-    ></div>
+    ></div> -->
     <div @click.stop class="task-editor">
+		<div
+      @click="closePopup"
+      v-if="isPopup"
+      class="disable-page-container"
+      :style="{ 'z-index': 1 }"
+    ></div>
       <div class="task-header">
         <h2 contenteditable v-text="taskToEdit.name" @blur="updateTaskName">
           {{ task.name }}
@@ -125,6 +131,8 @@ import taskDetailsLabels from '../task-details/task-details-labels.cmp';
 import { uploadImg } from "../../services/img-upload.service.js";
 import userAvatar from "../user-avatar.cmp";
 import taskDetailsLabelsCmp from './task-details-labels.cmp.vue';
+import { eventBusService } from "../../services/eventBus.service";
+
 
 export default {
 	name: "task-details",
@@ -213,10 +221,13 @@ export default {
 			this.$emit("removeAttachment", idx);
 		},
 		openPopup(type) {
-			(this.cmpType = type), (this.isPopup = true);
+			this.cmpType = type
+			this.isPopup = true
+			// eventBusService.$emit("disablePage", { to: "popup", zIndex: 4 });
 		},
 		closePopup() {
-			(this.cmpType = ""), (this.isPopup = false);
+			this.cmpType = "" 
+			this.isPopup = false
 		},
 		onKeyUp(ev) {
 			if (ev.keyCode === 27) {
@@ -284,9 +295,11 @@ export default {
 	created() {
 		this.taskToEdit = JSON.parse(JSON.stringify(this.task));
 		document.body.addEventListener("keyup", this.onKeyUp);
+		// eventBusService.$on("disablePage-popup", this.closePopup);
 	},
 	destroyed() {
 		document.body.removeEventListener("keyup", this.onKeyUp);
+		// eventBusService.$off("disablePage-popup");
 	},
 };
 </script>
