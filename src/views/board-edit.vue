@@ -29,7 +29,6 @@
         @sort="updateBoard"
       >
         <list
-          class="list"
           v-for="(list, listIdx) in board.lists"
           :key="list.id"
           :list="list"
