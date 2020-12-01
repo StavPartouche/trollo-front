@@ -41,14 +41,11 @@
 					@click="openTask(listIdx, taskIdx)"
 					:style="{ backgroundColor: task.backgroundColor }"
 				>
-					<ul class="flex">
-						<li v-for="(label, idx) in task.labels" :key="idx">
-							<div
-								class="label-preview"
+					<ul class="task-preview-labels flex">
+						<li v-for="(label, idx) in task.labels" :key="idx" class="task-preview-label"
 								:style="{
 									backgroundColor: label.backgroundColor,
-								}"
-							></div>
+								}">
 						</li>
 					</ul>
 					<div
