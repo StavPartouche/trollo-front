@@ -15,12 +15,12 @@
     <div class=" open-menu-btn widht-200 flex justify-end">
       <font-awesome-icon
         v-if="isMenu"
-        @click="toggleMenu"
+        @click="closeMenu"
         :icon="['fas', 'times']"
       />
       <font-awesome-icon
         v-if="!isMenu"
-        @click="toggleMenu"
+        @click="openMenu"
         :icon="['fas', 'ellipsis-h']"
       />
     </div>
@@ -29,6 +29,8 @@
 
 <script>
 import boardMember from "./board-member.cmp";
+import { eventBusService } from "../../services/eventBus.service";
+
 export default {
   name: "board-nav",
   props: {
@@ -43,8 +45,14 @@ export default {
   },
   computed: {},
   methods: {
-    toggleMenu() {
-      this.isMenu = !this.isMenu;
+    openMenu() {
+      this.isMenu = true;
+      this.$emit("toggleMenu", this.isMenu);
+      eventBusService.$emit("disablePage", { to: "boardMenu" });
+
+    },
+    closeMenu() {
+      this.isMenu = false;
       this.$emit("toggleMenu", this.isMenu);
     },
     addBoardMember(memberId) {
@@ -59,7 +67,7 @@ export default {
       this.$emit("updateBoardName", this.nameToEdit);
     },
     onKeyUp(ev){
-      if (ev.keyCode === 27 && this.isMenu) this.toggleMenu()
+      if (ev.keyCode === 27 && this.isMenu) this.closeMenu()
     },
   },
   watch: {
@@ -73,9 +81,13 @@ export default {
   created() {
     this.nameToEdit = this.name;
     document.body.addEventListener("keyup", this.onKeyUp);
+        eventBusService.$on("disablePage-boardMenu", this.closeMenu);
+
   },
   destroyed() {
     document.body.removeEventListener("keyup", this.onKeyUp);
+        eventBusService.$off("disablePage-boardMenu");
+
   },
 };
 </script>
