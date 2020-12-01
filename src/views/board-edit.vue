@@ -27,8 +27,8 @@
         :list="board.lists"
         v-bind="dragOptions"
         group="lists"
-        @sort="updateBoard"
       >
+        <!-- @sort="updateBoard" -->
         <list
           v-for="(list, listIdx) in board.lists"
           :key="list.id"
@@ -117,7 +117,6 @@ export default {
         this.UserId
       );
       this.board.activities.unshift(activity);
-      this.updateBoard();
     },
     async removeBoardMember(memberId) {
       const fullMember = await this.getMember(memberId)
@@ -140,7 +139,6 @@ export default {
       );
       this.board.activities.unshift(activity);
       this.board.members.push(memberId);
-      this.updateBoard();
       this.members.push(fullMember);
     },
     updateBoardMember(type, memberId) {
@@ -167,7 +165,6 @@ export default {
         this.UserId
       );
       this.board.activities.unshift(activity);
-      this.updateBoard();
     },
     updateBoardDueDate(dueDate) {
       this.board.dueDate = dueDate;
@@ -176,7 +173,6 @@ export default {
         this.UserId
       );
       this.board.activities.unshift(activity);
-      this.updateBoard();
     },
     saveBoardBgc(bgc) {
       if (bgc.type === "img") {
@@ -191,7 +187,6 @@ export default {
         this.UserId
       );
       this.board.activities.unshift(activity);
-      this.updateBoard();
     },
 
     // LIST
@@ -202,7 +197,6 @@ export default {
       );
       this.board.activities.unshift(activity);
       this.board.lists.splice(listIdx, 1);
-      this.updateBoard();
     },
     openTask(idxs) {
       this.currTask = this.board.lists[idxs.listIdx].tasks[idxs.taskIdx];
@@ -219,7 +213,6 @@ export default {
         newTask.id
       );
       this.board.activities.unshift(activity);
-      this.updateBoard();
     },
     updateListName(updates) {
       this.board.lists[updates.listIdx].name = updates.newName;
@@ -229,7 +222,6 @@ export default {
       );
       this.board.activities.unshift(activity);
       socket.emit('listName', {listIdx: updates.listIdx, newName: updates.newName})
-      this.updateBoard();
     },
 
     // TASK-DETAILS
@@ -239,7 +231,6 @@ export default {
       ].isDone = !this.currTask.checkLists[idxs.checkListIdx].items[
         idxs.itemIdx
       ].isDone;
-      this.updateBoard();
     },
     addItem(item) {
       const currCheckListItems = this.currTask.checkLists[item.checkListIdx]
@@ -249,7 +240,6 @@ export default {
         isDone: item.isDone,
       };
       currCheckListItems.push(newItem);
-      this.updateBoard();
     },
     addCheckList(checkListData) {
       const currCheckLists = this.currTask.checkLists;
@@ -264,7 +254,6 @@ export default {
         this.currTask.id
       );
       this.board.activities.unshift(activity);
-      this.updateBoard();
     },
     async addMemberToTask(memberId) {
       const fullMember = await this.getMember(memberId);
@@ -275,7 +264,6 @@ export default {
       );
       this.board.activities.unshift(activity);
       this.currTask.members.push(memberId);
-      this.updateBoard();
     },
     async removeMemberfromTask(memberIdx) {
       const fullMember = await this.getMember(this.currTask.members[memberIdx]);
@@ -286,7 +274,6 @@ export default {
       );
       this.board.activities.unshift(activity);
       this.currTask.members.splice(memberIdx, 1);
-      this.updateBoard();
     },
     updateDueDate(newDate) {
       this.currTask.dueDate = newDate;
@@ -296,8 +283,6 @@ export default {
         this.currTask.id
       );
       this.board.activities.unshift(activity);
-      this.updateBoard();
-      // socket.emit("update task", this.currTask);
     },
     updateTaskName(newName) {
       this.currTask.name = newName;
@@ -307,7 +292,6 @@ export default {
         this.currTask.id
       );
       this.board.activities.unshift(activity);
-      this.updateBoard();
     },
     updateTaskDesc(newDwsc) {
       this.currTask.description = newDwsc;
@@ -317,7 +301,6 @@ export default {
         this.currTask.id
       );
       this.board.activities.unshift(activity);
-      this.updateBoard();
     },
     UploadImg(imgUrl) {
       this.currTask.attachments.push(imgUrl);
@@ -327,14 +310,12 @@ export default {
         this.currTask.id
       );
       this.board.activities.unshift(activity);
-      this.updateBoard();
     },
     closeDetails() {
       this.currTask = null;
     },
     removeItem(idxs) {
       this.currTask.checkLists[idxs.checkListIdx].items.splice(idxs.itemIdx, 1);
-      this.updateBoard();
     },
     removeAttachment(idx) {
       this.currTask.attachments.splice(idx, 1);
@@ -344,11 +325,9 @@ export default {
         this.currTask.id
       );
       this.board.activities.unshift(activity);
-      this.updateBoard();
     },
     setPreviewImg(idx) {
       this.currTask.previewImg = this.currTask.attachments[idx];
-      this.updateBoard();
     },
     addComment(commentTxt) {
       var comment = {
@@ -359,7 +338,6 @@ export default {
           : { fullName: "Guest" },
       };
       this.currTask.comments.push(comment);
-      this.updateBoard();
     },
     removeCheckList(idx) {
       const activity = boardService.newActivity(
@@ -369,7 +347,6 @@ export default {
       );
       this.board.activities.unshift(activity);
       this.currTask.checkLists.splice(idx, 1);
-      this.updateBoard();
     },
     toggleLabel(label) {
       const idx = this.currTask.labels.findIndex(
@@ -377,7 +354,6 @@ export default {
       );
       if (idx === -1) this.currTask.labels.push(label);
       else this.currTask.labels.splice(idx, 1);
-      this.updateBoard();
     },
     setTaskColor(bgc) {
       this.currTask.backgroundColor = bgc;
@@ -387,7 +363,6 @@ export default {
         this.currTask.id
       );
       this.board.activities.unshift(activity);
-      this.updateBoard();
     },
     removeTask() {
       const activity = boardService.newActivity(
@@ -398,11 +373,9 @@ export default {
       this.board.activities.unshift(activity);
       this.board.lists[this.currListIdx].tasks.splice(this.currTaskIdx, 1);
       this.currTask = null;
-      this.updateBoard();
     },
     removePreviewImg() {
       this.currTask.previewImg = "";
-      this.updateBoard();
     },
 
     // GENERAL BOARD
@@ -415,7 +388,6 @@ export default {
         this.UserId
       );
       this.board.activities.unshift(activity);
-      await this.updateBoard();
       this.isNewList = false;
     },
     async getMember(memberId) {
@@ -448,7 +420,6 @@ export default {
         ];
     },
     onDrag() {
-      this.updateBoard();
     },
   },
   watch: {
@@ -475,7 +446,8 @@ export default {
       };
     },
     UserId() {
-      return this.$store.getters.loggedInUser._id;
+      const user = this.$store.getters.loggedInUser;
+      return user ? user._id : 'guest';
     },
   },
   components: {
@@ -507,7 +479,12 @@ export default {
 		// this.currTask = this.board.lists[0].tasks[0]
 	},
 	destroyed() {
-		socket.emit("leaveBoard");
+    socket.emit("leaveBoard");
+    socket.off('listName');
+    socket.off('boardName');
+    socket.off('removeBoardMember');
+    socket.off('addBoardMember');
+    socket.off("updateBoard");
 		socket.terminate();
 	},
 };

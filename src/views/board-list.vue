@@ -35,7 +35,7 @@
 				<el-card
 					class="flex center"
 					:body-style="{ height: '75px' }"
-					@click.native="addBoard"
+					@click.native="openPrompt"
 					><img class="plus-icon" src="../styles/assets/plus.png"
 				/></el-card>
 			</el-col>
