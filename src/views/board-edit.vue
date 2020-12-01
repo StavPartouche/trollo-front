@@ -19,6 +19,7 @@
       :name="board.name"
       :description="board.description"
       :dueDate="board.dueDate"
+      :activities="board.activities"
     ></board-menu>
     <ul class="lists" v-if="board">
       <draggable
@@ -52,7 +53,7 @@
     <task-details
       v-if="currTask"
       :task="currTask"
-      :activites="board.activities"
+      :activities="board.activities"
       :members="members"
       :labels="board.labels"
       @toggleCheck="toggleCheck"

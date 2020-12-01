@@ -1,0 +1,15 @@
+.activity{
+    display: flex;
+
+    .activity-desc{
+        margin: 0;
+
+        span{
+            font-weight: bold;
+        }
+    }
+
+    .activity-date{
+        margin: 0;
+    }
+}

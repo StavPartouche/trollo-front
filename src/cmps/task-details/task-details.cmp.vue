@@ -63,7 +63,7 @@
             />
             <div>
               <h3>Activity</h3>
-              <div v-for="(activity, idx) in taskActivites" :key="idx">
+              <div v-for="(activity, idx) in taskActivities" :key="idx">
                 <h4>By: {{ activity.userId }}</h4>
                 <p>{{ activity.txt }}</p>
               </div>
@@ -138,7 +138,7 @@ export default {
 	name: "task-details",
 	props: {
 		task: Object,
-		activites: Array,
+		activities: Array,
 		members: Array,
 		labels: Array
 	},
@@ -263,8 +263,8 @@ export default {
 		}
 	},
 	computed: {
-		taskActivites() {
-			return this.activites.filter(
+		taskActivities() {
+			return this.activities.filter(
 				(activity) => activity.taskId === this.task.id
 			);
 		},

@@ -12,7 +12,12 @@
 
         <li @click.stop="openWarning" class="menu-btn">Delete board</li>
         <hr />
-        <li class="menu-btn" @backToMenu="backToMenu">Activity-log</li>
+        <li class="menu-btn" @backToMenu="backToMenu">
+          Activity-log
+          <ul>
+            <board-activity v-for="(activity, idx) in activities" :key="idx" :activity="activity"/>
+          </ul>
+        </li>
       </ul>
     </div>
           <board-about
@@ -41,12 +46,14 @@
 <script>
 import boardAbout from "./board-about.cmp";
 import boardBackground from "./board-background.cmp";
+import boardActivity from './board-activity.cmp.vue'
 export default {
   name: "board-menu",
   props: {
     name: String,
     description: String,
     dueDate: String,
+    activities: Array
   },
   data() {
     return {
@@ -115,7 +122,8 @@ export default {
   },
   components: {
     boardAbout,
-    boardBackground
+    boardBackground,
+    boardActivity
   },
   created() {
     
