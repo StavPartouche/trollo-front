@@ -35,7 +35,7 @@
           :list="list"
           :listIdx="listIdx"
           :members="members"
-          :listsCount="board.lists.length"
+          :isNewList="isNewList"
           @removeList="removeList"
           @openTask="openTask"
           @addTask="addTask"
@@ -101,6 +101,7 @@ export default {
       currListIdx: null,
       currTaskIdx: null,
       isMenu: false,
+      isNewList: false,
     };
   },
   methods: {
@@ -284,8 +285,9 @@ export default {
     async addList() {
       var newList = boardService.getEmptyList("Enter list name");
       this.board.lists.push(newList);
+      this.isNewList = true;
       await this.updateBoard();
-      const newListIdx = this.board.lists.length - 1;
+      this.isNewList = false;
     },
     async getMember(memberId) {
       const member = await userService.getById(memberId);
