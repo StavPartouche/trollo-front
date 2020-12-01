@@ -75,7 +75,7 @@ export default {
   created() {
     const user = this.loggedInUser || { userName: "guest" };
     socket.setup(user);
-    socket.emit("user connect", user);
+    socket.emit("userConnect", user);
     this.$store.dispatch({
       type: "loadUsers",
     });
