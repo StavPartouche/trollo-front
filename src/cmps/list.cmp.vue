@@ -1,5 +1,5 @@
 <template>
-	<li>
+	<li class="list flex-column">
     <div
       @click="closeListEdit"
       :class="{ 'hide': !isListEdit,'disable-page-container': isListEdit }"
@@ -27,8 +27,9 @@
 				@toggleAdd="toggleAdd"
 			/>
 		</div>
-		<ul>
+		<ul class="draggable-tsaks-container">
 			<draggable
+			class="draggable-tsaks"
 				:list="list.tasks"
 				group="tasks"
 				v-bind="dragOptions"
