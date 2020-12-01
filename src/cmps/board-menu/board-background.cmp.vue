@@ -63,7 +63,6 @@ export default {
     },
     setType(type) {
       this.type = type;
-      console.log(this.type);
     },
     backToMenu() {
       this.$emit("backToMenu");

@@ -1,132 +1,115 @@
 <template>
-	<div class="task-editor-container" @click="closeDetails">
-		<div
-			@click.stop="closePopup"
-			:class="{ hide: !isPopup, 'disable-page-container': isPopup }"
-		></div>
-		<div @click.stop class="task-editor">
-			<div class="task-header">
-				<h2
-					contenteditable
-					v-text="taskToEdit.name"
-					@blur="updateTaskName"
-				>
-					{{ task.name }}
-				</h2>
-				<button @click.stop="closeDetails">X</button>
-			</div>
-			<div class="task-editor-main">
-				<div class="task-details">
-					<task-details-labels :labels="task.labels" />
-					<div>
-						<h3>Description</h3>
-						<textarea
-							class="description-textarea"
-							contenteditable
-							v-model="taskToEdit.description"
-							@blur="updateTaskDesc"
-							cols="30"
-							rows="5"
-						></textarea>
-					</div>
-					<div v-if="task.dueDate">
-						<h3>Due Date</h3>
-						<p>{{ task.dueDate }}</p>
-					</div>
-					<div v-if="membersToShow.length">
-						<h3>members</h3>
-						<ul class="flex">
-							<li
-								v-for="member in membersToShow"
-								:key="member._id"
-							>
-								<user-avatar :user="member"></user-avatar>
-							</li>
-						</ul>
-					</div>
-					<taskDetailsAttachments
-						:attachments="task.attachments"
-						:previewImg="task.previewImg"
-						@removeAttachment="removeAttachment"
-						@setPreviewImg="setPreviewImg"
-						@removePreviewImg="removePreviewImg"
-					/>
-					<taskDetailsChecklists
-						:checkLists="task.checkLists"
-						@addItem="addItem"
-						@removeItem="removeItem"
-						@toggleCheck="toggleCheck"
-						@removeCheckList="removeCheckList"
-					/>
-					<taskDetailsComments
-						:comments="task.comments"
-						@addComment="addComment"
-					/>
-					<div>
-						<h3>Activity</h3>
-						<div
-							v-for="(activity, idx) in taskActivites"
-							:key="idx"
-						>
-							<h4>By: {{ activity.userId }}</h4>
-							<p>{{ activity.txt }}</p>
-						</div>
-					</div>
-				</div>
-				<div class="side-bar">
-					<component
-						v-if="isPopup"
-						:taskMembersIds="task.members"
-						:boardMembers="members"
-						:labels="labels"
-						:is="cmpType"
-						@addCheckList="addCheckList"
-						@addMemberToTask="addMemberToTask"
-						@removeMemberfromTask="removeMemberfromTask"
-						@updateDueDate="updateDueDate"
-						@closePopup="closePopup"
-						@toggleLabel="toggleLabel"
-						@setTaskColor="setTaskColor"
-					/>
-					<button
-						class="side-bar-btn"
-						@click="openPopup('checkList')"
-					>
-						CheckList
-					</button>
-					<button class="side-bar-btn" @click="openPopup('labels')">
-						Labels
-					</button>
-					<button class="side-bar-btn" @click="openPopup('members')">
-						Members
-					</button>
-					<button class="side-bar-btn" @click="openPopup('dueDate')">
-						dueDate
-					</button>
-					<button
-						class="side-bar-btn"
-						@click="openPopup('backgroundColor')"
-					>
-						BackgroundColor
-					</button>
-					<label class="btn side-bar-btn">
-						Attachments
-						<input
-							class="add-attachments-input"
-							type="file"
-							@change="onUploadImg"
-						/>
-					</label>
-					<button
-						class="side-bar-btn delete-task-btn"
-						@click="openWarning"
-					>
-						Delete Task
-					</button>
-				</div>
-			</div>
-		</div>
-	</div>
+  <div class="task-editor-container" @click="closeDetails">
+        <div
+      @click.stop="closePopup"
+      :class="{ 'hide': !isPopup, 'disable-page-container': isPopup }"
+    ></div>
+    <div @click.stop class="task-editor">
+      <div class="task-header">
+        <h2 contenteditable v-text="taskToEdit.name" @blur="updateTaskName">
+          {{ task.name }}
+        </h2>
+        <button @click.stop="closeDetails">X</button>
+      </div>
+      <div class="task-editor-main">
+          <div class="task-details">
+            <task-details-labels :labels="task.labels"/>
+            <div>
+              <h3>Description</h3>
+              <textarea
+                class="description-textarea"
+                contenteditable
+                v-model="taskToEdit.description"
+                @blur="updateTaskDesc"
+                cols="30"
+                rows="5"
+              ></textarea>
+            </div>
+            <div v-if="task.dueDate">
+              <h3>Due Date</h3>
+              <p>{{ task.dueDate }}</p>
+            </div>
+            <div v-if="membersToShow.length">
+              <h3>members</h3>
+              <ul class="flex">
+                <li v-for="member in membersToShow" :key="member._id">
+                  <user-avatar :user="member"></user-avatar>
+                </li>
+              </ul>
+            </div>
+            <taskDetailsAttachments
+              :attachments="task.attachments"
+              :previewImg="task.previewImg"
+              @removeAttachment="removeAttachment"
+              @setPreviewImg="setPreviewImg"
+              @removePreviewImg="removePreviewImg"
+            />
+            <taskDetailsChecklists
+              :checkLists="task.checkLists"
+              @addItem="addItem"
+              @removeItem="removeItem"
+              @toggleCheck="toggleCheck"
+			  @removeCheckList="removeCheckList"
+            />
+            <taskDetailsComments
+              :comments="task.comments"
+              @addComment="addComment"
+            />
+            <div>
+              <h3>Activity</h3>
+              <div v-for="(activity, idx) in taskActivites" :key="idx">
+                <h4>By: {{ activity.userId }}</h4>
+                <p>{{ activity.txt }}</p>
+              </div>
+            </div>
+          </div>
+          <component
+            v-if="isPopup"
+            :taskMembersIds="task.members"
+            :boardMembers="members"
+            :labels="labels"
+            :is="cmpType"
+            @addCheckList="addCheckList"
+            @addMemberToTask="addMemberToTask"
+            @removeMemberfromTask="removeMemberfromTask"
+            @updateDueDate="updateDueDate"
+            @closePopup="closePopup"
+            @toggleLabel="toggleLabel"
+            @setTaskColor="setTaskColor"
+          />
+        <div class="flex-column justify-space-between">
+          <div class="side-bar">
+            <button class="side-bar-btn" @click="openPopup('checkList')">
+              CheckList
+            </button>
+            <button class="side-bar-btn" @click="openPopup('labels')">
+              Labels
+            </button>
+            <button class="side-bar-btn" @click="openPopup('members')">
+              Members
+            </button>
+            <button class="side-bar-btn" @click="openPopup('dueDate')">
+              dueDate
+            </button>
+            <button class="side-bar-btn" @click="openPopup('backgroundColor')">
+              BackgroundColor
+            </button>
+            <label class="btn side-bar-btn">
+              Attachments
+              <input
+                class="add-attachments-input"
+                type="file"
+                @change="onUploadImg"
+              />
+            </label>
+          </div>
+          <button class="side-bar-btn delete-task-btn" @click="openWarning">
+            Delete Task
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>

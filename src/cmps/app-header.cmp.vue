@@ -37,7 +37,6 @@ export default {
 			if (this.$router.currentRoute.path !== '/') this.$router.push('/');
 		},
 		toggleMenu(){
-			console.log('click');
 			this.isMenu = !this.isMenu
 		},
 		toUserPage(){

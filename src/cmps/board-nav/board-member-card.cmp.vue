@@ -1,5 +1,6 @@
 <template>
-      <li v-if="member._id !== 'guest'"  class="userToShow user-card-container">
+      <li class="userToShow user-card-container">
+      <!-- <li v-if="member._id !== 'guest'"  class="userToShow user-card-container"> -->
             <div @click="togggleMember" :class="{'disable-page-container': showMember}"></div>
       <user-avatar @click.native="togggleMember" :user="member"></user-avatar>
     <div v-if="showMember"  class="user-card flex-column">

@@ -72,7 +72,6 @@ export default {
   },
   watch: {
     description() {
-      console.log('watchinggg');
       this.descToEdit = this.description;
     },
   },

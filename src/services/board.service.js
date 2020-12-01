@@ -37,17 +37,17 @@ function put(board) {
 }
 
 function getEmptyBoard(userId = 'guest') {
-    return {
+    const newBoard = {
         name: '',
-        members: [userId],
+        members: [],
         labels: [
-            {backgroundColor: 'rgb(97, 189, 79)', txt: 'Entertainment'},
-            {backgroundColor: 'rgb(242, 214, 0)', txt: 'Extras'},
-            {backgroundColor: 'rgb(255, 159, 26)', txt: 'First priority'},
-            {backgroundColor: 'rgb(235, 90, 70)', txt: 'Must Have'},
-            {backgroundColor: 'rgb(195, 119, 224', txt: 'Pending'},
-            {backgroundColor: 'rgb(0, 121, 191)', txt: 'Expensive'}
-    ],
+            { backgroundColor: 'rgb(97, 189, 79)', txt: 'Entertainment' },
+            { backgroundColor: 'rgb(242, 214, 0)', txt: 'Extras' },
+            { backgroundColor: 'rgb(255, 159, 26)', txt: 'First priority' },
+            { backgroundColor: 'rgb(235, 90, 70)', txt: 'Must Have' },
+            { backgroundColor: 'rgb(195, 119, 224', txt: 'Pending' },
+            { backgroundColor: 'rgb(0, 121, 191)', txt: 'Expensive' }
+        ],
         style: { backgroundColor: '', url: 'bgc1.jpg' },
         creator: userId,
         dueDate: '',
@@ -57,13 +57,14 @@ function getEmptyBoard(userId = 'guest') {
             txt: 'Board created',
             userId: userId,
             taskId: ''
-        }
-        ],
+        }],
         lists: _getEmptyLists()
     };
+    if (userId !== 'guest') newBoard.members.push(userId);
+    return newBoard;
 }
 
-function _getEmptyLists(){
+function _getEmptyLists() {
     return [
         getEmptyList('To do'),
         getEmptyList('In Progress'),

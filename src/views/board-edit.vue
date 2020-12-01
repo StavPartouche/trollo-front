@@ -46,7 +46,6 @@
             </li>
           </draggable>
           <li>
-
         <button class="add-list-btn" @click="addList">
           <i class="fas fa-plus"></i><span>Add list</span>
         </button>
@@ -179,7 +178,7 @@ export default {
     },
 
     // TASK-DETAILS
-  toggleCheck(idxs) {
+    toggleCheck(idxs) {
       this.currTask.checkLists[idxs.checkListIdx].items[
         idxs.itemIdx
       ].isDone = !this.currTask.checkLists[idxs.checkListIdx].items[
@@ -197,36 +196,36 @@ export default {
       currCheckListItems.push(newItem);
       this.updateBoard();
     },
-    addCheckList(checkListData){
+    addCheckList(checkListData) {
       const currCheckLists = this.currTask.checkLists;
-        const newChechList = {
-          title: checkListData.title,
-          items: checkListData.items,
-        };
-        currCheckLists.push(newChechList);
-        this.updateBoard();
+      const newChechList = {
+        title: checkListData.title,
+        items: checkListData.items,
+      };
+      currCheckLists.push(newChechList);
+      this.updateBoard();
     },
-    addMemberToTask(memberId){
+    addMemberToTask(memberId) {
       this.currTask.members.push(memberId);
       this.updateBoard();
     },
-    removeMemberfromTask(memberIdx){
+    removeMemberfromTask(memberIdx) {
       this.currTask.members.splice(memberIdx, 1);
       this.updateBoard();
     },
-    updateDueDate(newDate){
+    updateDueDate(newDate) {
       this.currTask.dueDate = newDate;
       this.updateBoard();
     },
-    updateTaskName(newName){
+    updateTaskName(newName) {
       this.currTask.name = newName;
       this.updateBoard();
     },
-    updateTaskDesc(newDwsc){
+    updateTaskDesc(newDwsc) {
       this.currTask.description = newDwsc;
       this.updateBoard();
     },
-    UploadImg(imgUrl){
+    UploadImg(imgUrl) {
       this.currTask.attachments.push(imgUrl);
       this.updateBoard();
     },
@@ -281,13 +280,13 @@ export default {
       this.currTask.previewImg = "";
       this.updateBoard();
     },
-    
+
     // GENERAL BOARD
     async addList() {
-      var newList = boardService.getEmptyList('Enter list name');
+      var newList = boardService.getEmptyList("Enter list name");
       this.board.lists.push(newList);
       await this.updateBoard();
-      const newListIdx = this.board.lists.length - 1
+      const newListIdx = this.board.lists.length - 1;
       document.getElementById(`list${newListIdx}`).focus();
     },
     async getMember(memberId) {
@@ -295,12 +294,11 @@ export default {
       return member;
     },
     async updateBoard(ev) {
-      console.log(ev)
       await this.$store.dispatch({
         type: "saveBoard",
-				board: this.board,
-			});
-			socket.emit('update board');
+        board: this.board,
+      });
+      socket.emit("update board");
       // await eventBusService.$emit("boardBgc", this.board.style);
 		},
 		// alertEnter(user) {
@@ -308,7 +306,7 @@ export default {
 		// },
 		async loadBoard(ev) {
       const updatedBoard = await boardService.getById(this.board._id);
-			this.board = updatedBoard;
+      this.board = updatedBoard;
       await eventBusService.$emit("boardBgc", this.board.style);
       this.members = [];
       this.board.members.forEach(async (member) => {
