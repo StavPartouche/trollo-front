@@ -128,7 +128,7 @@ export default {
       var idx = this.board.members.findIndex((member) => member === memberId);
       if (idx === -1) return;
       this.board.members.splice(idx, 1);
-			idx = this.members.findIndex((member) => member._id === memberId);
+      idx = this.members.findIndex((member) => member._id === memberId);
       this.members.splice(idx, 1);
     },
     async addBoardMember(memberId) {
@@ -394,17 +394,6 @@ export default {
       const member = await userService.getById(memberId);
       return member;
     },
-    async updateBoard(ev) {
-      await this.$store.dispatch({
-        type: "saveBoard",
-        board: this.board,
-      });
-      socket.emit("update board");
-      // await eventBusService.$emit("boardBgc", this.board.style);
-    },
-    // alertEnter(user) {
-    //   alert(user.userName + ' has entered the board!');
-    // },
     async loadBoard(ev) {
       const updatedBoard = await boardService.getById(this.board._id);
       this.board = updatedBoard;

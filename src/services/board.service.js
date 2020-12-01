@@ -101,11 +101,9 @@ function getEmptyTask() {
 function newActivity(txt,userId, taskId = null){
     return {
         createdAt: Date.now(),
-        txt: txt,
-        userId: userId
-          ? userId
-          : { fullName: "Guest" },
-        taskId: taskId
+        txt,
+        userId,
+        taskId
     }
     // return {
     //     createdAt: Date.now(),

@@ -97,6 +97,7 @@ export default {
 			this.$router.push(`/board/${saveBoard._id}`);
 		},
 		openPrompt() {
+		console.log('here');
         this.$prompt('Please enter new board name', 'Create new board', {
           confirmButtonText: 'Create',
 		  cancelButtonText: 'Cancel',
