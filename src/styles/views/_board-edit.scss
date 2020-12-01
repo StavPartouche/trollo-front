@@ -2,7 +2,6 @@
     flex: 1;
     width: 100%;
     overflow: hidden;
-    
     .add-list-btn {
         background-color: #ebecf0;
         min-width: 250px;
@@ -24,35 +23,46 @@
         width: 100%;
         overflow-x: auto;
         overflow-y: hidden;
+        padding: 10px 2px;
         &>* {
             height: 100%;
         }
         .list {
+            .draggable-tsaks-container {
+                flex: 1;
+                overflow: auto;
+                // padding-right: 4px;
+            }
+            .draggable-tsaks {
+                padding-right: 4px;
+                // background-color: red;
+            }
             background-color: #ebecf0;
             width: 250px;
-            margin: 10px 5px;
+            margin: 0 5px;
             border-radius: 4px;
-            padding: 0 12px;
+            padding: 0 4px 0 8px;
             height: fit-content;
             max-height: 100%;
             overflow-y: auto;
             &>section {
-                height: 100%;
-                display: flex;
-                flex-direction: column;
+                // height: 100%;
+                // display: flex;
+                // flex-direction: column;
                 &>ul {
-                    flex: 1;
+                    // flex: 1;
                     // overflow-y: hidden;
-                    &>div {
-                        height: 100%;
-                        overflow-y: auto;
-                    }
+                    // &>div {
+                    //     height: 100%;
+                    //     overflow-y: auto;
+                    // }
                 }
             }
             .add-item-input {
                 padding-bottom: 5px;
             }
             .list-edit-btn {
+                padding: 0 4px 0 0;
                 opacity: 0.4;
             }
             // .list-edit-menu-container{
@@ -97,6 +107,7 @@
                 background-color: transparent;
                 font-size: rem(16px);
                 padding: 10px 0;
+                height: 40px;
             }
             input {
                 background-color: transparent;
@@ -107,10 +118,11 @@
             }
             .list-header-container {
                 // width: 94%;
-                margin-bottom: 5px;
-                margin-top: 5px;
+                height: 40px;
+                // padding-bottom: 5px;
+                // padding-top: 5px;
+                padding: 13px;
                 .list-header {
-                    padding: 5px;
                     font-size: 1rem;
                     margin: 0;
                 }

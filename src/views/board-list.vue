@@ -4,7 +4,7 @@
 			<h2>User Boards:</h2>
 			<el-row class="flex justify-center wrap">
 				<el-col :span="2" :offset="0">
-					<el-card @click.native="addBoard"
+					<el-card @click.native="openPrompt"
 						><img class="plus-icon" src="../styles/assets/plus.png"
 					/></el-card>
 				</el-col>
@@ -86,17 +86,39 @@ export default {
 		};
 	},
 	methods: {
-		async addBoard() {
+		async addBoard(value) {
 			const user = this.loggedInUser;
 			var newBoard = (user) ? boardService.getEmptyBoard(user._id) : boardService.getEmptyBoard();
-			newBoard.name = prompt("Enter Board name");
-			if (!newBoard.name) return;
+			newBoard.name = value
 			var saveBoard = await this.$store.dispatch({
 				type: "saveBoard",
 				board: newBoard,
 			});
 			this.$router.push(`/board/${saveBoard._id}`);
 		},
+		openPrompt() {
+        this.$prompt('Please enter new board name', 'Create new board', {
+          confirmButtonText: 'Create',
+		  cancelButtonText: 'Cancel',
+		  inputValidator: this.validateInput,
+		  inputErrorMessage: 'Enter board name'
+        }).then(({ value }) => {
+			this.addBoard(value)
+          	this.$message({
+            type: 'success',
+            message: 'New board: ' + value + ' was created'
+          });
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: 'Input canceled'
+          });       
+        });
+	  },
+	  validateInput(input){
+		  if(!input) return false
+		  else return true
+	  }
 	},
 	computed: {
 		userBoards() {

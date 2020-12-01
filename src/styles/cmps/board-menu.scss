@@ -5,7 +5,7 @@
     padding: 7px;
     // top: 70px;
     // padding-top: $board-nav-height;
-    width: 300px;
+    width: 350px;
     height: 100%;
     background-color: $task-details-bgc;
     .menu-btn {
@@ -13,6 +13,26 @@
     }
     .main-menu,
     .board-about {
+        .activity{
+            display: flex;
+            padding-left: 0;
+            .activity-details{
+                padding-left: 3px;
+                .activity-desc{
+                    margin: 0;
+                    font-size: rem(14px);
+            
+                    span{
+                        font-weight: bold;
+                    }
+                }
+            
+                .activity-date{
+                    margin: 0;
+                    font-size: rem(12px);
+                }
+            }
+        }
         padding: 0 15px 15px 15px;
         li {
             font-size: rem(18px);

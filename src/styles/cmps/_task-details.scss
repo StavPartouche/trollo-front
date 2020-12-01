@@ -1,4 +1,4 @@
-.label-preview{
+.task-preview-label {
     width: 30px;
     height: 5px;
     border-radius: 20px;
@@ -49,13 +49,13 @@
                 min-width: 80%;
                 overflow-y: auto;
                 margin-block-end: 13px;
-                // .label-preview{
+                // .task-preview-label{
                 //     width: 30px;
                 //     height: 5px;
                 //     border-radius: 20px;
                 //     margin-right: 3px;
                 // }
-                .data-layout{
+                .data-layout {
                     margin-bottom: 10px;
                 }
                 .description-textarea {
@@ -88,7 +88,7 @@
                     }
                 }
             }
-            .side-bar-container{
+            .side-bar-container {
                 width: 100%;
             }
             .side-bar {
@@ -114,10 +114,9 @@
                     cursor: pointer;
                 }
             }
-            .delete-task-btn{
+            .delete-task-btn {
                 color: white;
                 background-color: #940000;
-            
             }
         }
     }
