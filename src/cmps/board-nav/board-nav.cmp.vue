@@ -28,6 +28,8 @@
   </div>
 </template>
 
+
+
 <script>
 import boardMember from "./board-member.cmp";
 

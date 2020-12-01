@@ -93,13 +93,11 @@ textarea {
     width: 100vw;
 }
 
-.logo {
+.logo,
+.logo:active {
     color: rgb(230, 230, 230);
-    // font-family: orbitron;
-    // font-family: audi;
-    // font-family: aclonica;
+    text-shadow: 1px 1px black;
     font-family: megrim;
-    // font-family: surfer;
     span {
         font-size: 1.1em; // color: rgb(136, 199, 183)
     }

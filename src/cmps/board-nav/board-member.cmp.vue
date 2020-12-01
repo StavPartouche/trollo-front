@@ -17,7 +17,7 @@
           v-if="allMembers"
           @click="openShowInvite"
         >
-          <i class="fas fa-user-plus"></i>
+          <font-awesome-icon :icon="['fas', 'user-plus']" />
         </button>
       </li>
     </ul>
