@@ -20,17 +20,14 @@
       :description="board.description"
       :dueDate="board.dueDate"
     ></board-menu>
-    <vue-scroll class="vuescroll" :ops="ops">
-      <!-- <div class=""> -->
-      <!-- <ul class="lists lists-container flex" v-if="board"> -->
-      <ul class="lists" v-if="board">
-        <draggable
-          class="flex"
-          :list="board.lists"
-          v-bind="dragOptions"
-          group="lists"
-          @sort="updateBoard"
-        >
+        <ul class="lists" v-if="board">
+          <draggable
+            class="flex"
+            :list="board.lists"
+            v-bind="dragOptions"
+            group="lists"
+            @sort="updateBoard"
+          >
             <li
               class="list"
               v-for="(list, listIdx) in board.lists"
@@ -53,8 +50,7 @@
           <i class="fas fa-plus"></i><span>Add list</span>
         </button>
           </li>
-      </ul>
-    </vue-scroll>
+        </ul>
     <task-details
       v-if="currTask"
       :task="currTask"
@@ -98,38 +94,23 @@ import io from 'socket.io-client';
 import _ from 'lodash';
 
 export default {
-  name: "board-edit",
-  data() {
-    return {
-      board: null,
-      members: [],
-      currTask: null,
-      currListIdx: null,
-      currTaskIdx: null,
-      ops: {
-        scrollPanel: {},
-        rail: {
-          background: "rgba(0, 0, 0, 0.404)",
-          size: "20px",
-          opacity: "0.1",
-        },
-        bar: {
-          onlyShowBarOnScroll: false,
-          keepShow: true,
-          size: "15px",
-          opacity: "0.7",
-          minSize: 0,
-        },
-      },
-      isMenu: false,
-    };
-  },
-  methods: {
-    // BOARD-NAV
-    toggleMenu(ev) {
-      this.isMenu = ev;
-    },
-    updateBoardName(name) {
+	name: "board-edit",
+	data() {
+		return {
+			board: null,
+			members: [],
+			currTask: null,
+			currListIdx: null,
+			currTaskIdx: null,
+			isMenu: false,
+		};
+	},
+	methods: {
+		// BOARD-NAV
+		toggleMenu(ev) {
+			this.isMenu = ev;
+		},
+		updateBoardName(name) {
       this.board.name = name;
       this.updateBoard();
     },
