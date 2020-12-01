@@ -20,9 +20,6 @@
       :description="board.description"
       :dueDate="board.dueDate"
     ></board-menu>
-    <vue-scroll class="vuescroll" :ops="ops">
-      <!-- <div class=""> -->
-        <!-- <ul class="lists lists-container flex" v-if="board"> -->
         <ul class="lists" v-if="board">
           <draggable
             class="flex"
@@ -55,7 +52,6 @@
         </button>
           </li>
         </ul>
-    </vue-scroll>
     <task-details
       v-if="currTask"
       :task="currTask"
@@ -107,21 +103,6 @@ export default {
 			currTask: null,
 			currListIdx: null,
 			currTaskIdx: null,
-			ops: {
-				scrollPanel: {},
-				rail: {
-					background: "rgba(0, 0, 0, 0.404)",
-					size: "20px",
-					opacity: "0.1",
-				},
-				bar: {
-					onlyShowBarOnScroll: false,
-					keepShow: true,
-					size: "15px",
-					opacity: "0.7",
-					minSize: 0,
-				},
-			},
 			isMenu: false,
 		};
 	},
