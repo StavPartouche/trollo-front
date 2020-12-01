@@ -1,11 +1,9 @@
 <template>
-  <!-- <div @click="closeMenu" class="list-edit-menu-container"> -->
     <div class="list-edit-menu">
       <h3>Edit List</h3>
       <button @click="openWarning(listIdx)">Delete List</button>
       <button @click="toggleAdd">Add card</button>
     </div>
-  <!-- </div> -->
 </template>
 
 <script>
@@ -19,14 +17,11 @@ export default {
   },
   computed: {},
   methods: {
-    closeMenu(){
-      this.$emit("toggleListEdit");
-    },
     removeList(listIdx) {
       this.$emit("removeList", listIdx);
     },
     toggleAdd() {
-      this.$emit("toggleListEdit");
+      this.$emit("closeListEdit");
       this.$emit("toggleAdd");
     },
     openWarning(listIdx) {

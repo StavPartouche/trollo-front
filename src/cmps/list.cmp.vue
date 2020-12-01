@@ -13,7 +13,7 @@
 			>
 				{{ list.name }}
 			</h2>
-			<button class="list-edit-btn" @click="toggleListEdit">
+			<button class="list-edit-btn" @click="openListEdit">
 				<font-awesome-icon :icon="['fas', 'ellipsis-v']" />
 			</button>
 			<list-edit-menu
@@ -21,7 +21,6 @@
 				:listIdx="listIdx"
 				@removeList="removeList"
 				@toggleAdd="toggleAdd"
-				@toggleListEdit="toggleListEdit"
 			/>
 		</div>
 		<ul>
@@ -86,6 +85,7 @@ import draggable from "vuedraggable";
 import userAvatar from "./user-avatar.cmp";
 import addItemInput from "./add-item-input.cmp";
 import listEditMenu from "./list-edit-menu.cmp";
+import { eventBusService } from "../services/eventBus.service";
 export default {
 	name: "list",
 	props: {
@@ -107,9 +107,12 @@ export default {
 		};
 	},
 	methods: {
-		toggleListEdit() {
-			this.isListEdit = !this.isListEdit;
-			this.$emit('toggleDisable');
+		openListEdit(){
+			this.isListEdit = true
+			eventBusService.$emit("disablePage", { to: "listEdit" });
+		},
+		closeListEdit(){
+			this.isListEdit = false
 		},
 		updateListName(evt) {
 			var src = evt.target.innerText;
@@ -182,6 +185,10 @@ export default {
 	},
 	created() {
 		this.listName = this.list.name;
+		eventBusService.$on("disablePage-listEdit", this.closeListEdit);
 	},
+	destroyed(){
+		eventBusService.$off("disablePage-listEdit");
+	}
 };
 </script>
