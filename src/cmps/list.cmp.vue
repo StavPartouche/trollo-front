@@ -27,7 +27,6 @@
       <draggable
         :list="list.tasks"
         group="tasks"
-        :move="tiltCard"
         v-bind="dragOptions"
         @sort="emitUpdateList"
       >
@@ -134,12 +133,6 @@ export default {
     },
     emitUpdateList() {
       this.$emit("updateList", this.list);
-    },
-    tiltCard(ev) {
-      // console.log(ev)
-      // console.log(ev.dragged)
-      // ev.dragged.classList.add('tilt');
-      // ev.item.classList.toggle('tilt');
     },
   },
   watch: {

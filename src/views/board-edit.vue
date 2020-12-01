@@ -313,7 +313,6 @@ export default {
       return member;
     },
     async updateBoard(ev) {
-      console.log(ev)
       await this.$store.dispatch({
         type: "saveBoard",
         board: this.board,
@@ -329,8 +328,6 @@ export default {
       this.board = updatedBoard;
       await eventBusService.$emit("boardBgc", this.board.style);
       this.members = [];
-      console.log('this members', this.members);
-      console.log('board members', this.board.members);
       this.board.members.forEach(async (member) => {
 			var memberObject = await this.getMember(member);
 			this.members.push(memberObject);

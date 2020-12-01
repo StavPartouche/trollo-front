@@ -66,19 +66,15 @@ export default {
     },
     toggleActivityLog() {
       this.isActivityLog = !this.isActivityLog;
-      console.log(this.isMainMenu);
     },
     toggleIsAbout() {
       this.isAbout = !this.isAbout;
-      console.log(this.isMainMenu);
     },
     toggleIsBackground() {
       this.isBackground = !this.isBackground;
-      console.log(this.isMainMenu);
     },
 
     updateBoardDesc(desc) {
-      console.log('update desc');
       this.$emit("updateBoardDesc", desc);
     },
     updateBoardDueDate(dueDate) {
@@ -91,7 +87,6 @@ export default {
       this.isActivityLog = false;
       this.isAbout = false;
       this.isBackground = false;
-      console.log(this.isMainMenu);
     },
     onKeyUp(ev){
       if (ev.keyCode === 27) {
