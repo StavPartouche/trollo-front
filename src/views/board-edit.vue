@@ -3,8 +3,8 @@
     <board-nav
       @toggleMenu="toggleMenu"
       @updateBoardName="updateBoardName"
-      @removeBoardMember="removeBoardMember"
-      @addBoardMember="addBoardMember"
+      @removeBoardMember="updateBoardMember('remove', $event)"
+      @addBoardMember="updateBoardMember('add', $event)"
       v-if="board"
       :name="board.name"
       :members="members"
@@ -111,6 +111,7 @@ export default {
 		},
 		updateBoardName(name) {
       this.board.name = name;
+      socket.emit('boardName', name);
       const activity = boardService.newActivity(
         `updated board name to "${name}"`,
         this.UserId
@@ -142,6 +143,13 @@ export default {
       this.updateBoard();
       this.members.push(fullMember);
     },
+    updateBoardMember(type, memberId) {
+      if (type === 'remove') this.removeBoardMember(memberId);
+      else this.addBoardMember(memberId);
+      const ev = type + 'BoardMember';
+      socket.emit(ev, memberId);
+    },
+
 
     // BOARD-MENU
     async removeBoard() {
@@ -149,6 +157,7 @@ export default {
         type: "removeBoard",
         boardId: this.board._id,
       });
+      socket.emit('removeBoard', this.board._id);
       this.$router.push("/board");
     },
     updateBoardDesc(desc) {
@@ -219,6 +228,7 @@ export default {
         this.UserId
       );
       this.board.activities.unshift(activity);
+      socket.emit('listName', {listIdx: updates.listIdx, newName: updates.newName})
       this.updateBoard();
     },
 
@@ -441,6 +451,17 @@ export default {
       this.updateBoard();
     },
   },
+  watch: {
+        board: {
+            handler: function (newBoard) {
+                this.$store.dispatch({
+                    type: "saveBoard",
+                    board: newBoard
+                });
+            },
+            deep: true
+    }
+  },  
   computed: {
     lists() {
       return this.board.lists;
