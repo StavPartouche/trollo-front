@@ -41,10 +41,16 @@ export default {
             commit({ type: 'setBoards', boards });
         },
         async saveBoard({ commit }, { board }) {
-            const actionType = (board._id) ? 'updateBoard' : 'addBoard';
-            const savedBoard = await boardService.save(board);
-            commit({ type: actionType, savedBoard });
-            return savedBoard;
+            try {
+                const actionType = (board._id) ? 'updateBoard' : 'addBoard';
+                const savedBoard = await boardService.save(board);
+                commit({ type: actionType, savedBoard });
+                return savedBoard;
+            } catch (err) {
+                console.error('Cannot save board', err);
+                // $swal.error()
+                throw err;
+            }
         },
         async removeBoard({ commit }, { boardId }) {
             try {

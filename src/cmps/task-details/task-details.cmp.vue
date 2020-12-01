@@ -77,7 +77,7 @@
             @toggleLabel="toggleLabel"
             @setTaskColor="setTaskColor"
           />
-        <div class="flex-column justify-space-between">
+        <div class="side-bar-container flex-column justify-space-between">
           <div class="side-bar">
             <button class="side-bar-btn" @click="openPopup('checkList')">
               CheckList

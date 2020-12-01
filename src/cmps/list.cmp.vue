@@ -9,6 +9,7 @@
 				@blur="updateListName"
 				v-text="listName"
 				:id="'list' + listIdx"
+				ref="header"
 			>
 				{{ list.name }}
 			</h2>
@@ -91,6 +92,7 @@ export default {
 		list: Object,
 		listIdx: Number,
 		members: Array,
+		listsCount: Number
 	},
 	data() {
 		return {
@@ -172,6 +174,11 @@ export default {
 		userAvatar,
 		addItemInput,
 		listEditMenu,
+	},
+	mounted(){
+		if(this.listIdx === this.listsCount - 1 && this.list.name === 'Enter list name'){
+			this.$refs.header.focus()
+		}
 	},
 	created() {
 		this.listName = this.list.name;

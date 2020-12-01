@@ -37,6 +37,7 @@
                 :list="list"
                 :listIdx="listIdx"
                 :members="members"
+                :listsCount="board.lists.length"
                 @removeList="removeList"
                 @openTask="openTask"
                 @addTask="addTask"
@@ -216,6 +217,7 @@ export default {
     updateDueDate(newDate) {
       this.currTask.dueDate = newDate;
       this.updateBoard();
+      // socket.emit("update task", this.currTask);
     },
     updateTaskName(newName) {
       this.currTask.name = newName;
@@ -287,7 +289,6 @@ export default {
       this.board.lists.push(newList);
       await this.updateBoard();
       const newListIdx = this.board.lists.length - 1;
-      document.getElementById(`list${newListIdx}`).focus();
     },
     async getMember(memberId) {
       const member = await userService.getById(memberId);
