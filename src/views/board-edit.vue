@@ -20,38 +20,35 @@
       :description="board.description"
       :dueDate="board.dueDate"
     ></board-menu>
-        <ul class="lists" v-if="board">
-          <draggable
-            class="flex"
-            :list="board.lists"
-            v-bind="dragOptions"
-            group="lists"
-            @sort="updateBoard"
-          >
-            <li
-              class="list"
-              v-for="(list, listIdx) in board.lists"
-              :key="list.id"
-            >
-              <list
-                :list="list"
-                :listIdx="listIdx"
-                :members="members"
-                :listsCount="board.lists.length"
-                @removeList="removeList"
-                @openTask="openTask"
-                @addTask="addTask"
-                @updateList="onDrag"
-                @updateListName="updateListName"
-              />
-            </li>
-          </draggable>
-          <li>
+    <ul class="lists" v-if="board">
+      <draggable
+        class="flex"
+        :list="board.lists"
+        v-bind="dragOptions"
+        group="lists"
+        @sort="updateBoard"
+      >
+        <list
+          class="list"
+          v-for="(list, listIdx) in board.lists"
+          :key="list.id"
+          :list="list"
+          :listIdx="listIdx"
+          :members="members"
+          :listsCount="board.lists.length"
+          @removeList="removeList"
+          @openTask="openTask"
+          @addTask="addTask"
+          @updateList="onDrag"
+          @updateListName="updateListName"
+        />
+      </draggable>
+      <li>
         <button class="add-list-btn" @click="addList">
           <i class="fas fa-plus"></i><span>Add list</span>
         </button>
-          </li>
-        </ul>
+      </li>
+    </ul>
     <task-details
       v-if="currTask"
       :task="currTask"
@@ -90,28 +87,28 @@ import boardMenu from "../cmps/board-menu/board-menu.cmp";
 import taskDetails from "../cmps/task-details/task-details.cmp";
 import list from "../cmps/list.cmp";
 import draggable from "vuedraggable";
-import socket from '@/services/socket.service';
-import io from 'socket.io-client';
-import _ from 'lodash';
+import socket from "@/services/socket.service";
+import io from "socket.io-client";
+import _ from "lodash";
 
 export default {
-	name: "board-edit",
-	data() {
-		return {
-			board: null,
-			members: [],
-			currTask: null,
-			currListIdx: null,
-			currTaskIdx: null,
-			isMenu: false,
-		};
-	},
-	methods: {
-		// BOARD-NAV
-		toggleMenu(ev) {
-			this.isMenu = ev;
-		},
-		updateBoardName(name) {
+  name: "board-edit",
+  data() {
+    return {
+      board: null,
+      members: [],
+      currTask: null,
+      currListIdx: null,
+      currTaskIdx: null,
+      isMenu: false,
+    };
+  },
+  methods: {
+    // BOARD-NAV
+    toggleMenu(ev) {
+      this.isMenu = ev;
+    },
+    updateBoardName(name) {
       this.board.name = name;
       this.updateBoard();
     },
@@ -301,63 +298,66 @@ export default {
       });
       socket.emit("update board");
       // await eventBusService.$emit("boardBgc", this.board.style);
-		},
-		// alertEnter(user) {
-      //   alert(user.userName + ' has entered the board!');
-		// },
-		async loadBoard(ev) {
+    },
+    // alertEnter(user) {
+    //   alert(user.userName + ' has entered the board!');
+    // },
+    async loadBoard(ev) {
       const updatedBoard = await boardService.getById(this.board._id);
       this.board = updatedBoard;
       await eventBusService.$emit("boardBgc", this.board.style);
       this.members = [];
       this.board.members.forEach(async (member) => {
-			var memberObject = await this.getMember(member);
-			this.members.push(memberObject);
-		});
-      if (this.currTask) this.currTask = this.board.lists[this.currListIdx].tasks[this.currTaskIdx];
+        var memberObject = await this.getMember(member);
+        this.members.push(memberObject);
+      });
+      if (this.currTask)
+        this.currTask = this.board.lists[this.currListIdx].tasks[
+          this.currTaskIdx
+        ];
     },
     onDrag() {
       this.updateBoard();
-    }
-	},
-	computed: {
-		lists() {
-			return this.board.lists;
-		},
-		dragOptions() {
-			return {
-				animation: 200,
-				group: "lists",
-				disabled: false,
-				ghostClass: "ghost",
-			};
-		},
-	},
-	components: {
-		boardNav,
-		taskDetails,
-		list,
-		draggable,
-		boardMenu,
-	},
-	async created() {
-		const boardId = this.$route.params.id;
-		const board = await boardService.getById(boardId);
-		socket.setup();
-    socket.emit('enter board', board._id);
+    },
+  },
+  computed: {
+    lists() {
+      return this.board.lists;
+    },
+    dragOptions() {
+      return {
+        animation: 200,
+        group: "lists",
+        disabled: false,
+        ghostClass: "ghost",
+      };
+    },
+  },
+  components: {
+    boardNav,
+    taskDetails,
+    list,
+    draggable,
+    boardMenu,
+  },
+  async created() {
+    const boardId = this.$route.params.id;
+    const board = await boardService.getById(boardId);
+    socket.setup();
+    socket.emit("enter board", board._id);
     this.onDrag = _.debounce(this.onDrag, 500);
-		socket.on('update board', this.loadBoard);
-		board.members.forEach(async (member) => {
-			var memberObject = await this.getMember(member);
-			this.members.push(memberObject);
-		});
-		this.board = JSON.parse(JSON.stringify(board));
-		eventBusService.$emit("boardBgc", this.board.style);
-		// this.currTask = this.board.lists[0].tasks[0]
-	},
-	destroyed() {
-		socket.emit('user left board');
-		socket.terminate();
-	}
+    socket.on("update board", this.loadBoard);
+    board.members.forEach(async (member) => {
+      var memberObject = await this.getMember(member);
+      this.members.push(memberObject);
+    });
+    this.board = JSON.parse(JSON.stringify(board));
+    eventBusService.$emit("boardBgc", this.board.style);
+    // this.currTask = this.board.lists[0].tasks[0]
+  },
+  destroyed() {
+    socket.emit("user left board");
+    socket.terminate();
+  },
 };
 </script>

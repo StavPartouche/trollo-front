@@ -1,5 +1,5 @@
 <template>
-	<section>
+	<li>
 		<div
 			class="list-header-container flex justify-space-between align-center"
 		>
@@ -77,7 +77,7 @@
 			v-else
 			@add="addTask(listIdx, $event)"
 		/>
-	</section>
+	</li>
 </template>
 
 <script>
