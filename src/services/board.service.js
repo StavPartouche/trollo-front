@@ -8,7 +8,8 @@ export const boardService = {
     save,
     getEmptyBoard,
     getEmptyList,
-    getEmptyTask
+    getEmptyTask,
+    newActivity
 };
 
 function query(userId = 'guest') {
@@ -95,4 +96,23 @@ function getEmptyTask() {
         attachments: [],
         checkLists: []
     };
+}
+
+function newActivity(txt,userId, taskId = null){
+    return {
+        createdAt: Date.now(),
+        txt: txt,
+        userId: userId
+          ? userId
+          : { fullName: "Guest" },
+        taskId: taskId
+    }
+    // return {
+    //     createdAt: Date.now(),
+    //     txt:`added a new task "${newTask.name}"`,
+    //     userId: this.$store.getters.loggedInUser
+    //       ? this.$store.getters.loggedInUser._id
+    //       : { fullName: "Guest" },
+    //     taskId: newTask.id
+    // }
 }

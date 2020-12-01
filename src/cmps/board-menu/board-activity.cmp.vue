@@ -1,7 +1,7 @@
 <template>
   <li class="activity" v-if="user">
     <user-avatar :user="user"></user-avatar>
-    <div>
+    <div class="activity-details">
       <p class="activity-desc"><span>{{user.fullName}}</span> {{activity.txt}}</p>
       <p class="activity-date">{{activity.createdAt}}</p>
     </div>

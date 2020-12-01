@@ -111,9 +111,20 @@ export default {
     },
     updateBoardName(name) {
       this.board.name = name;
+      const activity = boardService.newActivity(
+        `updated board name to "${name}"`,
+        this.UserId
+      );
+      this.board.activities.unshift(activity);
       this.updateBoard();
     },
-    removeBoardMember(memberId) {
+    async removeBoardMember(memberId) {
+      const fullMember = await this.getMember(memberId)
+      const activity = boardService.newActivity(
+        `removed ${fullMember.fullName} from board`,
+        this.UserId
+      );
+      this.board.activities.unshift(activity);
       var idx = this.board.members.findIndex((member) => member === memberId);
       if (idx === -1) return;
       this.board.members.splice(idx, 1);
@@ -122,10 +133,15 @@ export default {
       this.members.splice(idx, 1);
     },
     async addBoardMember(memberId) {
+      const fullMember = await this.getMember(memberId);
+      const activity = boardService.newActivity(
+        `added ${fullMember.fullName} to board`,
+        this.UserId
+      );
+      this.board.activities.unshift(activity);
       this.board.members.push(memberId);
       this.updateBoard();
-      const memberObject = await this.getMember(memberId);
-      this.members.push(memberObject);
+      this.members.push(fullMember);
     },
 
     // BOARD-MENU
@@ -138,10 +154,20 @@ export default {
     },
     updateBoardDesc(desc) {
       this.board.description = desc;
+      const activity = boardService.newActivity(
+        `updated board description`,
+        this.UserId
+      );
+      this.board.activities.unshift(activity);
       this.updateBoard();
     },
     updateBoardDueDate(dueDate) {
       this.board.dueDate = dueDate;
+      const activity = boardService.newActivity(
+        `updated board due date to ${dueDate}`,
+        this.UserId
+      );
+      this.board.activities.unshift(activity);
       this.updateBoard();
     },
     saveBoardBgc(bgc) {
@@ -152,11 +178,21 @@ export default {
         this.board.style.backgroundColor = bgc.color;
       }
       eventBusService.$emit("boardBgc", this.board.style);
+      const activity = boardService.newActivity(
+        `updated board background`,
+        this.UserId
+      );
+      this.board.activities.unshift(activity);
       this.updateBoard();
     },
 
     // LIST
     removeList(listIdx) {
+      const activity = boardService.newActivity(
+        `removed list "${this.board.lists[listIdx].name}"`,
+        this.UserId
+      );
+      this.board.activities.unshift(activity);
       this.board.lists.splice(listIdx, 1);
       this.updateBoard();
     },
@@ -169,10 +205,21 @@ export default {
       var newTask = boardService.getEmptyTask();
       newTask.name = updates.title;
       this.board.lists[updates.listIdx].tasks.push(newTask);
+      const activity = boardService.newActivity(
+        `added a new task "${newTask.name}"`,
+        this.UserId,
+        newTask.id
+      );
+      this.board.activities.unshift(activity);
       this.updateBoard();
     },
     updateListName(updates) {
       this.board.lists[updates.listIdx].name = updates.newName;
+      const activity = boardService.newActivity(
+        `updated list name to "${updates.newName}"`,
+        this.UserId
+      );
+      this.board.activities.unshift(activity);
       this.updateBoard();
     },
 
@@ -202,31 +249,75 @@ export default {
         items: checkListData.items,
       };
       currCheckLists.push(newChechList);
+      const activity = boardService.newActivity(
+        `added checklist "${checkListData.title}" to ${this.currTask.name}`,
+        this.UserId,
+        this.currTask.id
+      );
+      this.board.activities.unshift(activity);
       this.updateBoard();
     },
-    addMemberToTask(memberId) {
+    async addMemberToTask(memberId) {
+      const fullMember = await this.getMember(memberId);
+      const activity = boardService.newActivity(
+        `added ${fullMember.fullName} to ${this.currTask.name}`,
+        this.UserId,
+        this.currTask.id
+      );
+      this.board.activities.unshift(activity);
       this.currTask.members.push(memberId);
       this.updateBoard();
     },
-    removeMemberfromTask(memberIdx) {
+    async removeMemberfromTask(memberIdx) {
+      const fullMember = await this.getMember(this.currTask.members[memberIdx]);
+      const activity = boardService.newActivity(
+        `removed ${fullMember.fullName} from ${this.currTask.name}`,
+        this.UserId,
+        this.currTask.id
+      );
+      this.board.activities.unshift(activity);
       this.currTask.members.splice(memberIdx, 1);
       this.updateBoard();
     },
     updateDueDate(newDate) {
       this.currTask.dueDate = newDate;
+      const activity = boardService.newActivity(
+        `updated due date in ${this.currTask.name} to ${newDate}`,
+        this.UserId,
+        this.currTask.id
+      );
+      this.board.activities.unshift(activity);
       this.updateBoard();
       // socket.emit("update task", this.currTask);
     },
     updateTaskName(newName) {
       this.currTask.name = newName;
+      const activity = boardService.newActivity(
+        `updated task name to ${newName}`,
+        this.UserId,
+        this.currTask.id
+      );
+      this.board.activities.unshift(activity);
       this.updateBoard();
     },
     updateTaskDesc(newDwsc) {
       this.currTask.description = newDwsc;
+      const activity = boardService.newActivity(
+        `updated ${this.currTask.name}s description`,
+        this.UserId,
+        this.currTask.id
+      );
+      this.board.activities.unshift(activity);
       this.updateBoard();
     },
     UploadImg(imgUrl) {
       this.currTask.attachments.push(imgUrl);
+      const activity = boardService.newActivity(
+        `added an attachment to ${this.currTask.name}`,
+        this.UserId,
+        this.currTask.id
+      );
+      this.board.activities.unshift(activity);
       this.updateBoard();
     },
     closeDetails() {
@@ -238,6 +329,12 @@ export default {
     },
     removeAttachment(idx) {
       this.currTask.attachments.splice(idx, 1);
+      const activity = boardService.newActivity(
+        `removed an attachment from ${this.currTask.name}`,
+        this.UserId,
+        this.currTask.id
+      );
+      this.board.activities.unshift(activity);
       this.updateBoard();
     },
     setPreviewImg(idx) {
@@ -256,6 +353,12 @@ export default {
       this.updateBoard();
     },
     removeCheckList(idx) {
+      const activity = boardService.newActivity(
+        `removed checklist "${this.currTask.checkLists[idx].title}" from ${this.currTask.name}`,
+        this.UserId,
+        this.currTask.id
+      );
+      this.board.activities.unshift(activity);
       this.currTask.checkLists.splice(idx, 1);
       this.updateBoard();
     },
@@ -269,9 +372,21 @@ export default {
     },
     setTaskColor(bgc) {
       this.currTask.backgroundColor = bgc;
+      const activity = boardService.newActivity(
+        `updated ${this.currTask.name} color`,
+        this.UserId,
+        this.currTask.id
+      );
+      this.board.activities.unshift(activity);
       this.updateBoard();
     },
     removeTask() {
+      const activity = boardService.newActivity(
+        `removed ${this.currTask.name} from ${this.board.lists[this.currListIdx].name}`,
+        this.UserId,
+        this.currTask.id
+      );
+      this.board.activities.unshift(activity);
       this.board.lists[this.currListIdx].tasks.splice(this.currTaskIdx, 1);
       this.currTask = null;
       this.updateBoard();
@@ -286,6 +401,11 @@ export default {
       var newList = boardService.getEmptyList("Enter list name");
       this.board.lists.push(newList);
       this.isNewList = true;
+      const activity = boardService.newActivity(
+        `added a list`,
+        this.UserId
+      );
+      this.board.activities.unshift(activity);
       await this.updateBoard();
       this.isNewList = false;
     },
@@ -333,6 +453,9 @@ export default {
         disabled: false,
         ghostClass: "ghost",
       };
+    },
+    UserId() {
+      return this.$store.getters.loggedInUser._id;
     },
   },
   components: {
