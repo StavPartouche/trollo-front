@@ -56,16 +56,18 @@ button {
     color: rgb(37, 37, 37);
 }
 
-.dark-btn {
-    background-color: rgb(65, 65, 65);
-    color: whitesmoke;
+.weak-btn {
+    background-color: transparent;
+    &hover {
+        // list-style: ;;
+    }
+    // color: whitesmoke;
 }
 
-.light-btn {
-    background-color: whitesmoke;
-    color: rgb(65, 65, 65);
-}
-
+// .light-btn {
+//     background-color: whitesmoke;
+//     color: rgb(65, 65, 65);
+// }
 select {
     // background-color: rgb(230, 230, 230);
     border-radius: 5px;
