@@ -49,6 +49,10 @@
 				</button>
 			</li>
 		</ul>
+      <div v-if="currTask"
+      @click="closeDetails"
+      class="disable-page-container"
+    ></div>
 		<task-details
 			v-if="currTask"
 			:task="currTask"

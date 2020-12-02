@@ -11,7 +11,10 @@
         // font-size: 23px;
         cursor: pointer;
     }
-    h2 {
+    .board-name {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
         margin-bottom: 5px
     }
     .board-setting-container {

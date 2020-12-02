@@ -3,7 +3,8 @@
     <user-avatar :user="user"></user-avatar>
     <div class="activity-details">
       <p class="activity-desc"><span>{{user.fullName}}</span> {{activity.txt}}</p>
-      <p class="activity-date">{{activity.createdAt}}</p>
+      <!-- <p class="activity-date">{{date}}</p> -->
+      <p class="activity-date">{{ date }}</p>
     </div>
   </li>
 </template>
@@ -12,6 +13,7 @@
 
 import { userService } from '../../services/user.service'
 import userAvatar from "../user-avatar.cmp";
+import moment from 'moment'
 
 export default {
   name: "boardActivity",
@@ -27,7 +29,13 @@ export default {
       
   },
   computed:{
-    
+    date(){
+      const week = 604800000
+      const actTime = this.activity.createdAt
+      const now = Date.now()
+      if(now - actTime < 604800000) return moment(actTime).fromNow()
+      else return moment(actTime).format('MMM DD, h:mm A')
+    },
   },
   components:{
     userAvatar
