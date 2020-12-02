@@ -102,6 +102,7 @@ export default {
 			currTaskIdx: null,
 			isMenu: false,
 			isNewList: false,
+			isSocketEv: false,
 		};
 	},
 	methods: {
@@ -112,7 +113,7 @@ export default {
 		updateBoardName(name) {
 			this.board.name = name;
 			const activity = boardService.newActivity(
-        `updated board name to "${name}"`,
+				`updated board name to "${name}"`,
 				this.userId
 			);
 			this.board.activities.unshift(activity);
@@ -127,7 +128,7 @@ export default {
 			this.board.activities.unshift(activity);
 			var idx = this.board.members.findIndex((member) => member === memberId);
 			if (idx === -1) return;
-      this.board.members.splice(idx, 1);
+			this.board.members.splice(idx, 1);
 			idx = this.members.findIndex((member) => member._id === memberId);
 			this.members.splice(idx, 1);
 		},
@@ -165,6 +166,7 @@ export default {
 				this.userId
 			);
 			this.board.activities.unshift(activity);
+			socket.emit('boardDesc', desc);
 		},
 		updateBoardDueDate(dueDate) {
 			this.board.dueDate = dueDate;
@@ -220,7 +222,7 @@ export default {
 				`updated list name to "${updates.newName}"`,
 				this.userId
 			);
-      this.board.activities.unshift(activity);
+			this.board.activities.unshift(activity);
 			socket.emit('listName', { listIdx: updates.listIdx, newName: updates.newName });
 		},
 
@@ -408,17 +410,30 @@ export default {
 			// 	];
 		},
 		onDrag() {
-		},
+    },
+    
+    // Socket Events
+    socketEv({type, data}) {
+      if (type === 'listName') this.board.lists[data.listIdx].name = data.newName;;
+      if (type === 'boardName') this.board.name = data;
+      if (type === 'removeBoardMember') this.removeBoardMember(data);
+      if (type === 'addBoardMember') this.addBoardMember(data);
+      if (type === 'boardDesc') this.board.description = data;
+    }
 	},
 	watch: {
 		board: {
 			handler: function (newBoard) {
+				// if (this.isSocketEv) return;
 				this.$store.dispatch({
 					type: "saveBoard",
 					board: newBoard
 				});
 			},
 			deep: true
+		},
+		'board.activities'(activities) {
+			socket.emit('activity', activities[0]);
 		}
 	},
 	computed: {
@@ -434,7 +449,7 @@ export default {
 			};
 		},
 		userId() {
-      const user = this.$store.getters.loggedInUser;
+			const user = this.$store.getters.loggedInUser;
 			return user ? user._id : 'guest';
 		},
 	},
@@ -451,29 +466,37 @@ export default {
 
 		// this.onDrag = _.debounce(this.onDrag, 500);
 		board.members.forEach(async (member) => {
-      var memberObject = await this.getMember(member);
+			var memberObject = await this.getMember(member);
 			this.members.push(memberObject);
 		});
 		this.board = JSON.parse(JSON.stringify(board));
 		eventBusService.$emit("boardBgc", this.board.style);
-    // this.currTask = this.board.lists[0].tasks[0]
-    
+		// this.currTask = this.board.lists[0].tasks[0]
+
 		// Sockets
 		socket.setup();
-		socket.on('listName', ({ listIdx, newName }) => this.board.lists[listIdx].name = newName);
-		socket.on('boardName', name => this.board.name = name);
-		socket.on('removeBoardMember', id => this.removeBoardMember(id));
-		socket.on('addBoardMember', id => this.addBoardMember(id));
-    // socket.on("updateBoard", this.loadBoard);
-		socket.emit("enterBoard", boardId);
+		socket.on('listName', this.socketEv);
+		socket.on('boardName', this.socketEv);
+		socket.on('removeBoardMember', this.socketEv);
+		socket.on('addBoardMember', this.socketEv);
+		socket.on('boardDesc', this.socketEv);
+		// socket.on('activity', activity => {
+    //   this.isSocketEv = true;
+    //   this.board.activities.unshift(activity)
+    //   this.isSocketEv = false;
+    // });
+		// socket.on("updateBoard", this.loadBoard);
+		socket.emit('enterBoard', boardId);
 	},
 	destroyed() {
 		socket.emit("leaveBoard");
-		socket.off('listName', ({ listIdx, name }) => this.board.lists[listIdx].name = name);
-		socket.off('boardName', name => this.board.name = name);
-		socket.off('removeBoardMember', id => this.removeBoardMember(id));
-		socket.off('addBoardMember', id => this.addBoardMember(id));
-		socket.off("updateBoard", this.loadBoard);
+		socket.off('listName', this.socketEv);
+		socket.off('boardName', this.socketEv);
+		socket.off('removeBoardMember', this.socketEv);
+    socket.off('addBoardMember', this.socketEv);
+    socket.off('boardDesc', this.socketEv);
+		// socket.off('activity', activity => this.board.activities.unshift(activity));
+		// socket.off("updateBoard", this.loadBoard);
 		socket.terminate();
 	},
 };
