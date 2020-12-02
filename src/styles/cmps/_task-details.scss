@@ -22,23 +22,21 @@
     right: 50%;
     transform: translate(50%, -50%);
     width: 700px;
-    max-height: 500px;
+    height: 500px;
     background-color: $task-details-bgc;
     border-radius: 4px;
     padding: 15px;
     z-index: 3;
     color: #000000c4;
+    .close-details-btn {
+        background: transparent;
+        position: absolute;
+        right: 17px;
+    }
     .task-header {
-        .close-details-btn {
-            background: transparent;
-            position: absolute;
-            right: 17px;
-        }
-        h2 {
-            max-width: 100%;
-            overflow-wrap: break-word;
-            font-size: rem(32px);
-        }
+        max-width: 100%;
+        overflow-wrap: break-word;
+        // font-size: rem(32px);
     }
     .task-editor-main {
         .task-details {
