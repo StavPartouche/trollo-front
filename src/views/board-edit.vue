@@ -123,7 +123,8 @@ export default {
 				this.userId
 			);
 			this.board.activities.unshift(activity);
-			socket.emit('boardName', name);
+      socket.emit('boardName', name);
+      socket.emit('log', activity);
 		},
 		async removeBoardMember(memberId) {
 			const fullMember = await this.getMember(memberId);
@@ -152,7 +153,8 @@ export default {
 			if (type === 'remove') this.removeBoardMember(memberId);
 			else this.addBoardMember(memberId);
 			const ev = type + 'BoardMember';
-			socket.emit(ev, memberId);
+      socket.emit(ev, memberId);
+      socket.emit('log', activity);
 		},
 
 		// BOARD-MENU
@@ -162,7 +164,7 @@ export default {
 				type: "removeBoard",
 				boardId
 			});
-			socket.emit('removeBoard');
+      socket.emit('removeBoard');
 			this.$router.push("/board");
 		},
 		updateBoardDesc(desc) {
@@ -172,7 +174,8 @@ export default {
 				this.userId
 			);
 			this.board.activities.unshift(activity);
-			socket.emit('boardDesc', desc);
+      socket.emit('boardDesc', desc);
+      socket.emit('log', activity);
 		},
 		updateBoardDueDate(dueDate) {
 			this.board.dueDate = dueDate;
@@ -180,8 +183,8 @@ export default {
 				`updated board due date to ${dueDate}`,
 				this.userId
 			);
-			this.board.activities.unshift(activity);
-			// Need to add socket handle
+      this.board.activities.unshift(activity);
+      socket.emit('log', activity);
 		},
 		saveBoardBgc(bgc) {
 			if (bgc.type === "img") {
@@ -196,7 +199,8 @@ export default {
 				this.userId
 			);
 			this.board.activities.unshift(activity);
-			socket.emit('boardStyle', this.board.style);
+      socket.emit('boardStyle', this.board.style);
+      socket.emit('log', activity);
 		},
 
 		// LIST
@@ -207,7 +211,8 @@ export default {
 			);
 			this.board.activities.unshift(activity);
 			this.board.lists.splice(listIdx, 1);
-			socket.emit('removeList', listIdx);
+      socket.emit('removeList', listIdx);
+      socket.emit('log', activity);
 		},
 		openTask(idxs) {
 			this.currTask = this.board.lists[idxs.listIdx].tasks[idxs.taskIdx];
@@ -230,7 +235,8 @@ export default {
 				socket.emit('addTask', {
 					listIdx: this.currListIdx,
 					task: newTask
-				});
+        });
+        socket.emit('log', activity);
 				this.successMsg('Task was duplicated!')
 			} 
 			else{
@@ -246,7 +252,8 @@ export default {
 				socket.emit('addTask', {
 					listIdx: updates.listIdx,
 					task: newTask
-				});
+        });
+        socket.emit('log', activity);
 			}
 		},
 		updateListName(updates) {
@@ -259,7 +266,8 @@ export default {
 			socket.emit('listName', {
 				listIdx: updates.listIdx,
 				name: updates.newName
-			});
+      });
+      socket.emit('log', activity);
 		},
 
 		// TASK-DETAILS
@@ -318,7 +326,8 @@ export default {
 				listIdx: this.currListIdx,
 				taskIdx: this.currTaskIdx,
 				checkList: newCheckList
-			});
+      });
+      socket.emit('log', activity);
 		},
 		removeCheckList(idx) {
 			const activity = boardService.newActivity(
@@ -332,7 +341,8 @@ export default {
 				listIdx: this.currListIdx,
 				taskIdx: this.currTaskIdx,
 				checkListIdx: idx
-			});
+      });
+      socket.emit('log', activity);
 		},
 		async addMemberToTask(memberId) {
 			const fullMember = await this.getMember(memberId);
@@ -347,7 +357,8 @@ export default {
 				listIdx: this.currListIdx,
 				taskIdx: this.currTaskIdx,
 				memberId
-			});
+      });
+      socket.emit('log', activity);
 		},
 		async removeMemberfromTask(memberIdx) {
 			const fullMember = await this.getMember(this.currTask.members[memberIdx]);
@@ -362,7 +373,8 @@ export default {
 				listIdx: this.currListIdx,
 				taskIdx: this.currTaskIdx,
 				memberIdx
-			});
+      });
+      socket.emit('log', activity);
 		},
 		updateDueDate(newDate) {
 			this.currTask.dueDate = newDate;
@@ -376,7 +388,8 @@ export default {
 				listIdx: this.currListIdx,
 				taskIdx: this.currTaskIdx,
 				dueDate: newDate
-			});
+      });
+      socket.emit('log', activity);
 		},
 		updateTaskName(newName) {
 			this.currTask.name = newName;
@@ -390,7 +403,8 @@ export default {
 				listIdx: this.currListIdx,
 				taskIdx: this.currTaskIdx,
 				name: newName
-			});
+      });
+      socket.emit('log', activity);
 		},
 		updateTaskDesc(newDesc) {
 			this.currTask.description = newDesc;
@@ -404,7 +418,8 @@ export default {
 				listIdx: this.currListIdx,
 				taskIdx: this.currTaskIdx,
 				desc: newDesc
-			});
+      });
+      socket.emit('log', activity);
 		},
 		UploadImg(imgUrl) {
 			this.currTask.attachments.push(imgUrl);
@@ -418,7 +433,8 @@ export default {
 				listIdx: this.currListIdx,
 				taskIdx: this.currTaskIdx,
 				imgUrl
-			});
+      });
+      socket.emit('log', activity);
 		},
 		removeAttachment(idx) {
 			this.currTask.attachments.splice(idx, 1);
@@ -432,7 +448,8 @@ export default {
 				listIdx: this.currListIdx,
 				taskIdx: this.currTaskIdx,
 				attachmentIdx: idx
-			});
+      });
+      socket.emit('log', activity);
 		},
 		setPreviewImg(idx) {
 			this.currTask.previewImg = this.currTask.attachments[idx];
@@ -490,7 +507,8 @@ export default {
 				listIdx: this.currListIdx,
 				taskIdx: this.currTaskIdx,
 				bgc
-			});
+      });
+      socket.emit('log', activity);
 		},
 		removeTask() {
 			const activity = boardService.newActivity(
@@ -504,7 +522,8 @@ export default {
 			socket.emit('removeTask', {
 				listIdx: this.currListIdx,
 				taskIdx: this.currTaskIdx,
-			});
+      });
+      socket.emit('log', activity);
 		},
 
 		// GENERAL BOARD
@@ -524,7 +543,8 @@ export default {
 			);
 			this.board.activities.unshift(activity);
 			this.isNewList = false;
-			socket.emit('addList', newList);
+      socket.emit('addList', newList);
+      socket.emit('log', activity);
 		},
 		async getMember(memberId) {
 			const member = await userService.getById(memberId);
@@ -616,22 +636,21 @@ export default {
 				const currList = this.board.lists[data.listIdx];
 				const currTask = currList.tasks[data.taskIdx];
 				currTask.backgroundColor = data.bgc;
-			}
+      }
+      if (type === 'log') {
+        this.board.activities.unshift(data);
+      }
 		}
 	},
 	watch: {
 		board: {
 			handler: function (newBoard) {
-				// if (this.isSocketEv) return;
 				this.$store.dispatch({
 					type: "saveBoard",
 					board: newBoard
 				});
 			},
 			deep: true
-		},
-		'board.activities'(activities) {
-			socket.emit('activity', activities[0]);
 		}
 	},
 	computed: {
@@ -661,8 +680,6 @@ export default {
 	async created() {
 		const boardId = this.$route.params.id;
 		const board = await boardService.getById(boardId);
-
-		// this.onDrag = _.debounce(this.onDrag, 500);
 		board.members.forEach(async (member) => {
 			var memberObject = await this.getMember(member);
 			this.members.push(memberObject);
@@ -695,11 +712,7 @@ export default {
 		socket.on('comment', this.socketEv);
 		socket.on('label', this.socketEv);
 		socket.on('taskColor', this.socketEv);
-		// socket.on('activity', activity => {
-		//   this.isSocketEv = true;
-		//   this.board.activities.unshift(activity)
-		//   this.isSocketEv = false;
-		// });
+		socket.on('log', this.socketEv);
 		socket.emit('enterBoard', boardId);
 	},
 	destroyed() {
@@ -728,7 +741,7 @@ export default {
 		socket.off('comment', this.socketEv);
 		socket.off('label', this.socketEv);
 		socket.off('taskColor', this.socketEv);
-		// socket.off('activity', activity => this.board.activities.unshift(activity));
+		socket.off('log', this.socketEv);
 		socket.terminate();
 	},
 };
