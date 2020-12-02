@@ -3,7 +3,8 @@
     <user-avatar :user="user"></user-avatar>
     <div class="activity-details">
       <p class="activity-desc"><span>{{user.fullName}}</span> {{activity.txt}}</p>
-      <p class="activity-date">{{activity.createdAt}}</p>
+      <!-- <p class="activity-date">{{date}}</p> -->
+      <p class="activity-date">{{ activity.createdAt | moment("MMM Do, h:mm A") }}</p>
     </div>
   </li>
 </template>
@@ -27,7 +28,9 @@ export default {
       
   },
   computed:{
-    
+    // date(){
+    //  return  this.activity.createdAt | moment("dddd, MMMM Do YYYY, h:mm:ss a") 
+    // }
   },
   components:{
     userAvatar
