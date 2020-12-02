@@ -65,7 +65,6 @@ export default {
     userAvatar,
   },
   created() {
-    console.log(this.task);
   },
 };
 </script>
