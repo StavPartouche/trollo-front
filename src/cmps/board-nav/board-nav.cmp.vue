@@ -3,7 +3,7 @@
         <div @click="closeMenu" :class="{'hide': !isMenu,'disable-page-container': isMenu}"></div>
     <div class="widht-200 flex justify-start align-center">
       <!-- <h2 contenteditable @blur="updateBoardName" v-text="nameToEdit">{{name }}</h2> -->
-      <h2 contenteditable @blur="updateBoardName" v-text="nameToEdit">
+      <h2 class="board-name" contenteditable @blur="updateBoardName" v-text="nameToEdit">
         {{ nameToEdit }}
       </h2>
       <div class="board-setting-container"></div>

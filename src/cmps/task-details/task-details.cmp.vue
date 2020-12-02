@@ -1,9 +1,5 @@
 <template>
-  <div class="task-editor-container" @click="closeDetails">
-        <!-- <div
-      @click.stop="closePopup"
-      :class="{ 'hide': !isPopup, 'disable-page-container': isPopup }"
-    ></div> -->
+  <!-- <div class="task-editor-container" @click="closeDetails"> -->
     <div @click.stop class="task-editor">
 		<div
       @click="closePopup"
@@ -115,7 +111,7 @@
         </div>
       </div>
     </div>
-  </div>
+  <!-- </div> -->
 </template>
 
 <script>
