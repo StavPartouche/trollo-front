@@ -1,11 +1,11 @@
 <template>
   <div class="board-menu">
-    <div v-if="isMainMenu" class="main-menu">
+    <div v-if="isMainMenu" class="main-menu flex-column">
       <div class="menu-header">
       <h3 >Menu</h3>
       </div>
       <hr />
-      <ul>
+      <ul class="menu-ops">
         <li @click.stop="toggleIsAbout" class="menu-btn">About this board</li>
 
         <li @click="toggleIsBackground" class="menu-btn">Change background</li>
@@ -14,11 +14,11 @@
         <hr />
         <li class="menu-btn" @backToMenu="backToMenu">
           Activity-log
-          <ul>
-            <board-activity v-for="(activity, idx) in activities" :key="idx" :activity="activity"/>
-          </ul>
         </li>
       </ul>
+          <ul class="menu-activity">
+            <board-activity v-for="(activity, idx) in activities" :key="idx" :activity="activity"/>
+          </ul>
     </div>
           <board-about
         @backToMenu="backToMenu"

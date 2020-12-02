@@ -1,19 +1,17 @@
-.activity{
+.activity {
     display: flex;
     padding-left: 0;
     padding-bottom: 12px;
-    .activity-details{
+    .activity-details {
         padding-left: 3px;
-        .activity-desc{
+        .activity-desc {
             margin: 0;
             font-size: rem(14px);
-    
-            span{
+            span {
                 font-weight: bold;
             }
         }
-    
-        .activity-date{
+        .activity-date {
             margin: 0;
             font-size: rem(12px);
         }
@@ -33,32 +31,20 @@
     .menu-btn {
         cursor: pointer;
     }
+    .menu-ops {
+        height: fit-content;
+    }
+    .menu-activity {
+        flex: 1;
+        overflow-y: auto;
+    }
     .main-menu,
     .board-about {
-        // .activity{
-        //     display: flex;
-        //     padding-left: 0;
-        //     .activity-details{
-        //         padding-left: 3px;
-        //         .activity-desc{
-        //             margin: 0;
-        //             font-size: rem(14px);
-            
-        //             span{
-        //                 font-weight: bold;
-        //             }
-        //         }
-            
-        //         .activity-date{
-        //             margin: 0;
-        //             font-size: rem(12px);
-        //         }
-        //     }
-        // }
         padding: 0 15px 15px 15px;
+        height: 100%;
         li {
             font-size: rem(18px);
-            padding: 10px;
+            padding: 10px 0;
             &.bold {
                 font-size: rem(20px);
                 font-weight: bold;
@@ -73,16 +59,16 @@
 .board-menu .menu-header {
     font-size: rem(18px);
     height: 30px;
-    display: flex;
-    flex-direction: row-reverse;
-    justify-content: center;
+    // display: flex;
+    // flex-direction: row-reverse;
+    // justify-content: center;
     margin-top: 37px;
     .btn-back-to-menu {
         background-color: transparent;
         position: absolute;
         left: 10px;
-        top: 44px;
-        font-size: 18px;
+        top: 7px;
+        font-size: rem(11px);
         // &::before {
         //     content: ''
         // }
