@@ -27,8 +27,8 @@
 				:list="board.lists"
 				v-bind="dragOptions"
 				group="lists"
+				@sort="onDrag"
 			>
-				<!-- @sort="updateBoard" -->
 				<list
 					v-for="(list, listIdx) in board.lists"
 					:key="list.id"
@@ -162,7 +162,7 @@ export default {
 				type: "removeBoard",
 				boardId
 			});
-			socket.emit('removeBoard', boardId);
+			socket.emit('removeBoard');
 			this.$router.push("/board");
 		},
 		updateBoardDesc(desc) {
@@ -538,6 +538,7 @@ export default {
 			// 	];
 		},
 		onDrag() {
+      socket.emit('dragInBoard', this.board.lists)
 		},
 
 		// Socket Events
@@ -546,7 +547,8 @@ export default {
 			if (type === 'removeBoardMember') this.removeBoardMember(data);
 			if (type === 'addBoardMember') this.addBoardMember(data);
 			if (type === 'boardDesc') this.board.description = data;
-			if (type === 'boardStyle') eventBusService.$emit("boardBgc", data);
+      if (type === 'boardStyle') eventBusService.$emit("boardBgc", data);
+      if (type === 'dragInBoard') this.board.lists = data;
 			if (type === 'removeList') this.board.lists.splice(data, 1);
 			if (type === 'addList') {
 				this.isNewList = true;
@@ -683,6 +685,7 @@ export default {
 		socket.on('addBoardMember', this.socketEv);
 		socket.on('boardDesc', this.socketEv);
 		socket.on('boardStyle', this.socketEv);
+		socket.on('dragInBoard', this.socketEv);
 		socket.on('removeList', this.socketEv);
 		socket.on('addList', this.socketEv);
 		socket.on('listName', this.socketEv);
@@ -715,6 +718,7 @@ export default {
 		socket.off('addBoardMember', this.socketEv);
 		socket.off('boardDesc', this.socketEv);
 		socket.off('boardStyle', this.socketEv);
+		socket.off('dragInBoard', this.socketEv);
 		socket.off('removeList', this.socketEv);
 		socket.off('addList', this.socketEv);
 		socket.off('addTask', this.socketEv);
