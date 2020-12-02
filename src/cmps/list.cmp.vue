@@ -1,9 +1,9 @@
 <template>
 	<li class="list flex-column">
-    <div
-      @click="closeListEdit"
-      :class="{ 'hide': !isListEdit,'disable-page-container': isListEdit }"
-    ></div>
+		<div
+			@click="closeListEdit"
+			:class="{ hide: !isListEdit, 'disable-page-container': isListEdit }"
+		></div>
 		<div
 			class="list-header-container flex justify-space-between align-center"
 		>
@@ -29,7 +29,7 @@
 		</div>
 		<ul class="draggable-tsaks-container">
 			<draggable
-			class="draggable-tsaks"
+				class="draggable-tsaks"
 				:list="list.tasks"
 				group="tasks"
 				v-bind="dragOptions"
@@ -43,11 +43,14 @@
 					:style="{ backgroundColor: task.backgroundColor }"
 				>
 					<ul class="task-preview-labels flex">
-						<li v-for="(label, idx) in task.labels" :key="idx" class="task-preview-label"
-								:style="{
-									backgroundColor: label.backgroundColor,
-								}">
-						</li>
+						<li
+							v-for="(label, idx) in task.labels"
+							:key="idx"
+							class="task-preview-label"
+							:style="{
+								backgroundColor: label.backgroundColor,
+							}"
+						></li>
 					</ul>
 					<div
 						class="task-preview-header flex align-center justify-space-between"
@@ -108,11 +111,11 @@ export default {
 		};
 	},
 	methods: {
-		openListEdit(){
-			this.isListEdit = true
+		openListEdit() {
+			this.isListEdit = true;
 		},
-		closeListEdit(){
-			this.isListEdit = false
+		closeListEdit() {
+			this.isListEdit = false;
 		},
 		updateListName(evt) {
 			var src = evt.target.innerText;
@@ -178,13 +181,16 @@ export default {
 		addItemInput,
 		listEditMenu,
 	},
-	mounted(){
-		if (this.isNewList) this.$refs.header.focus()
+	mounted() {
+		debugger;
+		if (this.isNewList) {
+			this.$refs.header.focus();
+		}
 	},
 	created() {
 		this.listName = this.list.name;
 	},
-	destroyed(){
+	destroyed() {
 	}
 };
 </script>
