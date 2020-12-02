@@ -6,11 +6,12 @@
       class="disable-page-container"
       :style="{ 'z-index': 1 }"
     ></div>
+    <button class="close-details-btn">
     <font-awesome-icon
-      class="close-details-btn"
       @click.stop="closeDetails"
       :icon="['fas', 'times']"
     />
+    </button>
     <!-- <div class="task-header flex"> -->
     <h2
       class="task-header flex"
@@ -20,10 +21,18 @@
     >
       {{ task.name }}
     </h2>
+            <div v-if="membersToShow.length">
+          <h3>Members</h3>
+          <ul class="flex data-layout">
+            <li v-for="member in membersToShow" :key="member._id">
+              <user-avatar :user="member"></user-avatar>
+            </li>
+          </ul>
+        </div>
     <!-- <button @click.stop="closeDetails">X</button> -->
     <!-- </div> -->
     <div class="task-editor-main flex">
-      <div class="task-details flex-colmn">
+      <div class="task-details flex-column">
         <task-details-labels v-if="task.labels" :labels="task.labels" />
         <div>
           <h3>Description</h3>
@@ -32,22 +41,15 @@
             contenteditable
             v-model="taskToEdit.description"
             @blur="updateTaskDesc"
-            cols="30"
-            rows="5"
+            cols="80"
+            rows="6"
           ></textarea>
         </div>
         <div v-if="task.dueDate">
           <h3>Due Date</h3>
           <p>{{ task.dueDate }}</p>
         </div>
-        <div v-if="membersToShow.length">
-          <h3>members</h3>
-          <ul class="flex data-layout">
-            <li v-for="member in membersToShow" :key="member._id">
-              <user-avatar :user="member"></user-avatar>
-            </li>
-          </ul>
-        </div>
+
         <taskDetailsAttachments
           :attachments="task.attachments"
           :previewImg="task.previewImg"
@@ -66,7 +68,7 @@
           :comments="task.comments"
           @addComment="addComment"
         />
-        <div class="activity-task-container">
+        <div class="activity-task-container flex-column">
           <h3>Activity</h3>
           <ul class="activity-task">
             <board-activity
