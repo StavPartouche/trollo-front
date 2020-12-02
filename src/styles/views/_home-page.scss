@@ -11,6 +11,7 @@
         background-color: transparent;
         img {
             filter: drop-shadow(0 0 6px white);
+            filter: grayscale(1);
             &:hover {
                 transform: scale(1.1);
             }
