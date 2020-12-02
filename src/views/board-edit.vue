@@ -78,6 +78,7 @@
 			@toggleLabel="toggleLabel"
 			@setTaskColor="setTaskColor"
 			@removeTask="removeTask"
+			@addTask="addTask"
 		/>
 	</div>
 </template>
@@ -85,7 +86,8 @@
 <script>
 import { boardService } from "../services/board.service.js";
 import { userService } from "../services/user.service.js";
-import { eventBusService } from "../services/eventBus.service";
+import { eventBusService } from "../services/eventBus.service.js";
+import { utilService } from '../services/util.service.js'
 import boardNav from "../cmps/board-nav/board-nav.cmp";
 import boardMenu from "../cmps/board-menu/board-menu.cmp";
 import taskDetails from "../cmps/task-details/task-details.cmp";
@@ -213,19 +215,38 @@ export default {
 			this.currTaskIdx = idxs.taskIdx;
 		},
 		addTask(updates) {
-			var newTask = boardService.getEmptyTask();
-			newTask.name = updates.title;
-			this.board.lists[updates.listIdx].tasks.push(newTask);
-			const activity = boardService.newActivity(
-				`added a new task "${newTask.name}"`,
-				this.userId,
-				newTask.id
-			);
-			this.board.activities.unshift(activity);
-			socket.emit('addTask', {
-				listIdx: updates.listIdx,
-				task: newTask
-			});
+			var newTask = null
+			var activity = null
+			if(updates.id){
+				newTask = JSON.parse(JSON.stringify(updates))
+				newTask.id = utilService.makeId()
+				this.board.lists[this.currListIdx].tasks.push(newTask)
+				activity = boardService.newActivity(
+					`added a copy of task "${newTask.name}"`,
+					this.userId,
+					newTask.id
+				);
+				this.board.activities.unshift(activity);
+				socket.emit('addTask', {
+					listIdx: this.currListIdx,
+					task: newTask
+				});
+			} 
+			else{
+				newTask = boardService.getEmptyTask();
+				newTask.name = updates.title;
+				this.board.lists[updates.listIdx].tasks.push(newTask);
+				activity = boardService.newActivity(
+					`added a new task "${newTask.name}"`,
+					this.userId,
+					newTask.id
+				);
+				this.board.activities.unshift(activity);
+				socket.emit('addTask', {
+					listIdx: updates.listIdx,
+					task: newTask
+				});
+			}
 		},
 		updateListName(updates) {
 			this.board.lists[updates.listIdx].name = updates.newName;
