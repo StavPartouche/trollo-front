@@ -6,8 +6,8 @@
       class="disable-page-container"
       :style="{ 'z-index': 1 }"
     ></div>
-    <button class="close-details-btn">
-      <font-awesome-icon @click.stop="closeDetails" :icon="['fas', 'times']" />
+    <button  @click.stop="closeDetails" class="close-details-btn">
+      <font-awesome-icon :icon="['fas', 'times']" />
     </button>
     <!-- <div class="task-header flex"> -->
     <h2
@@ -18,7 +18,12 @@
     >
       {{ task.name }}
     </h2>
-    <div v-if="membersToShow.length">
+
+    <!-- <button @click.stop="closeDetails">X</button> -->
+    <!-- </div> -->
+    <div class="task-editor-main flex">
+      <div class="task-details flex-column">
+            <div v-if="membersToShow.length">
       <h3>Members</h3>
       <ul class="flex data-layout">
         <li v-for="member in membersToShow" :key="member._id">
@@ -26,10 +31,6 @@
         </li>
       </ul>
     </div>
-    <!-- <button @click.stop="closeDetails">X</button> -->
-    <!-- </div> -->
-    <div class="task-editor-main flex">
-      <div class="task-details flex-column">
         <task-details-labels v-if="task.labels" :labels="task.labels" />
         <div>
           <h3>Description</h3>
@@ -91,7 +92,7 @@
         @setTaskColor="setTaskColor"
       />
       <div class="side-bar-container flex-column">
-        <p>Add To This Task</p>
+        <p class="side-bar-p">Add To This Task</p>
         <button class="side-bar-btn" @click="openPopup('checkList')">
           CheckList
         </button>
@@ -115,11 +116,12 @@
             @change="onUploadImg"
           />
         </label>
-        <button class="side-bar-btn weak-btn" @click="openWarning">
-          Delete this task
-        </button>
+                <p class="side-bar-p">More...</p>
         <button class="side-bar-btn weak-btn" @click="copyTask(task)">
           Duplicate
+        </button>
+        <button class="side-bar-btn weak-btn" @click="openWarning">
+          Delete this task
         </button>
       </div>
     </div>

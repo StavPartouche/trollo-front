@@ -1,15 +1,23 @@
 <template>
-  <div class="task-details-comments">
+  <div class="task-details-comments data-layout">
     <h3>Comments</h3>
-    <div class="flex comment align-center data-layout" v-for="(comment, idx) in comments" :key="idx">
+    <div class="flex comment align-center data-layout wrap" v-for="(comment, idx) in comments" :key="idx">
       <user-avatar :user="comment.creator"></user-avatar>
       <h4 class="comment-creator">{{ comment.creator.fullName }}: </h4>
+      <!-- <pre class="comment-txt">{{ comment.txt }}</pre> -->
       <p class="comment-txt">{{ comment.txt }}</p>
       <p>{{date(comment.createdAt)}}</p>
     </div>
       <form @submit.prevent="addComment">
-          <input class="comment-input data-layout" type="text" placeholder="Write a comment" v-model="commentTxt">
-          <button>Send</button>
+                 <textarea
+            class="description-textarea"
+            contenteditable
+            v-model="commentTxt"
+            cols="80"
+            rows="3"
+          ></textarea> 
+          <!-- <input class="comment-input data-layout" type="text" placeholder="Write a comment" v-model="commentTxt"> -->
+          <button class="green-btn">Send</button>
       </form>
   </div>
 </template>
