@@ -28,13 +28,20 @@
         &>* {
             height: 100%;
         }
+        .smooth-dnd-container.vertical {
+            // display: flex;
+            // flex-direction: column;
+            .smooth-dnd-draggable-wrapper {
+                
+            }
+        }
         .list {
-            .draggable-tsaks-container {
+            .draggable-tasks-container {
                 flex: 1;
                 overflow: auto;
                 // padding-right: 4px;
             }
-            .draggable-tsaks {
+            .draggable-tasks {
                 padding-right: 4px;
                 // background-color: red;
             }

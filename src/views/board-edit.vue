@@ -22,37 +22,46 @@
 			:activities="board.activities"
 		></board-menu>
 		<ul class="lists" v-if="board">
-			<draggable
+			<!-- <draggable
 				class="flex"
 				:list="board.lists"
 				v-bind="dragOptions"
 				group="lists"
 				@sort="onDrag"
-			>
-				<list
+			> -->
+			<Container orientation="horizontal" @drop="onListDrag" group-name="lists">
+				<Draggable
+					class="flex"
 					v-for="(list, listIdx) in board.lists"
 					:key="list.id"
-					:list="list"
-					:listIdx="listIdx"
-					:members="members"
-					:isNewList="isNewList"
-					@removeList="removeList"
-					@openTask="openTask"
-					@addTask="addTask"
-					@updateList="onDrag"
-					@updateListName="updateListName"
-				/>
-			</draggable>
+				>
+					<!-- v-for="(list, listIdx) in board.lists"
+					:key="list.id" -->
+					<list
+						:list="list"
+						:listIdx="listIdx"
+						:members="members"
+						:isNewList="isNewList"
+						@removeList="removeList"
+						@openTask="openTask"
+						@addTask="addTask"
+						@drop="onTaskDrag"
+						@updateListName="updateListName"
+					/>
+				</Draggable>
+			</Container>
+			<!-- </draggable> -->
 			<li>
 				<button class="add-list-btn" @click="addList">
 					<i class="fas fa-plus"></i><span>Add list</span>
 				</button>
 			</li>
 		</ul>
-      <div v-if="currTask"
-      @click="closeDetails"
-      class="disable-page-container"
-    ></div>
+		<div
+			v-if="currTask"
+			@click="closeDetails"
+			class="disable-page-container"
+		></div>
 		<task-details
 			v-if="currTask"
 			:task="currTask"
@@ -87,12 +96,13 @@
 import { boardService } from "../services/board.service.js";
 import { userService } from "../services/user.service.js";
 import { eventBusService } from "../services/eventBus.service.js";
-import { utilService } from '../services/util.service.js'
+import { utilService } from '../services/util.service.js';
 import boardNav from "../cmps/board-nav/board-nav.cmp";
 import boardMenu from "../cmps/board-menu/board-menu.cmp";
 import taskDetails from "../cmps/task-details/task-details.cmp";
 import list from "../cmps/list.cmp";
-import draggable from "vuedraggable";
+// import draggable from "vuedraggable";
+import { Container, Draggable } from 'vue-smooth-dnd';
 import socket from "@/services/socket.service";
 import io from "socket.io-client";
 import _ from "lodash";
@@ -123,8 +133,8 @@ export default {
 				this.userId
 			);
 			this.board.activities.unshift(activity);
-      socket.emit('boardName', name);
-      socket.emit('log', activity);
+			socket.emit('boardName', name);
+			socket.emit('log', activity);
 		},
 		async removeBoardMember(memberId) {
 			const fullMember = await this.getMember(memberId);
@@ -153,8 +163,8 @@ export default {
 			if (type === 'remove') this.removeBoardMember(memberId);
 			else this.addBoardMember(memberId);
 			const ev = type + 'BoardMember';
-      socket.emit(ev, memberId);
-      socket.emit('log', activity);
+			socket.emit(ev, memberId);
+			socket.emit('log', activity);
 		},
 
 		// BOARD-MENU
@@ -164,7 +174,7 @@ export default {
 				type: "removeBoard",
 				boardId
 			});
-      socket.emit('removeBoard');
+			socket.emit('removeBoard');
 			this.$router.push("/board");
 		},
 		updateBoardDesc(desc) {
@@ -174,8 +184,8 @@ export default {
 				this.userId
 			);
 			this.board.activities.unshift(activity);
-      socket.emit('boardDesc', desc);
-      socket.emit('log', activity);
+			socket.emit('boardDesc', desc);
+			socket.emit('log', activity);
 		},
 		updateBoardDueDate(dueDate) {
 			this.board.dueDate = dueDate;
@@ -183,8 +193,8 @@ export default {
 				`updated board due date to ${dueDate}`,
 				this.userId
 			);
-      this.board.activities.unshift(activity);
-      socket.emit('log', activity);
+			this.board.activities.unshift(activity);
+			socket.emit('log', activity);
 		},
 		saveBoardBgc(bgc) {
 			if (bgc.type === "img") {
@@ -199,8 +209,8 @@ export default {
 				this.userId
 			);
 			this.board.activities.unshift(activity);
-      socket.emit('boardStyle', this.board.style);
-      socket.emit('log', activity);
+			socket.emit('boardStyle', this.board.style);
+			socket.emit('log', activity);
 		},
 
 		// LIST
@@ -211,8 +221,8 @@ export default {
 			);
 			this.board.activities.unshift(activity);
 			this.board.lists.splice(listIdx, 1);
-      socket.emit('removeList', listIdx);
-      socket.emit('log', activity);
+			socket.emit('removeList', listIdx);
+			socket.emit('log', activity);
 		},
 		openTask(idxs) {
 			this.currTask = this.board.lists[idxs.listIdx].tasks[idxs.taskIdx];
@@ -220,12 +230,12 @@ export default {
 			this.currTaskIdx = idxs.taskIdx;
 		},
 		addTask(updates) {
-			var newTask = null
-			var activity = null
-			if(updates.id){
-				newTask = JSON.parse(JSON.stringify(updates))
-				newTask.id = utilService.makeId()
-				this.board.lists[this.currListIdx].tasks.push(newTask)
+			var newTask = null;
+			var activity = null;
+			if (updates.id) {
+				newTask = JSON.parse(JSON.stringify(updates));
+				newTask.id = utilService.makeId();
+				this.board.lists[this.currListIdx].tasks.push(newTask);
 				activity = boardService.newActivity(
 					`added a copy of task "${newTask.name}"`,
 					this.userId,
@@ -235,11 +245,11 @@ export default {
 				socket.emit('addTask', {
 					listIdx: this.currListIdx,
 					task: newTask
-        });
-        socket.emit('log', activity);
-				this.successMsg('Task was duplicated!')
-			} 
-			else{
+				});
+				socket.emit('log', activity);
+				this.successMsg('Task was duplicated!');
+			}
+			else {
 				newTask = boardService.getEmptyTask();
 				newTask.name = updates.title;
 				this.board.lists[updates.listIdx].tasks.push(newTask);
@@ -252,8 +262,8 @@ export default {
 				socket.emit('addTask', {
 					listIdx: updates.listIdx,
 					task: newTask
-        });
-        socket.emit('log', activity);
+				});
+				socket.emit('log', activity);
 			}
 		},
 		updateListName(updates) {
@@ -266,8 +276,8 @@ export default {
 			socket.emit('listName', {
 				listIdx: updates.listIdx,
 				name: updates.newName
-      });
-      socket.emit('log', activity);
+			});
+			socket.emit('log', activity);
 		},
 
 		// TASK-DETAILS
@@ -326,8 +336,8 @@ export default {
 				listIdx: this.currListIdx,
 				taskIdx: this.currTaskIdx,
 				checkList: newCheckList
-      });
-      socket.emit('log', activity);
+			});
+			socket.emit('log', activity);
 		},
 		removeCheckList(idx) {
 			const activity = boardService.newActivity(
@@ -341,8 +351,8 @@ export default {
 				listIdx: this.currListIdx,
 				taskIdx: this.currTaskIdx,
 				checkListIdx: idx
-      });
-      socket.emit('log', activity);
+			});
+			socket.emit('log', activity);
 		},
 		async addMemberToTask(memberId) {
 			const fullMember = await this.getMember(memberId);
@@ -357,8 +367,8 @@ export default {
 				listIdx: this.currListIdx,
 				taskIdx: this.currTaskIdx,
 				memberId
-      });
-      socket.emit('log', activity);
+			});
+			socket.emit('log', activity);
 		},
 		async removeMemberfromTask(memberIdx) {
 			const fullMember = await this.getMember(this.currTask.members[memberIdx]);
@@ -373,8 +383,8 @@ export default {
 				listIdx: this.currListIdx,
 				taskIdx: this.currTaskIdx,
 				memberIdx
-      });
-      socket.emit('log', activity);
+			});
+			socket.emit('log', activity);
 		},
 		updateDueDate(newDate) {
 			this.currTask.dueDate = newDate;
@@ -388,8 +398,8 @@ export default {
 				listIdx: this.currListIdx,
 				taskIdx: this.currTaskIdx,
 				dueDate: newDate
-      });
-      socket.emit('log', activity);
+			});
+			socket.emit('log', activity);
 		},
 		updateTaskName(newName) {
 			this.currTask.name = newName;
@@ -403,8 +413,8 @@ export default {
 				listIdx: this.currListIdx,
 				taskIdx: this.currTaskIdx,
 				name: newName
-      });
-      socket.emit('log', activity);
+			});
+			socket.emit('log', activity);
 		},
 		updateTaskDesc(newDesc) {
 			this.currTask.description = newDesc;
@@ -418,8 +428,8 @@ export default {
 				listIdx: this.currListIdx,
 				taskIdx: this.currTaskIdx,
 				desc: newDesc
-      });
-      socket.emit('log', activity);
+			});
+			socket.emit('log', activity);
 		},
 		UploadImg(imgUrl) {
 			this.currTask.attachments.push(imgUrl);
@@ -433,8 +443,8 @@ export default {
 				listIdx: this.currListIdx,
 				taskIdx: this.currTaskIdx,
 				imgUrl
-      });
-      socket.emit('log', activity);
+			});
+			socket.emit('log', activity);
 		},
 		removeAttachment(idx) {
 			this.currTask.attachments.splice(idx, 1);
@@ -448,8 +458,8 @@ export default {
 				listIdx: this.currListIdx,
 				taskIdx: this.currTaskIdx,
 				attachmentIdx: idx
-      });
-      socket.emit('log', activity);
+			});
+			socket.emit('log', activity);
 		},
 		setPreviewImg(idx) {
 			this.currTask.previewImg = this.currTask.attachments[idx];
@@ -507,8 +517,8 @@ export default {
 				listIdx: this.currListIdx,
 				taskIdx: this.currTaskIdx,
 				bgc
-      });
-      socket.emit('log', activity);
+			});
+			socket.emit('log', activity);
 		},
 		removeTask() {
 			const activity = boardService.newActivity(
@@ -522,17 +532,17 @@ export default {
 			socket.emit('removeTask', {
 				listIdx: this.currListIdx,
 				taskIdx: this.currTaskIdx,
-      });
-      socket.emit('log', activity);
+			});
+			socket.emit('log', activity);
 		},
 
 		// GENERAL BOARD
 		successMsg(msg) {
-        this.$message({
-          message: msg,
-          type: 'success'
-        });
-      	},
+			this.$message({
+				message: msg,
+				type: 'success'
+			});
+		},
 		async addList() {
 			var newList = boardService.getEmptyList("Enter list name");
 			this.isNewList = true;
@@ -543,15 +553,30 @@ export default {
 			);
 			this.board.activities.unshift(activity);
 			this.isNewList = false;
-      socket.emit('addList', newList);
-      socket.emit('log', activity);
+			socket.emit('addList', newList);
+			socket.emit('log', activity);
 		},
 		async getMember(memberId) {
 			const member = await userService.getById(memberId);
 			return member;
 		},
-		onDrag() {
-      socket.emit('dragInBoard', this.board.lists)
+		onListDrag(dropResult) {
+			const board = Object.assign({}, this.board);
+			board.lists = utilService.applyDrag(board.lists, dropResult);
+			this.board = board;
+			socket.emit('dragInBoard', this.board.lists);
+		},
+		onTaskDrag({ listId, dropResult }) {
+			if (dropResult.removedIndex !== null || dropResult.addedIndex !== null) {
+				const board = Object.assign({}, this.board);
+				const list = board.lists.filter(list => list.id === listId)[0];
+				const listIdx = board.lists.indexOf(list);
+				const newList = Object.assign({}, list);
+				newList.tasks = utilService.applyDrag(newList.tasks, dropResult);
+				board.lists.splice(listIdx, 1, newList);
+				this.board = board;
+				socket.emit('dragInBoard', this.board.lists);
+			}
 		},
 
 		// Socket Events
@@ -560,15 +585,15 @@ export default {
 			if (type === 'removeBoardMember') this.removeBoardMember(data);
 			if (type === 'addBoardMember') this.addBoardMember(data);
 			if (type === 'boardDesc') this.board.description = data;
-      if (type === 'boardStyle') eventBusService.$emit("boardBgc", data);
-      if (type === 'dragInBoard') this.board.lists = data;
+			if (type === 'boardStyle') eventBusService.$emit("boardBgc", data);
+			if (type === 'dragInBoard') this.board.lists = data;
 			if (type === 'removeList') this.board.lists.splice(data, 1);
 			if (type === 'addList') {
 				this.isNewList = true;
 				this.board.lists.push(data);
 				this.isNewList = false;
 			};
-			if (type === 'listName') this.board.lists[data.listIdx].name = data.name;;
+			if (type === 'listName') this.board.lists[data.listIdx].name = data.name;
 			if (type === 'checkListItem') {
 				const currList = this.board.lists[data.listIdx];
 				const currTask = currList.tasks[data.taskIdx];
@@ -636,10 +661,10 @@ export default {
 				const currList = this.board.lists[data.listIdx];
 				const currTask = currList.tasks[data.taskIdx];
 				currTask.backgroundColor = data.bgc;
-      }
-      if (type === 'log') {
-        this.board.activities.unshift(data);
-      }
+			}
+			if (type === 'log') {
+				this.board.activities.unshift(data);
+			}
 		}
 	},
 	watch: {
@@ -674,7 +699,9 @@ export default {
 		boardNav,
 		taskDetails,
 		list,
-		draggable,
+		// draggable,
+		Container,
+		Draggable,
 		boardMenu,
 	},
 	async created() {

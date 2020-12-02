@@ -85,15 +85,3 @@
     width: 30px;
     border-radius: 50%;
 }
-
-.ghost {
-    // background-color: crimson;
-    @apply --tilt;
-}
-
-:root {
-    --tilt: {
-        transform: rotate(20deg);
-        transition: .25s;
-    }
-}
