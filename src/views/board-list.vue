@@ -57,18 +57,23 @@
 		</el-row>
 		<hr />
 		<h2>Templates:</h2>
-		<!-- <ul>
-			<li v-for="board in templateBoards" :key="board._id">
-				<router-link :to="'/board/' + board._id">{{
-					board.name
-				}}</router-link>
-			</li>
-		</ul> -->
-		<el-carousel :interval="4000" type="card" height="200px">
-			<el-carousel-item v-for="board in templateBoards" :key="board._id">
-				<h3 class="medium">{{ board.name }}</h3>
-			</el-carousel-item>
-		</el-carousel>
+		<el-row class="flex justify-center wrap">
+			<el-col
+				:span="4"
+				v-for="board in templateBoards"
+				:key="board._id"
+				:offset="1"
+			>
+				<router-link :to="'/board/' + board._id">
+					<el-card :body-style="{ padding: '0px', height: '75px' }">
+						<div style="padding: 14px">
+							<span>{{ board.name }}</span>
+							<div class="bottom clearfix"></div>
+						</div>
+					</el-card>
+				</router-link>
+			</el-col>
+		</el-row>
 	</section>
 </template>
 
@@ -94,6 +99,7 @@ export default {
 				type: "saveBoard",
 				board: newBoard,
 			});
+			socket.emit('addBoard');
 			this.$router.push(`/board/${saveBoard._id}`);
 		},
 		openPrompt() {
@@ -139,8 +145,8 @@ export default {
 		const user = (sessionStorage.getItem('user')) ? JSON.parse(sessionStorage.getItem('user')) : { userName: 'guest' };
 		socket.setup(user);
 		socket.emit('userConnect', user);
-		socket.on('removeBoard', id => this.$store.dispatch({type: 'loadBoards'}));
-
+		socket.on('removeBoard', () => this.$store.dispatch({type: 'loadBoards'}));
+		socket.on('addBoard', () => this.$store.dispatch({type: 'loadBoards'}));
 		this.$store.dispatch({
 			type: "loadBoards",
 		});
@@ -149,6 +155,7 @@ export default {
 	},
 	destroyed() {
 		socket.off('removeBoard');
+		socket.off('addBoard');
 		socket.terminate();
 	}
 };

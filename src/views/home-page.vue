@@ -1,7 +1,8 @@
 <template>
 	<section class="home-page flex-column center">
 		<h1>something we want to tell about the purpase of this amazing app</h1>
-		<button @click="goToBoards">Try it now</button>
+		<!-- <button @click="goToBoards">Try it now</button> -->
+		<button class="try-now-btn" @click="goToBoards"><img src="@/styles/assets/tryNow.png" /></button>
 		<footer class="flex center">
 			<p><span>®</span> All rights reserved 2020 - Stav Partouche - Maya Malik - Inbar Tamir</p>
 		</footer>

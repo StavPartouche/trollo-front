@@ -27,8 +27,8 @@
 				:list="board.lists"
 				v-bind="dragOptions"
 				group="lists"
+				@sort="onDrag"
 			>
-				<!-- @sort="updateBoard" -->
 				<list
 					v-for="(list, listIdx) in board.lists"
 					:key="list.id"
@@ -78,6 +78,7 @@
 			@toggleLabel="toggleLabel"
 			@setTaskColor="setTaskColor"
 			@removeTask="removeTask"
+			@addTask="addTask"
 		/>
 	</div>
 </template>
@@ -85,7 +86,8 @@
 <script>
 import { boardService } from "../services/board.service.js";
 import { userService } from "../services/user.service.js";
-import { eventBusService } from "../services/eventBus.service";
+import { eventBusService } from "../services/eventBus.service.js";
+import { utilService } from '../services/util.service.js'
 import boardNav from "../cmps/board-nav/board-nav.cmp";
 import boardMenu from "../cmps/board-menu/board-menu.cmp";
 import taskDetails from "../cmps/task-details/task-details.cmp";
@@ -160,7 +162,7 @@ export default {
 				type: "removeBoard",
 				boardId
 			});
-			socket.emit('removeBoard', boardId);
+			socket.emit('removeBoard');
 			this.$router.push("/board");
 		},
 		updateBoardDesc(desc) {
@@ -179,6 +181,7 @@ export default {
 				this.userId
 			);
 			this.board.activities.unshift(activity);
+			// Need to add socket handle
 		},
 		saveBoardBgc(bgc) {
 			if (bgc.type === "img") {
@@ -193,6 +196,7 @@ export default {
 				this.userId
 			);
 			this.board.activities.unshift(activity);
+			socket.emit('boardStyle', this.board.style);
 		},
 
 		// LIST
@@ -203,6 +207,7 @@ export default {
 			);
 			this.board.activities.unshift(activity);
 			this.board.lists.splice(listIdx, 1);
+			socket.emit('removeList', listIdx);
 		},
 		openTask(idxs) {
 			this.currTask = this.board.lists[idxs.listIdx].tasks[idxs.taskIdx];
@@ -210,15 +215,39 @@ export default {
 			this.currTaskIdx = idxs.taskIdx;
 		},
 		addTask(updates) {
-			var newTask = boardService.getEmptyTask();
-			newTask.name = updates.title;
-			this.board.lists[updates.listIdx].tasks.push(newTask);
-			const activity = boardService.newActivity(
-				`added a new task "${newTask.name}"`,
-				this.userId,
-				newTask.id
-			);
-			this.board.activities.unshift(activity);
+			var newTask = null
+			var activity = null
+			if(updates.id){
+				newTask = JSON.parse(JSON.stringify(updates))
+				newTask.id = utilService.makeId()
+				this.board.lists[this.currListIdx].tasks.push(newTask)
+				activity = boardService.newActivity(
+					`added a copy of task "${newTask.name}"`,
+					this.userId,
+					newTask.id
+				);
+				this.board.activities.unshift(activity);
+				socket.emit('addTask', {
+					listIdx: this.currListIdx,
+					task: newTask
+				});
+				this.successMsg('Task was duplicated!')
+			} 
+			else{
+				newTask = boardService.getEmptyTask();
+				newTask.name = updates.title;
+				this.board.lists[updates.listIdx].tasks.push(newTask);
+				activity = boardService.newActivity(
+					`added a new task "${newTask.name}"`,
+					this.userId,
+					newTask.id
+				);
+				this.board.activities.unshift(activity);
+				socket.emit('addTask', {
+					listIdx: updates.listIdx,
+					task: newTask
+				});
+			}
 		},
 		updateListName(updates) {
 			this.board.lists[updates.listIdx].name = updates.newName;
@@ -227,16 +256,27 @@ export default {
 				this.userId
 			);
 			this.board.activities.unshift(activity);
-			socket.emit('listName', { listIdx: updates.listIdx, newName: updates.newName });
+			socket.emit('listName', {
+				listIdx: updates.listIdx,
+				name: updates.newName
+			});
 		},
 
 		// TASK-DETAILS
+		closeDetails() {
+			this.currTask = null;
+		},
 		toggleCheck(idxs) {
-			this.currTask.checkLists[idxs.checkListIdx].items[
-				idxs.itemIdx
-			].isDone = !this.currTask.checkLists[idxs.checkListIdx].items[
-				idxs.itemIdx
-			].isDone;
+			const currItem = this.currTask.checkLists[idxs.checkListIdx].items[
+				idxs.itemIdx];
+			currItem.isDone = !currItem.isDone;
+			socket.emit('checkListItem', {
+				listIdx: this.currListIdx,
+				taskIdx: this.currTaskIdx,
+				checkListIdx: idxs.checkListIdx,
+				itemIdx: idxs.itemIdx,
+				item: currItem
+			});
 		},
 		addItem(item) {
 			const currCheckListItems = this.currTask.checkLists[item.checkListIdx].items;
@@ -245,20 +285,54 @@ export default {
 				isDone: item.isDone,
 			};
 			currCheckListItems.push(newItem);
+			socket.emit('checkListItem', {
+				listIdx: this.currListIdx,
+				taskIdx: this.currTaskIdx,
+				checkListIdx: item.checkListIdx,
+				item: newItem
+			});
+		},
+		removeItem(idxs) {
+			this.currTask.checkLists[idxs.checkListIdx].items.splice(idxs.itemIdx, 1);
+			socket.emit('checkListItem', {
+				listIdx: this.currListIdx,
+				taskIdx: this.currTaskIdx,
+				checkListIdx: idxs.checkListIdx,
+				itemIdx: idxs.itemIdx
+			});
 		},
 		addCheckList(checkListData) {
 			const currCheckLists = this.currTask.checkLists;
-			const newChechList = {
+			const newCheckList = {
 				title: checkListData.title,
 				items: checkListData.items,
 			};
-			currCheckLists.push(newChechList);
+			currCheckLists.push(newCheckList);
 			const activity = boardService.newActivity(
 				`added checklist "${checkListData.title}" to ${this.currTask.name}`,
 				this.userId,
 				this.currTask.id
 			);
 			this.board.activities.unshift(activity);
+			socket.emit('checkList', {
+				listIdx: this.currListIdx,
+				taskIdx: this.currTaskIdx,
+				checkList: newCheckList
+			});
+		},
+		removeCheckList(idx) {
+			const activity = boardService.newActivity(
+				`removed checklist "${this.currTask.checkLists[idx].title}" from ${this.currTask.name}`,
+				this.userId,
+				this.currTask.id
+			);
+			this.board.activities.unshift(activity);
+			this.currTask.checkLists.splice(idx, 1);
+			socket.emit('checkList', {
+				listIdx: this.currListIdx,
+				taskIdx: this.currTaskIdx,
+				checkListIdx: idx
+			});
 		},
 		async addMemberToTask(memberId) {
 			const fullMember = await this.getMember(memberId);
@@ -269,6 +343,11 @@ export default {
 			);
 			this.board.activities.unshift(activity);
 			this.currTask.members.push(memberId);
+			socket.emit('taskMember', {
+				listIdx: this.currListIdx,
+				taskIdx: this.currTaskIdx,
+				memberId
+			});
 		},
 		async removeMemberfromTask(memberIdx) {
 			const fullMember = await this.getMember(this.currTask.members[memberIdx]);
@@ -279,6 +358,11 @@ export default {
 			);
 			this.board.activities.unshift(activity);
 			this.currTask.members.splice(memberIdx, 1);
+			socket.emit('taskMember', {
+				listIdx: this.currListIdx,
+				taskIdx: this.currTaskIdx,
+				memberIdx
+			});
 		},
 		updateDueDate(newDate) {
 			this.currTask.dueDate = newDate;
@@ -288,6 +372,11 @@ export default {
 				this.currTask.id
 			);
 			this.board.activities.unshift(activity);
+			socket.emit('taskDueDate', {
+				listIdx: this.currListIdx,
+				taskIdx: this.currTaskIdx,
+				dueDate: newDate
+			});
 		},
 		updateTaskName(newName) {
 			this.currTask.name = newName;
@@ -297,15 +386,25 @@ export default {
 				this.currTask.id
 			);
 			this.board.activities.unshift(activity);
+			socket.emit('taskName', {
+				listIdx: this.currListIdx,
+				taskIdx: this.currTaskIdx,
+				name: newName
+			});
 		},
-		updateTaskDesc(newDwsc) {
-			this.currTask.description = newDwsc;
+		updateTaskDesc(newDesc) {
+			this.currTask.description = newDesc;
 			const activity = boardService.newActivity(
 				`updated ${this.currTask.name}s description`,
 				this.userId,
 				this.currTask.id
 			);
 			this.board.activities.unshift(activity);
+			socket.emit('taskDesc', {
+				listIdx: this.currListIdx,
+				taskIdx: this.currTaskIdx,
+				desc: newDesc
+			});
 		},
 		UploadImg(imgUrl) {
 			this.currTask.attachments.push(imgUrl);
@@ -315,12 +414,11 @@ export default {
 				this.currTask.id
 			);
 			this.board.activities.unshift(activity);
-		},
-		closeDetails() {
-			this.currTask = null;
-		},
-		removeItem(idxs) {
-			this.currTask.checkLists[idxs.checkListIdx].items.splice(idxs.itemIdx, 1);
+			socket.emit('uploadImg', {
+				listIdx: this.currListIdx,
+				taskIdx: this.currTaskIdx,
+				imgUrl
+			});
 		},
 		removeAttachment(idx) {
 			this.currTask.attachments.splice(idx, 1);
@@ -330,9 +428,27 @@ export default {
 				this.currTask.id
 			);
 			this.board.activities.unshift(activity);
+			socket.emit('attachment', {
+				listIdx: this.currListIdx,
+				taskIdx: this.currTaskIdx,
+				attachmentIdx: idx
+			});
 		},
 		setPreviewImg(idx) {
 			this.currTask.previewImg = this.currTask.attachments[idx];
+			socket.emit('previewImg', {
+				listIdx: this.currListIdx,
+				taskIdx: this.currTaskIdx,
+				previewImg: this.currTask.attachments[idx]
+			});
+		},
+		removePreviewImg() {
+			this.currTask.previewImg = "";
+			socket.emit('previewImg', {
+				listIdx: this.currListIdx,
+				taskIdx: this.currTaskIdx,
+				previewImg: ''
+			});
 		},
 		addComment(commentTxt) {
 			var comment = {
@@ -343,15 +459,11 @@ export default {
 					: { fullName: "Guest" },
 			};
 			this.currTask.comments.push(comment);
-		},
-		removeCheckList(idx) {
-			const activity = boardService.newActivity(
-				`removed checklist "${this.currTask.checkLists[idx].title}" from ${this.currTask.name}`,
-				this.userId,
-				this.currTask.id
-			);
-			this.board.activities.unshift(activity);
-			this.currTask.checkLists.splice(idx, 1);
+			socket.emit('comment', {
+				listIdx: this.currListIdx,
+				taskIdx: this.currTaskIdx,
+				comment
+			});
 		},
 		toggleLabel(label) {
 			const idx = this.currTask.labels.findIndex(
@@ -359,6 +471,12 @@ export default {
 			);
 			if (idx === -1) this.currTask.labels.push(label);
 			else this.currTask.labels.splice(idx, 1);
+			socket.emit('label', {
+				listIdx: this.currListIdx,
+				taskIdx: this.currTaskIdx,
+				labelIdx: idx,
+				label
+			});
 		},
 		setTaskColor(bgc) {
 			this.currTask.backgroundColor = bgc;
@@ -368,6 +486,11 @@ export default {
 				this.currTask.id
 			);
 			this.board.activities.unshift(activity);
+			socket.emit('taskColor', {
+				listIdx: this.currListIdx,
+				taskIdx: this.currTaskIdx,
+				bgc
+			});
 		},
 		removeTask() {
 			const activity = boardService.newActivity(
@@ -378,52 +501,123 @@ export default {
 			this.board.activities.unshift(activity);
 			this.board.lists[this.currListIdx].tasks.splice(this.currTaskIdx, 1);
 			this.currTask = null;
-		},
-		removePreviewImg() {
-			this.currTask.previewImg = "";
+			socket.emit('removeTask', {
+				listIdx: this.currListIdx,
+				taskIdx: this.currTaskIdx,
+			});
 		},
 
 		// GENERAL BOARD
+		successMsg(msg) {
+        this.$message({
+          message: msg,
+          type: 'success'
+        });
+      	},
 		async addList() {
 			var newList = boardService.getEmptyList("Enter list name");
-			this.board.lists.push(newList);
 			this.isNewList = true;
+			this.board.lists.push(newList);
 			const activity = boardService.newActivity(
 				`added a list`,
 				this.userId
 			);
 			this.board.activities.unshift(activity);
 			this.isNewList = false;
+			socket.emit('addList', newList);
 		},
 		async getMember(memberId) {
 			const member = await userService.getById(memberId);
 			return member;
 		},
-		async loadBoard(ev) {
-			// const updatedBoard = await boardService.getById(this.board._id);
-			// this.board = updatedBoard;
-			// await eventBusService.$emit("boardBgc", this.board.style);
-			// this.members = [];
-			// this.board.members.forEach(async (member) => {
-			// 	var memberObject = await this.getMember(member);
-			// 	this.members.push(memberObject);
-			// });
-			// if (this.currTask)
-			// 	this.currTask = this.board.lists[this.currListIdx].tasks[
-			// 		this.currTaskIdx
-			// 	];
-		},
 		onDrag() {
-    },
-    
-    // Socket Events
-    socketEv({type, data}) {
-      if (type === 'listName') this.board.lists[data.listIdx].name = data.newName;;
-      if (type === 'boardName') this.board.name = data;
-      if (type === 'removeBoardMember') this.removeBoardMember(data);
-      if (type === 'addBoardMember') this.addBoardMember(data);
-      if (type === 'boardDesc') this.board.description = data;
-    }
+      socket.emit('dragInBoard', this.board.lists)
+		},
+
+		// Socket Events
+		socketEv({ type, data }) {
+			if (type === 'boardName') this.board.name = data;
+			if (type === 'removeBoardMember') this.removeBoardMember(data);
+			if (type === 'addBoardMember') this.addBoardMember(data);
+			if (type === 'boardDesc') this.board.description = data;
+      if (type === 'boardStyle') eventBusService.$emit("boardBgc", data);
+      if (type === 'dragInBoard') this.board.lists = data;
+			if (type === 'removeList') this.board.lists.splice(data, 1);
+			if (type === 'addList') {
+				this.isNewList = true;
+				this.board.lists.push(data);
+				this.isNewList = false;
+			};
+			if (type === 'listName') this.board.lists[data.listIdx].name = data.name;;
+			if (type === 'checkListItem') {
+				const currList = this.board.lists[data.listIdx];
+				const currTask = currList.tasks[data.taskIdx];
+				const currCheckList = currTask.checkLists[data.checkListIdx];
+				if (!data.itemIdx && data.itemIdx !== 0) currCheckList.items.push(data.item);
+				else if (!data.item) currCheckList.items.splice(data.itemIdx, 1);
+				else currCheckList.items.splice(data.itemIdx, 1, data.item);
+			}
+			if (type === 'checkList') {
+				const currList = this.board.lists[data.listIdx];
+				const currTask = currList.tasks[data.taskIdx];
+				if (data.checkListIdx >= 0) currTask.checkLists.splice(data.checkListIdx, 1);
+				else currTask.checkLists.push(data.checkList);
+			}
+			if (type === 'addTask') this.board.lists[data.listIdx].tasks.push(data.task);
+			if (type === 'removeTask') this.board.lists[data.listIdx].tasks.splice(data.taskIdx, 1);
+			if (type === 'taskMember') {
+				const currList = this.board.lists[data.listIdx];
+				const currTask = currList.tasks[data.taskIdx];
+				if (data.memberIdx >= 0) currTask.members.splice(data.memberIdx, 1);
+				else currTask.members.push(data.memberId);
+			}
+			if (type === 'taskDueDate') {
+				const currList = this.board.lists[data.listIdx];
+				const currTask = currList.tasks[data.taskIdx];
+				currTask.dueDate = data.dueDate;
+			}
+			if (type === 'taskName') {
+				const currList = this.board.lists[data.listIdx];
+				const currTask = currList.tasks[data.taskIdx];
+				currTask.name = data.name;
+			}
+			if (type === 'taskDesc') {
+				const currList = this.board.lists[data.listIdx];
+				const currTask = currList.tasks[data.taskIdx];
+				currTask.description = data.desc;
+			}
+			if (type === 'uploadImg') {
+				const currList = this.board.lists[data.listIdx];
+				const currTask = currList.tasks[data.taskIdx];
+				currTask.attachments.push(data.imgUrl);
+			}
+			if (type === 'attachment') {
+				const currList = this.board.lists[data.listIdx];
+				const currTask = currList.tasks[data.taskIdx];
+				if (data.attachmentIdx >= 0) currTask.attachments.splice(data.attachmentIdx, 1);
+			}
+			if (type === 'previewImg') {
+				const currList = this.board.lists[data.listIdx];
+				const currTask = currList.tasks[data.taskIdx];
+				currTask.previewImg = data.previewImg;
+			}
+			if (type === 'comment') {
+				const currList = this.board.lists[data.listIdx];
+				const currTask = currList.tasks[data.taskIdx];
+				currTask.comments.push(data.comment);
+			}
+			if (type === 'label') {
+				const currList = this.board.lists[data.listIdx];
+				const currTask = currList.tasks[data.taskIdx];
+				if (data.labelIdx === -1) currTask.labels.push(data.label);
+				else currTask.labels.splice(data.labelIdx, 1);
+			}
+			if (type === 'taskColor') {
+				const currList = this.board.lists[data.listIdx];
+				const currTask = currList.tasks[data.taskIdx];
+				currTask.backgroundColor = data.bgc;
+			}
+		}
 	},
 	watch: {
 		board: {
@@ -475,32 +669,66 @@ export default {
 		});
 		this.board = JSON.parse(JSON.stringify(board));
 		eventBusService.$emit("boardBgc", this.board.style);
-		// this.currTask = this.board.lists[0].tasks[0]
 
 		// Sockets
 		socket.setup();
-		socket.on('listName', this.socketEv);
 		socket.on('boardName', this.socketEv);
 		socket.on('removeBoardMember', this.socketEv);
 		socket.on('addBoardMember', this.socketEv);
 		socket.on('boardDesc', this.socketEv);
+		socket.on('boardStyle', this.socketEv);
+		socket.on('dragInBoard', this.socketEv);
+		socket.on('removeList', this.socketEv);
+		socket.on('addList', this.socketEv);
+		socket.on('listName', this.socketEv);
+		socket.on('checkListItem', this.socketEv);
+		socket.on('checkList', this.socketEv);
+		socket.on('addTask', this.socketEv);
+		socket.on('removeTask', this.socketEv);
+		socket.on('taskMember', this.socketEv);
+		socket.on('taskDueDate', this.socketEv);
+		socket.on('taskName', this.socketEv);
+		socket.on('taskDesc', this.socketEv);
+		socket.on('uploadImg', this.socketEv);
+		socket.on('attachment', this.socketEv);
+		socket.on('previewImg', this.socketEv);
+		socket.on('comment', this.socketEv);
+		socket.on('label', this.socketEv);
+		socket.on('taskColor', this.socketEv);
 		// socket.on('activity', activity => {
-    //   this.isSocketEv = true;
-    //   this.board.activities.unshift(activity)
-    //   this.isSocketEv = false;
-    // });
-		// socket.on("updateBoard", this.loadBoard);
+		//   this.isSocketEv = true;
+		//   this.board.activities.unshift(activity)
+		//   this.isSocketEv = false;
+		// });
 		socket.emit('enterBoard', boardId);
 	},
 	destroyed() {
 		socket.emit("leaveBoard");
-		socket.off('listName', this.socketEv);
 		socket.off('boardName', this.socketEv);
 		socket.off('removeBoardMember', this.socketEv);
-    socket.off('addBoardMember', this.socketEv);
-    socket.off('boardDesc', this.socketEv);
+		socket.off('addBoardMember', this.socketEv);
+		socket.off('boardDesc', this.socketEv);
+		socket.off('boardStyle', this.socketEv);
+		socket.off('dragInBoard', this.socketEv);
+		socket.off('removeList', this.socketEv);
+		socket.off('addList', this.socketEv);
+		socket.off('addTask', this.socketEv);
+		socket.off('removeTask', this.socketEv);
+		socket.off('listName', this.socketEv);
+		socket.off('checkListItem', this.socketEv);
+		socket.off('checkList', this.socketEv);
+		socket.off('addTask', this.socketEv);
+		socket.off('taskMember', this.socketEv);
+		socket.off('taskDueDate', this.socketEv);
+		socket.off('taskName', this.socketEv);
+		socket.off('taskDesc', this.socketEv);
+		socket.off('uploadImg', this.socketEv);
+		socket.off('attachment', this.socketEv);
+		socket.off('previewImg', this.socketEv);
+		socket.off('comment', this.socketEv);
+		socket.off('label', this.socketEv);
+		socket.off('taskColor', this.socketEv);
 		// socket.off('activity', activity => this.board.activities.unshift(activity));
-		// socket.off("updateBoard", this.loadBoard);
 		socket.terminate();
 	},
 };

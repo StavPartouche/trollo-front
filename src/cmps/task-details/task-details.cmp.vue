@@ -68,10 +68,6 @@
         />
         <div class="activity-task-container">
           <h3>Activity</h3>
-          <!-- <div v-for="(activity, idx) in taskActivities" :key="idx">
-                <h4>By: {{ activity.userId }}</h4>
-                <p>{{ activity.txt }}</p>
-              </div> -->
           <ul class="activity-task">
             <board-activity
               v-for="(activity, idx) in taskActivities"
@@ -123,6 +119,9 @@
         <button class="side-bar-btn weak-btn" @click="openWarning">
           Delete this task
         </button>
+        <button class="side-bar-btn weak-btn" @click="copyTask(task)">
+          Duplicate
+        </button>
       </div>
     </div>
   </div>
@@ -160,6 +159,9 @@ export default {
     };
   },
   methods: {
+    copyTask(task){
+      this.$emit("addTask", task)
+    },
     removeTask() {
       this.$emit("removeTask");
     },
