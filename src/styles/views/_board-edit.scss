@@ -32,9 +32,11 @@
             flex: 1;
             height: 100%;
             display: flex;
+            min-width: auto;
             .smooth-dnd-draggable-wrapper {
                 flex: 1;
                 display: flex;
+                vertical-align: none;
             }
         }
         .list {

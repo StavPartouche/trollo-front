@@ -35,6 +35,7 @@
         <div>
           <h3>Description</h3>
           <textarea
+            placeholder="Describe here..."
             class="description-textarea data-layout"
             contenteditable
             v-model="taskToEdit.description"
