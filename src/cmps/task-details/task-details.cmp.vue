@@ -59,10 +59,13 @@
             />
             <div>
               <h3>Activity</h3>
-              <div v-for="(activity, idx) in taskActivities" :key="idx">
+              <!-- <div v-for="(activity, idx) in taskActivities" :key="idx">
                 <h4>By: {{ activity.userId }}</h4>
                 <p>{{ activity.txt }}</p>
-              </div>
+              </div> -->
+			  <ul>
+				  <board-activity v-for="(activity, idx) in taskActivities" :key="idx" :activity="activity"/>
+			  </ul>
             </div>
           </div>
           <component
@@ -128,6 +131,7 @@ import { uploadImg } from "../../services/img-upload.service.js";
 import userAvatar from "../user-avatar.cmp";
 import taskDetailsLabelsCmp from './task-details-labels.cmp.vue';
 import { eventBusService } from "../../services/eventBus.service";
+import boardActivity from '../board-menu/board-activity.cmp';
 
 
 export default {
@@ -286,7 +290,8 @@ export default {
 		taskDetailsComments,
 		taskDetailsAttachments,
 		taskDetailsLabels,
-		userAvatar
+		userAvatar,
+		boardActivity
 	},
 	created() {
 		this.taskToEdit = JSON.parse(JSON.stringify(this.task));

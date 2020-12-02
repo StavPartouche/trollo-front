@@ -1,3 +1,25 @@
+.activity{
+    display: flex;
+    padding-left: 0;
+    padding-bottom: 12px;
+    .activity-details{
+        padding-left: 3px;
+        .activity-desc{
+            margin: 0;
+            font-size: rem(14px);
+    
+            span{
+                font-weight: bold;
+            }
+        }
+    
+        .activity-date{
+            margin: 0;
+            font-size: rem(12px);
+        }
+    }
+}
+
 .board-menu {
     z-index: 1;
     position: fixed;
@@ -13,26 +35,26 @@
     }
     .main-menu,
     .board-about {
-        .activity{
-            display: flex;
-            padding-left: 0;
-            .activity-details{
-                padding-left: 3px;
-                .activity-desc{
-                    margin: 0;
-                    font-size: rem(14px);
+        // .activity{
+        //     display: flex;
+        //     padding-left: 0;
+        //     .activity-details{
+        //         padding-left: 3px;
+        //         .activity-desc{
+        //             margin: 0;
+        //             font-size: rem(14px);
             
-                    span{
-                        font-weight: bold;
-                    }
-                }
+        //             span{
+        //                 font-weight: bold;
+        //             }
+        //         }
             
-                .activity-date{
-                    margin: 0;
-                    font-size: rem(12px);
-                }
-            }
-        }
+        //         .activity-date{
+        //             margin: 0;
+        //             font-size: rem(12px);
+        //         }
+        //     }
+        // }
         padding: 0 15px 15px 15px;
         li {
             font-size: rem(18px);
