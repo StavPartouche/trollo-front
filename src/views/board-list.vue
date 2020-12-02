@@ -74,18 +74,6 @@
 				</router-link>
 			</el-col>
 		</el-row>
-		<!-- <ul>
-			<li v-for="board in templateBoards" :key="board._id">
-				<router-link :to="'/board/' + board._id">{{
-					board.name
-				}}</router-link>
-			</li>
-		</ul> -->
-		<!-- <el-carousel :interval="4000" type="card" height="200px">
-			<el-carousel-item v-for="board in templateBoards" :key="board._id">
-				<h3 class="medium">{{ board.name }}</h3>
-			</el-carousel-item>
-		</el-carousel> -->
 	</section>
 </template>
 

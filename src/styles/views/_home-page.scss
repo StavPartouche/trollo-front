@@ -7,6 +7,15 @@
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+    .try-now-btn {
+        background-color: transparent;
+        img {
+            filter: drop-shadow(0 0 6px white);
+            &:hover {
+                transform: scale(1.1);
+            }
+        }
+    }
     flex: 1;
     footer {
         position: absolute;

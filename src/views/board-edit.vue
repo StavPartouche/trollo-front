@@ -523,20 +523,6 @@ export default {
 			const member = await userService.getById(memberId);
 			return member;
 		},
-		async loadBoard(ev) {
-			// const updatedBoard = await boardService.getById(this.board._id);
-			// this.board = updatedBoard;
-			// await eventBusService.$emit("boardBgc", this.board.style);
-			// this.members = [];
-			// this.board.members.forEach(async (member) => {
-			// 	var memberObject = await this.getMember(member);
-			// 	this.members.push(memberObject);
-			// });
-			// if (this.currTask)
-			// 	this.currTask = this.board.lists[this.currListIdx].tasks[
-			// 		this.currTaskIdx
-			// 	];
-		},
 		onDrag() {
       socket.emit('dragInBoard', this.board.lists)
 		},
@@ -676,7 +662,6 @@ export default {
 		});
 		this.board = JSON.parse(JSON.stringify(board));
 		eventBusService.$emit("boardBgc", this.board.style);
-		// this.currTask = this.board.lists[0].tasks[0]
 
 		// Sockets
 		socket.setup();
@@ -708,7 +693,6 @@ export default {
 		//   this.board.activities.unshift(activity)
 		//   this.isSocketEv = false;
 		// });
-		// socket.on("updateBoard", this.loadBoard);
 		socket.emit('enterBoard', boardId);
 	},
 	destroyed() {
@@ -738,7 +722,6 @@ export default {
 		socket.off('label', this.socketEv);
 		socket.off('taskColor', this.socketEv);
 		// socket.off('activity', activity => this.board.activities.unshift(activity));
-		// socket.off("updateBoard", this.loadBoard);
 		socket.terminate();
 	},
 };
