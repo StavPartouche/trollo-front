@@ -13,7 +13,7 @@ export default {
     user: Object,
     width: {
         type: Number,
-        default: 30
+        default: 28
   },
   },
   data() {

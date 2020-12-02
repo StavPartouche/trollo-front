@@ -25,10 +25,13 @@
     height: 700px;
     background-color: $task-details-bgc;
     border-radius: 4px;
-    padding: 15px;
+    padding: 15px 15px 20px 15px;
     z-index: 3;
     color: #000000c4;
     overflow: hidden;
+    h2 {
+        margin-bottom: 15px;
+    }
     h3 {
         font-size: rem(15px);
         font-weight: normal;
@@ -56,12 +59,14 @@
         // font-size: rem(32px);
     }
     .task-editor-main {
-        overflow: hidden;
+        width: 100%;
+        overflow-y: hidden;
         flex: 1;
         .task-details {
             height: 100%;
             flex: 1;
-            overflow-y: hidden;
+            overflow-y: auto;
+            overflow-x: hidden;
             div:not(:last-child) {
                 height: fit-content;
             }
@@ -107,18 +112,22 @@
             }
             .activity-task-container {
                 flex: 1;
-                overflow: hidden;
+                // overflow: hidden;
                 h3 {
                     height: fit-content;
                 }
                 .activity-task {
                     flex: 1;
-                    overflow-y: auto;
-                    overflow-x: hidden;
+                    li {
+                        max-width: 100%;
+                    }
+                    // overflow-y: auto;
+                    // overflow-x: hidden;
                 }
             }
         }
         .side-bar-container {
+            padding-left: 15px;
             width: 140px;
         }
         .side-bar-btn {

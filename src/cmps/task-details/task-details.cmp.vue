@@ -7,10 +7,7 @@
       :style="{ 'z-index': 1 }"
     ></div>
     <button class="close-details-btn">
-    <font-awesome-icon
-      @click.stop="closeDetails"
-      :icon="['fas', 'times']"
-    />
+      <font-awesome-icon @click.stop="closeDetails" :icon="['fas', 'times']" />
     </button>
     <!-- <div class="task-header flex"> -->
     <h2
@@ -21,14 +18,14 @@
     >
       {{ task.name }}
     </h2>
-            <div v-if="membersToShow.length">
-          <h3>Members</h3>
-          <ul class="flex data-layout">
-            <li v-for="member in membersToShow" :key="member._id">
-              <user-avatar :user="member"></user-avatar>
-            </li>
-          </ul>
-        </div>
+    <div v-if="membersToShow.length">
+      <h3>Members</h3>
+      <ul class="flex data-layout">
+        <li v-for="member in membersToShow" :key="member._id">
+          <user-avatar :user="member"></user-avatar>
+        </li>
+      </ul>
+    </div>
     <!-- <button @click.stop="closeDetails">X</button> -->
     <!-- </div> -->
     <div class="task-editor-main flex">
@@ -161,8 +158,8 @@ export default {
     };
   },
   methods: {
-    copyTask(task){
-      this.$emit("addTask", task)
+    copyTask(task) {
+      this.$emit("addTask", task);
     },
     removeTask() {
       this.$emit("removeTask");
