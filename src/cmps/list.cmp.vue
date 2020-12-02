@@ -66,16 +66,7 @@
 							v-if="task.previewImg"
 							:src="task.previewImg"
 						/>
-						<ul class="flex" v-if="task.members.length">
-							<li
-								v-for="memberId in task.members"
-								:key="memberId"
-							>
-								<user-avatar
-									:user="getMemberById(memberId)"
-								></user-avatar>
-							</li>
-						</ul>
+						<taskPreviewFotter :task="task" :members="members"/>
 					</li>
 				</Draggable>
 			</Container>
@@ -94,9 +85,9 @@
 
 <script>
 import { Container, Draggable } from 'vue-smooth-dnd';
-import userAvatar from "./user-avatar.cmp";
 import addItemInput from "./add-item-input.cmp";
 import listEditMenu from "./list-edit-menu.cmp";
+import taskPreviewFotter from './task-preview-footer.cmp';
 export default {
 	name: "list",
 	props: {
@@ -135,11 +126,6 @@ export default {
 		toggleAdd() {
 			this.isAddInput = !this.isAddInput;
 		},
-		getMemberById(id) {
-			const arr = this.members.filter((member) => member._id === id);
-			if (!arr.length) return;
-			return arr[0];
-		},
 		openTask(listIdx, taskIdx) {
 			this.$emit("openTask", {
 				listIdx,
@@ -176,9 +162,9 @@ export default {
 	components: {
 		Container,
 		Draggable,
-		userAvatar,
 		addItemInput,
 		listEditMenu,
+		taskPreviewFotter
 	},
 	mounted() {
 		// if (this.isNewList) this.$refs.header.focus();

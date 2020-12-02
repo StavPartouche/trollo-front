@@ -23,12 +23,16 @@
     transform: translate(50%, -50%);
     width: 700px;
     height: 700px;
+    max-height: 80%;
     background-color: $task-details-bgc;
     border-radius: 4px;
-    padding: 15px;
+    padding: 15px 15px 20px 15px;
     z-index: 3;
     color: #000000c4;
     overflow: hidden;
+    h2 {
+        margin-bottom: 15px;
+    }
     h3 {
         font-size: rem(15px);
         font-weight: normal;
@@ -56,14 +60,19 @@
         // font-size: rem(32px);
     }
     .task-editor-main {
-        overflow: hidden;
+        width: 100%;
+        overflow-y: hidden;
         flex: 1;
         .task-details {
             height: 100%;
             flex: 1;
-            overflow-y: hidden;
-            div:not(:last-child) {
-                height: fit-content;
+            overflow-y: auto;
+            overflow-x: hidden;
+            &>div {
+                width: 100%;
+                &:not(:last-child) {
+                    height: fit-content;
+                }
             }
             margin-block-end: 13px;
             .data-layout {
@@ -85,6 +94,9 @@
                 height: 100px;
                 margin: 5px;
             }
+            .vue-avatar--wrapper {
+                margin: 0;
+            }
             .task-details-comments {
                 .comment-input {
                     width: 85%;
@@ -94,6 +106,7 @@
                 .comment {
                     font-size: 0.8rem;
                     margin-bottom: 10px;
+                    max-width: 500px;
                     .comment-creator {
                         color: #181818;
                         padding-left: 5px;
@@ -102,24 +115,42 @@
                     .comment-txt {
                         padding-left: 5px;
                         margin-bottom: 0;
+                        width: 100%;
+                        overflow-wrap: break-word;
+                    }
+                    p {
+                        margin: 0;
                     }
                 }
             }
             .activity-task-container {
                 flex: 1;
-                overflow: hidden;
+                // overflow: hidden;
                 h3 {
                     height: fit-content;
                 }
                 .activity-task {
                     flex: 1;
-                    overflow-y: auto;
-                    overflow-x: hidden;
+                    li {
+                        max-width: 100%;
+                    }
+                    // overflow-y: auto;
+                    // overflow-x: hidden;
                 }
             }
         }
         .side-bar-container {
+            padding-left: 15px;
             width: 140px;
+        }
+        .side-bar-p {
+            margin: 0;
+            padding: 2px;
+            font-size: rem(14px);
+            text-align: center;
+            &:not(:first-child) {
+                margin-top: 15px
+            }
         }
         .side-bar-btn {
             margin-bottom: 5px;

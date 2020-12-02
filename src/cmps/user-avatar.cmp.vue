@@ -1,6 +1,6 @@
 <template>
   <div v-if="user" :style="avatarSize">
-  <avatar :size="width" v-if="!user.imgUrl" :username="user.fullName"></avatar>
+  <avatar class="vue-avatar" :size="width" v-if="!user.imgUrl" :username="user.fullName"></avatar>
   <el-avatar v-else :size="width" :src="user.imgUrl"></el-avatar>
   </div>
 </template>
@@ -13,7 +13,7 @@ export default {
     user: Object,
     width: {
         type: Number,
-        default: 30
+        default: 28
   },
   },
   data() {
