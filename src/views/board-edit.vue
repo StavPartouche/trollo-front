@@ -31,7 +31,6 @@
 			> -->
 			<Container orientation="horizontal" @drop="onListDrag" group-name="lists">
 				<Draggable
-					class="flex"
 					v-for="(list, listIdx) in board.lists"
 					:key="list.id"
 				>

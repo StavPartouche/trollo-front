@@ -27,10 +27,10 @@
 				@toggleAdd="toggleAdd"
 			/>
 		</div>
-		<ul>
+		<ul class="draggable-tasks-container">
 		<!-- <ul class="draggable-tasks-container"> -->
 			<Container
-				class="draggable-tasks-container"
+				class=""
 				orientation="vertical"
 				@drop="onDrop(list.id, $event)"
 				:get-child-payload="getChildPayload"

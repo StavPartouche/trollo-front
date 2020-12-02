@@ -7,7 +7,7 @@
         min-width: 250px;
         text-align: center;
         height: 30px;
-        margin: 0 10px;
+        margin: 0 10px 0 0;
         border-radius: 4px;
         .fa-plus {
             margin-right: 3px;
@@ -28,14 +28,26 @@
         &>* {
             height: 100%;
         }
-        .smooth-dnd-container.vertical {
-            // display: flex;
-            // flex-direction: column;
+        .smooth-dnd-container.horizontal {
+            flex: 1;
+            height: 100%;
+            display: flex;
             .smooth-dnd-draggable-wrapper {
-                
+                flex: 1;
+                display: flex;
             }
         }
         .list {
+            margin-right: 10px;
+            background-color: #ebecf0;
+            width: 272px;
+            border-radius: 4px;
+            padding: 0 4px 0 8px;
+            height: fit-content;
+            max-height: 100%;
+            overflow-y: auto;
+            // &:not(:last-child) {
+            // }
             .draggable-tasks-container {
                 flex: 1;
                 overflow: auto;
@@ -44,16 +56,6 @@
             .draggable-tasks {
                 padding-right: 4px;
                 // background-color: red;
-            }
-            background-color: #ebecf0;
-            width: 272px;
-            border-radius: 4px;
-            padding: 0 4px 0 8px;
-            height: fit-content;
-            max-height: 100%;
-            overflow-y: auto;
-            &:not(:last-child) {
-                margin-right: 10px;
             }
             &>section {
                 // height: 100%;
