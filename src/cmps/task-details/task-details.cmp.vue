@@ -1,5 +1,4 @@
 <template>
-  <!-- <div class="task-editor-container" @click="closeDetails"> -->
   <div @click.stop class="task-editor flex-column">
     <div
       @click="closePopup"
@@ -92,7 +91,6 @@
         @setTaskColor="setTaskColor"
       />
       <div class="side-bar-container flex-column">
-        <!-- <div class="side-bar"> -->
 			<p>Add To This Task</p>
           <button class="side-bar-btn" @click="openPopup('checkList')">
             CheckList
@@ -119,13 +117,8 @@
           </label>
 		  <button class="side-bar-btn weak-btn" @click="openWarning" >Delete this task</button>
         </div>
-        <!-- <button class="side-bar-btn delete-task-btn" @click="openWarning">
-          Delete Task
-        </button> -->
       </div>
-    <!-- </div> -->
   </div>
-  <!-- </div> -->
 </template>
 
 <script>
