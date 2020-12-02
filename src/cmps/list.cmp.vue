@@ -182,7 +182,6 @@ export default {
 		listEditMenu,
 	},
 	mounted() {
-		debugger;
 		if (this.isNewList) {
 			this.$refs.header.focus();
 		}
