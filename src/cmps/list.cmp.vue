@@ -182,10 +182,7 @@ export default {
 		listEditMenu,
 	},
 	mounted() {
-		debugger;
-		if (this.isNewList) {
-			this.$refs.header.focus();
-		}
+		if (this.isNewList) this.$refs.header.focus();
 	},
 	created() {
 		this.listName = this.list.name;
