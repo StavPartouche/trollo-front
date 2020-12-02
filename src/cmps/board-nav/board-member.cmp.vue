@@ -13,11 +13,12 @@
       ></board-member-card>
       <li>
         <button
-          class="btn-add-board-user"
+          class="btn-add-board-user flex center"
           v-if="allMembers"
           @click="openShowInvite"
-        >
-          <font-awesome-icon :icon="['fas', 'user-plus']" />
+        > 
+        <p>+</p>
+          <!-- <font-awesome-icon :icon="['fas', 'plus']" /> -->
         </button>
       </li>
     </ul>

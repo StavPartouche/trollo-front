@@ -23,8 +23,8 @@
     <!-- <button @click.stop="closeDetails">X</button> -->
     <!-- </div> -->
     <div class="task-editor-main flex">
-      <div class="task-details">
-        <task-details-labels :labels="task.labels" />
+      <div class="task-details flex-colmn">
+        <task-details-labels v-if="task.labels" :labels="task.labels" />
         <div>
           <h3>Description</h3>
           <textarea
@@ -66,13 +66,13 @@
           :comments="task.comments"
           @addComment="addComment"
         />
-        <div>
+        <div class="activity-task-container">
           <h3>Activity</h3>
           <!-- <div v-for="(activity, idx) in taskActivities" :key="idx">
                 <h4>By: {{ activity.userId }}</h4>
                 <p>{{ activity.txt }}</p>
               </div> -->
-          <ul>
+          <ul class="activity-task">
             <board-activity
               v-for="(activity, idx) in taskActivities"
               :key="idx"
