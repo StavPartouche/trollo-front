@@ -107,19 +107,20 @@
                     font-size: 0.8rem;
                     margin-bottom: 10px;
                     max-width: 500px;
-                    .comment-creator {
-                        color: #181818;
-                        padding-left: 5px;
-                        margin-bottom: 0;
-                    }
-                    .comment-txt {
+                    .comment-details{
                         padding-left: 5px;
                         margin-bottom: 0;
                         width: 100%;
                         overflow-wrap: break-word;
+                        font-weight: normal;
+                        font-size: rem(14px);
+                        span{
+                            font-weight: bold;
+                        }
                     }
                     p {
                         margin: 0;
+                        padding-left: 5px;
                     }
                 }
             }

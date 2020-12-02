@@ -29,12 +29,14 @@
             height: 100%;
         }
         .smooth-dnd-container.horizontal {
-            flex: 1;
+            // flex: 1;
             height: 100%;
             display: flex;
+            min-width: auto;
             .smooth-dnd-draggable-wrapper {
-                flex: 1;
+                // flex: 1;
                 display: flex;
+                vertical-align: none;
             }
         }
         .list {
@@ -135,6 +137,11 @@
                 .list-header {
                     font-size: 1rem;
                     margin: 0;
+                    min-width: 200px;
+                    &:hover, &:focus{
+                        border-bottom: 1px solid rgba(0, 0, 0, 0.336);
+                        outline: none;
+                    }
                 }
             }
             .task-preview {

@@ -18,7 +18,7 @@
 				{{ list.name }}
 			</h2>
 			<button class="list-edit-btn" @click="openListEdit">
-				<font-awesome-icon :icon="['fas', 'ellipsis-v']" />
+				<font-awesome-icon :icon="['fas', 'ellipsis-h']" />
 			</button>
 			<list-edit-menu
 				v-if="isListEdit"
@@ -94,7 +94,7 @@ export default {
 		list: Object,
 		listIdx: Number,
 		members: Array,
-		// isNewList: Boolean
+		isNewList: Boolean
 	},
 	data() {
 		return {
@@ -167,7 +167,7 @@ export default {
 		taskPreviewFotter
 	},
 	mounted() {
-		// if (this.isNewList) this.$refs.header.focus();
+		if (this.isNewList) this.$refs.header.focus();
 	},
 	created() {
 		this.listName = this.list.name;
