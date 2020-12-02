@@ -231,6 +231,7 @@ export default {
 					listIdx: this.currListIdx,
 					task: newTask
 				});
+				this.successMsg('Task was duplicated!')
 			} 
 			else{
 				newTask = boardService.getEmptyTask();
@@ -507,6 +508,12 @@ export default {
 		},
 
 		// GENERAL BOARD
+		successMsg(msg) {
+        this.$message({
+          message: msg,
+          type: 'success'
+        });
+      	},
 		async addList() {
 			var newList = boardService.getEmptyList("Enter list name");
 			this.isNewList = true;
