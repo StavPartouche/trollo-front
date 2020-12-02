@@ -7,6 +7,10 @@
     flex-direction: column;
 }
 
+.flex-1 {
+    flex: 1;
+}
+
 .wrap {
     flex-wrap: wrap;
 }
@@ -84,21 +88,4 @@
     height: 30px;
     width: 30px;
     border-radius: 50%;
-}
-
-.ghost {
-    // background-color: crimson;
-    @apply --tilt;
-}
-
-:root {
-    --tilt: {
-        transform: rotate(20deg);
-        transition: .25s;
-    }
-}
-
-.vue-avatar {
-    width: 28;
-    height: 28;
 }

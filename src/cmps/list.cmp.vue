@@ -27,44 +27,49 @@
 				@toggleAdd="toggleAdd"
 			/>
 		</div>
-		<ul class="draggable-tsaks-container">
-			<draggable
-				class="draggable-tsaks"
-				:list="list.tasks"
-				group="tasks"
-				v-bind="dragOptions"
-				@sort="emitUpdateList"
+		<ul class="draggable-tasks-container">
+		<!-- <ul class="draggable-tasks-container"> -->
+			<Container
+				class=""
+				orientation="vertical"
+				@drop="onDrop(list.id, $event)"
+				:get-child-payload="getChildPayload"
+				group-name="tasks"
+				drag-class="card-ghost"
+				drop-class="card-ghost-drop"
 			>
-				<li
-					class="task-preview"
-					v-for="(task, taskIdx) in list.tasks"
-					:key="taskIdx"
-					@click="openTask(listIdx, taskIdx)"
-					:style="{ backgroundColor: task.backgroundColor }"
-				>
-					<ul class="task-preview-labels flex">
-						<li
-							v-for="(label, idx) in task.labels"
-							:key="idx"
-							class="task-preview-label"
-							:style="{
-								backgroundColor: label.backgroundColor,
-							}"
-						></li>
-					</ul>
-					<div
-						class="task-preview-header flex align-center justify-space-between"
+				<Draggable class="draggable-tasks" v-for="(task, taskIdx) in list.tasks" :key="task.id">
+					<li
+						class="task-preview"
+						@click="openTask(listIdx, taskIdx)"
+						:style="{ backgroundColor: task.backgroundColor }"
 					>
-						<h4>{{ task.name }}</h4>
-					</div>
-					<img
-						class="preview-img"
-						v-if="task.previewImg"
-						:src="task.previewImg"
-					/>
-					<taskPreviewFotter :task="task" :members="members"/>
-				</li>
-			</draggable>
+						<!-- v-for="(task, taskIdx) in list.tasks"
+					:key="taskIdx" -->
+						<ul class="task-preview-labels flex">
+							<li
+								v-for="(label, idx) in task.labels"
+								:key="idx"
+								class="task-preview-label"
+								:style="{
+									backgroundColor: label.backgroundColor,
+								}"
+							></li>
+						</ul>
+						<div
+							class="task-preview-header flex align-center justify-space-between"
+						>
+							<h4>{{ task.name }}</h4>
+						</div>
+						<img
+							class="preview-img"
+							v-if="task.previewImg"
+							:src="task.previewImg"
+						/>
+						<taskPreviewFotter :task="task" :members="members"/>
+					</li>
+				</Draggable>
+			</Container>
 		</ul>
 		<button v-if="!isAddInput" class="add-task-btn" @click="toggleAdd">
 			+ Add task
@@ -79,8 +84,7 @@
 </template>
 
 <script>
-import draggable from "vuedraggable";
-// import { Container, Draggable } from 'vue-smooth-dnd';
+import { Container, Draggable } from 'vue-smooth-dnd';
 import addItemInput from "./add-item-input.cmp";
 import listEditMenu from "./list-edit-menu.cmp";
 import taskPreviewFotter from './task-preview-footer.cmp';
@@ -90,7 +94,7 @@ export default {
 		list: Object,
 		listIdx: Number,
 		members: Array,
-		isNewList: Boolean
+		// isNewList: Boolean
 	},
 	data() {
 		return {
@@ -101,7 +105,7 @@ export default {
 				className: 'drop-preview',
 				animationDuration: '150',
 				showOnTop: true
-			}
+			},
 		};
 	},
 	methods: {
@@ -143,35 +147,27 @@ export default {
 			this.closeListEdit();
 			this.$emit("removeList", listIdx);
 		},
-		emitUpdateList() {
-			this.$emit("updateList", this.list);
+		onDrop(listId, dropResult) {
+			this.$emit('drop', { listId, dropResult });
 		},
+		getChildPayload(taskIdx) {
+			return this.list.tasks[taskIdx];
+		}
 	},
 	watch: {
 		'list.name'() {
 			this.listName = this.list.name;
 		}
 	},
-	computed: {
-		dragOptions() {
-			return {
-				animation: 300,
-				group: "tasks",
-				disabled: false,
-				ghostClass: "ghost",
-			};
-		},
-	},
 	components: {
-		draggable,
-		// Container,
-		// Draggable,
+		Container,
+		Draggable,
 		addItemInput,
 		listEditMenu,
 		taskPreviewFotter
 	},
 	mounted() {
-		if (this.isNewList) this.$refs.header.focus();
+		// if (this.isNewList) this.$refs.header.focus();
 	},
 	created() {
 		this.listName = this.list.name;

@@ -7,7 +7,7 @@
         min-width: 250px;
         text-align: center;
         height: 30px;
-        margin: 0 10px;
+        margin: 0 10px 0 0;
         border-radius: 4px;
         .fa-plus {
             margin-right: 3px;
@@ -28,16 +28,17 @@
         &>* {
             height: 100%;
         }
-        .list {
-            .draggable-tsaks-container {
+        .smooth-dnd-container.horizontal {
+            flex: 1;
+            height: 100%;
+            display: flex;
+            .smooth-dnd-draggable-wrapper {
                 flex: 1;
-                overflow: auto;
-                // padding-right: 4px;
+                display: flex;
             }
-            .draggable-tsaks {
-                padding-right: 4px;
-                // background-color: red;
-            }
+        }
+        .list {
+            margin-right: 10px;
             background-color: #ebecf0;
             width: 272px;
             border-radius: 4px;
@@ -45,8 +46,16 @@
             height: fit-content;
             max-height: 100%;
             overflow-y: auto;
-            &:not(:last-child) {
-                margin-right: 10px;
+            // &:not(:last-child) {
+            // }
+            .draggable-tasks-container {
+                flex: 1;
+                overflow: auto;
+                // padding-right: 4px;
+            }
+            .draggable-tasks {
+                padding-right: 4px;
+                // background-color: red;
             }
             &>section {
                 // height: 100%;
