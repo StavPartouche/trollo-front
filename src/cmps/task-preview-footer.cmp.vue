@@ -8,7 +8,7 @@
     </div>
     <ul class="flex" v-if="task.members.length">
       <li v-for="memberId in task.members" :key="memberId">
-        <user-avatar :user="getMemberById(memberId)"></user-avatar>
+        <user-avatar :width="25" :user="getMemberById(memberId)"></user-avatar>
       </li>
     </ul>
   </div>
