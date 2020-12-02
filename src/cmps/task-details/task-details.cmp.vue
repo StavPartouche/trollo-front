@@ -6,17 +6,22 @@
       class="disable-page-container"
       :style="{ 'z-index': 1 }"
     ></div>
-    <div class="task-header flex">
-      <h2 contenteditable v-text="taskToEdit.name" @blur="updateTaskName">
-        {{ task.name }}
-      </h2>
-	        <font-awesome-icon
-			class="close-details-btn"
-        @click.stop="closeDetails"
-        :icon="['fas', 'times']"
-      />
-      <!-- <button @click.stop="closeDetails">X</button> -->
-    </div>
+    <font-awesome-icon
+      class="close-details-btn"
+      @click.stop="closeDetails"
+      :icon="['fas', 'times']"
+    />
+    <!-- <div class="task-header flex"> -->
+    <h2
+      class="task-header flex"
+      contenteditable
+      v-text="taskToEdit.name"
+      @blur="updateTaskName"
+    >
+      {{ task.name }}
+    </h2>
+    <!-- <button @click.stop="closeDetails">X</button> -->
+    <!-- </div> -->
     <div class="task-editor-main flex">
       <div class="task-details">
         <task-details-labels :labels="task.labels" />
@@ -91,33 +96,35 @@
         @setTaskColor="setTaskColor"
       />
       <div class="side-bar-container flex-column">
-			<p>Add To This Task</p>
-          <button class="side-bar-btn" @click="openPopup('checkList')">
-            CheckList
-          </button>
-          <button class="side-bar-btn" @click="openPopup('labels')">
-            Labels
-          </button>
-          <button class="side-bar-btn" @click="openPopup('members')">
-            Members
-          </button>
-          <button class="side-bar-btn" @click="openPopup('dueDate')">
-            dueDate
-          </button>
-          <button class="side-bar-btn" @click="openPopup('backgroundColor')">
-            BackgroundColor
-          </button>
-          <label class="btn side-bar-btn">
-            Attachments
-            <input
-              class="add-attachments-input"
-              type="file"
-              @change="onUploadImg"
-            />
-          </label>
-		  <button class="side-bar-btn weak-btn" @click="openWarning" >Delete this task</button>
-        </div>
+        <p>Add To This Task</p>
+        <button class="side-bar-btn" @click="openPopup('checkList')">
+          CheckList
+        </button>
+        <button class="side-bar-btn" @click="openPopup('labels')">
+          Labels
+        </button>
+        <button class="side-bar-btn" @click="openPopup('members')">
+          Members
+        </button>
+        <button class="side-bar-btn" @click="openPopup('dueDate')">
+          dueDate
+        </button>
+        <button class="side-bar-btn" @click="openPopup('backgroundColor')">
+          BackgroundColor
+        </button>
+        <label class="btn side-bar-btn">
+          Attachments
+          <input
+            class="add-attachments-input"
+            type="file"
+            @change="onUploadImg"
+          />
+        </label>
+        <button class="side-bar-btn weak-btn" @click="openWarning">
+          Delete this task
+        </button>
       </div>
+    </div>
   </div>
 </template>
 
