@@ -3,38 +3,45 @@
     <!-- <div v-if="isMenu" @click="closeMenu" class="disable-page-container"></div> -->
     <div v-if="menu" @click="closeMenu" class="disable-page-container"></div>
     <div class="flex center">
-
-    <h2
-      class=" board-name"
-      contenteditable
-      @blur="updateBoardName"
-      v-text="nameToEdit"
-    >
-      {{ nameToEdit }}
-    </h2>
-    <input class="board-nav-btn" type="text" name="" id="" placeholder="Search">
-    <button class="board-nav-btn">Filter by Member</button>
+      <h2
+        class="board-name"
+        contenteditable
+        @blur="updateBoardName"
+        v-text="nameToEdit"
+      >
+        {{ nameToEdit }}
+      </h2>
+      <input
+        class="board-nav-btn"
+        type="text"
+        name=""
+        id=""
+        placeholder="Search"
+      />
+      <button class="board-nav-btn">Filter by Member</button>
     </div>
-      <div class="flex center">
+    <div class="flex center">
       <board-member
         @removeBoardMember="removeBoardMember"
         @addBoardMember="addBoardMember"
         :boardMembers="members"
       />
-<!-- <button class="board-nav-btn">Team</button> -->
-<button @click="openBackground" class="board-nav-btn">Background</button>
-    <div class="board-nav-btn flex center">
-      <!-- <button v-if="isMenu" @click="closeMenu" class="open-menu-btn"> -->
-      <button v-if="menu" @click="closeMenu" class="open-menu-btn">
-        <font-awesome-icon :icon="['fas', 'times']" />
-      </button>
-      <!-- <button class="open-menu-btn" v-if="!isMenu" @click="openMenu"> -->
-      <button class="open-menu-btn" v-if="!menu" @click="openMenu">
-        <font-awesome-icon :icon="['fas', 'ellipsis-h']" />
-        Show Menu
-      </button>
-    </div>
+      <!-- <button class="board-nav-btn">Team</button> -->
+      <button @click="openBackground" class="board-nav-btn">Background</button>
+      <button @click="openDashboard" class="board-nav-btn"><font-awesome-icon :icon="['fas', 'chart-bar']" /></button>
+      <div class="board-nav-btn flex center">
+        <!-- <button v-if="isMenu" @click="closeMenu" class="open-menu-btn"> -->
+        <button v-if="menu" @click="closeMenu" class="open-menu-btn">
+          <font-awesome-icon :icon="['fas', 'times']" />
+        </button>
+        <!-- <button class="open-menu-btn" v-if="!isMenu" @click="openMenu"> -->
+        <button class="open-menu-btn" v-if="!menu" @click="openMenu">
+          <font-awesome-icon :icon="['fas', 'ellipsis-h']" />
+          Show Menu
+        </button>
       </div>
+    </div>
+    <dashboard v-if="isDashboeard" :members="members" :board="board" @closeDashbord="closeDashbord"/>
   </div>
 </template>
 
@@ -43,12 +50,14 @@
 <script>
 import boardMember from "./board-member.cmp";
 import boardMemberCard from "./board-member-card.cmp";
+import dashboard from '../dashboard.cmp'
 
 export default {
   name: "board-nav",
   props: {
     name: String,
     members: Array,
+    board: Object
   },
   data() {
     return {
@@ -56,12 +65,19 @@ export default {
       menu: null,
       isBacground: false,
       nameToEdit: null,
+      isDashboeard: false
     };
   },
   computed: {},
   methods: {
+    closeDashbord(){
+      this.isDashboeard = false
+    },
+    openDashboard(){
+      this.isDashboeard = true
+    },
     openMenu() {
-      this.menu = 'main';
+      this.menu = "main";
       this.$emit("toggleMenu", this.menu);
       // this.isMenu = true;
       // this.$emit("toggleMenu", { menu: this.isMenu, background: this.isBackground });
@@ -73,8 +89,8 @@ export default {
       // this.isBackground = false;
       // this.$emit("toggleMenu", { menu: this.isMenu, background: this.isBackground });
     },
-    openBackground(){
-      this.menu = 'bgc';
+    openBackground() {
+      this.menu = "bgc";
       this.$emit("toggleMenu", this.menu);
     },
     addBoardMember(memberId) {
@@ -99,6 +115,7 @@ export default {
   },
   components: {
     boardMember,
+    dashboard
   },
   created() {
     this.nameToEdit = this.name;
