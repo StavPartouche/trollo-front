@@ -1,33 +1,27 @@
 <template>
   <div class="board-nav flex justify-space-between align-center">
-        <div v-if="isMenu" @click="closeMenu" class="disable-page-container"></div>
-      <h2 class="board-nav-btn board-name" contenteditable @blur="updateBoardName" v-text="nameToEdit">
-        {{ nameToEdit }}
-      </h2>
+    <div v-if="isMenu" @click="closeMenu" class="disable-page-container"></div>
+    <h2
+      class="board-nav-btn board-name"
+      contenteditable
+      @blur="updateBoardName"
+      v-text="nameToEdit"
+    >
+      {{ nameToEdit }}
+    </h2>
     <div class="board-nav-btn flex center">
-    <board-member
-      @removeBoardMember="removeBoardMember"
-      @addBoardMember="addBoardMember"
-      :boardMembers="members"
-    />
-    <!-- <button> -->
-      <font-awesome-icon
-       class=" open-menu-btn"
-        v-if="isMenu"
-        @click="closeMenu"
-        :icon="['fas', 'times']"
-      />
-      
-    <!-- </button> -->
-    <!-- <button> -->
-      <font-awesome-icon
-       class=" open-menu-btn"
-        v-if="!isMenu"
-        @click="openMenu"
-        :icon="['fas', 'ellipsis-h']"
-      />
-      <!-- Show Menu -->
-    <!-- </button> -->
+      <!-- <board-member
+        @removeBoardMember="removeBoardMember"
+        @addBoardMember="addBoardMember"
+        :boardMembers="members"
+      /> -->
+      <button v-if="isMenu" @click="closeMenu" class="open-menu-btn">
+        <font-awesome-icon :icon="['fas', 'times']" />
+      </button>
+      <button class="open-menu-btn" v-if="!isMenu" @click="openMenu">
+        <font-awesome-icon :icon="['fas', 'ellipsis-h']" />
+        Show Menu
+      </button>
     </div>
   </div>
 </template>
@@ -54,7 +48,6 @@ export default {
     openMenu() {
       this.isMenu = true;
       this.$emit("toggleMenu", this.isMenu);
-
     },
     closeMenu() {
       this.isMenu = false;
@@ -71,14 +64,14 @@ export default {
       this.nameToEdit = src;
       this.$emit("updateBoardName", this.nameToEdit);
     },
-    onKeyUp(ev){
-      if (ev.keyCode === 27 && this.isMenu) this.closeMenu()
+    onKeyUp(ev) {
+      if (ev.keyCode === 27 && this.isMenu) this.closeMenu();
     },
   },
   watch: {
     name() {
       this.nameToEdit = this.name;
-    }
+    },
   },
   components: {
     boardMember,
@@ -86,11 +79,9 @@ export default {
   created() {
     this.nameToEdit = this.name;
     document.body.addEventListener("keyup", this.onKeyUp);
-
   },
   destroyed() {
     document.body.removeEventListener("keyup", this.onKeyUp);
-
   },
 };
 </script>
