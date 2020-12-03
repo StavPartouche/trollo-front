@@ -29,7 +29,6 @@
 		</div>
 		<ul class="draggable-tasks-container">
 			<Container
-				class=""
 				orientation="vertical"
 				@drop="onDrop(list.id, $event)"
 				@drag-start="onDragStart"
