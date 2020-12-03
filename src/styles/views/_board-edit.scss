@@ -30,8 +30,8 @@
         }
         .smooth-dnd-container.horizontal {
             // flex: 1;
-            height: fit-content;
-            max-height: 100%;
+            // height: fit-content;
+            // max-height: 100%;
             display: flex;
             min-width: auto;
             .smooth-dnd-draggable-wrapper {
@@ -139,7 +139,8 @@
                     font-size: 1rem;
                     margin: 0;
                     min-width: 200px;
-                    &:hover, &:focus{
+                    &:hover,
+                    &:focus {
                         border-bottom: 1px solid rgba(0, 0, 0, 0.336);
                         outline: none;
                     }
