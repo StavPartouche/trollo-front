@@ -9,44 +9,43 @@ html {
 
 body {
     margin: 0;
-    .el-message-box.delete-warning{
+    .el-message-box.delete-warning {
         background-color: #d8d8d8;
         border: 1px solid #5f5f5f;
-        .el-message-box__title{
+        .el-message-box__title {
             color: #252525;
         }
         .el-icon-warning {
             display: none;
         }
-        p{
+        p {
             color: #252525;
         }
-        .el-button{
+        .el-button {
             border: none;
         }
-        .el-button--primary{
+        .el-button--primary {
             background-color: #9e1a1a;
         }
     }
-    .el-message-box.create-prompt{
+    .el-message-box.create-prompt {
         background-color: #d8d8d8;
         border: 1px solid #5f5f5f;
-        .el-message-box__title{
+        .el-message-box__title {
             color: #252525;
         }
         .el-icon-warning {
             display: none;
         }
-        p{
+        p {
             color: #252525;
         }
-        .el-button{
+        .el-button {
             border: none;
         }
-        .el-input__inner{
+        .el-input__inner {
             border: none;
             margin: 2px 0;
-            
         }
     }
 }
@@ -124,7 +123,7 @@ input {
     font-family: quicksand, sans-serif;
     border-radius: 5px;
     outline: 0;
-    // border: none;
+    border: none;
     padding: 2px;
     margin: 5px;
     color: rgb(37, 37, 37);
@@ -142,9 +141,15 @@ textarea {
 
 .logo,
 .logo:active {
-    color: rgb(230, 230, 230);
-    text-shadow: 1px 1px black;
+    // color: rgb(230, 230, 230);
+    // text-shadow: 1px 1px black;
     font-family: megrim;
+    // font-family: audi;
+    // font-family: orbitron;
+    // font-family: sarpanch;
+    // font-family: cuteFont;
+    // font-family: novaFlat;
+    // font-family: textMeOne;
     span {
         font-size: 1.1em; // color: rgb(136, 199, 183)
     }
