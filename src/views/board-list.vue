@@ -107,6 +107,7 @@ export default {
         this.$prompt('Please enter new board name', 'Create new board', {
           confirmButtonText: 'Create',
 		  cancelButtonText: 'Cancel',
+		  customClass:'create-prompt',
 		  inputValidator: this.validateInput,
 		  inputErrorMessage: 'Enter board name'
         }).then(({ value }) => {

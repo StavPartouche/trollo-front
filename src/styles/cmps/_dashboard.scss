@@ -1,0 +1,29 @@
+.dashboard{
+    position:absolute;
+    top: 563%;
+    right: 50%;
+    transform: translate(50%, -50%);
+    width: 80%;
+    height: 500px;
+    z-index: 1;
+    background-color: wheat;
+    overflow-y: auto;
+    .dashboard-data{
+        align-items: center;
+        justify-content: space-around;
+        margin-top: 20px;
+        .data-card{
+            border: 1px solid black;
+        }
+    }
+
+    .charts{
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between
+    }
+    .chart{
+        width: 300px;
+    }
+}

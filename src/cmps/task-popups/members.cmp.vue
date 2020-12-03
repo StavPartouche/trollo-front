@@ -2,7 +2,9 @@
   <div class="task-popup">
     <h3 class="task-popup-header">Members</h3>
     <button @click="closePopup" class="exit-popup-btn"><font-awesome-icon :icon="['fas', 'times']" /></button>
-    <div class="task-members-popup flex-column">
+       <member-list :width="230" :selectedMembers="taskMembersToShow"
+    :allMembers="boardMembersToShow" @addMember="addMember" @removeMember="removeMember"></member-list>
+    <!-- <div class="task-members-popup flex-column">
       <input type="text" placeholder="Search member" v-model="filterBy" />
       <ul>
         <li
@@ -29,12 +31,14 @@
           <h4>{{ member.fullName }}</h4>
         </li>
       </ul>
-    </div>
+    </div> -->
   </div>
 </template>
 
 <script>
 import userAvatar from "../user-avatar.cmp";
+import memberList from "../member-list.cmp";
+
 
 export default {
   name: "members",
@@ -51,8 +55,8 @@ export default {
     addMember(memberId) {
       this.$emit("addMemberToTask", memberId);
     },
-    removeMember(memberIdx) {
-      this.$emit("removeMemberfromTask", memberIdx);
+    removeMember(memberId) {     
+      this.$emit("removeMemberfromTask", memberId);
     },
     closePopup() {
       this.$emit("closePopup");
@@ -60,24 +64,32 @@ export default {
   },
   computed: {
     boardMembersToShow() {
+      console.log(this.boardMembers);
       var toShow = this.boardMembers.reduce((acc, member) => {
         if (!this.taskMembersIds.includes(member._id)) acc.push(member);
         return acc;
       }, []);
-      if (this.filterBy === "") return toShow;
-      return toShow.filter((member) => member.fullName.includes(this.filterBy));
+      console.log(toShow);
+      return toShow;
+      // if (this.filterBy === "") return toShow;
+      // return toShow.filter((member) => member.fullName.includes(this.filterBy));
     },
     taskMembersToShow() {
+      console.log(this.taskMembersIds);
       var toShow = this.boardMembers.reduce((acc, member) => {
         if (this.taskMembersIds.includes(member._id)) acc.push(member);
         return acc;
       }, []);
-      if (this.filterBy === "") return toShow;
-      return toShow.filter((member) => member.fullName.includes(this.filterBy));
+      console.log(toShow);
+            return toShow;
+
+      // if (this.filterBy === "") return toShow;
+      // return toShow.filter((member) => member.fullName.includes(this.filterBy));
     },
   },
   components: {
     userAvatar,
+    memberList
   },
   created() {},
 };

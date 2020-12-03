@@ -1,8 +1,9 @@
 <template>
   <div class="board-member">
     <div
+    v-if="showInvite"
       @click="closeShowInvite"
-      :class="{ 'disable-page-container': showInvite }"
+      class="disable-page-container"
     ></div>
     <ul class="flex center">
       <board-member-card
@@ -24,13 +25,15 @@
     </ul>
     <div class="invite" v-if="showInvite">
       <p v-if="!membersToInvite">No users to show</p>
-      <input
+      <!-- <input
         v-else
         type="text"
         placeholder="Search member"
         v-model="filterBy"
-      />
-      <ul>
+      /> -->
+      <member-list class="board-user-list" :selectedMembers="boardMembers"
+    :allMembers="membersToInvite" @addMember="addBoardBMember" @removeMember="removeBoardMember"></member-list>
+      <!-- <ul>
         <li
           class="userToShow flex align-center"
           @click="addBoardBMember(member._id)"
@@ -38,16 +41,17 @@
           :key="member._id"
         >
           <user-avatar :user="member"></user-avatar>
-          <p>{{ member.userName }}</p>
+          <p>{{ member.fullName }}</p>
         </li>
-      </ul>
+      </ul> -->
     </div>
   </div>
 </template>
 
 <script>
 import boardMemberCard from "./board-member-card.cmp";
-import userAvatar from "../user-avatar.cmp";
+// import userAvatar from "../user-avatar.cmp";
+import memberList from "../member-list.cmp";
 
 export default {
   name: "board-members",
@@ -106,7 +110,8 @@ export default {
   },
   components: {
     boardMemberCard,
-    userAvatar,
+    // userAvatar,
+    memberList
   },
 };
 </script>

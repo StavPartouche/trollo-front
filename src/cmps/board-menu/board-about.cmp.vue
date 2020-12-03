@@ -28,30 +28,14 @@
       <li>
         Description:
         <!-- <h4>Description:</h4> -->
-                  <textarea
+            <textarea
             placeholder="Describe here..."
             class="board-desc-content"
-            contenteditable            
-             v-text="descToEdit"
+            v-model="descToEdit"
             @blur="updateBoardDesc"
             cols="40"
             rows="6"
           ></textarea>
-        <!-- <p
-          class="board-desc-content"
-          contenteditable
-          @blur="updateBoardDesc"
-          v-text="descToEdit"
-          v-model="descToEdit"
-        >
-          {{ descToEdit }}
-        </p> -->
-        <!-- <textarea
-            class="justify-end"
-            type="text"
-            v-model="description"
-            @change="changeDesc"
-          /> -->
       </li>
     </ul>
   </div>
@@ -77,9 +61,7 @@ export default {
     backToMenu() {
       this.$emit("backToMenu");
     },
-    updateBoardDesc(evt) {
-      var src = evt.target.innerText;
-      this.descToEdit = src;
+    updateBoardDesc() {
       this.$emit("updateBoardDesc", this.descToEdit);
     },
   },
