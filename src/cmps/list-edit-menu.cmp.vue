@@ -25,9 +25,10 @@ export default {
       this.$emit("toggleAdd");
     },
     openWarning(listIdx) {
-        this.$confirm('This will permanently delete the task. Continue?', 'Warning', {
+        this.$confirm('This will permanently delete the list. Continue?', 'Warning!', {
           confirmButtonText: 'Delete',
           cancelButtonText: 'Cancel',
+          customClass:'delete-warning',
           type: 'warning'
         }).then(() => {
           this.removeList(listIdx)

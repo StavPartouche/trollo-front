@@ -8,6 +8,7 @@
       v-if="board"
       :name="board.name"
       :members="members"
+      :board="board"
     ></board-nav>
     <board-menu
       v-if="menu"

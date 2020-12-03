@@ -276,6 +276,7 @@ export default {
         {
           confirmButtonText: "Delete",
           cancelButtonText: "Cancel",
+          customClass:'delete-warning',
           type: "warning",
         }
       )
