@@ -1,7 +1,7 @@
 <template>
   <div class="task-popup">
-    <h3 class="task-popup-header">dueDate</h3>
-    <button @click="closePopup" class="exit-popup-btn">X</button>
+    <h3 class="task-popup-header">Due date</h3>
+    <button @click="closePopup" class="exit-popup-btn"><font-awesome-icon :icon="['fas', 'times']" /></button>
     <input @input="updateDueDate" type="date" v-model="date" />
   </div>
 </template>

@@ -1,7 +1,7 @@
 <template>
 	<div class="task-popup">
 		<h3 class="task-popup-header">CheckLists</h3>
-		<button @click="closePopup" class="exit-popup-btn">X</button>
+		<button @click="closePopup" class="exit-popup-btn"><font-awesome-icon :icon="['fas', 'times']" /></button>
 		<add-item-input class="task-checklist-popup" @add="addCheckList" />
 	</div>
 </template>

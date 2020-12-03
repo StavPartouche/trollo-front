@@ -17,11 +17,14 @@
     >
       {{ task.name }}
     </h2>
-    <div v-if="task.dueDate">
-        <p>{{ task.dueDate }}</p>
-    </div>
+    <!-- <div class="date-container flex center" v-if="task.dueDate">
+        <p><font-awesome-icon :icon="['far', 'clock']" />{{ dueDate(task.dueDate) }}</p>
+    </div> -->
     <div class="task-editor-main flex">
       <div class="task-details flex-column">
+          <div class="date-container flex center" v-if="task.dueDate">
+            <p><font-awesome-icon :icon="['far', 'clock']" /> {{ dueDate(task.dueDate) }}</p>
+          </div>
           <div v-if="membersToShow.length">
             <ul class="flex data-layout">
               <li v-for="member in membersToShow" :key="member._id">
@@ -96,7 +99,7 @@
         @setTaskColor="setTaskColor"
       />
       <div class="side-bar-container flex-column">
-        <p class="side-bar-p">Add To This Task</p>
+        <p class="side-bar-p">Add To Task</p>
         <button class="side-bar-btn" @click="openPopup('checkList')">
           CheckList
         </button>
@@ -107,10 +110,10 @@
           Members
         </button>
         <button class="side-bar-btn" @click="openPopup('dueDate')">
-          dueDate
+          Due date
         </button>
         <button class="side-bar-btn" @click="openPopup('backgroundColor')">
-          BackgroundColor
+          Background
         </button>
         <label class="btn side-bar-btn">
           Attachments
@@ -147,6 +150,7 @@ import userAvatar from "../user-avatar.cmp";
 import taskDetailsLabelsCmp from "./task-details-labels.cmp.vue";
 import { eventBusService } from "../../services/eventBus.service";
 import boardActivity from "../board-menu/board-activity.cmp";
+import moment from 'moment'
 
 export default {
   name: "task-details",
@@ -166,6 +170,9 @@ export default {
     };
   },
   methods: {
+    dueDate(time){
+      return moment(time).format('MMM DD')
+    },
     showComments(){
       this.isComments = true
       this.isActivities = false

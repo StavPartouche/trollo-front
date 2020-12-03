@@ -1,26 +1,24 @@
 .task-popup {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
     position: absolute;
     z-index: 10;
     top: 30px;
     right: 175px;
-    width: 240px;
-    height: 170px;
-    background-color: #efefef;
+    width: 290px;
+    height: fit-content;
+    max-height: 255px;
+    background-color: #f4f5f7;
     border-radius: 10px;
-    box-shadow: 0px 0px 8px 0px #888888;
-    // border: 1px solid black;
     .task-popup-header {
-        text-align: center;
-        // margin-top: 17px;
-        padding: 15px 0;
-        // border-bottom: 1px solid black;
+        padding: 15px 0 0 0;
+        font-size: rem(24px);
     }
     .labels-container{
         overflow-y: auto;
+        margin-top: 7px;
+        margin-bottom: 11px;
         .chose-label{
             width: 195px;
             height: 30px;
@@ -39,6 +37,8 @@
         flex-wrap: wrap;
         justify-content: space-between;
         width: 179px;
+        margin-top: 15px;
+        margin-bottom: 19px;
         .color{
             width: 25px;
             height: 25px;
@@ -51,17 +51,45 @@
     .exit-popup-btn {
         position: absolute;
         top: 0;
-        right: 0;
+        right: 2px;
         background-color: transparent;
-        color: #888888;
+        color: rgb(37,37,37);
     }
     .task-checklist-popup {
         margin-top: 5px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        input{
+            width: 125%;
+            font-size: rem(14px);
+            height: 30px;   
+            border-radius: unset;
+            border: unset;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.77);
+            background-color: transparent;
+        }
+        button{
+            background-color: #5aac44;
+            color: #fdfdfd;
+            margin-top: 10px;
+            margin-bottom: 17px;
+        }
     }
     .task-members-popup {
         overflow-y: auto;
-        height: 90px;
+        height: 64%;
         width: 90%;
+        input{
+            font-size: rem(14px);
+            height: 30px;   
+            margin-bottom: 9px;
+            border-radius: unset;
+            border: unset;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.77);
+            background-color: transparent;
+        }
         li {
             cursor: pointer;
             .check {
@@ -74,14 +102,16 @@
             h4 {
                 margin: 0;
                 padding-left: 5px;
+                font-weight: normal;
+                font-size: rem(14px);
             }
         }
     }
 }
 
-.task-popup {
-    input {
-        border: 0.5px solid gray
-    }
-}
+// .task-popup {
+//     input {
+//         border: 0.5px solid gray
+//     }
+// }
 
