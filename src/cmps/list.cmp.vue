@@ -30,6 +30,7 @@
 		<ul class="draggable-tasks-container">
 			<Container
 				orientation="vertical"
+				drag-handle-selector=".task-preview"
 				@drop="onDrop(list.id, $event)"
 				@drag-start="onDragStart"
 				@drag-end="onDragEnd"
@@ -40,13 +41,13 @@
 			>
 				<Draggable
 					class="draggable-tasks"
-					v-for="(task, taskIdx) in list.tasks"
+					v-for="task in list.tasks"
 					:key="task.id"
 					:ref="`drag${task.id}`"
 				>
 					<li
 						class="task-preview"
-						@click="openTask(listIdx, taskIdx)"
+						@click="openTask(list.id, task.id)"
 						:style="{ backgroundColor: task.backgroundColor }"
 					>
 						<ul class="task-preview-labels flex">
@@ -130,10 +131,10 @@ export default {
 		toggleAdd() {
 			this.isAddInput = !this.isAddInput;
 		},
-		openTask(listIdx, taskIdx) {
+		openTask(listId, taskId) {
 			this.$emit("openTask", {
-				listIdx,
-				taskIdx,
+				listId,
+				taskId
 			});
 		},
 		addTask(listIdx, itemTxt) {
@@ -184,6 +185,7 @@ export default {
 		taskPreviewFotter
 	},
 	mounted() {
+		console.log(this.list)
 		if (this.isNewList) this.$refs.header.focus();
 	},
 	created() {

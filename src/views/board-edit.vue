@@ -2,6 +2,7 @@
 	<div class="board-edit flex-column">
 		<board-nav
 			@toggleMenu="toggleMenu"
+			@filter="setFilterBy"
 			@updateBoardName="updateBoardName"
 			@removeBoardMember="updateBoardMember('remove', $event)"
 			@addBoardMember="updateBoardMember('add', $event)"
@@ -25,11 +26,12 @@
 		<ul class="lists" v-if="board">
 			<Container
 				orientation="horizontal"
+        drag-handle-selector=".list"
 				@drop="onListDrag"
 				group-name="lists"
 			>
 				<Draggable
-					v-for="(list, listIdx) in board.lists"
+					v-for="(list, listIdx) in lists"
 					:key="list.id"
 				>
 					<list
@@ -105,7 +107,8 @@ export default {
 	data() {
 		return {
 			board: null,
-			members: [],
+      members: [],
+      filterByMemberId: '',
 			currTask: null,
 			currListIdx: null,
 			currTaskIdx: null,
@@ -220,9 +223,9 @@ export default {
 			socket.emit('log', activity);
 		},
 		openTask(idxs) {
-			this.currTask = this.board.lists[idxs.listIdx].tasks[idxs.taskIdx];
-			this.currListIdx = idxs.listIdx;
-			this.currTaskIdx = idxs.taskIdx;
+      this.currListIdx = this.board.lists.findIndex(list => list.id === idxs.listId);
+			this.currTaskIdx = this.board.lists[this.currListIdx].tasks.findIndex(task => task.id === idxs.taskId);
+			this.currTask = this.board.lists[this.currListIdx].tasks[this.currTaskIdx];
 		},
 		addTask(updates) {
 			var newTask = null;
@@ -572,7 +575,10 @@ export default {
 				this.board = board;
 				socket.emit('dragInBoard', this.board.lists);
 			}
-		},
+    },
+    setFilterBy(memberId) {
+      this.filterByMemberId = memberId;
+    },
 
 		// Socket Events
 		socketEv({ type, data }) {
@@ -633,15 +639,14 @@ export default {
 	},
 	computed: {
 		lists() {
-			return this.board.lists;
-		},
-		dragOptions() {
-			return {
-				animation: 200,
-				group: 'lists',
-				disabled: false,
-				ghostClass: 'ghost',
-			};
+      if (!this.filterByMemberId) return this.board.lists;
+			return this.board.lists.reduce((lists, list) => {
+        const listCopy = Object.assign({}, list);
+        const tasks = listCopy.tasks.filter(task => task.members.includes(this.filterByMemberId))
+        listCopy.tasks = tasks;
+        if (tasks.length) lists.push(listCopy);
+        return lists;
+      }, []);
 		},
 		userId() {
 			const user = this.$store.getters.loggedInUser;

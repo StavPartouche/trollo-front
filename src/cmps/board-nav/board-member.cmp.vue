@@ -91,7 +91,7 @@ export default {
       });
       if (!toInvite.length) return;
       return toInvite.filter((member) => {
-        return member.userName.includes(this.filterBy);
+        return member.fullName.includes(this.filterBy);
       });
     },
     allMembers() {
