@@ -1,12 +1,12 @@
 <template>
   <div class="task-details-comments data-layout">
-    <h3>Comments</h3>
+    <h3><font-awesome-icon class="task-preview-data-item-icon" :icon="['far', 'comment']" /> Comments</h3>
     <div class="flex comment align-center data-layout wrap" v-for="(comment, idx) in comments" :key="idx">
       <user-avatar :user="comment.creator"></user-avatar>
-      <h4 class="comment-creator">{{ comment.creator.fullName }}: </h4>
-      <!-- <pre class="comment-txt">{{ comment.txt }}</pre> -->
-      <p class="comment-txt">{{ comment.txt }}</p>
-      <p>{{date(comment.createdAt)}}</p>
+      <div>
+        <h4 class="comment-details"><span>{{ comment.creator.fullName }}</span>: {{ comment.txt }}</h4>
+        <p>{{date(comment.createdAt)}}</p>
+      </div>
     </div>
       <form @submit.prevent="addComment">
                  <textarea

@@ -28,7 +28,6 @@
 				group-name="lists"
 			>
 				<Draggable
-					class="flex"
 					v-for="(list, listIdx) in board.lists"
 					:key="list.id"
 				>
@@ -542,13 +541,13 @@ export default {
 		async addList() {
 			var newList = boardService.getEmptyList("Enter list name");
 			this.isNewList = true;
-			this.board.lists.push(newList);
+			await this.board.lists.push(newList);
+			this.isNewList = false;
 			const activity = boardService.newActivity(
 				`added a list`,
 				this.userId
 			);
 			this.board.activities.unshift(activity);
-			this.isNewList = false;
 			socket.emit('addList', newList);
 			socket.emit('log', activity);
 		},

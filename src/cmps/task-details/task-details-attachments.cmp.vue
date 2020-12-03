@@ -1,12 +1,16 @@
 <template>
 	<div v-if="attachments.length">
-        <h3>Attachments</h3>
-        <button v-if="previewImg" @click="removePreviewImg">remove preview img</button>
-        <ul class="flex warp data-layout" v-if="attachments">
-            <li v-for="(attachment, idx) in attachments" :key="idx">
+        <div class="attachments-header">
+            <h3><font-awesome-icon class="task-preview-data-item-icon" :icon="['fas', 'paperclip']" /> Attachments</h3>
+            <button v-if="previewImg" @click="removePreviewImg">Remove cover</button>
+        </div>
+        <ul class="flex wrap align-center justify-space-around data-layout" v-if="attachments">
+            <li class="img-container" v-for="(attachment, idx) in attachments" :key="idx">
                 <img :src="attachment" class="img-attachments">
-                <button @click="removeAttachment(idx)">X</button>
-                <button @click="setPreviewImg(idx)">set as cover</button>
+                <div class="img-btns">
+                    <button @click="removeAttachment(idx)">Remove</button>
+                    <button @click="setPreviewImg(idx)">Set cover</button>
+                </div>
             </li>
         </ul>
     </div>

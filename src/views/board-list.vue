@@ -151,7 +151,7 @@ export default {
 			type: "loadBoards",
 		});
 		// eventBusService.$emit('boardBgc', {type: 'img', img:'desk3.jpg'})
-		eventBusService.$emit('boardBgc', { url: 'desk5.jpg' });
+		eventBusService.$emit('boardBgc', { url: 'desk6.jpg' });
 	},
 	destroyed() {
 		socket.off('removeBoard');

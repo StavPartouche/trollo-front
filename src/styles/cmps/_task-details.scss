@@ -78,21 +78,84 @@
             .data-layout {
                 margin-bottom: 10px;
             }
+            .show-controller{
+                display: flex;
+                align-items: center;
+                margin-bottom: 20px;
+                margin-top: 16px;
+                .active{
+                    background-color: #505e78;
+                    color: #f4f5f7;
+                }
+                button{
+                    padding: 10px;
+                    margin-right: 10px;
+                    background-color: #dddddd;
+                    color: #5c5c5c;
+                }
+            }
             .description-textarea {
                 border-radius: 5px;
                 background-color: #dddddd;
                 font-size: rem(13px);
                 border: none;
                 resize: none;
-                &:hover,
                 &:focus {
                     background-color: #fdfdfd;
                 }
             }
+            .task-details-checklist{
+                margin-left: 10px;
+                margin-right: 10px;
+                .checklist-header{
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    .remove-list-btn{
+                        margin-bottom: 10px;
+                        background-color: transparent;
+                        opacity: 0;
+                    }
+                }
+                .add-item-btn{
+                    margin-top: 10px;
+                }
+                .item-container{
+                    margin-top: 5px;
+
+                    .item{
+                        display: flex;
+                        justify-content: space-between;
+                        font-size: rem(14px);
+                    }
+                }
+                &:hover{
+                    .remove-list-btn{
+                        opacity: 0.5;
+                    }
+                }
+            }
+            .attachments-header{
+                // display: flex;
+                // align-items: center;
+                button{
+                    margin-bottom: 10px;
+                    background-color: transparent;
+                    font-size: 12px;
+                    &:hover{
+                        text-decoration: underline;
+                    }
+                }
+            }
             .img-attachments {
-                width: 100px;
-                height: 100px;
+                width: 200px;
+                max-height: 150px;
                 margin: 5px;
+            }
+            .img-btns{
+                display: flex;
+                align-items: center;
+                justify-content: space-evenly;
             }
             .vue-avatar--wrapper {
                 margin: 0;
@@ -107,19 +170,20 @@
                     font-size: 0.8rem;
                     margin-bottom: 10px;
                     max-width: 500px;
-                    .comment-creator {
-                        color: #181818;
+                    .comment-details {
                         padding-left: 5px;
                         margin-bottom: 0;
-                    }
-                    .comment-txt {
-                        padding-left: 5px;
-                        margin-bottom: 0;
-                        width: 100%;
+                        // width: 100%;
                         overflow-wrap: break-word;
+                        font-weight: normal;
+                        font-size: rem(14px);
+                        span {
+                            font-weight: bold;
+                        }
                     }
                     p {
                         margin: 0;
+                        padding-left: 5px;
                     }
                 }
             }

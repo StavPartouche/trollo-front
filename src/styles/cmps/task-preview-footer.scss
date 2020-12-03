@@ -1,0 +1,18 @@
+.task-preview-footer{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+        .task-preview-data{
+            display: flex;
+            align-items: center;
+            .task-preview-data-item{
+                padding-right: 8px;
+                margin: 0;
+                font-size: rem(12px);
+                letter-spacing: -0.2px;
+                .task-preview-data-item-icon{
+                    opacity: 0.5;
+                }
+            }
+        }
+}

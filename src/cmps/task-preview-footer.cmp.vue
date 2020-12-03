@@ -1,12 +1,20 @@
 <template>
-  <div class="flex align-center justify-space-between">
-    <div class="flex align-center">
-      <p v-if="task.description !== ''">D</p>
-	  <p v-if="task.comments.length">C{{task.comments.length}}</p>
-      <p v-if="task.attachments.length">A{{ task.attachments.length }}</p>
-      <p v-if="task.checkLists.length">I{{ doneItems }}/{{ allItems }}</p>
+  <div class="task-preview-footer">
+    <div class="task-preview-data">
+		<p class="task-preview-data-item" v-if="task.description !== ''">
+	  		<font-awesome-icon class="task-preview-data-item-icon" :icon="['fas', 'align-left']" />
+		</p>
+		<p class="task-preview-data-item" v-if="task.comments.length" >
+	  		<font-awesome-icon class="task-preview-data-item-icon" :icon="['far', 'comment']" /> {{task.comments.length}}
+		</p>
+		<p class="task-preview-data-item" v-if="task.attachments.length" >
+	  		<font-awesome-icon class="task-preview-data-item-icon" :icon="['fas', 'paperclip']" /> {{task.attachments.length}}
+		</p>
+		<p class="task-preview-data-item" v-if="task.checkLists.length">
+			<font-awesome-icon class="task-preview-data-item-icon" :icon="['fas', 'tasks']" /> {{ doneItems }}/{{ allItems }}
+		</p>
     </div>
-    <ul class="flex" v-if="task.members.length">
+    <ul class="task-preview-members flex" v-if="task.members.length">
       <li v-for="memberId in task.members" :key="memberId">
         <user-avatar :width="25" :user="getMemberById(memberId)"></user-avatar>
       </li>
@@ -57,7 +65,6 @@ export default {
     userAvatar,
   },
   created() {
-    console.log(this.task);
   },
 };
 </script>
