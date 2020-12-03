@@ -9,7 +9,6 @@
     <button  @click.stop="closeDetails" class="close-details-btn">
       <font-awesome-icon :icon="['fas', 'times']" />
     </button>
-    <!-- <div class="task-header flex"> -->
     <h2
       class="task-header flex"
       contenteditable
@@ -18,22 +17,21 @@
     >
       {{ task.name }}
     </h2>
-
-    <!-- <button @click.stop="closeDetails">X</button> -->
-    <!-- </div> -->
+    <div v-if="task.dueDate">
+        <p>{{ task.dueDate }}</p>
+    </div>
     <div class="task-editor-main flex">
       <div class="task-details flex-column">
-            <div v-if="membersToShow.length">
-      <h3>Members</h3>
-      <ul class="flex data-layout">
-        <li v-for="member in membersToShow" :key="member._id">
-          <user-avatar :user="member"></user-avatar>
-        </li>
-      </ul>
-    </div>
+          <div v-if="membersToShow.length">
+            <ul class="flex data-layout">
+              <li v-for="member in membersToShow" :key="member._id">
+                <user-avatar :user="member"></user-avatar>
+              </li>
+            </ul>
+          </div>
         <task-details-labels v-if="task.labels" :labels="task.labels" />
         <div>
-          <h3>Description</h3>
+          <h3><font-awesome-icon class="task-preview-data-item-icon" :icon="['fas', 'align-left']" /> Description</h3>
           <textarea
             placeholder="Describe here..."
             class="description-textarea data-layout"
@@ -44,10 +42,10 @@
             rows="6"
           ></textarea>
         </div>
-        <div v-if="task.dueDate">
+        <!-- <div v-if="task.dueDate">
           <h3>Due Date</h3>
           <p>{{ task.dueDate }}</p>
-        </div>
+        </div> -->
 
         <taskDetailsAttachments
           :attachments="task.attachments"
@@ -63,12 +61,17 @@
           @toggleCheck="toggleCheck"
           @removeCheckList="removeCheckList"
         />
+        <div class="show-controller">
+          <button :class="activeCommetns" @click="showComments">Comments</button>
+          <button :class="activeActivities" @click="showActivities">Activities</button>
+        </div>
         <taskDetailsComments
+          v-if="isComments"
           :comments="task.comments"
           @addComment="addComment"
         />
-        <div class="activity-task-container flex-column">
-          <h3>Activity</h3>
+        <div v-if="isActivities" class="activity-task-container flex-column">
+          <h3><font-awesome-icon :icon="['fas', 'history']" /> Activity</h3>
           <ul class="activity-task">
             <board-activity
               v-for="(activity, idx) in taskActivities"
@@ -158,9 +161,19 @@ export default {
       taskToEdit: null,
       isPopup: false,
       cmpType: "",
+      isComments: true,
+      isActivities: false
     };
   },
   methods: {
+    showComments(){
+      this.isComments = true
+      this.isActivities = false
+    },
+    showActivities(){
+      this.isComments = false
+      this.isActivities = true
+    },
     copyTask(task) {
       this.$emit("addTask", task);
     },
@@ -299,6 +312,12 @@ export default {
       });
       return toShow;
     },
+    activeCommetns(){
+      return { active: this.isComments }
+    },
+    activeActivities(){
+      return { active: this.isActivities }
+    }
   },
   components: {
     checkList,

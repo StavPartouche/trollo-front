@@ -1,18 +1,20 @@
 <template>
 	<div class="task-details-checklist">
-      <h4>{{ checkList.title }}</h4>
-      <button @click="removeCheckList">DeleteCheckList</button>
+        <div class="checklist-header">
+            <h4>{{ checkList.title }}</h4>
+            <button class="remove-list-btn" @click="removeCheckList"><font-awesome-icon :icon="['fas', 'trash-alt']" /></button>
+        </div>
       <el-progress :text-inside="true" :stroke-width="17" :percentage="donePercent" :color="doneColor"></el-progress>
-      <ul>
-        <li v-for="(item, itemIdx) in checkList.items" :key="itemIdx">
+      <ul class="item-container">
+        <li class="item" v-for="(item, itemIdx) in checkList.items" :key="itemIdx">
             <label>
                 <input class="checkbox" type="checkbox" @change="toggleCheck(checkListIdx, itemIdx)" :checked="item.isDone">
                 <span :class="{'line-through': item.isDone}">{{ item.txt }}</span>
             </label>
-          <button @click="removeItem(checkListIdx, itemIdx)">X</button>
+            <button @click="removeItem(checkListIdx, itemIdx)">X</button>
         </li>
       </ul>
-      <button v-if="!isAddInput" @click="toggleAdd">Add item to list</button>
+      <button class="add-item-btn green-btn" v-if="!isAddInput" @click="toggleAdd">Add item</button>
       <add-item-input v-else @add="addItem(checkListIdx, $event)" />
     </div>
 </template>
