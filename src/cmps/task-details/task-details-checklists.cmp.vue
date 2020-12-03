@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h3 v-if="checkLists.length">CheckLists</h3>
+    <h3 v-if="checkLists.length"><font-awesome-icon :icon="['fas', 'tasks']" /> CheckLists</h3>
     <ul class="data-layout">
       <li v-for="(checkList, checkListIdx) in checkLists" :key="checkListIdx">
         <checkList :checkList="checkList" :checkListIdx="checkListIdx" 

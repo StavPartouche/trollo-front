@@ -1,6 +1,5 @@
 <template>
-  <div>
-    <h3 v-if="labels.length">Labels</h3>
+  <div  v-if="labels.length">
     <ul class="flex data-layout">
       <li v-for="(label, idx) in labels" :key="idx">
         <div class="task-preview-label" :style='{backgroundColor: label.backgroundColor}'></div>
