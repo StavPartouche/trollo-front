@@ -36,7 +36,7 @@
             <chart-one :board="board"/>
         </div>
         <div class="chart">
-            <chart-two :board="board"/>
+            <chart-two :board="board" :members="members"/>
         </div>
         <div class="chart">
             <chart-three />

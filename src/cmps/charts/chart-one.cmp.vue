@@ -8,14 +8,13 @@ export default {
   },
   extends: Bar,
   mounted() {
-    // Overwriting base render method with actual data.
     this.renderChart({
       labels: this.listsName,
       datasets: [
         {
-          label: "Tasks pre list",
+          label: "Tasks per list",
           backgroundColor: "#f87979",
-          data: this.TasksPreLists,
+          data: this.TasksPerLists,
         },
       ],
     });
@@ -28,7 +27,7 @@ export default {
       });
       return names
     },
-    TasksPreLists(){
+    TasksPerLists(){
       var tasks = []
       this.board.lists.forEach(list => {
         tasks.push(list.tasks.length)

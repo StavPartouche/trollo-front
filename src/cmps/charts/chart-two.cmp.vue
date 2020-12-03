@@ -1,28 +1,34 @@
 <script>
 import { Doughnut } from "vue-chartjs";
 
+
 export default {
   name: "chart-two",
   props: {
+    members: Array,
     board: Object,
   },
   extends: Doughnut,
   mounted() {
     // Overwriting base render method with actual data.
     this.renderChart({
-      labels: this.members,
+      labels: this.memberNames,
       datasets: [
         {
-          label: "Tasks pre member",
+          label: "Tasks per member",
           backgroundColor: "#f87979",
-          data: [1, 1, 1, 1, 1, 1],
+          data: [1,1,1,1],
         },
       ],
     });
   },
   computed: {
-    members() {
-      return this.board.members;
+    memberNames() {
+      const names = []
+      this.members.forEach(member =>{
+        names.push(member.fullName)
+      })
+      return names
     },
   },
   created() {
