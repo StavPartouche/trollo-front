@@ -1,23 +1,31 @@
 .board-nav {
-    font-size: rem(13px);
+    // font-size: rem(13px);
     position: relative;
     padding: 10px 23px;
     height: $board-nav-height;
     width: 100%;
-    background-color: rgba(255, 255, 255, 0.548);
+    // background-color: rgba(255, 255, 255, 0.548);
     color: #292929d9;
+    .board-nav-btn {
+        height: 30px;
+        border-radius: 3px;
+        background-color: rgba(255, 255, 255, 0.548)
+    }
     h2 {
         margin-bottom: 0;
     }
     .open-menu-btn {
         z-index: 2;
-        font-size: rem(23px);
+        // font-size: rem(23px);
         cursor: pointer;
+        border: none;
     }
     .board-name {
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
+        color: #fffffff7;
+        margin-right: 5px;
         // margin-bottom: 5px
     }
     .board-setting-container {
@@ -25,7 +33,7 @@
     }
     button {
         background-color: transparent;
-        font-size: 1.3rem;
+        // font-size: 1.3rem;
         margin: 2.5px;
         color: #292929d9;
     }

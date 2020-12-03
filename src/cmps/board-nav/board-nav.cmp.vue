@@ -1,20 +1,28 @@
 <template>
   <div class="board-nav flex justify-space-between align-center">
     <div v-if="isMenu" @click="closeMenu" class="disable-page-container"></div>
+    <div class="flex center">
+
     <h2
-      class="board-nav-btn board-name"
+      class=" board-name"
       contenteditable
       @blur="updateBoardName"
       v-text="nameToEdit"
     >
       {{ nameToEdit }}
     </h2>
-    <div class="board-nav-btn flex center">
-      <!-- <board-member
+    <input class="board-nav-btn" type="text" name="" id="" placeholder="Search">
+    <button class="board-nav-btn">Filter by Member</button>
+    </div>
+      <div class="flex center">
+      <board-member
         @removeBoardMember="removeBoardMember"
         @addBoardMember="addBoardMember"
         :boardMembers="members"
-      /> -->
+      />
+<!-- <button class="board-nav-btn">Team</button> -->
+<button class="board-nav-btn">Background</button>
+    <div class="board-nav-btn flex center">
       <button v-if="isMenu" @click="closeMenu" class="open-menu-btn">
         <font-awesome-icon :icon="['fas', 'times']" />
       </button>
@@ -23,6 +31,7 @@
         Show Menu
       </button>
     </div>
+      </div>
   </div>
 </template>
 
