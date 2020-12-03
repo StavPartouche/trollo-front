@@ -29,6 +29,7 @@
 			<Container
 				orientation="horizontal"
 				drag-handle-selector=".list"
+        :get-child-payload="getChildPayload"
 				@drop="onListDrag"
 				group-name="lists"
 			>
@@ -112,7 +113,7 @@ export default {
 			currTask: null,
 			currListIdx: null,
 			currTaskIdx: null,
-			menu: null,
+      menu: null,
 			isNewList: false,
 			isSocketEv: false,
 			boardEditEvs: ['boardName', 'removeBoardMember', 'addBoardMember', 'boardDesc', 'boardStyle', 'dragInBoard', 'removeList', 'addList',
@@ -566,11 +567,14 @@ export default {
 		async getMember(memberId) {
 			const member = await userService.getById(memberId);
 			return member;
-		},
+    },
+    getChildPayload(listIdx) {
+			return this.board.lists[listIdx];
+    },
 		onListDrag(dropResult) {
 			const board = Object.assign({}, this.board);
 			board.lists = utilService.applyDrag(board.lists, dropResult);
-			this.board = board;
+      this.board = board;
 			socket.emit('dragInBoard', this.board.lists);
 		},
 		onTaskDrag({ listId, dropResult }) {
