@@ -59,7 +59,7 @@
       <button @click="openDashboard" class="board-nav-btn"><font-awesome-icon :icon="['fas', 'chart-bar']" /></button>
       <div class="board-nav-btn flex center">
         <!-- <button v-if="isMenu" @click="closeMenu" class="open-menu-btn"> -->
-        <button v-if="menu" @click="closeMenu" class="open-menu-btn">
+        <button v-if="menu" @click="closeMenu" class="open-menu-btn times">
           <font-awesome-icon :icon="['fas', 'times']" />
         </button>
         <!-- <button class="open-menu-btn" v-if="!isMenu" @click="openMenu"> -->

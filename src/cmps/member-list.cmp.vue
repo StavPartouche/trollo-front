@@ -5,7 +5,7 @@
       <ul>
         <li
           @click="removeMember(member._id)"
-          v-for="(member) in allMembersToShow"
+          v-for="(member) in selectedMembersToShow"
           :key="member._id"
           class="flex justify-space-between align-center"
         >
@@ -19,7 +19,7 @@
       <ul>
         <li
           @click="addMember(member._id)"
-          v-for="member in selectedMembersToShow"
+          v-for="member in allMembersToShow"
           :key="member._id"
           class="flex align-center member-list-name"
         >
@@ -54,6 +54,7 @@ export default {
       this.$emit("addMember", memberId);
     },
     removeMember(memberId) {
+      console.log('remove');
       this.$emit("removeMember", memberId);
     },
   },

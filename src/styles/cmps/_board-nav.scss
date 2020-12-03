@@ -55,14 +55,26 @@
         cursor: pointer;
         border: none;
         padding: 0;
+        &.times svg {
+            font-size: 15px;
+        }
     }
     .board-name {
+        font-family: sans-serif;
+        outline: none;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
-        color: #fffffff7;
+        // color: #fffffff7;
+        color: #fffffffa;
         margin-right: 5px;
+        margin-bottom: 4px;
+        text-shadow: 1px 1px 1px #0000008f;
         // margin-bottom: 5px
+        &:focus {
+            border-radius: 0;
+            border-bottom: gray 1px solid;
+        }
     }
     .board-setting-container {
         position: relative;

@@ -45,11 +45,12 @@ export default {
   },
   methods: {  
     closePopup() {
+      console.log('closepopup bgc');
       this.$emit("closePopup");
     },
     setTaskColor(ev){
         this.$emit('setTaskColor', event.target.style.backgroundColor)
-        closePopup()
+        this.closePopup()
     }
   },
 };

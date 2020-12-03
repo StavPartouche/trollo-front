@@ -10,13 +10,14 @@
     height: fit-content;
     max-height: 255px;
     background-color: #f4f5f7;
-    border-radius: 10px;
+    border-radius: 6px;
     padding: 14px;
     .task-popup-header {
         // padding: 15px 0 0 0;
         font-size: rem(24px);
     }
     .labels-container {
+        padding-right: 5px;
         overflow-y: auto;
         margin-top: 7px;
         margin-bottom: 11px;
@@ -51,8 +52,8 @@
     }
     .exit-popup-btn {
         position: absolute;
-        top: 0;
-        right: 2px;
+        top: 1px;
+        right: 4px;
         background-color: transparent;
         color: rgb(37, 37, 37);
     }
@@ -106,6 +107,9 @@
                 font-weight: normal;
                 font-size: rem(14px);
             }
+        }
+        .due-date {
+            background-color: transparent;
         }
     }
 }
