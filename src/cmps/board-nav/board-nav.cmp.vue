@@ -18,7 +18,35 @@
         id=""
         placeholder="Search"
       />
-      <button class="board-nav-btn">Filter by Member</button>
+      <button class="board-nav-btn" @click="toggleFilter">
+				Filter by Member
+			</button>
+			<div v-if="isFilterOpts"
+				@click="toggleFilter"
+				class="disable-page-container"
+			></div>
+			<div class="lists-filter" v-if="isFilterOpts">
+				<p v-if="!members">No users to show</p>
+				<input
+					v-else
+					type="text"
+					placeholder="Search member"
+					v-model="filterBy"
+				/>
+				<ul>
+          <li class="userToShow flex align-center" @click="emitFilter('')">
+            <p>All Members</p>
+          </li>
+					<li
+						class="userToShow flex align-center"
+						v-for="member in membersToShow"
+						:key="member._id"
+            @click="emitFilter(member._id)"
+					>
+						<p>{{ member.userName }}</p>
+					</li>
+				</ul>
+			</div>
     </div>
     <div class="flex center">
       <board-member
@@ -65,10 +93,16 @@ export default {
       menu: null,
       isBacground: false,
       nameToEdit: null,
-      isDashboeard: false
+      isDashboeard: false,
+      filterBy: '',
+			isFilterOpts: false,
     };
   },
-  computed: {},
+  computed: {
+    membersToShow() {
+      return this.members.filter(member => member.fullName.includes(this.filterBy));
+    }
+  },
   methods: {
     closeDashbord(){
       this.isDashboeard = false
@@ -105,7 +139,14 @@ export default {
       this.$emit("updateBoardName", this.nameToEdit);
     },
     onKeyUp(ev) {
-      if (ev.keyCode === 27 && this.isMenu) this.closeMenu();
+			if (ev.keyCode === 27 && this.menu) this.closeMenu();
+		},
+		toggleFilter() {
+			this.isFilterOpts = !this.isFilterOpts;
+    },
+    emitFilter(memberId) {
+      this.$emit('filter', memberId)
+      this.isFilterOpts = false;
     },
   },
   watch: {
