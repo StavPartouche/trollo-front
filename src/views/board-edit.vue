@@ -159,7 +159,6 @@ export default {
 			else this.addBoardMember(memberId);
 			const ev = type + 'BoardMember';
 			socket.emit(ev, memberId);
-			socket.emit('log', activity);
 		},
 
 		// BOARD-MENU
