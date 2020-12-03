@@ -1,18 +1,23 @@
 <template>
-  <div class="board-member">
+  <div class="board-member flex center">
     <div
     v-if="showInvite"
       @click="closeShowInvite"
       class="disable-page-container"
     ></div>
-    <ul class="flex center">
-      <board-member-card
+    <!-- <ul class="flex center"> -->
+          <user-avatar         v-for="member in boardMembers"
+        :key="member._id"
+        @removeBoardMember="removeBoardMember"
+        :user="member"></user-avatar>
+
+      <!-- <board-member-card
         v-for="member in boardMembers"
         :key="member._id"
         @removeBoardMember="removeBoardMember"
         :member="member"
-      ></board-member-card>
-      <li>
+      ></board-member-card> -->
+      <!-- <li> -->
         <button
           class="btn-add-board-user flex center"
           v-if="allMembers"
@@ -21,8 +26,8 @@
         <p>+</p>
           <!-- <font-awesome-icon :icon="['fas', 'plus']" /> -->
         </button>
-      </li>
-    </ul>
+      <!-- </li> -->
+    <!-- </ul> -->
     <div class="invite" v-if="showInvite">
       <p v-if="!membersToInvite">No users to show</p>
       <!-- <input
@@ -31,7 +36,7 @@
         placeholder="Search member"
         v-model="filterBy"
       /> -->
-      <member-list class="board-user-list" :selectedMembers="boardMembers"
+      <member-list :selectedMembers="boardMembers"
     :allMembers="membersToInvite" @addMember="addBoardBMember" @removeMember="removeBoardMember"></member-list>
       <!-- <ul>
         <li
@@ -50,7 +55,7 @@
 
 <script>
 import boardMemberCard from "./board-member-card.cmp";
-// import userAvatar from "../user-avatar.cmp";
+import userAvatar from "../user-avatar.cmp";
 import memberList from "../member-list.cmp";
 
 export default {
@@ -110,7 +115,7 @@ export default {
   },
   components: {
     boardMemberCard,
-    // userAvatar,
+    userAvatar,
     memberList
   },
 };
