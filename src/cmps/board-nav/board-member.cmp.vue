@@ -5,15 +5,12 @@
       :class="{ 'disable-page-container': showInvite }"
     ></div>
     <ul class="flex center">
-      <slot name="board-member-card">
-        
-      </slot>
-      <!-- <board-member-card
+      <board-member-card
         v-for="member in boardMembers"
         :key="member._id"
         @removeBoardMember="removeBoardMember"
         :member="member"
-      ></board-member-card> -->
+      ></board-member-card>
       <li>
         <button
           class="btn-add-board-user flex center"
@@ -49,7 +46,7 @@
 </template>
 
 <script>
-// import boardMemberCard from "./board-member-card.cmp";
+import boardMemberCard from "./board-member-card.cmp";
 import userAvatar from "../user-avatar.cmp";
 
 export default {
@@ -69,12 +66,12 @@ export default {
     addBoardBMember(memberId) {
       this.$emit("addBoardMember", memberId);
     },
-    // removeBoardMember(memberId) {
-    //   this.$emit("removeBoardMember", memberId);
-    // },
-    // openUser() {
-    //     this.showUser= !this.showUser
-    // },
+    removeBoardMember(memberId) {
+      this.$emit("removeBoardMember", memberId);
+    },
+    openUser() {
+        this.showUser= !this.showUser
+    },
     openShowInvite() {
       this.showInvite = true;
     },
@@ -108,7 +105,7 @@ export default {
     document.body.removeEventListener("keyup", this.onKeyUp);
   },
   components: {
-    // boardMemberCard,
+    boardMemberCard,
     userAvatar,
   },
 };

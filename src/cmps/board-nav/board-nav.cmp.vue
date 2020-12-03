@@ -22,26 +22,13 @@
 				placeholder="Search"
 			/>
 			<button class="board-nav-btn">Filter by Member</button>
-			<board-member
-				@removeBoardMember="removeBoardMember"
-				@addBoardMember="addBoardMember"
-				:boardMembers="members"
-			/>
 		</div>
 		<div class="flex center">
 			<board-member
 				@removeBoardMember="removeBoardMember"
 				@addBoardMember="addBoardMember"
 				:boardMembers="members"
-			>
-				<board-member-card
-					slot="board-member-card"
-					v-for="member in members"
-					:key="member._id"
-					@removeBoardMember="removeBoardMember"
-					:member="member"
-				></board-member-card>
-			</board-member>
+			></board-member>
 			<!-- <button class="board-nav-btn">Team</button> -->
 			<button class="board-nav-btn">Background</button>
 			<div class="board-nav-btn flex center">
