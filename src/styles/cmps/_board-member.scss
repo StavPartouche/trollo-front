@@ -1,6 +1,11 @@
 .board-member {
+    margin-right: 6px;
     position: relative;
+    &>* {
+        margin-right: -10px;
+    }
     .invite {
+        // margin-right: 6px;
         position: absolute;
         top: 40px;
         right: 10px;
@@ -9,33 +14,34 @@
         // box-shadow: 0px 1px 1px 0px #8d8d8d;
         border-radius: 5px;
         z-index: 1;
-        input {
-            border-bottom: gray solid 0.5px;
-        }
+        height: 280px;
+        // input {
+        //     border-bottom: gray solid 0.5px;
+        // }
     }
-    .userToShow {
-        padding: 2px;
-        cursor: pointer;
-        &.user-card-container {
-            margin-right: -12px;
-        }
-        p {
-            margin: 0 7px 2px;
-        }
-    }
+    // .userToShow {
+    //     padding: 2px;
+    //     cursor: pointer;
+    //     &.user-card-container {
+    //         margin-right: -12px;
+    //     }
+    //     p {
+    //         margin: 0 7px 2px;
+    //     }
+    // }
     .btn-add-board-user {
-        p {
-            font-size: rem(25px);
-            font-weight: bolder;
-        }
+        // p {
+        //     font-size: rem(25px);
+        //     font-weight: bolder;
+        // }
         // margin-right: 14px;
         padding-bottom: 2px;
         padding-top: 4px;
-        height: 30px;
-        width: 30px;
+        height: 28px;
+        width: 28px;
         // background-color: rgb(236, 236, 236);
         background-color: #ffffffdb;
-        z-index: 0.1; // padding-bottom: 32px;
+        // z-index: 0.1; // padding-bottom: 32px;
         font-size: rem(18px);
         color: #292929d9;
         border-radius: 50%;
@@ -59,7 +65,4 @@
     //         }
     //     }
     // }
-    .board-user-list {
-        height: 300px;
-    }
 }

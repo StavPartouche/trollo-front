@@ -41,7 +41,7 @@ export default {
     allMembers: Array,
         width: {
         type: Number,
-        default: 250
+        default: 230
   },
   },
   data() {

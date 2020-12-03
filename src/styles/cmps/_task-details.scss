@@ -78,28 +78,28 @@
             .data-layout {
                 margin-bottom: 10px;
             }
-            .date-container{
+            .date-container {
                 background-color: #e06060;
                 width: fit-content;
                 border-radius: 3px;
                 color: white;
                 margin-bottom: 7px;
                 padding: 3px;
-                p{
+                p {
                     margin: 0;
                 }
             }
-            .show-controller{
+            .show-controller {
                 display: flex;
                 align-items: center;
                 margin-bottom: 20px;
                 margin-top: 16px;
-                .active{
+                .active {
                     background-color: #505e78;
                     color: #f4f5f7;
                 }
-                button{
-                    padding: 10px;
+                button {
+                    padding: 7px;
                     margin-right: 10px;
                     background-color: #dddddd;
                     color: #5c5c5c;
@@ -115,69 +115,67 @@
                     background-color: #fdfdfd;
                 }
             }
-            .task-details-checklist{
+            .task-details-checklist {
                 margin-left: 10px;
                 margin-right: 10px;
-                .checklist-header{
+                .checklist-header {
                     display: flex;
                     align-items: center;
                     justify-content: space-between;
-                    .remove-list-btn{
+                    .remove-list-btn {
                         margin-bottom: 10px;
                         background-color: transparent;
                         opacity: 0;
                     }
                 }
-                .add-item-btn{
+                .add-item-btn {
                     margin-top: 10px;
                 }
-                .item-container{
+                .item-container {
                     margin-top: 5px;
-
-                    .item{
+                    .item {
                         display: flex;
                         justify-content: space-between;
                         font-size: rem(14px);
                     }
                 }
-                &:hover{
-                    .remove-list-btn{
+                &:hover {
+                    .remove-list-btn {
                         opacity: 0.5;
                     }
                 }
             }
-            .attachments-header{
+            .attachments-header {
                 // display: flex;
                 // align-items: center;
-                button{
+                button {
                     margin-bottom: 10px;
                     background-color: transparent;
                     font-size: 12px;
-                    &:hover{
+                    &:hover {
                         text-decoration: underline;
                     }
                 }
             }
-            .img-container{
+            .img-container {
                 transition: 5s;
                 .img-attachments {
                     width: 200px;
                     max-height: 150px;
                     margin: 5px;
                 }
-                .img-btns{
+                .img-btns {
                     display: flex;
                     align-items: center;
                     justify-content: space-evenly;
-                    button{
+                    button {
                         color: #5c5c5c;
                         background-color: #dddddd;
                         opacity: 0;
                     }
                 }
-                &:hover{
-                    button{
-                        
+                &:hover {
+                    button {
                         opacity: 1;
                     }
                 }
