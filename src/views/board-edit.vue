@@ -9,7 +9,7 @@
 			v-if="board"
 			:name="board.name"
 			:members="members"
-      :board="board"
+			:board="board"
 		></board-nav>
 		<board-menu
 			v-if="menu"
@@ -27,14 +27,11 @@
 		<ul class="lists" v-if="board">
 			<Container
 				orientation="horizontal"
-        drag-handle-selector=".list"
+				drag-handle-selector=".list"
 				@drop="onListDrag"
 				group-name="lists"
 			>
-				<Draggable
-					v-for="(list, listIdx) in lists"
-					:key="list.id"
-				>
+				<Draggable v-for="(list, listIdx) in lists" :key="list.id">
 					<list
 						:list="list"
 						:listIdx="listIdx"
@@ -108,8 +105,8 @@ export default {
 	data() {
 		return {
 			board: null,
-      members: [],
-      filterByMemberId: '',
+			members: [],
+			filterByMemberId: '',
 			currTask: null,
 			currListIdx: null,
 			currTaskIdx: null,
@@ -166,54 +163,54 @@ export default {
 			socket.emit(ev, memberId);
 		},
 
-    // BOARD-MENU
-    async removeBoard() {
-      const boardId = this.board._id;
-      await this.$store.dispatch({
-        type: "removeBoard",
-        boardId,
-      });
-      socket.emit("removeBoard");
-      this.$router.push("/board");
-    },
-    updateBoardDesc(desc) {
-      this.board.description = desc;
-      console.log(this.board.description);
-      const activity = boardService.newActivity(
-        `updated board description`,
-        this.userId
-      );
-      console.log("updat board desc");
-      this.board.activities.unshift(activity);
-      socket.emit("boardDesc", desc);
-      socket.emit("log", activity);
-    },
-    updateBoardDueDate(dueDate) {
-      this.board.dueDate = dueDate;
-      const activity = boardService.newActivity(
-        `updated board due date to ${dueDate}`,
-        this.userId
-      );
-      this.board.activities.unshift(activity);
-      socket.emit("log", activity);
-    },
-    saveBoardBgc(bgc) {
-      if (bgc.type === "img") {
-        this.board.style.url = bgc.img;
-      } else {
-        this.board.style.url = "color";
-        this.board.style.backgroundColor = bgc.color;
-      }
-      console.log("saveBoardBgc");
-      eventBusService.$emit("boardBgc", this.board.style);
-      const activity = boardService.newActivity(
-        `updated board background`,
-        this.userId
-      );
-      this.board.activities.unshift(activity);
-      socket.emit("boardStyle", this.board.style);
-      socket.emit("log", activity);
-    },
+		// BOARD-MENU
+		async removeBoard() {
+			const boardId = this.board._id;
+			await this.$store.dispatch({
+				type: "removeBoard",
+				boardId,
+			});
+			socket.emit("removeBoard");
+			this.$router.push("/board");
+		},
+		updateBoardDesc(desc) {
+			this.board.description = desc;
+			console.log(this.board.description);
+			const activity = boardService.newActivity(
+				`updated board description`,
+				this.userId
+			);
+			console.log("updat board desc");
+			this.board.activities.unshift(activity);
+			socket.emit("boardDesc", desc);
+			socket.emit("log", activity);
+		},
+		updateBoardDueDate(dueDate) {
+			this.board.dueDate = dueDate;
+			const activity = boardService.newActivity(
+				`updated board due date to ${dueDate}`,
+				this.userId
+			);
+			this.board.activities.unshift(activity);
+			socket.emit("log", activity);
+		},
+		saveBoardBgc(bgc) {
+			if (bgc.type === "img") {
+				this.board.style.url = bgc.img;
+			} else {
+				this.board.style.url = "color";
+				this.board.style.backgroundColor = bgc.color;
+			}
+			console.log("saveBoardBgc");
+			eventBusService.$emit("boardBgc", this.board.style);
+			const activity = boardService.newActivity(
+				`updated board background`,
+				this.userId
+			);
+			this.board.activities.unshift(activity);
+			socket.emit("boardStyle", this.board.style);
+			socket.emit("log", activity);
+		},
 
 		// LIST
 		removeList(listIdx) {
@@ -227,7 +224,7 @@ export default {
 			socket.emit('log', activity);
 		},
 		openTask(idxs) {
-      this.currListIdx = this.board.lists.findIndex(list => list.id === idxs.listId);
+			this.currListIdx = this.board.lists.findIndex(list => list.id === idxs.listId);
 			this.currTaskIdx = this.board.lists[this.currListIdx].tasks.findIndex(task => task.id === idxs.taskId);
 			this.currTask = this.board.lists[this.currListIdx].tasks[this.currTaskIdx];
 		},
@@ -282,268 +279,267 @@ export default {
 			socket.emit('log', activity);
 		},
 
-    // TASK-DETAILS
-    closeDetails() {
-      this.currTask = null;
-    },
-    toggleCheck(idxs) {
-      const currItem = this.currTask.checkLists[idxs.checkListIdx].items[
-        idxs.itemIdx
-      ];
-      currItem.isDone = !currItem.isDone;
-      socket.emit("checkListItem", {
-        listIdx: this.currListIdx,
-        taskIdx: this.currTaskIdx,
-        checkListIdx: idxs.checkListIdx,
-        itemIdx: idxs.itemIdx,
-        item: currItem,
-      });
-    },
-    addItem(item) {
-      const currCheckListItems = this.currTask.checkLists[item.checkListIdx]
-        .items;
-      const newItem = {
-        txt: item.txt,
-        isDone: item.isDone,
-      };
-      currCheckListItems.push(newItem);
-      socket.emit("checkListItem", {
-        listIdx: this.currListIdx,
-        taskIdx: this.currTaskIdx,
-        checkListIdx: item.checkListIdx,
-        item: newItem,
-      });
-    },
-    removeItem(idxs) {
-      this.currTask.checkLists[idxs.checkListIdx].items.splice(idxs.itemIdx, 1);
-      socket.emit("checkListItem", {
-        listIdx: this.currListIdx,
-        taskIdx: this.currTaskIdx,
-        checkListIdx: idxs.checkListIdx,
-        itemIdx: idxs.itemIdx,
-      });
-    },
-    addCheckList(checkListData) {
-      const currCheckLists = this.currTask.checkLists;
-      const newCheckList = {
-        title: checkListData.title,
-        items: checkListData.items,
-      };
-      currCheckLists.push(newCheckList);
-      const activity = boardService.newActivity(
-        `added checklist "${checkListData.title}" to ${this.currTask.name}`,
-        this.userId,
-        this.currTask.id
-      );
-      this.board.activities.unshift(activity);
-      socket.emit("checkList", {
-        listIdx: this.currListIdx,
-        taskIdx: this.currTaskIdx,
-        checkList: newCheckList,
-      });
-      socket.emit("log", activity);
-    },
-    removeCheckList(idx) {
-      const activity = boardService.newActivity(
-        `removed checklist "${this.currTask.checkLists[idx].title}" from ${this.currTask.name}`,
-        this.userId,
-        this.currTask.id
-      );
-      this.board.activities.unshift(activity);
-      this.currTask.checkLists.splice(idx, 1);
-      socket.emit("checkList", {
-        listIdx: this.currListIdx,
-        taskIdx: this.currTaskIdx,
-        checkListIdx: idx,
-      });
-      socket.emit("log", activity);
-    },
-    async addMemberToTask(memberId) {
-      const fullMember = await this.getMember(memberId);
-      const activity = boardService.newActivity(
-        `added ${fullMember.fullName} to ${this.currTask.name}`,
-        this.userId,
-        this.currTask.id
-      );
-      this.board.activities.unshift(activity);
-      this.currTask.members.push(memberId);
-      socket.emit("taskMember", {
-        listIdx: this.currListIdx,
-        taskIdx: this.currTaskIdx,
-        memberId,
-      });
-      socket.emit("log", activity);
-    },
-    async removeMemberfromTask(memberId) {
-      const memberIdx = this.currTask.members.findIndex(
-        (currMemberId) => currMemberId === memberId
-      );
-      const fullMember = await this.getMember(this.currTask.members[memberIdx]);
-      const activity = boardService.newActivity(
-        `removed ${fullMember.fullName} from ${this.currTask.name}`,
-        this.userId,
-        this.currTask.id
-      );
-      this.board.activities.unshift(activity);
-      this.currTask.members.splice(memberIdx, 1);
-      socket.emit("taskMember", {
-        listIdx: this.currListIdx,
-        taskIdx: this.currTaskIdx,
-        memberIdx,
-      });
-      socket.emit("log", activity);
-    },
-    updateDueDate(newDate) {
-      this.currTask.dueDate = newDate;
-      const activity = boardService.newActivity(
-        `updated due date in ${this.currTask.name} to ${newDate}`,
-        this.userId,
-        this.currTask.id
-      );
-      this.board.activities.unshift(activity);
-      socket.emit("taskDueDate", {
-        listIdx: this.currListIdx,
-        taskIdx: this.currTaskIdx,
-        dueDate: newDate,
-      });
-      socket.emit("log", activity);
-    },
-    updateTaskName(newName) {
-      this.currTask.name = newName;
-      const activity = boardService.newActivity(
-        `updated task name to ${newName}`,
-        this.userId,
-        this.currTask.id
-      );
-      this.board.activities.unshift(activity);
-      socket.emit("taskName", {
-        listIdx: this.currListIdx,
-        taskIdx: this.currTaskIdx,
-        name: newName,
-      });
-      socket.emit("log", activity);
-    },
-    updateTaskDesc(newDesc) {
-      this.currTask.description = newDesc;
-      const activity = boardService.newActivity(
-        `updated ${this.currTask.name}s description`,
-        this.userId,
-        this.currTask.id
-      );
-      this.board.activities.unshift(activity);
-      socket.emit("taskDesc", {
-        listIdx: this.currListIdx,
-        taskIdx: this.currTaskIdx,
-        desc: newDesc,
-      });
-      socket.emit("log", activity);
-    },
-    UploadImg(imgUrl) {
-      this.currTask.attachments.push(imgUrl);
-      const activity = boardService.newActivity(
-        `added an attachment to ${this.currTask.name}`,
-        this.userId,
-        this.currTask.id
-      );
-      this.board.activities.unshift(activity);
-      socket.emit("uploadImg", {
-        listIdx: this.currListIdx,
-        taskIdx: this.currTaskIdx,
-        imgUrl,
-      });
-      socket.emit("log", activity);
-    },
-    removeAttachment(idx) {
-      this.currTask.attachments.splice(idx, 1);
-      const activity = boardService.newActivity(
-        `removed an attachment from ${this.currTask.name}`,
-        this.userId,
-        this.currTask.id
-      );
-      this.board.activities.unshift(activity);
-      socket.emit("attachment", {
-        listIdx: this.currListIdx,
-        taskIdx: this.currTaskIdx,
-        attachmentIdx: idx,
-      });
-      socket.emit("log", activity);
-    },
-    setPreviewImg(idx) {
-      this.currTask.previewImg = this.currTask.attachments[idx];
-      socket.emit("previewImg", {
-        listIdx: this.currListIdx,
-        taskIdx: this.currTaskIdx,
-        previewImg: this.currTask.attachments[idx],
-      });
-    },
-    removePreviewImg() {
-      this.currTask.previewImg = "";
-      socket.emit("previewImg", {
-        listIdx: this.currListIdx,
-        taskIdx: this.currTaskIdx,
-        previewImg: "",
-      });
-    },
-    addComment(commentTxt) {
-      var comment = {
-        txt: commentTxt,
-        createdAt: Date.now(),
-        creator: this.$store.getters.loggedInUser
-          ? this.$store.getters.loggedInUser
-          : { fullName: "Guest" },
-      };
-      this.currTask.comments.push(comment);
-      socket.emit("comment", {
-        listIdx: this.currListIdx,
-        taskIdx: this.currTaskIdx,
-        comment,
-      });
-    },
-    toggleLabel(label) {
-      const idx = this.currTask.labels.findIndex(
-        (currLabel) => currLabel.backgroundColor === label.backgroundColor
-      );
-      if (idx === -1) this.currTask.labels.push(label);
-      else this.currTask.labels.splice(idx, 1);
-      socket.emit("label", {
-        listIdx: this.currListIdx,
-        taskIdx: this.currTaskIdx,
-        labelIdx: idx,
-        label,
-      });
-    },
-    setTaskColor(bgc) {
-      this.currTask.backgroundColor = bgc;
-      const activity = boardService.newActivity(
-        `updated ${this.currTask.name} color`,
-        this.userId,
-        this.currTask.id
-      );
-      this.board.activities.unshift(activity);
-      socket.emit("taskColor", {
-        listIdx: this.currListIdx,
-        taskIdx: this.currTaskIdx,
-        bgc,
-      });
-      socket.emit("log", activity);
-    },
-    removeTask() {
-      const activity = boardService.newActivity(
-        `removed ${this.currTask.name} from ${
-          this.board.lists[this.currListIdx].name
-        }`,
-        this.userId,
-        this.currTask.id
-      );
-      this.board.activities.unshift(activity);
-      this.board.lists[this.currListIdx].tasks.splice(this.currTaskIdx, 1);
-      this.currTask = null;
-      socket.emit("removeTask", {
-        listIdx: this.currListIdx,
-        taskIdx: this.currTaskIdx,
-      });
-      socket.emit("log", activity);
-    },
+		// TASK-DETAILS
+		closeDetails() {
+			this.currTask = null;
+		},
+		toggleCheck(idxs) {
+			const currItem = this.currTask.checkLists[idxs.checkListIdx].items[
+				idxs.itemIdx
+			];
+			currItem.isDone = !currItem.isDone;
+			socket.emit("checkListItem", {
+				listIdx: this.currListIdx,
+				taskIdx: this.currTaskIdx,
+				checkListIdx: idxs.checkListIdx,
+				itemIdx: idxs.itemIdx,
+				item: currItem,
+			});
+		},
+		addItem(item) {
+			const currCheckListItems = this.currTask.checkLists[item.checkListIdx]
+				.items;
+			const newItem = {
+				txt: item.txt,
+				isDone: item.isDone,
+			};
+			currCheckListItems.push(newItem);
+			socket.emit("checkListItem", {
+				listIdx: this.currListIdx,
+				taskIdx: this.currTaskIdx,
+				checkListIdx: item.checkListIdx,
+				item: newItem,
+			});
+		},
+		removeItem(idxs) {
+			this.currTask.checkLists[idxs.checkListIdx].items.splice(idxs.itemIdx, 1);
+			socket.emit("checkListItem", {
+				listIdx: this.currListIdx,
+				taskIdx: this.currTaskIdx,
+				checkListIdx: idxs.checkListIdx,
+				itemIdx: idxs.itemIdx,
+			});
+		},
+		addCheckList(checkListData) {
+			const currCheckLists = this.currTask.checkLists;
+			const newCheckList = {
+				title: checkListData.title,
+				items: checkListData.items,
+			};
+			currCheckLists.push(newCheckList);
+			const activity = boardService.newActivity(
+				`added checklist "${checkListData.title}" to ${this.currTask.name}`,
+				this.userId,
+				this.currTask.id
+			);
+			this.board.activities.unshift(activity);
+			socket.emit("checkList", {
+				listIdx: this.currListIdx,
+				taskIdx: this.currTaskIdx,
+				checkList: newCheckList,
+			});
+			socket.emit("log", activity);
+		},
+		removeCheckList(idx) {
+			const activity = boardService.newActivity(
+				`removed checklist "${this.currTask.checkLists[idx].title}" from ${this.currTask.name}`,
+				this.userId,
+				this.currTask.id
+			);
+			this.board.activities.unshift(activity);
+			this.currTask.checkLists.splice(idx, 1);
+			socket.emit("checkList", {
+				listIdx: this.currListIdx,
+				taskIdx: this.currTaskIdx,
+				checkListIdx: idx,
+			});
+			socket.emit("log", activity);
+		},
+		async addMemberToTask(memberId) {
+			const fullMember = await this.getMember(memberId);
+			const activity = boardService.newActivity(
+				`added ${fullMember.fullName} to ${this.currTask.name}`,
+				this.userId,
+				this.currTask.id
+			);
+			this.board.activities.unshift(activity);
+			this.currTask.members.push(memberId);
+			socket.emit("taskMember", {
+				listIdx: this.currListIdx,
+				taskIdx: this.currTaskIdx,
+				memberId,
+			});
+			socket.emit("log", activity);
+		},
+		async removeMemberfromTask(memberId) {
+			const memberIdx = this.currTask.members.findIndex(
+				(currMemberId) => currMemberId === memberId
+			);
+			const fullMember = await this.getMember(this.currTask.members[memberIdx]);
+			const activity = boardService.newActivity(
+				`removed ${fullMember.fullName} from ${this.currTask.name}`,
+				this.userId,
+				this.currTask.id
+			);
+			this.board.activities.unshift(activity);
+			this.currTask.members.splice(memberIdx, 1);
+			socket.emit("taskMember", {
+				listIdx: this.currListIdx,
+				taskIdx: this.currTaskIdx,
+				memberIdx,
+			});
+			socket.emit("log", activity);
+		},
+		updateDueDate(newDate) {
+			this.currTask.dueDate = newDate;
+			const activity = boardService.newActivity(
+				`updated due date in ${this.currTask.name} to ${newDate}`,
+				this.userId,
+				this.currTask.id
+			);
+			this.board.activities.unshift(activity);
+			socket.emit("taskDueDate", {
+				listIdx: this.currListIdx,
+				taskIdx: this.currTaskIdx,
+				dueDate: newDate,
+			});
+			socket.emit("log", activity);
+		},
+		updateTaskName(newName) {
+			this.currTask.name = newName;
+			const activity = boardService.newActivity(
+				`updated task name to ${newName}`,
+				this.userId,
+				this.currTask.id
+			);
+			this.board.activities.unshift(activity);
+			socket.emit("taskName", {
+				listIdx: this.currListIdx,
+				taskIdx: this.currTaskIdx,
+				name: newName,
+			});
+			socket.emit("log", activity);
+		},
+		updateTaskDesc(newDesc) {
+			this.currTask.description = newDesc;
+			const activity = boardService.newActivity(
+				`updated ${this.currTask.name}s description`,
+				this.userId,
+				this.currTask.id
+			);
+			this.board.activities.unshift(activity);
+			socket.emit("taskDesc", {
+				listIdx: this.currListIdx,
+				taskIdx: this.currTaskIdx,
+				desc: newDesc,
+			});
+			socket.emit("log", activity);
+		},
+		UploadImg(imgUrl) {
+			this.currTask.attachments.push(imgUrl);
+			const activity = boardService.newActivity(
+				`added an attachment to ${this.currTask.name}`,
+				this.userId,
+				this.currTask.id
+			);
+			this.board.activities.unshift(activity);
+			socket.emit("uploadImg", {
+				listIdx: this.currListIdx,
+				taskIdx: this.currTaskIdx,
+				imgUrl,
+			});
+			socket.emit("log", activity);
+		},
+		removeAttachment(idx) {
+			this.currTask.attachments.splice(idx, 1);
+			const activity = boardService.newActivity(
+				`removed an attachment from ${this.currTask.name}`,
+				this.userId,
+				this.currTask.id
+			);
+			this.board.activities.unshift(activity);
+			socket.emit("attachment", {
+				listIdx: this.currListIdx,
+				taskIdx: this.currTaskIdx,
+				attachmentIdx: idx,
+			});
+			socket.emit("log", activity);
+		},
+		setPreviewImg(idx) {
+			this.currTask.previewImg = this.currTask.attachments[idx];
+			socket.emit("previewImg", {
+				listIdx: this.currListIdx,
+				taskIdx: this.currTaskIdx,
+				previewImg: this.currTask.attachments[idx],
+			});
+		},
+		removePreviewImg() {
+			this.currTask.previewImg = "";
+			socket.emit("previewImg", {
+				listIdx: this.currListIdx,
+				taskIdx: this.currTaskIdx,
+				previewImg: "",
+			});
+		},
+		addComment(commentTxt) {
+			var comment = {
+				txt: commentTxt,
+				createdAt: Date.now(),
+				creator: this.$store.getters.loggedInUser
+					? this.$store.getters.loggedInUser
+					: { fullName: "Guest" },
+			};
+			this.currTask.comments.push(comment);
+			socket.emit("comment", {
+				listIdx: this.currListIdx,
+				taskIdx: this.currTaskIdx,
+				comment,
+			});
+		},
+		toggleLabel(label) {
+			const idx = this.currTask.labels.findIndex(
+				(currLabel) => currLabel.backgroundColor === label.backgroundColor
+			);
+			if (idx === -1) this.currTask.labels.push(label);
+			else this.currTask.labels.splice(idx, 1);
+			socket.emit("label", {
+				listIdx: this.currListIdx,
+				taskIdx: this.currTaskIdx,
+				labelIdx: idx,
+				label,
+			});
+		},
+		setTaskColor(bgc) {
+			this.currTask.backgroundColor = bgc;
+			const activity = boardService.newActivity(
+				`updated ${this.currTask.name} color`,
+				this.userId,
+				this.currTask.id
+			);
+			this.board.activities.unshift(activity);
+			socket.emit("taskColor", {
+				listIdx: this.currListIdx,
+				taskIdx: this.currTaskIdx,
+				bgc,
+			});
+			socket.emit("log", activity);
+		},
+		removeTask() {
+			const activity = boardService.newActivity(
+				`removed ${this.currTask.name} from ${this.board.lists[this.currListIdx].name
+				}`,
+				this.userId,
+				this.currTask.id
+			);
+			this.board.activities.unshift(activity);
+			this.board.lists[this.currListIdx].tasks.splice(this.currTaskIdx, 1);
+			this.currTask = null;
+			socket.emit("removeTask", {
+				listIdx: this.currListIdx,
+				taskIdx: this.currTaskIdx,
+			});
+			socket.emit("log", activity);
+		},
 
 		// GENERAL BOARD
 		successMsg(msg) {
@@ -586,26 +582,26 @@ export default {
 				this.board = board;
 				socket.emit('dragInBoard', this.board.lists);
 			}
-    },
-    setFilterBy(memberId) {
-      this.filterByMemberId = memberId;
-    },
+		},
+		setFilterBy(memberId) {
+			this.filterByMemberId = memberId;
+		},
 
-    // Socket Events
-    socketEv({ type, data }) {
-      if (type === "boardName") this.board.name = data;
-      if (type === "removeBoardMember") this.removeBoardMember(data);
-      if (type === "addBoardMember") this.addBoardMember(data);
-      if (type === "boardDesc") this.board.description = data;
-      if (type === "boardStyle") eventBusService.$emit("boardBgc", data);
-      if (type === "dragInBoard") this.board.lists = data;
-      if (type === "removeList") this.board.lists.splice(data, 1);
-      if (type === "addList") this.board.lists.push(data);
-      if (type === "listName") this.board.lists[data.listIdx].name = data.name;
+		// Socket Events
+		socketEv({ type, data }) {
+			if (type === "boardName") this.board.name = data;
+			if (type === "removeBoardMember") this.removeBoardMember(data);
+			if (type === "addBoardMember") this.addBoardMember(data);
+			if (type === "boardDesc") this.board.description = data;
+			if (type === "boardStyle") eventBusService.$emit("boardBgc", data);
+			if (type === "dragInBoard") this.board.lists = data;
+			if (type === "removeList") this.board.lists.splice(data, 1);
+			if (type === "addList") this.board.lists.push(data);
+			if (type === "listName") this.board.lists[data.listIdx].name = data.name;
 
-      const currList =
-        data.listIdx >= 0 ? this.board.lists[data.listIdx] : null;
-      const currTask = data.taskIdx >= 0 ? currList.tasks[data.taskIdx] : null;
+			const currList =
+				data.listIdx >= 0 ? this.board.lists[data.listIdx] : null;
+			const currTask = data.taskIdx >= 0 ? currList.tasks[data.taskIdx] : null;
 
 			if (type === 'addTask') this.board.lists[data.listIdx].tasks.push(data.task);
 			if (type === 'removeTask') this.board.lists[data.listIdx].tasks.splice(data.taskIdx, 1);
@@ -651,14 +647,14 @@ export default {
 	},
 	computed: {
 		lists() {
-      if (!this.filterByMemberId) return this.board.lists;
+			if (!this.filterByMemberId) return this.board.lists;
 			return this.board.lists.reduce((lists, list) => {
-        const listCopy = Object.assign({}, list);
-        const tasks = listCopy.tasks.filter(task => task.members.includes(this.filterByMemberId))
-        listCopy.tasks = tasks;
-        if (tasks.length) lists.push(listCopy);
-        return lists;
-      }, []);
+				const listCopy = Object.assign({}, list);
+				const tasks = listCopy.tasks.filter(task => task.members.includes(this.filterByMemberId));
+				listCopy.tasks = tasks;
+				if (tasks.length) lists.push(listCopy);
+				return lists;
+			}, []);
 		},
 		userId() {
 			const user = this.$store.getters.loggedInUser;
@@ -687,7 +683,7 @@ export default {
 		socket.emit('enterBoard', boardId);
 	},
 	destroyed() {
-    this.boardEditEvs.forEach(ev => socket.off(ev, this.socketEv));
+		this.boardEditEvs.forEach(ev => socket.off(ev, this.socketEv));
 		socket.emit("leaveBoard");
 		socket.terminate();
 	},

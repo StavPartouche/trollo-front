@@ -43,7 +43,6 @@
 					class="draggable-tasks"
 					v-for="task in list.tasks"
 					:key="task.id"
-					:ref="`drag${task.id}`"
 				>
 					<li
 						class="task-preview"
@@ -110,7 +109,7 @@ export default {
 				animationDuration: '150',
 				showOnTop: true
 			},
-			elTask: null,
+			'--rotate': 'rotateZ(0deg)',
 		};
 	},
 	methods: {
@@ -160,16 +159,15 @@ export default {
 		},
 		onDragStart(ev) {
 			if (!ev.isSource) return;
-			if (!this.elTask) this.elTask = this.$refs['drag' + ev.payload.id][0].$el;
-			document.body.addEventListener('mousemove', this.mouseMove);
+			document.documentElement.addEventListener('mousemove', this.mouseMove);
 		},
 		onDragEnd(ev) {
-			document.body.removeEventListener('mousemove', this.mouseMove);
-			this.elTask = null;
+			document.documentElement.removeEventListener('mousemove', this.mouseMove);
+			document.documentElement.style.setProperty('--rotate', '0deg')
 		},
 		mouseMove(ev) {
-			if (ev.movementX > 0) this.elTask.style.transform = 'rotateZ(-5deg)';
-			else this.elTask.style.transform = 'rotateZ(5deg)';
+			const rotate = (ev.movementX > 0) ? '7deg' : '-7deg';
+			document.documentElement.style.setProperty('--rotate', rotate)
 		}
 	},
 	watch: {
