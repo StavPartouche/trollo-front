@@ -174,10 +174,12 @@ export default {
 		},
 		updateBoardDesc(desc) {
 			this.board.description = desc;
+			console.log(this.board.description);
 			const activity = boardService.newActivity(
 				`updated board description`,
 				this.userId
 			);
+			console.log('updat board desc');
 			this.board.activities.unshift(activity);
 			socket.emit('boardDesc', desc);
 			socket.emit('log', activity);
@@ -198,6 +200,7 @@ export default {
 				this.board.style.url = "color";
 				this.board.style.backgroundColor = bgc.color;
 			}
+			console.log('saveBoardBgc');
 			eventBusService.$emit("boardBgc", this.board.style);
 			const activity = boardService.newActivity(
 				`updated board background`,
@@ -623,6 +626,7 @@ export default {
 	watch: {
 		board: {
 			handler: function (newBoard) {
+				console.log(newBoard);
 				this.$store.dispatch({
 					type: 'saveBoard',
 					board: newBoard
