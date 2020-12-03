@@ -78,6 +78,17 @@
             .data-layout {
                 margin-bottom: 10px;
             }
+            .date-container{
+                background-color: #e06060;
+                width: fit-content;
+                border-radius: 3px;
+                color: white;
+                margin-bottom: 7px;
+                padding: 3px;
+                p{
+                    margin: 0;
+                }
+            }
             .show-controller{
                 display: flex;
                 align-items: center;
@@ -147,15 +158,29 @@
                     }
                 }
             }
-            .img-attachments {
-                width: 200px;
-                max-height: 150px;
-                margin: 5px;
-            }
-            .img-btns{
-                display: flex;
-                align-items: center;
-                justify-content: space-evenly;
+            .img-container{
+                transition: 5s;
+                .img-attachments {
+                    width: 200px;
+                    max-height: 150px;
+                    margin: 5px;
+                }
+                .img-btns{
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-evenly;
+                    button{
+                        color: #5c5c5c;
+                        background-color: #dddddd;
+                        opacity: 0;
+                    }
+                }
+                &:hover{
+                    button{
+                        
+                        opacity: 1;
+                    }
+                }
             }
             .vue-avatar--wrapper {
                 margin: 0;
