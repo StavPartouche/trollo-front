@@ -5,7 +5,7 @@
       <ul>
         <li
           @click="removeMember(member._id)"
-          v-for="(member) in selectedMembers"
+          v-for="(member) in allMembersToShow"
           :key="member._id"
           class="flex justify-space-between align-center"
         >
@@ -19,7 +19,7 @@
       <ul>
         <li
           @click="addMember(member._id)"
-          v-for="member in allMembers"
+          v-for="member in selectedMembersToShow"
           :key="member._id"
           class="flex align-center member-list-name"
         >
@@ -58,13 +58,13 @@ export default {
     },
   },
   computed: {
-      selectedMembersToDisplay(){
-          return selectedMembers.filter((member) => {
+      selectedMembersToShow(){
+          return this.selectedMembers.filter((member) => {
         return member.userName.includes(this.filterBy);
       })
       },
-      allMembersToDisplay(){
-          return allMembers.filter((member) => {
+      allMembersToShow(){
+          return this.allMembers.filter((member) => {
         return member.userName.includes(this.filterBy);
       })
       }

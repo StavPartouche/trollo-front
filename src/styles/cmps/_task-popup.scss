@@ -11,35 +11,36 @@
     max-height: 255px;
     background-color: #f4f5f7;
     border-radius: 10px;
+    padding: 14px;
     .task-popup-header {
-        padding: 15px 0 0 0;
+        // padding: 15px 0 0 0;
         font-size: rem(24px);
     }
-    .labels-container{
+    .labels-container {
         overflow-y: auto;
         margin-top: 7px;
         margin-bottom: 11px;
-        .chose-label{
+        .chose-label {
             width: 195px;
             height: 30px;
             margin-bottom: 5px;
             border-radius: 5px;
             text-align: center;
             cursor: pointer;
-            h3{
+            h3 {
                 padding-top: 2px;
                 color: #f7f7f7;
             }
         }
     }
-    .colors-container{
+    .colors-container {
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
         width: 179px;
         margin-top: 15px;
         margin-bottom: 19px;
-        .color{
+        .color {
             width: 25px;
             height: 25px;
             border-radius: 50%;
@@ -53,7 +54,7 @@
         top: 0;
         right: 2px;
         background-color: transparent;
-        color: rgb(37,37,37);
+        color: rgb(37, 37, 37);
     }
     .task-checklist-popup {
         margin-top: 5px;
@@ -61,16 +62,16 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        input{
+        input {
             width: 125%;
             font-size: rem(14px);
-            height: 30px;   
+            height: 30px;
             border-radius: unset;
             border: unset;
             border-bottom: 1px solid rgba(0, 0, 0, 0.77);
             background-color: transparent;
         }
-        button{
+        button {
             background-color: #5aac44;
             color: #fdfdfd;
             margin-top: 10px;
@@ -81,9 +82,9 @@
         overflow-y: auto;
         height: 64%;
         width: 90%;
-        input{
+        input {
             font-size: rem(14px);
-            height: 30px;   
+            height: 30px;
             margin-bottom: 9px;
             border-radius: unset;
             border: unset;
@@ -114,4 +115,3 @@
 //         border: 0.5px solid gray
 //     }
 // }
-
