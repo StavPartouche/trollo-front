@@ -22,20 +22,15 @@
 			:activities="board.activities"
 		></board-menu>
 		<ul class="lists" v-if="board">
-			<!-- <draggable
-				class="flex"
-				:list="board.lists"
-				v-bind="dragOptions"
-				group="lists"
-				@sort="onDrag"
-			> -->
-			<Container orientation="horizontal" @drop="onListDrag" group-name="lists">
+			<Container
+				orientation="horizontal"
+				@drop="onListDrag"
+				group-name="lists"
+			>
 				<Draggable
 					v-for="(list, listIdx) in board.lists"
 					:key="list.id"
 				>
-					<!-- v-for="(list, listIdx) in board.lists"
-					:key="list.id" -->
 					<list
 						:list="list"
 						:listIdx="listIdx"
@@ -49,7 +44,6 @@
 					/>
 				</Draggable>
 			</Container>
-			<!-- </draggable> -->
 			<li>
 				<button class="add-list-btn" @click="addList">
 					<i class="fas fa-plus"></i><span>Add list</span>
@@ -100,7 +94,6 @@ import boardNav from "../cmps/board-nav/board-nav.cmp";
 import boardMenu from "../cmps/board-menu/board-menu.cmp";
 import taskDetails from "../cmps/task-details/task-details.cmp";
 import list from "../cmps/list.cmp";
-// import draggable from "vuedraggable";
 import { Container, Draggable } from 'vue-smooth-dnd';
 import socket from "@/services/socket.service";
 import io from "socket.io-client";
@@ -118,6 +111,9 @@ export default {
 			isMenu: false,
 			isNewList: false,
 			isSocketEv: false,
+			boardEditEvs: ['boardName', 'removeBoardMember', 'addBoardMember', 'boardDesc', 'boardStyle', 'dragInBoard', 'removeList', 'addList',
+				'listName', 'checkListItem', 'checkList', 'addTask', 'removeTask', 'taskMember', 'taskDueDate', 'taskName', 'taskDesc', 'uploadImg',
+				'attachment', 'previewImg', 'comment', 'label', 'taskColor', 'log'],
 		};
 	},
 	methods: {
@@ -587,82 +583,40 @@ export default {
 			if (type === 'boardStyle') eventBusService.$emit("boardBgc", data);
 			if (type === 'dragInBoard') this.board.lists = data;
 			if (type === 'removeList') this.board.lists.splice(data, 1);
-			if (type === 'addList') {
-				this.isNewList = true;
-				this.board.lists.push(data);
-				this.isNewList = false;
-			};
+			if (type === 'addList') this.board.lists.push(data);
 			if (type === 'listName') this.board.lists[data.listIdx].name = data.name;
-			if (type === 'checkListItem') {
-				const currList = this.board.lists[data.listIdx];
-				const currTask = currList.tasks[data.taskIdx];
-				const currCheckList = currTask.checkLists[data.checkListIdx];
-				if (!data.itemIdx && data.itemIdx !== 0) currCheckList.items.push(data.item);
-				else if (!data.item) currCheckList.items.splice(data.itemIdx, 1);
-				else currCheckList.items.splice(data.itemIdx, 1, data.item);
-			}
+
+			const currList = (data.listIdx >= 0) ? this.board.lists[data.listIdx] : null;
+			const currTask = (data.taskIdx >= 0) ? currList.tasks[data.taskIdx] : null;
+
+			if (type === 'addTask') this.board.lists[data.listIdx].tasks.push(data.task);
+			if (type === 'removeTask') this.board.lists[data.listIdx].tasks.splice(data.taskIdx, 1);
+			if (type === 'taskDueDate') currTask.dueDate = data.dueDate;
+			if (type === 'taskName') currTask.name = data.name;
+			if (type === 'taskDesc') currTask.description = data.desc;
+			if (type === 'uploadImg') currTask.attachments.push(data.imgUrl);
+			if (type === 'attachment' && data.attachmentIdx >= 0) currTask.attachments.splice(data.attachmentIdx, 1);
+			if (type === 'previewImg') currTask.previewImg = data.previewImg;
+			if (type === 'comment') currTask.comments.push(data.comment);
+			if (type === 'taskColor') currTask.backgroundColor = data.bgc;
+			if (type === 'log') this.board.activities.unshift(data);
 			if (type === 'checkList') {
-				const currList = this.board.lists[data.listIdx];
-				const currTask = currList.tasks[data.taskIdx];
 				if (data.checkListIdx >= 0) currTask.checkLists.splice(data.checkListIdx, 1);
 				else currTask.checkLists.push(data.checkList);
 			}
-			if (type === 'addTask') this.board.lists[data.listIdx].tasks.push(data.task);
-			if (type === 'removeTask') this.board.lists[data.listIdx].tasks.splice(data.taskIdx, 1);
 			if (type === 'taskMember') {
-				const currList = this.board.lists[data.listIdx];
-				const currTask = currList.tasks[data.taskIdx];
 				if (data.memberIdx >= 0) currTask.members.splice(data.memberIdx, 1);
 				else currTask.members.push(data.memberId);
 			}
-			if (type === 'taskDueDate') {
-				const currList = this.board.lists[data.listIdx];
-				const currTask = currList.tasks[data.taskIdx];
-				currTask.dueDate = data.dueDate;
-			}
-			if (type === 'taskName') {
-				const currList = this.board.lists[data.listIdx];
-				const currTask = currList.tasks[data.taskIdx];
-				currTask.name = data.name;
-			}
-			if (type === 'taskDesc') {
-				const currList = this.board.lists[data.listIdx];
-				const currTask = currList.tasks[data.taskIdx];
-				currTask.description = data.desc;
-			}
-			if (type === 'uploadImg') {
-				const currList = this.board.lists[data.listIdx];
-				const currTask = currList.tasks[data.taskIdx];
-				currTask.attachments.push(data.imgUrl);
-			}
-			if (type === 'attachment') {
-				const currList = this.board.lists[data.listIdx];
-				const currTask = currList.tasks[data.taskIdx];
-				if (data.attachmentIdx >= 0) currTask.attachments.splice(data.attachmentIdx, 1);
-			}
-			if (type === 'previewImg') {
-				const currList = this.board.lists[data.listIdx];
-				const currTask = currList.tasks[data.taskIdx];
-				currTask.previewImg = data.previewImg;
-			}
-			if (type === 'comment') {
-				const currList = this.board.lists[data.listIdx];
-				const currTask = currList.tasks[data.taskIdx];
-				currTask.comments.push(data.comment);
-			}
 			if (type === 'label') {
-				const currList = this.board.lists[data.listIdx];
-				const currTask = currList.tasks[data.taskIdx];
 				if (data.labelIdx === -1) currTask.labels.push(data.label);
 				else currTask.labels.splice(data.labelIdx, 1);
 			}
-			if (type === 'taskColor') {
-				const currList = this.board.lists[data.listIdx];
-				const currTask = currList.tasks[data.taskIdx];
-				currTask.backgroundColor = data.bgc;
-			}
-			if (type === 'log') {
-				this.board.activities.unshift(data);
+			if (type === 'checkListItem') {
+				const currCheckList = currTask.checkLists[data.checkListIdx];
+				if (data.itemIdx >= 0 && data.item) currCheckList.items.splice(data.itemIdx, 1, data.item);
+				else if (!data.item) currCheckList.items.splice(data.itemIdx, 1);
+				else currCheckList.items.push(data.item);
 			}
 		}
 	},
@@ -670,7 +624,7 @@ export default {
 		board: {
 			handler: function (newBoard) {
 				this.$store.dispatch({
-					type: "saveBoard",
+					type: 'saveBoard',
 					board: newBoard
 				});
 			},
@@ -684,9 +638,9 @@ export default {
 		dragOptions() {
 			return {
 				animation: 200,
-				group: "lists",
+				group: 'lists',
 				disabled: false,
-				ghostClass: "ghost",
+				ghostClass: 'ghost',
 			};
 		},
 		userId() {
@@ -698,7 +652,6 @@ export default {
 		boardNav,
 		taskDetails,
 		list,
-		// draggable,
 		Container,
 		Draggable,
 		boardMenu,
@@ -712,62 +665,13 @@ export default {
 		});
 		this.board = JSON.parse(JSON.stringify(board));
 		eventBusService.$emit("boardBgc", this.board.style);
-
-		// Sockets
 		socket.setup();
-		socket.on('boardName', this.socketEv);
-		socket.on('removeBoardMember', this.socketEv);
-		socket.on('addBoardMember', this.socketEv);
-		socket.on('boardDesc', this.socketEv);
-		socket.on('boardStyle', this.socketEv);
-		socket.on('dragInBoard', this.socketEv);
-		socket.on('removeList', this.socketEv);
-		socket.on('addList', this.socketEv);
-		socket.on('listName', this.socketEv);
-		socket.on('checkListItem', this.socketEv);
-		socket.on('checkList', this.socketEv);
-		socket.on('addTask', this.socketEv);
-		socket.on('removeTask', this.socketEv);
-		socket.on('taskMember', this.socketEv);
-		socket.on('taskDueDate', this.socketEv);
-		socket.on('taskName', this.socketEv);
-		socket.on('taskDesc', this.socketEv);
-		socket.on('uploadImg', this.socketEv);
-		socket.on('attachment', this.socketEv);
-		socket.on('previewImg', this.socketEv);
-		socket.on('comment', this.socketEv);
-		socket.on('label', this.socketEv);
-		socket.on('taskColor', this.socketEv);
-		socket.on('log', this.socketEv);
+		this.boardEditEvs.forEach(ev => socket.on(ev, this.socketEv));
 		socket.emit('enterBoard', boardId);
 	},
 	destroyed() {
+    this.boardEditEvs.forEach(ev => socket.off(ev, this.socketEv));
 		socket.emit("leaveBoard");
-		socket.off('boardName', this.socketEv);
-		socket.off('removeBoardMember', this.socketEv);
-		socket.off('addBoardMember', this.socketEv);
-		socket.off('boardDesc', this.socketEv);
-		socket.off('boardStyle', this.socketEv);
-		socket.off('dragInBoard', this.socketEv);
-		socket.off('removeList', this.socketEv);
-		socket.off('addList', this.socketEv);
-		socket.off('addTask', this.socketEv);
-		socket.off('removeTask', this.socketEv);
-		socket.off('listName', this.socketEv);
-		socket.off('checkListItem', this.socketEv);
-		socket.off('checkList', this.socketEv);
-		socket.off('addTask', this.socketEv);
-		socket.off('taskMember', this.socketEv);
-		socket.off('taskDueDate', this.socketEv);
-		socket.off('taskName', this.socketEv);
-		socket.off('taskDesc', this.socketEv);
-		socket.off('uploadImg', this.socketEv);
-		socket.off('attachment', this.socketEv);
-		socket.off('previewImg', this.socketEv);
-		socket.off('comment', this.socketEv);
-		socket.off('label', this.socketEv);
-		socket.off('taskColor', this.socketEv);
-		socket.off('log', this.socketEv);
 		socket.terminate();
 	},
 };

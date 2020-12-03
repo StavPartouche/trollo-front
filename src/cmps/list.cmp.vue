@@ -28,24 +28,28 @@
 			/>
 		</div>
 		<ul class="draggable-tasks-container">
-		<!-- <ul class="draggable-tasks-container"> -->
 			<Container
 				class=""
 				orientation="vertical"
 				@drop="onDrop(list.id, $event)"
+				@drag-start="onDragStart"
+				@drag-end="onDragEnd"
 				:get-child-payload="getChildPayload"
 				group-name="tasks"
 				drag-class="card-ghost"
 				drop-class="card-ghost-drop"
 			>
-				<Draggable class="draggable-tasks" v-for="(task, taskIdx) in list.tasks" :key="task.id">
+				<Draggable
+					class="draggable-tasks"
+					v-for="(task, taskIdx) in list.tasks"
+					:key="task.id"
+					:ref="`drag${task.id}`"
+				>
 					<li
 						class="task-preview"
 						@click="openTask(listIdx, taskIdx)"
 						:style="{ backgroundColor: task.backgroundColor }"
 					>
-						<!-- v-for="(task, taskIdx) in list.tasks"
-					:key="taskIdx" -->
 						<ul class="task-preview-labels flex">
 							<li
 								v-for="(label, idx) in task.labels"
@@ -66,7 +70,7 @@
 							v-if="task.previewImg"
 							:src="task.previewImg"
 						/>
-						<taskPreviewFotter :task="task" :members="members"/>
+						<taskPreviewFotter :task="task" :members="members" />
 					</li>
 				</Draggable>
 			</Container>
@@ -106,6 +110,7 @@ export default {
 				animationDuration: '150',
 				showOnTop: true
 			},
+			elTask: null,
 		};
 	},
 	methods: {
@@ -152,6 +157,19 @@ export default {
 		},
 		getChildPayload(taskIdx) {
 			return this.list.tasks[taskIdx];
+		},
+		onDragStart(ev) {
+			if (!ev.isSource) return;
+			if (!this.elTask) this.elTask = this.$refs['drag' + ev.payload.id][0].$el;
+			document.body.addEventListener('mousemove', this.mouseMove);
+		},
+		onDragEnd(ev) {
+			document.body.removeEventListener('mousemove', this.mouseMove);
+			this.elTask = null;
+		},
+		mouseMove(ev) {
+			if (ev.movementX > 0) this.elTask.style.transform = 'rotateZ(-5deg)';
+			else this.elTask.style.transform = 'rotateZ(5deg)';
 		}
 	},
 	watch: {
