@@ -1,6 +1,7 @@
 <template>
   <div class="board-nav flex justify-space-between align-center">
-    <div v-if="isMenu" @click="closeMenu" class="disable-page-container"></div>
+    <!-- <div v-if="isMenu" @click="closeMenu" class="disable-page-container"></div> -->
+    <div v-if="menu" @click="closeMenu" class="disable-page-container"></div>
     <div class="flex center">
 
     <h2
@@ -21,12 +22,14 @@
         :boardMembers="members"
       />
 <!-- <button class="board-nav-btn">Team</button> -->
-<button class="board-nav-btn">Background</button>
+<button @click="openBackground" class="board-nav-btn">Background</button>
     <div class="board-nav-btn flex center">
-      <button v-if="isMenu" @click="closeMenu" class="open-menu-btn">
+      <!-- <button v-if="isMenu" @click="closeMenu" class="open-menu-btn"> -->
+      <button v-if="menu" @click="closeMenu" class="open-menu-btn">
         <font-awesome-icon :icon="['fas', 'times']" />
       </button>
-      <button class="open-menu-btn" v-if="!isMenu" @click="openMenu">
+      <!-- <button class="open-menu-btn" v-if="!isMenu" @click="openMenu"> -->
+      <button class="open-menu-btn" v-if="!menu" @click="openMenu">
         <font-awesome-icon :icon="['fas', 'ellipsis-h']" />
         Show Menu
       </button>
@@ -48,19 +51,30 @@ export default {
   },
   data() {
     return {
-      isMenu: false,
+      // isMenu: false,
+      menu: null,
+      isBacground: false,
       nameToEdit: null,
     };
   },
   computed: {},
   methods: {
     openMenu() {
-      this.isMenu = true;
-      this.$emit("toggleMenu", this.isMenu);
+      this.menu = 'main';
+      this.$emit("toggleMenu", this.menu);
+      // this.isMenu = true;
+      // this.$emit("toggleMenu", { menu: this.isMenu, background: this.isBackground });
     },
     closeMenu() {
-      this.isMenu = false;
-      this.$emit("toggleMenu", this.isMenu);
+      this.menu = null;
+      this.$emit("toggleMenu", this.menu);
+      // this.isMenu = false;
+      // this.isBackground = false;
+      // this.$emit("toggleMenu", { menu: this.isMenu, background: this.isBackground });
+    },
+    openBackground(){
+      this.menu = 'bgc';
+      this.$emit("toggleMenu", this.menu);
     },
     addBoardMember(memberId) {
       this.$emit("addBoardMember", memberId);

@@ -53,7 +53,8 @@ export default {
     name: String,
     description: String,
     dueDate: String,
-    activities: Array
+    activities: Array,
+    menu: String
   },
   data() {
     return {
@@ -126,7 +127,7 @@ export default {
     boardActivity
   },
   created() {
-    
+    if (this.menu==='bgc') this.isBackground = true;
   },
   destroyed() {
     

@@ -10,12 +10,13 @@
 			:members="members"
 		></board-nav>
 		<board-menu
-			v-if="isMenu"
+			v-if="menu"
 			@removeBoard="removeBoard"
 			@saveBoardBgc="saveBoardBgc"
 			@updateBoardName="updateBoardName"
 			@updateBoardDesc="updateBoardDesc"
 			@updateBoardDueDate="updateBoardDueDate"
+			:menu="menu"
 			:name="board.name"
 			:description="board.description"
 			:dueDate="board.dueDate"
@@ -108,7 +109,7 @@ export default {
 			currTask: null,
 			currListIdx: null,
 			currTaskIdx: null,
-			isMenu: false,
+			menu: null,
 			isNewList: false,
 			isSocketEv: false,
 			boardEditEvs: ['boardName', 'removeBoardMember', 'addBoardMember', 'boardDesc', 'boardStyle', 'dragInBoard', 'removeList', 'addList',
@@ -119,7 +120,7 @@ export default {
 	methods: {
 		// BOARD-NAV
 		toggleMenu(ev) {
-			this.isMenu = ev;
+			this.menu = ev;
 		},
 		updateBoardName(name) {
 			this.board.name = name;
