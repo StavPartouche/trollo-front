@@ -10,11 +10,13 @@
     <hr />
     <ul>
       <li class="bold">
-        <h3>{{ name }}</h3>
+        <!-- <h3>{{ name }}</h3> -->
+        {{ name }}
       </li>
       <!-- <li>Made By</li> -->
       <li>
-        <h4>Due Date:</h4>
+        Due Date:
+        <!-- <h4>Due Date:</h4> -->
 
         <input
           class="justify-end"
@@ -24,15 +26,26 @@
         />
       </li>
       <li>
-        <h4>Description:</h4>
-        <p
+        Description:
+        <!-- <h4>Description:</h4> -->
+                  <textarea
+            placeholder="Describe here..."
+            class="board-desc-content"
+            contenteditable            
+             v-text="descToEdit"
+            @blur="updateBoardDesc"
+            cols="40"
+            rows="6"
+          ></textarea>
+        <!-- <p
           class="board-desc-content"
           contenteditable
           @blur="updateBoardDesc"
           v-text="descToEdit"
+          v-model="descToEdit"
         >
           {{ descToEdit }}
-        </p>
+        </p> -->
         <!-- <textarea
             class="justify-end"
             type="text"

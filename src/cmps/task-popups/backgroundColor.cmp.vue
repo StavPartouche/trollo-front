@@ -4,7 +4,7 @@
     <button @click="closePopup" class="exit-popup-btn">X</button>
     <ul class="colors-container">
             <li class="color" style="background-color: lightgoldenrodyellow" @click="setTaskColor($event)"></li>
-            <li class="color" style="background-color: white" @click="setTaskColor($event)"></li>
+            <li class="color" style="background-color: #fafafa" @click="setTaskColor($event)"></li>
             <li class="color" style="background-color: rgb(255 204 212)" @click="setTaskColor($event)"></li>
             <li class="color" style="background-color: rgb(251 204 255)" @click="setTaskColor($event)"></li>
             <li class="color" style="background-color: rgb(223 204 255)" @click="setTaskColor($event)"></li>

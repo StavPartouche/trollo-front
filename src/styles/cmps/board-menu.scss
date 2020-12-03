@@ -23,11 +23,27 @@
     position: fixed;
     right: 0;
     padding: 7px;
-    // top: 70px;
-    // padding-top: $board-nav-height;
     width: 350px;
     height: 100%;
     background-color: $task-details-bgc;
+    .menu-header {
+        font-size: rem(18px);
+        height: 30px;
+        // display: flex;
+        // flex-direction: row-reverse;
+        // justify-content: center;
+        margin-top: 37px;
+        .btn-back-to-menu {
+            background-color: transparent;
+            position: absolute;
+            left: 10px;
+            top: 7px;
+            font-size: rem(11px);
+            // &::before {
+            //     content: ''
+            // }
+        }
+    }
     hr {
         width: 100%;
     }
@@ -49,35 +65,43 @@
             font-size: rem(18px);
             padding: 10px 0;
             &.bold {
-                font-size: rem(20px);
-                font-weight: bold;
+                // font-size: rem(16px);
+                // font-weight: bold;
             }
             .board-desc-content {
-                font-size: rem(15px);
+                // font-size: rem(15px);
+                margin-top: 10px;
+                border-radius: 5px;
+                background-color: #dddddd;
+                font-size: rem(13px);
+                border: none;
+                resize: none;
+                &:focus {
+                    background-color: #fdfdfd;
+                }
             }
         }
     }
 }
 
-.board-menu .menu-header {
-    font-size: rem(18px);
-    height: 30px;
-    // display: flex;
-    // flex-direction: row-reverse;
-    // justify-content: center;
-    margin-top: 37px;
-    .btn-back-to-menu {
-        background-color: transparent;
-        position: absolute;
-        left: 10px;
-        top: 7px;
-        font-size: rem(11px);
-        // &::before {
-        //     content: ''
-        // }
-    }
-}
-
+// .board-menu .menu-header {
+//     font-size: rem(18px);
+//     height: 30px;
+//     // display: flex;
+//     // flex-direction: row-reverse;
+//     // justify-content: center;
+//     margin-top: 37px;
+//     .btn-back-to-menu {
+//         background-color: transparent;
+//         position: absolute;
+//         left: 10px;
+//         top: 7px;
+//         font-size: rem(11px);
+//         // &::before {
+//         //     content: ''
+//         // }
+//     }
+// }
 // .board-menu-child {
 //     background-color: $task-details-bgc;
 //     position: fixed;

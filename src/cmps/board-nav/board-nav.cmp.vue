@@ -1,35 +1,33 @@
 <template>
   <div class="board-nav flex justify-space-between align-center">
         <div v-if="isMenu" @click="closeMenu" class="disable-page-container"></div>
-    <!-- <div class="widht-200 flex justify-start align-center"> -->
-      <!-- <h2 contenteditable @blur="updateBoardName" v-text="nameToEdit">{{name }}</h2> -->
-      <h2 class="board-name" contenteditable @blur="updateBoardName" v-text="nameToEdit">
+      <h2 class="board-nav-btn board-name" contenteditable @blur="updateBoardName" v-text="nameToEdit">
         {{ nameToEdit }}
       </h2>
-      <!-- <div class="board-setting-container"></div> -->
-    <!-- </div> -->
-    <!-- <div class=" open-menu-btn widht-200 flex justify-end"> -->
-    <div class="flex center">
+    <div class="board-nav-btn flex center">
     <board-member
       @removeBoardMember="removeBoardMember"
       @addBoardMember="addBoardMember"
       :boardMembers="members"
     />
-    <!-- <div class=" open-menu-btn"> -->
-
+    <!-- <button> -->
       <font-awesome-icon
        class=" open-menu-btn"
         v-if="isMenu"
         @click="closeMenu"
         :icon="['fas', 'times']"
       />
+      
+    <!-- </button> -->
+    <!-- <button> -->
       <font-awesome-icon
        class=" open-menu-btn"
         v-if="!isMenu"
         @click="openMenu"
         :icon="['fas', 'ellipsis-h']"
       />
-    <!-- </div> -->
+      <!-- Show Menu -->
+    <!-- </button> -->
     </div>
   </div>
 </template>
