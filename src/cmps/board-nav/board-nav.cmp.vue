@@ -144,6 +144,10 @@ export default {
 		toggleFilter() {
 			this.isFilterOpts = !this.isFilterOpts;
     },
+    emitFilter(memberId) {
+      this.$emit('filter', memberId)
+      this.isFilterOpts = false;
+    },
   },
   watch: {
     name() {
