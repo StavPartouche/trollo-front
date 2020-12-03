@@ -42,6 +42,7 @@
 
 <script>
 import boardMember from "./board-member.cmp";
+import boardMemberCard from "./board-member-card.cmp";
 
 export default {
   name: "board-nav",

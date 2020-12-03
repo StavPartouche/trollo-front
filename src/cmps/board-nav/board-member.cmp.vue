@@ -69,9 +69,9 @@ export default {
     removeBoardMember(memberId) {
       this.$emit("removeBoardMember", memberId);
     },
-    // openUser() {
-    //     this.showUser= !this.showUser
-    // },
+    openUser() {
+        this.showUser= !this.showUser
+    },
     openShowInvite() {
       this.showInvite = true;
     },

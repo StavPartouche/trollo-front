@@ -1,6 +1,6 @@
 <template>
   <div class="task-details-comments data-layout">
-    <h3><font-awesome-icon class="task-preview-data-item-icon" :icon="['far', 'comment']" /> Comments</h3>
+    <h3><font-awesome-icon :icon="['far', 'comment']" /> Comments</h3>
     <div class="flex comment align-center data-layout wrap" v-for="(comment, idx) in comments" :key="idx">
       <user-avatar :user="comment.creator"></user-avatar>
       <div>
