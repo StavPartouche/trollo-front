@@ -39,7 +39,7 @@
             <chart-two :board="board" :members="members"/>
         </div>
         <div class="chart">
-            <chart-three />
+            <chart-three :board="board"/>
         </div>
     </div>
   </div>

@@ -10,14 +10,13 @@ export default {
   },
   extends: Doughnut,
   mounted() {
-    // Overwriting base render method with actual data.
     this.renderChart({
       labels: this.memberNames,
       datasets: [
         {
           label: "Tasks per member",
           backgroundColor: "#f87979",
-          data: [1,1,1,1],
+          data: this.taskPerMember,
         },
       ],
     });
@@ -30,9 +29,24 @@ export default {
       })
       return names
     },
+    taskPerMember(){
+      const tasksPerMember = []
+      this.members.forEach(member =>{
+        tasksPerMember.push({id: member._id, tasks: 0})
+      })
+      this.board.lists.forEach(list=>{
+        list.tasks.forEach(task =>{
+          task.members.forEach(memberId =>{
+            var idx = tasksPerMember.findIndex(taskPerMember => memberId === taskPerMember.id )
+            tasksPerMember[idx].tasks++
+          })
+        })
+      })
+      const tasksCount = tasksPerMember.map(taskPerMember => taskPerMember.tasks)
+      return tasksCount
+    }
   },
   created() {
-    console.log(this.board);
   },
 };
 </script>
