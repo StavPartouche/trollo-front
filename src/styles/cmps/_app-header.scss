@@ -23,7 +23,7 @@
             background-color: white;
             border-radius: 5px;
             top: 29px;
-            right: 57px;
+            right: 37px;
             width: fit-content;
             height: fit-content;
             z-index: 3;
@@ -43,31 +43,41 @@
                 margin: 0;
             }
         }
+        .app-header-left {
+            a:first-child {
+                margin-right: 17px;
+            }
+        }
         a {
             height: fit-content;
             cursor: pointer;
             font-size: rem(18px);
             font-weight: bold;
-            &:not(.logo) {
+            .icon:not(.logo) {
                 &:hover {
-                    text-shadow: 1px 1px 6px #444444;
-                }
-                &.router-link-active:not(.logo) {
-                    // color: white;
-                    color: #f7f7f7db;
-                    // text-shadow: 1px 1px 2px black;
-                    // text-shadow: none;
-                    &:hover {
-                        // text-shadow: 1px 3px 6px #323232;
-                    }
+                    color: #ffffffe8;
+                    // text-shadow: 1px 1px 6px #444444;
                 }
             }
+            &:not(.logo) {
+                &:hover {
+                    color: #ffffffe8;
+                    // text-shadow: 1px 1px 6px #444444;
+                }
+                // &.router-link-active:not(.logo) {
+                //     color: #f7f7f7db;
+                //     &:hover {
+                //     }
+                // }
+            }
+            .home-icon {
+                font-size: rem(20px);
+                margin-top: 1px;
+            }
+            .board-icon {
+                margin-top: 2px;
+            }
         }
-        .fa-home {
-            font-size: rem(25px);
-        }
-        // background-color: aliceblue;
-        // border-bottom: 1px solid rgb(138, 199, 253);
         &>* {
             height: 100%;
         }
@@ -78,5 +88,8 @@
         }
         .logo {
             font-size: rem(25px);
+        }
+        .widht-200 {
+            width: 250px;
         }
     }
