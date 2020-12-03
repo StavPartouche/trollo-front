@@ -18,7 +18,7 @@
       {{ task.name }}
     </h2>
     <div v-if="task.dueDate">
-        <p>{{ task.dueDate }}</p>
+        <p><font-awesome-icon :icon="['far', 'clock']" />{{ dueDate(task.dueDate) }}</p>
     </div>
     <div class="task-editor-main flex">
       <div class="task-details flex-column">
@@ -147,6 +147,7 @@ import userAvatar from "../user-avatar.cmp";
 import taskDetailsLabelsCmp from "./task-details-labels.cmp.vue";
 import { eventBusService } from "../../services/eventBus.service";
 import boardActivity from "../board-menu/board-activity.cmp";
+import moment from 'moment'
 
 export default {
   name: "task-details",
@@ -166,6 +167,9 @@ export default {
     };
   },
   methods: {
+    dueDate(time){
+      return moment(time).format('MMM DD')
+    },
     showComments(){
       this.isComments = true
       this.isActivities = false
