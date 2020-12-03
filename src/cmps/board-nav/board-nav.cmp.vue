@@ -14,9 +14,8 @@
       <input
         class="board-nav-btn"
         type="text"
-        name=""
-        id=""
-        placeholder="Search"
+        placeholder="Search Task"
+        @keydown.enter="emitSearch"
       />
       <button class="board-nav-btn" @click="toggleFilter">
 				Filter by Member
@@ -147,6 +146,9 @@ export default {
     emitFilter(memberId) {
       this.$emit('filter', memberId)
       this.isFilterOpts = false;
+    },
+    emitSearch(ev) {
+      this.$emit('search', ev.target.value)
     },
   },
   watch: {
