@@ -1,21 +1,37 @@
 <script>
-import { Bar } from 'vue-chartjs'
+import { Line } from 'vue-chartjs'
  
 export default {
-    name: 'chart-one',
-  extends: Bar,
+  props:{
+    board: Object
+  },
+    name: 'chart-three',
+  extends: Line,
   mounted () {
-    // Overwriting base render method with actual data.
     this.renderChart({
       labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
       datasets: [
         {
-          label: 'GitHub Commits',
+          label: 'Tasks by months',
           backgroundColor: '#f87979',
-          data: [40, 20, 12, 39, 10, 40, 39, 80, 40, 20, 12, 11]
+          data: this.dueDates
         }
       ]
     })
-  }
+  },
+  computed:{
+    dueDates(){
+      const dueMonths = [0,0,0,0,0,0,0,0,0,0,0,0]
+      this.board.lists.forEach(list => {
+        list.tasks.forEach(task => {
+          if(task.dueDate){
+              const idx = new Date(task.dueDate).getMonth();
+              dueMonths[idx]++
+            } 
+        })
+      });
+      return dueMonths
+    }
+  },
 }
 </script>

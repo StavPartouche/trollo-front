@@ -90,14 +90,19 @@
     border-radius: 50%;
 }
 
+:root {
+	--rotate: 0deg;
+}
+
 .card-ghost {
-    transition: transform 0.18s ease;
-    transform: rotateZ(5deg)
+	transition: transform 0.5s ease;
+	// transform: var(--rotate);
+	transform: rotateZ(var(--rotate));
 }
 
 .card-ghost-drop {
-    transition: transform 0.18s ease-in-out;
-    transform: rotateZ(0deg)
+	transition: transform 0.2s ease-in-out;
+	transform: rotateZ(0deg);
 }
 
 .y-auto {
