@@ -43,7 +43,9 @@
 
 .task-editor,
 .lists,
-.board-menu {
+.board-menu,
+.board-nav {
+    // .board-edit {
      ::-webkit-scrollbar {
         // width: 24px;
         width: 11px;

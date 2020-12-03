@@ -1,0 +1,32 @@
+.member-list {
+    // overflow-y: auto;
+    // height: 64%;
+    // width: 90%;
+    overflow-x: hidden;
+    input {
+        font-size: rem(14px);
+        height: 30px;
+        margin-bottom: 9px;
+        border-radius: unset;
+        border: unset;
+        background-color: transparent;
+    }
+    li {
+        cursor: pointer;
+        padding: 2px 14px 2px 0px;
+        // .check {
+        //     margin-right: 5px;
+        // }
+    }
+    .member-list-name {
+        flex: 1;
+        padding-left: 5px;
+        margin-bottom: 5px;
+        p {
+            margin: 0;
+            padding-left: 5px;
+            font-weight: normal;
+            font-size: rem(14px);
+        }
+    }
+}
