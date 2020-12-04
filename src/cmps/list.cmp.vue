@@ -10,6 +10,8 @@
 			<h2
 				class="list-header"
 				contenteditable
+				@mousedown="toggleIsDrag"
+				@mouseup="toggleIsDrag"
 				@blur="updateListName"
 				v-text="listName"
 				:id="'list' + listIdx"
@@ -31,6 +33,7 @@
 			<Container
 				orientation="vertical"
 				drag-handle-selector=".task-preview"
+				non-drag-area-selector="img"
 				@drop="onDrop(list.id, $event)"
 				@drag-start="onDragStart"
 				@drag-end="onDragEnd"
@@ -97,13 +100,14 @@ export default {
 		list: Object,
 		listIdx: Number,
 		members: Array,
-		isNewList: Boolean
+		isNewList: Boolean,
 	},
 	data() {
 		return {
 			isAddInput: false,
 			isListEdit: false,
 			listName: null,
+			isDrag: false,
 			dropPlaceholderOptions: {
 				className: 'drop-preview',
 				animationDuration: '150',
@@ -120,6 +124,7 @@ export default {
 			this.isListEdit = false;
 		},
 		updateListName(evt) {
+			if (this.isDrag) return;
 			var src = evt.target.innerText;
 			this.listName = src;
 			this.$emit("updateListName", {
@@ -150,6 +155,9 @@ export default {
 		removeList(listIdx) {
 			this.closeListEdit();
 			this.$emit("removeList", listIdx);
+		},
+		toggleIsDrag() {
+			this.isDrag = !this.isDrag;
 		},
 		onDrop(listId, dropResult) {
 			this.$emit('drop', { listId, dropResult });
@@ -183,7 +191,6 @@ export default {
 		taskPreviewFotter
 	},
 	mounted() {
-		console.log(this.list)
 		if (this.isNewList) this.$refs.header.focus();
 	},
 	created() {

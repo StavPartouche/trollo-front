@@ -3,6 +3,7 @@
 		<board-nav
 			@toggleMenu="toggleMenu"
 			@filter="setFilterBy"
+      @search="setSearch"
 			@updateBoardName="updateBoardName"
 			@removeBoardMember="updateBoardMember('remove', $event)"
 			@addBoardMember="updateBoardMember('add', $event)"
@@ -28,6 +29,7 @@
 			<Container
 				orientation="horizontal"
 				drag-handle-selector=".list"
+        :get-child-payload="getChildPayload"
 				@drop="onListDrag"
 				group-name="lists"
 			>
@@ -106,11 +108,12 @@ export default {
 		return {
 			board: null,
 			members: [],
-			filterByMemberId: '',
+      filterByMemberId: '',
+      searchTask: '',
 			currTask: null,
 			currListIdx: null,
 			currTaskIdx: null,
-			menu: null,
+      menu: null,
 			isNewList: false,
 			isSocketEv: false,
 			boardEditEvs: ['boardName', 'removeBoardMember', 'addBoardMember', 'boardDesc', 'boardStyle', 'dragInBoard', 'removeList', 'addList',
@@ -564,11 +567,14 @@ export default {
 		async getMember(memberId) {
 			const member = await userService.getById(memberId);
 			return member;
-		},
+    },
+    getChildPayload(listIdx) {
+			return this.board.lists[listIdx];
+    },
 		onListDrag(dropResult) {
 			const board = Object.assign({}, this.board);
 			board.lists = utilService.applyDrag(board.lists, dropResult);
-			this.board = board;
+      this.board = board;
 			socket.emit('dragInBoard', this.board.lists);
 		},
 		onTaskDrag({ listId, dropResult }) {
@@ -585,7 +591,10 @@ export default {
 		},
 		setFilterBy(memberId) {
 			this.filterByMemberId = memberId;
-		},
+    },
+    setSearch(txt) {
+      this.searchTask = txt;
+    },
 
 		// Socket Events
 		socketEv({ type, data }) {
@@ -647,12 +656,14 @@ export default {
 	},
 	computed: {
 		lists() {
-			if (!this.filterByMemberId) return this.board.lists;
+			if (!this.filterByMemberId && !this.searchTask) return this.board.lists;
 			return this.board.lists.reduce((lists, list) => {
-				const listCopy = Object.assign({}, list);
-				const tasks = listCopy.tasks.filter(task => task.members.includes(this.filterByMemberId));
-				listCopy.tasks = tasks;
-				if (tasks.length) lists.push(listCopy);
+        const listCopy = Object.assign({}, list);
+        const [filter, search] = [this.filterByMemberId, this.searchTask];
+        if (filter && !search) listCopy.tasks = listCopy.tasks.filter(task => task.members.includes(filter));
+        else if (!filter && search) listCopy.tasks = listCopy.tasks.filter(task => task.name.toLowerCase().includes(search.toLowerCase()));
+				else listCopy.tasks = listCopy.tasks.filter(task => task.members.includes(filter) && task.name.toLowerCase().includes(search.toLowerCase()));
+				if (listCopy.tasks.length) lists.push(listCopy);
 				return lists;
 			}, []);
 		},
