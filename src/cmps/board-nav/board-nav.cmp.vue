@@ -47,7 +47,7 @@
             :key="member._id"
             @click="emitFilter(member._id, member.fullName)"
           >
-            <p>{{ member.userName }}</p>
+            <p>{{ member.fullName }}</p>
           </li>
         </ul>
       </div>
@@ -118,7 +118,7 @@ export default {
   computed: {
     membersToShow() {
       return this.members.filter((member) =>
-        member.fullName.includes(this.filterBy)
+        member.fullName.toLowerCase().includes(this.filterBy.toLowerCase())
       );
     },
   },
