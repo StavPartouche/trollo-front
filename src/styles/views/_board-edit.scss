@@ -48,7 +48,7 @@
             padding: 0 4px 0 8px;
             height: fit-content;
             max-height: 100%;
-            overflow-y: auto;
+            // overflow-y: auto;
             // &:not(:last-child) {
             // }
             .draggable-tasks-container {
@@ -93,6 +93,7 @@
             .list-edit-menu {
                 position: absolute;
                 top: 22px;
+                left: 186px;
                 transform: translateX(57px);
                 width: 150px;
                 border-radius: 5px;
