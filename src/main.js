@@ -4,6 +4,7 @@ import './registerServiceWorker';
 import router from './router/router';
 import store from './store/store';
 import ElementUI from 'element-ui';
+import locale from 'element-ui/lib/locale/lang/en'
 import 'element-ui/lib/theme-chalk/index.css';
 import '@fortawesome/fontawesome-free/css/all.css'
 import '@fortawesome/fontawesome-free/js/all.js'
@@ -44,7 +45,7 @@ Vue.component('font-awesome-icon', FontAwesomeIcon)
 import './styles/styles.scss';
 
 Vue.config.productionTip = false;
-Vue.use(ElementUI);
+Vue.use(ElementUI, { locale })
 
 new Vue({
     router,
