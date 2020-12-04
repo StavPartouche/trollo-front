@@ -121,7 +121,8 @@ export default {
 			this.isListEdit = false;
 		},
 		updateListName(evt) {
-			var src = evt.target.textContent;
+			if (evt.target.textContent && !evt.target.innerText) return;
+			var src = evt.target.innerText;
 			this.listName = src;
 			this.$emit("updateListName", {
 				newName: this.listName,
