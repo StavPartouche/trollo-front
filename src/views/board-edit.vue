@@ -341,6 +341,10 @@ export default {
 				taskIdx: this.currTaskIdx,
 				checkList: newCheckList,
 			});
+			this.$message({
+            type: 'success',
+            message: `checklist "${checkListData.title}" was added`
+			})
 			socket.emit("log", activity);
 		},
 		removeCheckList(idx) {
@@ -525,6 +529,10 @@ export default {
 				taskIdx: this.currTaskIdx,
 				bgc,
 			});
+			this.$message({
+            type: 'success',
+            message: `${this.currTask.name} color wad changed`
+          });
 			socket.emit("log", activity);
 		},
 		removeTask() {
