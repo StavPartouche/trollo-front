@@ -29,7 +29,7 @@
       <!-- </li> -->
     <!-- </ul> -->
     <div class="invite" v-if="showInvite">
-      <p v-if="!membersToInvite">No users to show</p>
+      <!-- <p v-if="!membersToInvite">No users to show</p> -->
       <!-- <input
         v-else
         type="text"
@@ -98,7 +98,7 @@ export default {
           return boardMember._id === member._id;
         });
       });
-      if (!toInvite.length) return;
+      if (!toInvite.length) return [];
       return toInvite.filter((member) => {
         return member.fullName.includes(this.filterBy);
       });
