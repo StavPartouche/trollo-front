@@ -103,9 +103,10 @@ export default {
       }
     },
     openWarning() {
-        this.$confirm('This will permanently delete the task. Continue?', 'Warning', {
+        this.$confirm('This will permanently delete the board. Continue?', 'Warning!', {
           confirmButtonText: 'Delete',
           cancelButtonText: 'Cancel',
+          customClass:'delete-warning',
           type: 'warning'
         }).then(() => {
           this.removeBoard()
