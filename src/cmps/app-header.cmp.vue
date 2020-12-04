@@ -1,16 +1,16 @@
 <template>
   <nav class="app-header flex align-center justify-space-between">
     <div class="widht-200 app-header-left flex align-center justify-start">
-      <router-link to="/">
+      <router-link class="app-header-home" to="/">
         <font-awesome-icon class="icon home-icon" :icon="['fas', 'home']" />
-        Home
+        <!-- Home -->
       </router-link>
-      <router-link to="/board" title="boards">
+      <router-link class="app-header-board" to="/board" title="boards">
         <font-awesome-icon
           class="icon board-icon"
           :icon="['fas', 'th-large']"
         />
-        Boards
+        <!-- Boards -->
       </router-link>
     </div>
     <router-link to="/" class="logo"><span>T</span>rollo</router-link>

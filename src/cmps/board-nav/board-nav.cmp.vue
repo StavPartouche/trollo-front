@@ -1,8 +1,9 @@
 <template>
-  <div class="board-nav flex justify-space-between align-center">
+  <!-- <div class="board-nav flex justify-space-between align-center"> -->
+  <div class="board-nav">
     <!-- <div v-if="isMenu" @click="closeMenu" class="disable-page-container"></div> -->
     <div v-if="menu" @click="closeMenu" class="disable-page-container"></div>
-    <div class="flex center">
+    <div class="board-nav-name flex center">
       <h2
         class="board-name"
         contenteditable
@@ -11,15 +12,28 @@
       >
         {{ nameToEdit }}
       </h2>
-      <input
-        class="board-nav-btn"
-        type="text"
-        placeholder="Search Task"
-        @keydown.enter="emitSearch"
-      />
+
       <button class="board-nav-btn" @click="toggleFilter">
+        <font-awesome-icon class="board-nav-icon" :icon="['fas', 'filter']" />
         {{ filterSelect }}
       </button>
+      <div
+        class="board-nav-btn flex center search-container"
+        
+      >
+        <button class="search-btn" @click="toggleSearch">
+          <font-awesome-icon
+            class="board-nav-icon search-icon"
+            :icon="['fas', 'search']"
+          />
+        </button>
+        <input
+          v-if="isSearch"
+          type="text"
+          placeholder="Search Task"
+          @keydown.enter="emitSearch"
+        />
+      </div>
       <div
         v-if="isFilterOpts"
         @click="toggleFilter"
@@ -52,30 +66,43 @@
         </ul>
       </div>
     </div>
-    <div class="flex center">
+    <div class="board-nav-tools">
       <board-member
         @removeBoardMember="removeBoardMember"
         @addBoardMember="addBoardMember"
         :boardMembers="members"
       />
       <!-- <button class="board-nav-btn">Team</button> -->
-      <button @click="openBackground" class="board-nav-btn">
-		  <font-awesome-icon class="board-nav-icon" :icon="['fas', 'paint-roller']" />
-		</button>
-      <button @click="openDashboard" class="board-nav-btn">
-        <font-awesome-icon class="board-nav-icon" :icon="['fas', 'chart-bar']" />
+      <div class="flex center">
+
+      <button @click="openBackground" class="board-nav-btn icon-container">
+        <font-awesome-icon
+          class="board-nav-icon"
+          :icon="['fas', 'paint-roller']"
+        />
       </button>
-      <div class="board-nav-btn settings-icon-container flex center">
+      <button @click="openDashboard" class="board-nav-btn icon-container">
+        <font-awesome-icon
+          class="board-nav-icon"
+          :icon="['fas', 'chart-bar']"
+        />
+      </button>
+      <div class="board-nav-btn flex center icon-container">
+        <!-- <div class="board-nav-btn settings-icon-container flex center icon-container"> -->
         <!-- <button v-if="isMenu" @click="closeMenu" class="open-menu-btn"> -->
-        <button v-if="menu" @click="closeMenu" class="open-menu-btn times">
-          <font-awesome-icon :icon="['fas', 'times']" />
+        <button v-if="menu" @click="closeMenu" class="close-menu-btn times">
+          <font-awesome-icon class="board-nav-icon" :icon="['fas', 'times']" />
         </button>
         <!-- <button class="open-menu-btn" v-if="!isMenu" @click="openMenu"> -->
-        <button v-if="!menu" @click="openMenu">
+        <button v-if="!menu" @click="openMenu" class="">
           <!-- <font-awesome-icon :icon="['fas', 'ellipsis-h']" />
           Show Menu -->
-		  <font-awesome-icon class="settings-icon" :icon="['fas', 'sliders-h']" />
+          <font-awesome-icon
+            class="settings-icon board-nav-icon"
+            :icon="['fas', 'sliders-h']"
+          />
         </button>
+      </div>
       </div>
     </div>
     <dashboard
@@ -116,6 +143,7 @@ export default {
       filterBy: "",
       filterSelect: "All Members",
       isFilterOpts: false,
+      isSearch: false,
     };
   },
   computed: {
@@ -173,6 +201,9 @@ export default {
     },
     emitSearch(ev) {
       this.$emit("search", ev.target.value);
+    },
+    toggleSearch() {
+      this.isSearch = !this.isSearch;
     },
   },
   watch: {
