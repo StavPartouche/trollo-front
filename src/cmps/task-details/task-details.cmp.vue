@@ -21,7 +21,10 @@
         <p><font-awesome-icon :icon="['far', 'clock']" />{{ dueDate(task.dueDate) }}</p>
     </div> -->
     <div class="task-editor-main flex">
-      <div class="task-details flex-column">
+      <div class="loading-spinner-container" v-if="isLoading">
+        <img class="loading-spinner" src="../../styles/assets/loading-attachment.gif" />
+      </div>
+      <div v-if="!isLoading" class="task-details flex-column">
           <div class="date-container flex center" v-if="task.dueDate">
             <p><font-awesome-icon :icon="['far', 'clock']" /> {{ dueDate(task.dueDate) }}</p>
           </div>
@@ -166,7 +169,8 @@ export default {
       isPopup: false,
       cmpType: "",
       isComments: true,
-      isActivities: false
+      isActivities: false,
+      isLoading: false
     };
   },
   methods: {
@@ -208,6 +212,7 @@ export default {
     async onUploadImg(ev) {
       this.isLoading = true;
       const res = await uploadImg(ev);
+      this.isLoading = false
       this.$emit("UploadImg", res.url);
     },
     updateTaskName(evt) {
