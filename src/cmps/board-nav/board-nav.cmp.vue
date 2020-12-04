@@ -66,7 +66,7 @@
 				Background
 			</button>
 			<button @click="openDashboard" class="board-nav-btn">
-				<font-awesome-icon :icon="['fas', 'chart-bar']" />
+				<font-awesome-icon class="dashbord-icon" :icon="['fas', 'chart-bar']" />
 			</button>
 			<div class="board-nav-btn flex center">
 				<!-- <button v-if="isMenu" @click="closeMenu" class="open-menu-btn"> -->
