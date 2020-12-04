@@ -1,41 +1,57 @@
 .home-page {
+    flex: 1;
     font-family: quicksand;
     // flex: 1;
     position: relative;
-    min-height: calc(100vh - 80px);
+    // min-height: calc(100vh - 80px);
     // background-image: url('../styles/assets/home1.jpg');
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+    color: #000000ad;
+    h1.logo {
+        text-shadow: -3px 4px #383838;
+        font-size: 123px;
+    }
     .try-now-btn {
-        background-color: transparent;
-        img {
-            filter: drop-shadow(0 0 6px white);
-            filter: grayscale(1);
-            &:hover {
-                transform: scale(1.1);
-            }
+        margin-top: rem(14px);
+        border-radius: 33px;
+        padding: 14px 22px;
+        font-size: rem(27px);
+        font-weight: bold;
+        // color: #000000b3;
+        color: #ffffffb3;
+        background: #202020e8;
+        &:hover {
+            margin-top: rem(11px);
+            font-size: rem(30px)
         }
+        // background-color: transparent;
+        // img {
+        //     filter: drop-shadow(0 0 6px white);
+        //     filter: grayscale(1);
+        //     &:hover {
+        //         transform: scale(1.1);
+        //     }
+        // }
     }
-    flex: 1;
-    footer {
-        position: absolute;
-        text-align: center;
-        width: 100vw;
-        height: 40px;
-        bottom: 0;
-        padding: 15px;
-        background-color: rgb(58, 58, 58);
-        p {
-            margin: 0 auto;
-            color: white;
-            font-weight: bold;
-            font-size: rem(14px);
-            span {
-                font-weight: normal;
-                font-size: rem(18px);
-                vertical-align: sub;
-            }
-        }
-    }
+    // footer {
+    //     position: absolute;
+    //     text-align: center;
+    //     width: 100vw;
+    //     height: 40px;
+    //     bottom: 0;
+    //     padding: 15px;
+    //     background-color: rgb(58, 58, 58);
+    //     p {
+    //         margin: 0 auto;
+    //         color: white;
+    //         font-weight: bold;
+    //         font-size: rem(14px);
+    //         span {
+    //             font-weight: normal;
+    //             font-size: rem(18px);
+    //             vertical-align: sub;
+    //         }
+    //     }
 }
