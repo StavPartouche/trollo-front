@@ -5,6 +5,7 @@
     <ul class="labels-container" v-if="labels">
         <li @click="toggleLabel(label)" class="chose-label" :style='{backgroundColor: label.backgroundColor}' v-for="(label,idx) in labels" :key="idx">
             <h3>{{label.txt}}</h3>
+            <font-awesome-icon class="label-txt-btn" :icon="['fas', 'pencil-alt']" />
         </li>
     </ul>
   </div>

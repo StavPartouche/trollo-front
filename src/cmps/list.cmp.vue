@@ -10,8 +10,6 @@
 			<h2
 				class="list-header"
 				contenteditable
-				@mousedown="toggleIsDrag"
-				@mouseup="toggleIsDrag"
 				@blur="updateListName"
 				v-text="listName"
 				:id="'list' + listIdx"
@@ -107,7 +105,6 @@ export default {
 			isAddInput: false,
 			isListEdit: false,
 			listName: null,
-			isDrag: false,
 			dropPlaceholderOptions: {
 				className: 'drop-preview',
 				animationDuration: '150',
@@ -124,7 +121,7 @@ export default {
 			this.isListEdit = false;
 		},
 		updateListName(evt) {
-			if (this.isDrag) return;
+			if (evt.target.textContent && !evt.target.innerText) return;
 			var src = evt.target.innerText;
 			this.listName = src;
 			this.$emit("updateListName", {
@@ -155,9 +152,6 @@ export default {
 		removeList(listIdx) {
 			this.closeListEdit();
 			this.$emit("removeList", listIdx);
-		},
-		toggleIsDrag() {
-			this.isDrag = !this.isDrag;
 		},
 		onDrop(listId, dropResult) {
 			this.$emit('drop', { listId, dropResult });

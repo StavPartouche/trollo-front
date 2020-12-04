@@ -2,60 +2,72 @@
 	<section class="board-list">
 		<template v-if="loggedInUser">
 			<h2>User Boards:</h2>
-			<el-row class="flex justify-center wrap">
-				<el-col :span="2" :offset="0">
-					<el-card @click.native="openPrompt"
-						><img class="plus-icon" src="../styles/assets/plus.png"
-					/></el-card>
-				</el-col>
-				<el-col
-					:span="4"
-					v-for="board in userBoards"
-					:key="board._id"
-					:offset="1"
-				>
-					<router-link :to="'/board/' + board._id">
-						<el-card
-							class="flex center"
-							:body-style="{ padding: '0px' }"
-						>
-							<div style="padding: 14px">
-								<span>{{ board.name }}</span>
-								<div class="bottom clearfix"></div>
+			<div class="grid-container felx center">
+				<el-row class="grid">
+					<el-col :span="2" :offset="0">
+						<el-card class="add-board-card" @click.native="openPrompt">
+							<div class="add-board-card-header flex center">
+								<font-awesome-icon class="plus-icon" :icon="['fas', 'plus']" />
+								<h2>CREAT BOARD</h2>
 							</div>
 						</el-card>
-					</router-link>
-				</el-col>
-			</el-row>
+					</el-col>
+					<el-col
+						:span="4"
+						v-for="board in userBoards"
+						:key="board._id"
+						:offset="0"
+					>
+						<router-link :to="'/board/' + board._id">
+							<el-card
+								class="flex center background-image"
+								:body-style="{ padding: '0px', }"
+								:style="boardBackgorund(board.style)"
+							>
+								<div class="card-header-container">
+									<span class="card-header">{{ board.name }}</span>
+									
+								</div>
+							</el-card>
+						</router-link>
+					</el-col>
+				</el-row>
+			</div>
 			<hr />
 		</template>
 		<h2>Public Boards:</h2>
-		<el-row class="flex justify-center wrap">
-			<el-col v-if="!loggedInUser" :span="2" :offset="0">
-				<el-card
-					class="flex center"
-					:body-style="{ height: '75px' }"
-					@click.native="openPrompt"
-					><img class="plus-icon" src="../styles/assets/plus.png"
-				/></el-card>
-			</el-col>
-			<el-col
-				:span="4"
-				v-for="board in publicBoards"
-				:key="board._id"
-				:offset="1"
-			>
-				<router-link :to="'/board/' + board._id">
-					<el-card :body-style="{ padding: '0px', height: '75px' }">
-						<div style="padding: 14px">
-							<span>{{ board.name }}</span>
-							<div class="bottom clearfix"></div>
-						</div>
-					</el-card>
-				</router-link>
-			</el-col>
-		</el-row>
-		<hr />
+		<div class="grid-container felx center">
+			<el-row class="grid">
+				<el-col v-if="!loggedInUser" :span="2" :offset="0">
+					<el-card class="add-board-card" @click.native="openPrompt">
+								<div class="add-board-card-header flex center">
+									<font-awesome-icon class="plus-icon" :icon="['fas', 'plus']" />
+									<h2>CREAT BOARD</h2>
+								</div>
+							</el-card>
+				</el-col>
+				<el-col
+					:span="4"
+					v-for="board in publicBoards"
+					:key="board._id"
+					:offset="0"
+				>
+					<router-link :to="'/board/' + board._id">
+						<el-card
+								class="flex center background-image"
+								:body-style="{ padding: '0px', }"
+								:style="boardBackgorund(board.style)"
+							>
+								<div class="card-header-container">
+									<span class="card-header">{{ board.name }}</span>
+									
+								</div>
+							</el-card>
+					</router-link>
+				</el-col>
+			</el-row>
+		</div>
+		<!-- <hr />
 		<h2>Templates:</h2>
 		<el-row class="flex justify-center wrap">
 			<el-col
@@ -73,7 +85,7 @@
 					</el-card>
 				</router-link>
 			</el-col>
-		</el-row>
+		</el-row> -->
 	</section>
 </template>
 
@@ -91,6 +103,10 @@ export default {
 		};
 	},
 	methods: {
+		boardBackgorund(style){
+			if(style.url === 'color') return {backgroundColor: `${style.backgroundColor}`}
+			else return {backgroundImage: `url(${require(`@/styles/assets/board-background-imgs/${style.url}`)})`}
+		},
 		async addBoard(value) {
 			const user = this.loggedInUser;
 			var newBoard = (user) ? boardService.getEmptyBoard(user._id) : boardService.getEmptyBoard();
@@ -152,7 +168,7 @@ export default {
 			type: "loadBoards",
 		});
 		// eventBusService.$emit('boardBgc', {type: 'img', img:'desk3.jpg'})
-		eventBusService.$emit('boardBgc', { url: 'desk6.jpg' });
+		eventBusService.$emit('boardBgc', { url: 'color', backgroundColor:'#ddd' });
 	},
 	destroyed() {
 		socket.off('removeBoard');

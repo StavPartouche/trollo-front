@@ -4,12 +4,13 @@ import './registerServiceWorker';
 import router from './router/router';
 import store from './store/store';
 import ElementUI from 'element-ui';
+import locale from 'element-ui/lib/locale/lang/en'
 import 'element-ui/lib/theme-chalk/index.css';
 import '@fortawesome/fontawesome-free/css/all.css'
 import '@fortawesome/fontawesome-free/js/all.js'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faUserSecret } from '@fortawesome/free-solid-svg-icons'
-import { faChevronLeft, faClock, faPaintRoller, faSlidersH, faHandPointer, faFileAlt, faUser, faTimes, faChartBar, faEllipsisH, faTrashAlt, faEllipsisV, faAlignJustify, faHistory, faUserPlus, faTasks, faPlus, faAlignLeft, faComment, faPaperclip, faHome, faThLarge, faCheck, faFilter, faSearch } from '@fortawesome/free-solid-svg-icons'
+import { faChevronLeft, faClock, faPaintRoller, faSlidersH, faHandPointer, faFileAlt, faUser, faTimes, faChartBar, faEllipsisH, faTrashAlt, faEllipsisV, faAlignJustify, faHistory, faUserPlus, faTasks, faPlus, faAlignLeft, faComment, faPaperclip, faHome, faThLarge, faCheck, faPencilAlt, faFilter, faSearch } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 // import VueCharts from 'vue-chartjs'
 // import { Bar, Line } from 'vue-chartjs'
@@ -39,13 +40,14 @@ library.add(faPaintRoller)
 library.add(faSlidersH)
 library.add(faFilter)
 library.add(faSearch)
+library.add(faPencilAlt)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 import './styles/styles.scss';
 
 Vue.config.productionTip = false;
-Vue.use(ElementUI);
+Vue.use(ElementUI, { locale })
 
 new Vue({
     router,
