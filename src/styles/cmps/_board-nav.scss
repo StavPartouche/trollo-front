@@ -18,6 +18,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        margin-left: 10px;
     }
     button {
         background-color: transparent;
@@ -34,7 +35,6 @@
         border: none;
         border-radius: 0px;
         padding: 6px;
-        width: 100px;
         border-bottom: gray solid 0.5px;
         &:focus {
             background-color: transparent;
@@ -55,10 +55,13 @@
         &.search-container {
             padding-left: 3.5px;
             padding-right: 3.5px;
-        }
-        .search-btn {
-            padding-left: 1px;
-            padding-right: 1px;
+            .search-input {
+                width: 100px;
+            }
+            .search-btn {
+                padding-left: 1px;
+                padding-right: 1px;
+            }
         }
         &:hover {
             background-color: rgba(255, 255, 255, 0.76);
@@ -81,6 +84,7 @@
                 font-size: 15px;
             }
         }
+        .background-icon {}
     }
     .board-name {
         font-family: sans-serif;
@@ -140,10 +144,30 @@
     // .board-setting-container {
     //     position: relative;
     // }
-    @include for-narrow-layout {
-        flex-direction: column-reverse;
+    // @include for-normal-layout {
+    //     .board-name {
+    //         max-width: 200px;
+    //     }
+    // }
+    @include for-normal-layout {
+        // flex-direction: column-reverse;
+        // height: 100px;
+        .board-name {
+            max-width: 200px;
+        }
         .board-nav-tools {
-            justify-content: space-between;
+            // justify-content: space-between;
+            // width: 100%;
+            .board-member {
+                .user-avatar {
+                    display: none;
+                }
+            }
+            .board-nav-btn {
+                &.background-btn {
+                    display: none;
+                }
+            }
         }
     }
 }

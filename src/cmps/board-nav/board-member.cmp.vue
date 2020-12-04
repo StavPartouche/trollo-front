@@ -6,7 +6,7 @@
       class="disable-page-container"
     ></div>
     <!-- <ul class="flex center"> -->
-          <user-avatar         v-for="member in boardMembers"
+          <user-avatar v-for="member in boardMembers"
         :key="member._id"
         @removeBoardMember="removeBoardMember"
         :user="member"></user-avatar>
@@ -23,7 +23,11 @@
           v-if="allMembers"
           @click="openShowInvite"
         > 
-        <p>+</p>
+        <p class="plus-icon">+</p>
+                <font-awesome-icon
+          class="board-nav-icon user-icon"
+          :icon="['fas', 'user']"
+        />
           <!-- <font-awesome-icon :icon="['fas', 'plus']" /> -->
         </button>
       <!-- </li> -->

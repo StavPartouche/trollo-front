@@ -1,5 +1,5 @@
 <template>
-  <div v-if="user" :style="avatarSize">
+  <div class="user-avatar" v-if="user" :style="avatarSize">
   <avatar class="vue-avatar" :size="width" v-if="!user.imgUrl" :username="user.fullName"></avatar>
   <el-avatar v-else :size="width" :src="user.imgUrl"></el-avatar>
   </div>

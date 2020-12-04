@@ -1,7 +1,6 @@
 <template>
   <!-- <div class="board-nav flex justify-space-between align-center"> -->
   <div class="board-nav">
-    <!-- <div v-if="isMenu" @click="closeMenu" class="disable-page-container"></div> -->
     <div v-if="menu" @click="closeMenu" class="disable-page-container"></div>
     <div class="board-nav-name flex center">
       <h2
@@ -28,6 +27,7 @@
           />
         </button>
         <input
+        class="search-input"
           v-if="isSearch"
           type="text"
           placeholder="Search Task"
@@ -72,12 +72,11 @@
         @addBoardMember="addBoardMember"
         :boardMembers="members"
       />
-      <!-- <button class="board-nav-btn">Team</button> -->
-      <div class="flex center">
+      <!-- <div class="flex center"> -->
 
-      <button @click="openBackground" class="board-nav-btn icon-container">
+      <button @click="openBackground" class="board-nav-btn background-btn icon-container">
         <font-awesome-icon
-          class="board-nav-icon"
+          class="board-nav-icon "
           :icon="['fas', 'paint-roller']"
         />
       </button>
@@ -102,7 +101,7 @@
             :icon="['fas', 'sliders-h']"
           />
         </button>
-      </div>
+      <!-- </div> -->
       </div>
     </div>
     <dashboard
