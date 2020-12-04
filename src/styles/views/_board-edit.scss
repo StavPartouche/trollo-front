@@ -140,8 +140,10 @@
                     font-size: 1rem;
                     margin: 0;
                     min-width: 200px;
+                    padding-bottom: 1px;
                     &:hover,
                     &:focus {
+                        padding-bottom: 0;
                         border-bottom: 1px solid rgba(0, 0, 0, 0.336);
                         outline: none;
                     }
