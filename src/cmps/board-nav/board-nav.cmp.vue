@@ -59,19 +59,22 @@
         :boardMembers="members"
       />
       <!-- <button class="board-nav-btn">Team</button> -->
-      <button @click="openBackground" class="board-nav-btn">Background</button>
+      <button @click="openBackground" class="board-nav-btn">
+		  <font-awesome-icon class="board-nav-icon" :icon="['fas', 'paint-roller']" />
+		</button>
       <button @click="openDashboard" class="board-nav-btn">
-        <font-awesome-icon class="dashbord-icon" :icon="['fas', 'chart-bar']" />
+        <font-awesome-icon class="board-nav-icon" :icon="['fas', 'chart-bar']" />
       </button>
-      <div class="board-nav-btn flex center">
+      <div class="board-nav-btn settings-icon-container flex center">
         <!-- <button v-if="isMenu" @click="closeMenu" class="open-menu-btn"> -->
         <button v-if="menu" @click="closeMenu" class="open-menu-btn times">
           <font-awesome-icon :icon="['fas', 'times']" />
         </button>
         <!-- <button class="open-menu-btn" v-if="!isMenu" @click="openMenu"> -->
-        <button class="open-menu-btn" v-if="!menu" @click="openMenu">
-          <font-awesome-icon :icon="['fas', 'ellipsis-h']" />
-          Show Menu
+        <button v-if="!menu" @click="openMenu">
+          <!-- <font-awesome-icon :icon="['fas', 'ellipsis-h']" />
+          Show Menu -->
+		  <font-awesome-icon class="settings-icon" :icon="['fas', 'sliders-h']" />
         </button>
       </div>
     </div>

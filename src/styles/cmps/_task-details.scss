@@ -63,6 +63,18 @@
         width: 100%;
         overflow-y: hidden;
         flex: 1;
+        .loading-spinner-container{
+            height: 100%;
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            img{
+                width: 150px;
+                margin-bottom: 50px;
+            }
+        }
         .task-details {
             height: 100%;
             flex: 1;
