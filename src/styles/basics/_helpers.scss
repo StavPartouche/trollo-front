@@ -96,7 +96,6 @@
 
 .card-ghost {
 	transition: transform 0.5s ease;
-	// transform: var(--rotate);
 	transform: rotateZ(var(--rotate));
 }
 
