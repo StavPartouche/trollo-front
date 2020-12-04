@@ -9,7 +9,7 @@ import '@fortawesome/fontawesome-free/css/all.css'
 import '@fortawesome/fontawesome-free/js/all.js'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faUserSecret } from '@fortawesome/free-solid-svg-icons'
-import { faChevronLeft ,faClock , faTimes, faChartBar, faEllipsisH,faTrashAlt, faEllipsisV, faAlignJustify, faHistory, faUserPlus, faTasks, faPlus, faAlignLeft, faComment ,faPaperclip,faHome, faThLarge, faCheck  } from '@fortawesome/free-solid-svg-icons'
+import { faChevronLeft ,faClock, faHandPointer, faFileAlt,faUser, faTimes, faChartBar, faEllipsisH,faTrashAlt, faEllipsisV, faAlignJustify, faHistory, faUserPlus, faTasks, faPlus, faAlignLeft, faComment ,faPaperclip,faHome, faThLarge, faCheck  } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 // import VueCharts from 'vue-chartjs'
 // import { Bar, Line } from 'vue-chartjs'
@@ -32,6 +32,9 @@ library.add(faThLarge)
 library.add(faClock)
 library.add(faChartBar)
 library.add(faCheck)
+library.add(faUser)
+library.add(faFileAlt)
+library.add(faHandPointer)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 

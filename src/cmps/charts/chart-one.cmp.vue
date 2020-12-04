@@ -13,7 +13,7 @@ export default {
       datasets: [
         {
           label: "Tasks per list",
-          backgroundColor: "#f87979",
+          backgroundColor: ["#A6F4E8","#6FBCB0","#FEE2B3","#665D4E","#B5AA99","#007664",],
           data: this.TasksPerLists,
         },
       ],

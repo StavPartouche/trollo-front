@@ -1,46 +1,51 @@
 <template>
   <div class="dashboard">
+    <button class="exit-btn" @click="closeDashbord"><font-awesome-icon class="data-card-icon" :icon="['fas', 'times']" /></button>
     <div class="dashboard-data flex">
       <div class="data-card">
-        <p>icon</p>
-        <div>
+        <font-awesome-icon class="data-card-icon" :icon="['fas', 'user']" />
+        <div class="data-card-details">
           <h3>{{ membersCount }}</h3>
-          <h3>Members</h3>
+          <p>Members</p>
         </div>
       </div>
       <div class="data-card">
-        <p>icon</p>
-        <div>
+        <font-awesome-icon class="data-card-icon" :icon="['fas', 'file-alt']" />
+        <div class="data-card-details">
           <h3>{{totalTasksCount}}</h3>
-          <h3>Total tasks</h3>
+          <p>Total tasks</p>
         </div>
       </div>
       <div class="data-card">
-        <p>icon</p>
-        <div>
+        <font-awesome-icon class="data-card-icon" :icon="['fas', 'times']" />
+        <div class="data-card-details">
           <h3>{{unassingnedTasksCount}}</h3>
-          <h3>Unassingned Tasks</h3>
+          <p>Unassingned Tasks</p>
         </div>
       </div>
       <div class="data-card">
-        <p>icon</p>
-        <div>
+        <font-awesome-icon class="data-card-icon" :icon="['fas', 'hand-pointer']" />
+        <div class="data-card-details">
           <h3>{{activitiesCount}}</h3>
-          <h3>Activities</h3>
+          <p>Activities</p>
         </div>
       </div>
-      <button @click="closeDashbord">X</button>
     </div>
     <div class="charts">
-        <div class="chart">
+      <div class="charts-top">
+        <div class="chart chart-bar">
             <chart-one :board="board"/>
         </div>
-        <div class="chart">
-            <chart-two :board="board" :members="members"/>
-        </div>
-        <div class="chart">
+        <div class="chart chart-doughnut">
+            <!-- <chart-two :board="board" :members="members"/> -->
             <chart-three :board="board"/>
+            
         </div>
+      </div>
+      <div class="chart-line flex center">
+          <!-- <chart-three :board="board"/> -->
+          <chart-two :board="board" :members="members"/>
+      </div>
     </div>
   </div>
 </template>
@@ -97,7 +102,7 @@ export default {
       chartThree
   },
   created(){
-      console.log(this.board);
+      
   }
 };
 </script>
