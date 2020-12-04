@@ -98,10 +98,6 @@ button {
 
 .weak-btn {
     background-color: transparent;
-    &hover {
-        // list-style: ;;
-    }
-    // color: whitesmoke;
 }
 
 .green-btn {
@@ -142,17 +138,10 @@ textarea {
 
 .logo,
 .logo:active {
-    // color: rgb(230, 230, 230);
     color: #faf8f8d9;
     // text-shadow: 1px 1px black;
     font-family: megrim;
-    // font-family: audi;
-    // font-family: orbitron;
-    // font-family: sarpanch;
-    // font-family: cuteFont;
-    // font-family: novaFlat;
-    // font-family: textMeOne;
     span {
-        font-size: 1.1em; // color: rgb(136, 199, 183)
+        font-size: 1.1em;
     }
 }

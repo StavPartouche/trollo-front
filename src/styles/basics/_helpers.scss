@@ -52,11 +52,10 @@
     cursor: pointer;
 }
 
-.img-circle {
-    @include aspect-ratio(100, 100);
-    border-radius: 50%;
-}
-
+// .img-circle {
+//     @include aspect-ratio(100, 100);
+//     border-radius: 50%;
+// }
 .avatar {
     border-radius: 50%;
     height: 30px;
@@ -91,17 +90,17 @@
 }
 
 :root {
-	--rotate: 0deg;
+    --rotate: 0deg;
 }
 
 .card-ghost {
-	transition: transform 0.5s ease;
-	transform: rotateZ(var(--rotate));
+    transition: transform 0.5s ease;
+    transform: rotateZ(var(--rotate));
 }
 
 .card-ghost-drop {
-	transition: transform 0.2s ease-in-out;
-	transform: rotateZ(0deg);
+    transition: transform 0.2s ease-in-out;
+    transform: rotateZ(0deg);
 }
 
 .y-auto {
