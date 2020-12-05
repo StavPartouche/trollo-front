@@ -12,7 +12,7 @@
 			</div>
           <router-link
             :to="'/board/' + board._id"
-            v-for="board in publicBoards"
+            v-for="board in userBoards"
             :key="board._id"
           >
             <div
