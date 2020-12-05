@@ -142,6 +142,9 @@ export default {
 	  validateInput(input){
 		  if(!input) return false
 		  else return true
+	  },
+	  loadBoard() {
+		  this.$store.dispatch({type: 'loadBoards'});
 	  }
 	},
 	computed: {
@@ -162,17 +165,15 @@ export default {
 		const user = (sessionStorage.getItem('user')) ? JSON.parse(sessionStorage.getItem('user')) : { userName: 'guest' };
 		socket.setup(user);
 		socket.emit('userConnect', user);
-		socket.on('removeBoard', () => this.$store.dispatch({type: 'loadBoards'}));
-		socket.on('addBoard', () => this.$store.dispatch({type: 'loadBoards'}));
-		this.$store.dispatch({
-			type: "loadBoards",
-		});
+		socket.on('removeBoard', this.loadBoard());
+		socket.on('addBoard', this.loadBoard());
+		this.loadBoard();
 		// eventBusService.$emit('boardBgc', {type: 'img', img:'desk3.jpg'})
 		eventBusService.$emit('boardBgc', { url: 'color', backgroundColor:'#ddd' });
 	},
 	destroyed() {
-		socket.off('removeBoard');
-		socket.off('addBoard');
+		socket.off('removeBoard', this.loadBoard());
+		socket.off('addBoard', this.loadBoard());
 		socket.terminate();
 	}
 };
