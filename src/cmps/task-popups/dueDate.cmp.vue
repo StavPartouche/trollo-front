@@ -4,10 +4,11 @@
     <button @click="closePopup" class="exit-popup-btn"><font-awesome-icon :icon="['fas', 'times']" /></button>
     <!-- <input @input="updateDueDate" type="date" v-model="date" /> -->
     <el-date-picker
+      @input="updateDueDate" 
       v-model="date"
       type="date"
       placeholder="Pick a day"
-      :picker-options="pickerOptions">
+      picker-options="Pick a day">
     </el-date-picker>
   </div>
 </template>
@@ -17,6 +18,9 @@ export default {
   name: "dueDate",
   data() {
     return {
+      pickerOptions: {
+          
+        },
       date: "",
     };
   },
