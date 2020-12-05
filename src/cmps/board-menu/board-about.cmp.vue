@@ -37,7 +37,7 @@
             rows="6"
           ></textarea>
       </li>
-      <li @click.stop="removeBoard" class="menu-btn">Delete board</li>
+      <li @click.stop="removeBoard" class="menu-delete-board">Delete board</li>
     </ul>
   </div>
 </template>

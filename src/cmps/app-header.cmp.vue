@@ -21,6 +21,7 @@
           class="pointer nav-avatar"
           v-if="loggedInUser"
           :user="loggedInUser"
+          :width="33"
         ></user-avatar>
         <div v-if="isMenu" class="user-menu">
           <!-- <h3>Menu</h3> -->

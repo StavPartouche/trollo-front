@@ -127,6 +127,11 @@ export default {
     boardBackground,
     boardActivity
   },
+  watch:{
+menu(){
+      if (this.menu==='bgc') this.isBackground = true;
+}
+  },
   created() {
     if (this.menu==='bgc') this.isBackground = true;
   },
