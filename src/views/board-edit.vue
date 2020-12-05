@@ -100,7 +100,6 @@ import list from "../cmps/list.cmp";
 import { Container, Draggable } from "vue-smooth-dnd";
 import socket from "@/services/socket.service";
 import io from "socket.io-client";
-import _ from "lodash";
 
 export default {
 	name: "board-edit",

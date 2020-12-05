@@ -16,6 +16,7 @@
         type="text"
         placeholder="Search Task"
         @keydown.enter="emitSearch"
+        @input="emitSearch"
       />
       <button class="board-nav-btn" @click="toggleFilter">
         {{ filterSelect }}
@@ -98,6 +99,7 @@
 import boardMember from "./board-member.cmp";
 import boardMemberCard from "./board-member-card.cmp";
 import dashboard from "../dashboard.cmp";
+import _ from "lodash";
 
 export default {
   name: "board-nav",
@@ -186,6 +188,7 @@ export default {
   },
   created() {
     this.nameToEdit = this.name;
+    this.emitSearch = _.debounce(this.emitSearch, 500);
     document.body.addEventListener("keyup", this.onKeyUp);
   },
   destroyed() {
