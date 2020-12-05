@@ -6,7 +6,7 @@
       class="disable-page-container"
     ></div>
     <!-- <ul class="flex center"> -->
-          <user-avatar v-for="member in boardMembers"
+          <user-avatar class="user-avatar-nav" v-for="member in boardMembers"
         :key="member._id"
         @removeBoardMember="removeBoardMember"
         :user="member"></user-avatar>
