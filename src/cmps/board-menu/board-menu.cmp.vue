@@ -52,7 +52,7 @@ export default {
   props: {
     name: String,
     description: String,
-    dueDate: String,
+    dueDate: [String, Date],
     activities: Array,
     menu: String
   },

@@ -18,12 +18,19 @@
         Due Date:
         <!-- <h4>Due Date:</h4> -->
 
-        <input
+        <!-- <input
           class="justify-end"
           type="date"
           v-model="dueDateEdit"
           @change="updateBoardDueDate"
-        />
+        /> -->
+        <el-date-picker class="date-input"
+          @input="updateBoardDueDate" 
+          v-model="dueDateEdit"
+          type="date"
+          placeholder="Pick a day"
+          picker-options="Pick a day">
+        </el-date-picker>
       </li>
       <li>
         Description:
@@ -48,11 +55,12 @@ export default {
   props: {
     name: String,
     description: String,
-    dueDate: String,
+    dueDate: [String,Date],
   },
   data() {
     return {
       descToEdit: null,
+      dueDateEdit: null
     };
   },
   methods: {
