@@ -45,7 +45,6 @@ export default {
   },
   methods: {  
     closePopup() {
-      console.log('closepopup bgc');
       this.$emit("closePopup");
     },
     setTaskColor(ev){

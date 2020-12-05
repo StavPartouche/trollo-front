@@ -54,7 +54,6 @@ export default {
       this.$emit("addMember", memberId);
     },
     removeMember(memberId) {
-      console.log('remove');
       this.$emit("removeMember", memberId);
     },
   },
@@ -74,7 +73,6 @@ export default {
     userAvatar,
   },
   created() {
-    console.log(this.selectedMembers, this.allMembers);
   },
 };
 </script>

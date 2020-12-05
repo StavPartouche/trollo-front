@@ -67,11 +67,9 @@ export default {
     },
     openMenu() {
       this.isMenu = true;
-      console.log("open menu");
     },
     closeMenu() {
       this.isMenu = false;
-      console.log("close menu");
     },
     // toggleMenu(){
     // 	this.isMenu = !this.isMenu
