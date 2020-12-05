@@ -10,7 +10,7 @@
 
         <li @click="toggleIsBackground" class="menu-btn">Change background</li>
 
-        <li @click.stop="openWarning" class="menu-btn">Delete board</li>
+        <!-- <li @click.stop="openWarning" class="menu-btn">Delete board</li> -->
         <hr />
         <li class="menu-btn" @backToMenu="backToMenu">
           Activity-log
@@ -24,7 +24,7 @@
         @backToMenu="backToMenu"
         @updateBoardDesc="updateBoardDesc"
         @updateBoardDueDate="updateBoardDueDate"
-        @removeBoard="removeBoard"
+        @removeBoard="openWarning"
         v-if="isAbout"
         :name="name"
         :description="description"
