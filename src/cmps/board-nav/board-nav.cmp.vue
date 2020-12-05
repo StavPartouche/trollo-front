@@ -11,9 +11,10 @@
       >
         {{ nameToEdit }}
       </h2>
-      <button class="board-nav-btn" @click="toggleFilter">
+
+      <button class="board-nav-btn flex center" @click="toggleFilter">
         <font-awesome-icon class="board-nav-icon" :icon="['fas', 'filter']" />
-        {{ filterSelect }}
+       <p class="filte-by-members"> {{ filterSelect }} </p>
       </button>
       <div
         class="board-nav-btn flex center search-container"

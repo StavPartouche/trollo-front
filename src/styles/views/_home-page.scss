@@ -9,8 +9,11 @@
         text-shadow: -2px 3px 2px #383838;
         font-size: 123px;
     }
+    h2 {
+        margin-bottom: 14px;
+    }
     .try-now-btn {
-        margin-top: rem(14px);
+        // margin-top: rem(14px);
         border-radius: 33px;
         padding: 14px 22px;
         font-size: rem(27px);
@@ -18,7 +21,7 @@
         color: #ffffffb3;
         background: #202020e8;
         &:hover {
-            margin-top: rem(11px);
+            // margin-top: rem(11px);
             font-size: rem(30px)
         }
         // background-color: transparent;
