@@ -13,7 +13,7 @@
 			:board="board"
 		></board-nav>
 		<board-menu
-			v-if="menu"
+:class="showMenu"
 			@removeBoard="removeBoard"
 			@saveBoardBgc="saveBoardBgc"
 			@updateBoardName="updateBoardName"
@@ -687,6 +687,9 @@ export default {
 			const user = this.$store.getters.loggedInUser;
 			return user ? user._id : 'guest';
 		},
+		showMenu(){
+		return{'show-menu': this.menu}
+		}
 	},
 	components: {
 		boardNav,
