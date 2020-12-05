@@ -21,7 +21,8 @@
 					{{ label.txt }}
 				</h3>
 				<button class="label-txt-btn" @click.stop="toggleEditLabel(idx)">
-					<font-awesome-icon v-if="!isEditable(idx)"
+					<!-- <font-awesome-icon v-if="!isEditable(idx)" -->
+					<font-awesome-icon v-if="!isEdits[idx]"
 						:icon="['fas', 'pencil-alt']"
 					/>
 					<font-awesome-icon v-else
@@ -41,7 +42,7 @@ export default {
 	},
 	data() {
 		return {
-      // isEdit: false
+      isEdits: []
 		};
 	},
 	methods: {
@@ -59,9 +60,10 @@ export default {
 		},
 		toggleEditLabel(idx) {
       const elH3 = this.$refs[`label${idx}`][0];
-      elH3.contentEditable = !this.isEditable(idx);
-      // console.log(this.isEditable(idx))
-			if (this.isEditable(idx)) elH3.focus();
+      elH3.contentEditable = !this.isEdits[idx];
+      this.isEdits[idx] = !this.isEdits[idx];
+      console.log(this.isEdits)
+			if (this.isEdits[idx]) elH3.focus();
 		},
 		emitLabelTxt(idx) {
       const txt = this.$refs[`label${idx}`][0].innerText;
