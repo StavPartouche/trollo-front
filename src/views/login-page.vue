@@ -179,7 +179,6 @@ export default {
     userAvatar,
   },
   created() {
-    console.log("this.loggedinUser", this.loggedinUser);
   },
 };
 </script>

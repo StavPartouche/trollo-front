@@ -62,7 +62,6 @@ export default {
     },
     isEditable(idx) {
       if (!this.$refs[`label${idx}`]) return;
-      // console.log(this.$refs[`label${idx}`][0].isContentEditable)
       return this.$refs[`label${idx}`][0].isContentEditable;
     },
     toggleLabel(label, idx) {
@@ -70,12 +69,9 @@ export default {
       this.$emit("toggleLabel", label);
     },
     toggleEditLabel(idx) {
-		console.log(idx);
-    //   this.isEdits[idx] = !this.isEdits[idx];
       this.isEdits[`${idx}`] = !this.isEdits[`${idx}`];
       const elH3 = this.$refs[`label${idx}`][0];
       elH3.contentEditable = this.isEdits[`${idx}`];
-      console.log(this.isEdits)
       if (this.isEdits[`${idx}`]) elH3.focus();
     },
     emitLabelTxt(idx) {

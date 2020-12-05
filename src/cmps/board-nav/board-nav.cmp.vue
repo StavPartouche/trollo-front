@@ -213,7 +213,6 @@ export default {
     },
     toggleSearch() {
       this.isSearch = !this.isSearch;
-      // console.log(this.$refs)
       this.$refs.search.focus();
     },
   },
@@ -230,7 +229,7 @@ export default {
     dashboard,
   },
   mounted() {
-    console.log(this.$refs.search)
+    // console.log(this.$refs.search)
   },
   created() {
     this.nameToEdit = this.name;

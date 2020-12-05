@@ -29,20 +29,8 @@ export default {
       isBgcColor: false,
       bgcImg: "",
       bgcColor: "",
-      // disablePage: {
-      //   isDisable: false,
-      //   zIndex: 1,
-      //   to: null
-      // },
     };
   },
-  // methods: {
-  //   closeDisable() {
-  //     this.disablePage.isDisable = false;
-  //     eventBusService.$emit(`disablePage-${this.disablePage.to}`)
-  //     console.log('closeDisable');
-  //   },
-  // },
   computed: {
     background() {
       if (this.isBgcImg) {

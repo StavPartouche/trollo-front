@@ -12,7 +12,7 @@
 			</div>
           <router-link
             :to="'/board/' + board._id"
-            v-for="board in publicBoards"
+            v-for="board in userBoards"
             :key="board._id"
           >
             <div
@@ -170,7 +170,6 @@ export default {
       this.$router.push(`/board/${saveBoard._id}`);
     },
     openPrompt() {
-      console.log("here");
       this.$prompt("Please enter new board name", "Create new board", {
         confirmButtonText: "Create",
         cancelButtonText: "Cancel",

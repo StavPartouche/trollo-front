@@ -13,7 +13,7 @@
 			:board="board"
 		></board-nav>
 		<board-menu
-:class="showMenu"
+			:class="showMenu"
 			@removeBoard="removeBoard"
 			@saveBoardBgc="saveBoardBgc"
 			@updateBoardName="updateBoardName"
@@ -177,12 +177,10 @@ export default {
 		},
 		updateBoardDesc(desc) {
 			this.board.description = desc;
-			console.log(this.board.description);
 			const activity = boardService.newActivity(
 				`updated board description`,
 				this.userId
 			);
-			console.log("updat board desc");
 			this.board.activities.unshift(activity);
 			socket.emit("boardDesc", desc);
 			socket.emit("log", activity);
@@ -203,7 +201,6 @@ export default {
 				this.board.style.url = "color";
 				this.board.style.backgroundColor = bgc.color;
 			}
-			console.log("saveBoardBgc");
 			eventBusService.$emit("boardBgc", this.board.style);
 			const activity = boardService.newActivity(
 				`updated board background`,
@@ -341,9 +338,9 @@ export default {
 				checkList: newCheckList,
 			});
 			this.$message({
-            type: 'success',
-            message: `checklist "${checkListData.title}" was added`
-			})
+				type: 'success',
+				message: `checklist "${checkListData.title}" was added`
+			});
 			socket.emit("log", activity);
 		},
 		removeCheckList(idx) {
@@ -529,9 +526,9 @@ export default {
 				bgc,
 			});
 			this.$message({
-            type: 'success',
-            message: `${this.currTask.name} color wad changed`
-          });
+				type: 'success',
+				message: `${this.currTask.name} color wad changed`
+			});
 			socket.emit("log", activity);
 		},
 		removeTask() {
@@ -609,11 +606,10 @@ export default {
 			if (type === "removeBoardMember") this.removeBoardMember(data);
 			if (type === "addBoardMember") this.addBoardMember(data);
 			if (type === "boardDesc") this.board.description = data;
-			if (type === "boardStyle"){
-				this.board.style = data
+			if (type === "boardStyle") {
+				this.board.style = data;
 				if (this.$route.name === "board-edit") eventBusService.$emit("boardBgc", data);
-				// להוסיף תנאי שאם אנחנו בלוח הרלוונטי (או לוודא שזה לא קורה כשאני לוח אחר בהירוקו)
-				} 
+			}
 			if (type === "dragInBoard") this.board.lists = data;
 			if (type === "removeList") this.board.lists.splice(data, 1);
 			if (type === "addList") this.board.lists.push(data);
@@ -674,9 +670,9 @@ export default {
 				const filterRes = listCopy.tasks.filter(task => task.members.includes(filter));
 				const searchRes = listCopy.tasks.filter(task => task.name.toLowerCase().includes(search.toLowerCase()));
 				if (filter && search) {
-          const set = new Set(filterRes, searchRes);
+					const set = new Set(filterRes, searchRes);
 					listCopy.tasks = [...set];
-        }
+				}
 				else if (filter && !search) listCopy.tasks = filterRes;
 				else listCopy.tasks = searchRes;
 				if (listCopy.tasks.length) lists.push(listCopy);
@@ -687,8 +683,8 @@ export default {
 			const user = this.$store.getters.loggedInUser;
 			return user ? user._id : 'guest';
 		},
-		showMenu(){
-		return{'show-menu': this.menu}
+		showMenu() {
+			return { 'show-menu': this.menu };
 		}
 	},
 	components: {
