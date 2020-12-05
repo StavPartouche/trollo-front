@@ -20,7 +20,7 @@
     <!-- <div class="date-container flex center" v-if="task.dueDate">
         <p><font-awesome-icon :icon="['far', 'clock']" />{{ dueDate(task.dueDate) }}</p>
     </div> -->
-    <div class="task-editor-main flex">
+    <div class="task-editor-main">
       <div class="loading-spinner-container" v-if="isLoading">
         <img class="loading-spinner" src="../../styles/assets/loading-attachment.gif" />
       </div>
@@ -100,39 +100,44 @@
         @closePopup="closePopup"
         @toggleLabel="toggleLabel"
         @setTaskColor="setTaskColor"
+        @labelTxt="setLabelTxt"
       />
       <div class="side-bar-container flex-column">
         <p class="side-bar-p">Add To Task</p>
-        <button class="side-bar-btn" @click="openPopup('checkList')">
-          CheckList
-        </button>
-        <button class="side-bar-btn" @click="openPopup('labels')">
-          Labels
-        </button>
-        <button class="side-bar-btn" @click="openPopup('members')">
-          Members
-        </button>
-        <button class="side-bar-btn" @click="openPopup('dueDate')">
-          Due date
-        </button>
-        <button class="side-bar-btn" @click="openPopup('backgroundColor')">
-          Background
-        </button>
-        <label class="btn side-bar-btn">
-          Attachments
-          <input
-            class="add-attachments-input"
-            type="file"
-            @change="onUploadImg"
-          />
-        </label>
-                <p class="side-bar-p">More...</p>
-        <button class="side-bar-btn weak-btn" @click="copyTask(task)">
-          Duplicate
-        </button>
-        <button class="side-bar-btn weak-btn" @click="openWarning">
-          Delete this task
-        </button>
+        <div class="add-btns-container">
+          <button class="side-bar-btn" @click="openPopup('checkList')">
+            CheckList
+          </button>
+          <button class="side-bar-btn" @click="openPopup('labels')">
+            Labels
+          </button>
+          <button class="side-bar-btn" @click="openPopup('members')">
+            Members
+          </button>
+          <button class="side-bar-btn" @click="openPopup('dueDate')">
+            Due date
+          </button>
+          <button class="side-bar-btn" @click="openPopup('backgroundColor')">
+            Background
+          </button>
+          <label class="btn side-bar-btn">
+            Attachments
+            <input
+              class="add-attachments-input"
+              type="file"
+              @change="onUploadImg"
+            />
+          </label>
+        </div>
+        <p class="side-bar-p">More...</p>
+        <div class="add-btns-container">
+          <button class="side-bar-btn weak-btn" @click="copyTask(task)">
+            Duplicate
+          </button>
+          <button class="side-bar-btn weak-btn" @click="openWarning">
+            Delete this task
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -298,6 +303,13 @@ export default {
             message: "Delete canceled",
           });
         });
+    },
+    setLabelTxt({idx, txt}) {
+      this.labels[idx].txt = txt;
+      this.$message({
+            type: 'success',
+            message: 'Label updated successfully'
+			})
     },
   },
   watch: {

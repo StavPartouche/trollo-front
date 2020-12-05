@@ -37,6 +37,7 @@
             rows="6"
           ></textarea>
       </li>
+      <li @click.stop="removeBoard" class="menu-btn">Delete board</li>
     </ul>
   </div>
 </template>
@@ -55,6 +56,9 @@ export default {
     };
   },
   methods: {
+    removeBoard(){
+      this.$emit("removeBoard");
+    },
     updateBoardDueDate() {
       this.$emit("updateBoardDueDate", this.dueDateEdit);
     },
