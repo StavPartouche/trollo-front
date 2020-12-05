@@ -191,49 +191,43 @@ export default {
             message: "Input canceled",
           });
         });
-    },
-    validateInput(input) {
-      if (!input) return false;
-      else return true;
-    },
-  },
-  computed: {
-    userBoards() {
-      return this.$store.getters.userBoardsForDisplay;
-    },
-    publicBoards() {
-      return this.$store.getters.publicBoardsForDisplay;
-    },
-    templateBoards() {
-      return this.$store.getters.templatesForDisplay;
-    },
-    loggedInUser() {
-      return this.$store.getters.loggedInUser;
-    },
-  },
-  created() {
-    const user = sessionStorage.getItem("user")
-      ? JSON.parse(sessionStorage.getItem("user"))
-      : { userName: "guest" };
-    socket.setup(user);
-    socket.emit("userConnect", user);
-    socket.on("removeBoard", () =>
-      this.$store.dispatch({ type: "loadBoards" })
-    );
-    socket.on("addBoard", () => this.$store.dispatch({ type: "loadBoards" }));
-    this.$store.dispatch({
-      type: "loadBoards",
-    });
-    // eventBusService.$emit('boardBgc', {type: 'img', img:'desk3.jpg'})
-    eventBusService.$emit("boardBgc", {
-      url: "color",
-      backgroundColor: "#ddd",
-    });
-  },
-  destroyed() {
-    socket.off("removeBoard");
-    socket.off("addBoard");
-    socket.terminate();
-  },
+	  },
+	  validateInput(input){
+		  if(!input) return false
+		  else return true
+	  },
+	  loadBoard() {
+		  this.$store.dispatch({type: 'loadBoards'});
+	  }
+	},
+	computed: {
+		userBoards() {
+			return this.$store.getters.userBoardsForDisplay;
+		},
+		publicBoards() {
+			return this.$store.getters.publicBoardsForDisplay;
+		},
+		templateBoards() {
+			return this.$store.getters.templatesForDisplay;
+		},
+		loggedInUser() {
+			return this.$store.getters.loggedInUser;
+		}
+	},
+	created() {
+		const user = (sessionStorage.getItem('user')) ? JSON.parse(sessionStorage.getItem('user')) : { userName: 'guest' };
+		socket.setup(user);
+		socket.emit('userConnect', user);
+		socket.on('removeBoard', this.loadBoard());
+		socket.on('addBoard', this.loadBoard());
+		this.loadBoard();
+		// eventBusService.$emit('boardBgc', {type: 'img', img:'desk3.jpg'})
+		eventBusService.$emit('boardBgc', { url: 'color', backgroundColor:'#ddd' });
+	},
+	destroyed() {
+		socket.off('removeBoard', this.loadBoard());
+		socket.off('addBoard', this.loadBoard());
+		socket.terminate();
+	}
 };
 </script>
