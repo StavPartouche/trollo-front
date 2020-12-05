@@ -12,7 +12,7 @@
 			:members="members"
 			:board="board"
 		></board-nav>
-		<board-menu
+		<board-menu v-if="board"
 			:class="showMenu"
 			@removeBoard="removeBoard"
 			@saveBoardBgc="saveBoardBgc"
