@@ -609,7 +609,11 @@ export default {
 			if (type === "removeBoardMember") this.removeBoardMember(data);
 			if (type === "addBoardMember") this.addBoardMember(data);
 			if (type === "boardDesc") this.board.description = data;
-			if (type === "boardStyle") eventBusService.$emit("boardBgc", data);
+			if (type === "boardStyle"){
+				this.board.style = data
+				if (this.$route.name === "board-edit") eventBusService.$emit("boardBgc", data);
+				// להוסיף תנאי שאם אנחנו בלוח הרלוונטי (או לוודא שזה לא קורה כשאני לוח אחר בהירוקו)
+				} 
 			if (type === "dragInBoard") this.board.lists = data;
 			if (type === "removeList") this.board.lists.splice(data, 1);
 			if (type === "addList") this.board.lists.push(data);
