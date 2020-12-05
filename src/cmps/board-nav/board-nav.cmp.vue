@@ -2,7 +2,8 @@
   <!-- <div class="board-nav flex justify-space-between align-center"> -->
   <div class="board-nav">
     <div v-if="menu" @click="closeMenu" class="disable-page-container"></div>
-    <div class="board-nav-name flex center">
+      <div>
+
       <h2
         class="board-name"
         contenteditable
@@ -11,11 +12,16 @@
       >
         {{ nameToEdit }}
       </h2>
+      </div>
 
-      <button class="board-nav-btn flex center" @click="toggleFilter">
+      <div class="nav-2">
+        <div class="flex center">
+
+      <button class="filter-btn board-nav-btn flex center" @click="toggleFilter">
         <font-awesome-icon class="board-nav-icon" :icon="['fas', 'filter']" />
        <p class="filte-by-members"> {{ filterSelect }} </p>
       </button>
+    <!-- <div class="board-nav-name flex center"> -->
       <div
         class="board-nav-btn flex center search-container"
       >
@@ -27,7 +33,7 @@
         </button>
         <input
         class="search-input"
-          v-show="isSearch"
+        :class="{'search-input-hide': !isSearch}"
           type="text"
           ref="search"
           placeholder="Search Task"
@@ -35,6 +41,7 @@
           @input="emitSearch"
         />
       </div>
+        </div>
       <div
         v-if="isFilterOpts"
         @click="toggleFilter"
@@ -66,7 +73,7 @@
           </li>
         </ul>
       </div>
-    </div>
+    <!-- </div> -->
     <div class="board-nav-tools">
       <board-member
         @removeBoardMember="removeBoardMember"
@@ -116,6 +123,7 @@
       @click="closeDashbord"
       class="disable-page-container"
     ></div>
+  </div>
   </div>
 </template>
 

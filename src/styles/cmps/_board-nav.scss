@@ -1,181 +1,218 @@
-.board-nav {
-    position: relative;
-    padding: 10px;
-    height: 50px;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    // padding: 10px 23px;
-    // font-size: rem(13px);
-    // background-color: rgba(255, 255, 255, 0.548);
-    // color: #292929d9;
-    color: #292929;
-    h2 {
-        margin-bottom: 0;
-    }
-    .board-nav-tools {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-left: 10px;
-    }
-    button {
-        background-color: transparent;
-        margin: 2.5px;
-        color: #292929;
-        // font-size: 1.3rem;
-        // color: #292929d9;
-        // &.search-btn {
-        //     width: 35px;
-        // }
-    }
-    input {
-        background-color: transparent;
-        border: none;
-        border-radius: 0px;
-        padding: 6px;
-        border-bottom: gray solid 0.5px;
-        &:focus {
-            background-color: transparent;
-        }
-        // border-bottom: gray solid 0.5px;
-    }
-    .board-nav-btn {
-        height: 35px;
-        border-radius: 3px;
-        padding: 9px;
-        background-color: rgba(255, 255, 255, 0.65);
-        p {
-            margin: 0;
-        }
-        .filte-by-members {
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-        &:not(:last-child) {
-            margin-right: 7px;
-        }
-        // svg {
-        //     font-size: 10px;
-        // }
-        &.search-container {
-            padding-left: 3.5px;
-            padding-right: 3.5px;
-            .search-input {
-                width: 100px;
-            }
-            .search-btn {
-                padding-left: 1px;
-                padding-right: 1px;
-            }
-        }
-        &:hover {
-            background-color: rgba(255, 255, 255, 0.76);
-        }
-        &.icon-container {
-            width: 35px;
-        }
-        .board-nav-icon {
-            // font-size: 19px;
-            // color: #000000bf;
-            font-size: 17px;
-            color: #000000a1;
-        }
-        .close-menu-btn {
-            z-index: 2;
-            cursor: pointer;
-            border: none;
-            padding: 1px;
-            &.times svg {
-                font-size: 15px;
-            }
-        }
-        .background-icon {}
-    }
-    .board-name {
-        font-family: sans-serif;
-        outline: none;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        color: #fffffffa;
-        margin-right: 5px;
-        margin-bottom: 4px;
-        text-shadow: 1px 1px 1px #0000008f;
-        // color: #fffffff7;
-        // margin-bottom: 5px
-        &:focus {
-            border-radius: 0;
-            border-bottom: gray 1px solid;
-        }
-    }
-    .lists-filter {
-        position: absolute;
-        top: 47px;
-        left: 266px;
-        background-color: #f7f7f7;
-        padding: 5px;
-        border-radius: 5px;
-        z-index: 1;
-        input {
-            // border-bottom: gray solid 0.5px;
-        }
-    }
-    .settings-icon-container {
-        // width: 35px;
-        // .settings-icon {
-        //     // font-size: 19px;
-        //     // color: #000000bf;
-        //     font-size: 17px;
-        //     color: #000000a1;
-        // }
-    }
-    .userToShow {
-        padding: 2px;
-        cursor: pointer;
-        &.user-card-container {
-            margin-right: -12px;
-        }
-        p {
-            margin: 0 7px 2px;
-        }
-    }
-    // .board-background {
-    //     width: 145px;
-    //     align-self: center;
-    // }
-    // .widht-200 {
-    //     width: 250px;
-    // }
-    // .board-setting-container {
-    //     position: relative;
-    // }
-    // @include for-normal-layout {
-    //     .board-name {
-    //         max-width: 200px;
-    //     }
-    // }
-    @include for-normal-layout {
-        // flex-direction: column-reverse;
-        // height: 100px;
-        .board-name {
-            max-width: 200px;
-        }
-        .board-nav-tools {
-            // justify-content: space-between;
-            // width: 100%;
-            .board-member {
-                .user-avatar {
-                    display: none;
+            .board-nav {
+                position: relative;
+                padding: 10px;
+                height: 50px;
+                width: 100%;
+                display: flex;
+                align-items: center;
+                // justify-content: space-between;
+                // padding: 10px 23px;
+                // font-size: rem(13px);
+                // background-color: rgba(255, 255, 255, 0.548);
+                // color: #292929d9;
+                color: #292929;
+                h2 {
+                    margin-bottom: 0;
+                }
+                .nav-2 {
+                    flex: 1;
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                }
+                .board-nav-tools {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    margin-left: 10px;
+                }
+                button {
+                    background-color: transparent;
+                    margin: 2.5px;
+                    color: #292929;
+                    // font-size: 1.3rem;
+                    // color: #292929d9;
+                    // &.search-btn {
+                    //     width: 35px;
+                    // }
+                }
+                input {
+                    background-color: transparent;
+                    border: none;
+                    border-radius: 0px;
+                    padding: 6px;
+                    // border-bottom: gray solid 0.5px;
+                    &:focus {
+                        background-color: transparent;
+                    }
+                    // border-bottom: gray solid 0.5px;
+                }
+                .board-nav-btn {
+                    height: 35px;
+                    border-radius: 3px;
+                    padding: 9px;
+                    background-color: rgba(255, 255, 255, 0.65);
+                    p {
+                        margin: 0;
+                    }
+                    .filte-by-members {
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                    }
+                    &:not(:last-child) {
+                        margin-right: 7px;
+                    }
+                    // svg {
+                    //     font-size: 10px;
+                    // }
+                    &.search-container {
+                        padding-left: 3.5px;
+                        padding-right: 3.5px;
+                        .search-input {
+                            width: 100px;
+                        }
+                        .search-input-hide {
+                            display: none;
+                        }
+                        .search-btn {
+                            padding-left: 1px;
+                            padding-right: 1px;
+                        }
+                    }
+                    &:hover {
+                        background-color: rgba(255, 255, 255, 0.76);
+                    }
+                    &.icon-container {
+                        width: 35px;
+                    }
+                    .board-nav-icon {
+                        // font-size: 19px;
+                        // color: #000000bf;
+                        font-size: 17px;
+                        color: #000000a1;
+                    }
+                    .close-menu-btn {
+                        z-index: 2;
+                        cursor: pointer;
+                        border: none;
+                        padding: 1px;
+                        &.times svg {
+                            font-size: 15px;
+                        }
+                    }
+                    .background-icon {}
+                }
+                .board-name {
+                    font-family: sans-serif;
+                    outline: none;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    color: #fffffffa;
+                    margin-right: 5px;
+                    margin-bottom: 4px;
+                    text-shadow: 1px 1px 1px #0000008f;
+                    // color: #fffffff7;
+                    // margin-bottom: 5px
+                    &:focus {
+                        border-radius: 0;
+                        // border-bottom: gray 1px solid;
+                    }
+                }
+                .lists-filter {
+                    position: absolute;
+                    top: 47px;
+                    left: 266px;
+                    background-color: #f7f7f7;
+                    padding: 5px;
+                    border-radius: 5px;
+                    z-index: 1;
+                    input {
+                        border-bottom: gray solid 0.5px;
+                    }
+                }
+                .settings-icon-container {
+                    // width: 35px;
+                    // .settings-icon {
+                    //     // font-size: 19px;
+                    //     // color: #000000bf;
+                    //     font-size: 17px;
+                    //     color: #000000a1;
+                    // }
+                }
+                .userToShow {
+                    padding: 2px;
+                    cursor: pointer;
+                    &.user-card-container {
+                        margin-right: -12px;
+                    }
+                    p {
+                        margin: 0 7px 2px;
+                    }
+                }
+                // .board-background {
+                //     width: 145px;
+                //     align-self: center;
+                // }
+                // .widht-200 {
+                //     width: 250px;
+                // }
+                // .board-setting-container {
+                //     position: relative;
+                // }
+                // @include for-normal-layout {
+                //     .board-name {
+                //         max-width: 200px;
+                //     }
+                // }
+                @include for-normal-layout {
+                    // flex-direction: column-reverse;
+                    // height: 100px;
+                    .board-name {
+                        // max-width: 200px;
+                    }
+                    .board-nav-tools {
+                        // justify-content: space-between;
+                        // width: 100%;
+                        .board-member {
+                            .user-avatar {
+                                display: none;
+                            }
+                        }
+                        .board-nav-btn {
+                            &.background-btn {
+                                display: none;
+                            }
+                        }
+                    }
+                }
+                @include for-narrow-layout {
+                    height: 100px;
+                    flex-direction: column-reverse;
+                    align-items: center;
+                    // flex-wrap: wrap-reverse;
+                    .board-name {
+                        // max-width: 200px;
+                    }
+                    // .nav-1 {
+                    //     align-self: normal;
+                    // }
+                    .nav-2 {
+                        // justify-content: flex-end;
+                        // flex-wrap: wrap-reverse;
+                    }
+                    .board-nav-btn {
+                        &.search-container {
+                            margin-left: 5px;
+                            margin-right: 0;
+                            .search-input-hide {
+                                display: block;
+                            }
+                        }
+                        &.filter-btn {
+                            margin: 0;
+                        }
+                    }
                 }
             }
-            .board-nav-btn {
-                &.background-btn {
-                    display: none;
-                }
-            }
-        }
-    }
-}
