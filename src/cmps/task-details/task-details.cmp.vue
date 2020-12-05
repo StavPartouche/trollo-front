@@ -100,6 +100,7 @@
         @closePopup="closePopup"
         @toggleLabel="toggleLabel"
         @setTaskColor="setTaskColor"
+        @labelTxt="setLabelTxt"
       />
       <div class="side-bar-container flex-column">
         <p class="side-bar-p">Add To Task</p>
@@ -298,6 +299,13 @@ export default {
             message: "Delete canceled",
           });
         });
+    },
+    setLabelTxt({idx, txt}) {
+      this.labels[idx].txt = txt;
+      this.$message({
+            type: 'success',
+            message: 'Label updated successfully'
+			})
     },
   },
   watch: {

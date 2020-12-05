@@ -12,13 +12,12 @@
         {{ nameToEdit }}
       </h2>
 
-      <button class="board-nav-btn" @click="toggleFilter">
+      <button class="board-nav-btn flex center" @click="toggleFilter">
         <font-awesome-icon class="board-nav-icon" :icon="['fas', 'filter']" />
-        {{ filterSelect }}
+       <p class="filte-by-members"> {{ filterSelect }} </p>
       </button>
       <div
         class="board-nav-btn flex center search-container"
-        
       >
         <button class="search-btn" @click="toggleSearch">
           <font-awesome-icon
@@ -28,10 +27,12 @@
         </button>
         <input
         class="search-input"
-          v-if="isSearch"
+          v-show="isSearch"
           type="text"
+          ref="search"
           placeholder="Search Task"
           @keydown.enter="emitSearch"
+          @input="emitSearch"
         />
       </div>
       <div
@@ -124,6 +125,7 @@
 import boardMember from "./board-member.cmp";
 import boardMemberCard from "./board-member-card.cmp";
 import dashboard from "../dashboard.cmp";
+import _ from "lodash";
 
 export default {
   name: "board-nav",
@@ -203,19 +205,28 @@ export default {
     },
     toggleSearch() {
       this.isSearch = !this.isSearch;
+      // console.log(this.$refs)
+      this.$refs.search.focus();
     },
   },
   watch: {
     name() {
       this.nameToEdit = this.name;
     },
+    // '$refs.search.style.display'() {
+    //   this.$refs.search.focus();
+    // }
   },
   components: {
     boardMember,
     dashboard,
   },
+  mounted() {
+    console.log(this.$refs.search)
+  },
   created() {
     this.nameToEdit = this.name;
+    this.emitSearch = _.debounce(this.emitSearch, 500);
     document.body.addEventListener("keyup", this.onKeyUp);
   },
   destroyed() {
