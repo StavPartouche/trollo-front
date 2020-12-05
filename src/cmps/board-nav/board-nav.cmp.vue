@@ -11,21 +11,12 @@
       >
         {{ nameToEdit }}
       </h2>
-      <!-- <input
-        class="board-nav-btn"
-        type="text"
-        placeholder="Search Task"
-        @keydown.enter="emitSearch"
-        @input="emitSearch"
-      /> -->
-
       <button class="board-nav-btn" @click="toggleFilter">
         <font-awesome-icon class="board-nav-icon" :icon="['fas', 'filter']" />
         {{ filterSelect }}
       </button>
       <div
         class="board-nav-btn flex center search-container"
-        
       >
         <button class="search-btn" @click="toggleSearch">
           <font-awesome-icon
@@ -35,10 +26,12 @@
         </button>
         <input
         class="search-input"
-          v-if="isSearch"
+          v-show="isSearch"
           type="text"
+          ref="search"
           placeholder="Search Task"
           @keydown.enter="emitSearch"
+          @input="emitSearch"
         />
       </div>
       <div
@@ -211,16 +204,24 @@ export default {
     },
     toggleSearch() {
       this.isSearch = !this.isSearch;
+      // console.log(this.$refs)
+      this.$refs.search.focus();
     },
   },
   watch: {
     name() {
       this.nameToEdit = this.name;
     },
+    // '$refs.search.style.display'() {
+    //   this.$refs.search.focus();
+    // }
   },
   components: {
     boardMember,
     dashboard,
+  },
+  mounted() {
+    console.log(this.$refs.search)
   },
   created() {
     this.nameToEdit = this.name;

@@ -41,6 +41,7 @@ export default {
 	},
 	data() {
 		return {
+      // isEdit: false
 		};
 	},
 	methods: {
@@ -48,7 +49,8 @@ export default {
 			this.$emit("closePopup");
     },
     isEditable(idx) {
-			if (!this.$refs[`label${idx}`]) return;
+      if (!this.$refs[`label${idx}`]) return;
+      // console.log(this.$refs[`label${idx}`][0].isContentEditable)
       return this.$refs[`label${idx}`][0].isContentEditable;
     },
 		toggleLabel(label, idx) {
@@ -58,7 +60,7 @@ export default {
 		toggleEditLabel(idx) {
       const elH3 = this.$refs[`label${idx}`][0];
       elH3.contentEditable = !this.isEditable(idx);
-      console.log(this.isEditable(idx))
+      // console.log(this.isEditable(idx))
 			if (this.isEditable(idx)) elH3.focus();
 		},
 		emitLabelTxt(idx) {
