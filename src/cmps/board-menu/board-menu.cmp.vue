@@ -95,6 +95,7 @@ export default {
       this.isActivityLog = false;
       this.isAbout = false;
       this.isBackground = false;
+      // this.menu=null;
     },
     onKeyUp(ev){
       if (ev.keyCode === 27) {
@@ -129,7 +130,9 @@ export default {
   },
   watch:{
 menu(){
+  console.log(this.menu);
       if (this.menu==='bgc') this.isBackground = true;
+      if (this.menu==='main') this.backToMenu();
 }
   },
   created() {
