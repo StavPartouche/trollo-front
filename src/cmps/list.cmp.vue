@@ -32,6 +32,7 @@
 				orientation="vertical"
 				drag-handle-selector=".task-preview"
 				non-drag-area-selector="img"
+				:drag-begin-delay="dragDelay"
 				@drop="onDrop(list.id, $event)"
 				@drag-start="onDragStart"
 				@drag-end="onDragEnd"
@@ -99,6 +100,7 @@ export default {
 		listIdx: Number,
 		members: Array,
 		isNewList: Boolean,
+		dragDelay: Number,
 	},
 	data() {
 		return {
@@ -165,11 +167,11 @@ export default {
 		},
 		onDragEnd(ev) {
 			document.documentElement.removeEventListener('mousemove', this.mouseMove);
-			document.documentElement.style.setProperty('--rotate', '0deg')
+			document.documentElement.style.setProperty('--rotate', '0deg');
 		},
 		mouseMove(ev) {
 			const rotate = (ev.movementX > 0) ? '7deg' : '-7deg';
-			document.documentElement.style.setProperty('--rotate', rotate)
+			document.documentElement.style.setProperty('--rotate', rotate);
 		}
 	},
 	watch: {

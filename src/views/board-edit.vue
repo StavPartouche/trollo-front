@@ -12,7 +12,8 @@
 			:members="members"
 			:board="board"
 		></board-nav>
-		<board-menu v-if="board"
+		<board-menu
+			v-if="board"
 			:class="showMenu"
 			@removeBoard="removeBoard"
 			@saveBoardBgc="saveBoardBgc"
@@ -25,7 +26,7 @@
 			:dueDate="board.dueDate"
 			:activities="board.activities"
 		></board-menu>
-		<ul class="lists" v-if="board">
+		<ul class="lists" v-if="board" @touchstart="setDragDelay(200)" @touchend="fixActionRestriction">
 			<Container
 				orientation="horizontal"
 				drag-handle-selector=".list"
@@ -39,6 +40,7 @@
 						:listIdx="listIdx"
 						:members="members"
 						:isNewList="isNewList"
+						:dragDelay="dragDelay"
 						@removeList="removeList"
 						@openTask="openTask"
 						@addTask="addTask"
@@ -115,6 +117,7 @@ export default {
 			menu: null,
 			isNewList: false,
 			isSocketEv: false,
+			dragDelay: 0,
 			boardEditEvs: ['boardName', 'removeBoardMember', 'addBoardMember', 'boardDesc', 'boardStyle', 'dragInBoard', 'removeList', 'addList',
 				'listName', 'checkListItem', 'checkList', 'addTask', 'removeTask', 'taskMember', 'taskDueDate', 'taskName', 'taskDesc', 'uploadImg',
 				'attachment', 'previewImg', 'comment', 'label', 'taskColor', 'log'],
@@ -592,6 +595,16 @@ export default {
 				this.board = board;
 				socket.emit('dragInBoard', this.board.lists);
 			}
+		},
+		fixActionRestriction() {
+			this.dragDelay = 0;
+			document.body.classList.remove(
+				"smooth-dnd-no-user-select",
+				"smooth-dnd-disable-touch-action"
+			);
+		},
+		setDragDelay(amount) {
+			this.dragDelay = amount;
 		},
 		setFilterBy(memberId) {
 			this.filterByMemberId = memberId;
