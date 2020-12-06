@@ -1,5 +1,5 @@
 <template>
-  <section class="board-list">
+  <section class="board-list background-image">
     <template v-if="loggedInUser">
       <h2>User Boards</h2>
       <div class="grid-container felx center">
@@ -220,8 +220,8 @@ export default {
 		socket.on('removeBoard', this.loadBoard());
 		socket.on('addBoard', this.loadBoard());
 		this.loadBoard();
-		// eventBusService.$emit('boardBgc', {type: 'img', img:'desk3.jpg'})
-		eventBusService.$emit('boardBgc', { url: 'color', backgroundColor:'#ddd' });
+		eventBusService.$emit('boardBgc', {url: 'desk6.jpg'})
+		// eventBusService.$emit('boardBgc', { url: 'color', backgroundColor:'#ddd' });
 	},
 	destroyed() {
 		socket.off('removeBoard', this.loadBoard());
