@@ -51,6 +51,7 @@
 						@click="openTask(list.id, task.id)"
 						:style="{ backgroundColor: task.backgroundColor }"
 					>
+					<div class="flex justify-space-between">
 						<ul class="task-preview-labels flex">
 							<li
 								v-for="(label, idx) in task.labels"
@@ -61,6 +62,11 @@
 								}"
 							></li>
 						</ul>
+						<!-- <div class="task-preview-date flex due-date-green" v-if="task.dueDate"> -->
+						<div class="task-preview-date flex" :class="checkDate(task.dueDate)" v-if="task.dueDate">
+            				<p><font-awesome-icon :icon="['far', 'clock']" /> {{ dueDate(task.dueDate) }}</p>
+        				</div>
+					</div>
 						<div
 							class="task-preview-header flex align-center justify-space-between"
 						>
@@ -93,6 +99,7 @@ import { Container, Draggable } from 'vue-smooth-dnd';
 import addItemInput from "./add-item-input.cmp";
 import listEditMenu from "./list-edit-menu.cmp";
 import taskPreviewFotter from './task-preview-footer.cmp';
+import moment from 'moment'
 export default {
 	name: "list",
 	props: {
@@ -116,6 +123,15 @@ export default {
 		};
 	},
 	methods: {
+		checkDate(taskDate){
+			const currDate = new Date(taskDate).getTime()
+			if(currDate > Date.now()){
+				return 'due-date-green'
+			} 
+		},
+		dueDate(time){
+			return moment(time).format('MMM DD')
+		},
 		openListEdit() {
 			this.isListEdit = true;
 		},

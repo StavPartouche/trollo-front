@@ -1,19 +1,23 @@
 <template>
   <div class="task-preview-footer">
     <div class="task-preview-data">
-		<p class="task-preview-data-item" v-if="task.description !== ''">
-	  		<font-awesome-icon class="task-preview-data-item-icon" :icon="['fas', 'align-left']" />
-		</p>
-		<p class="task-preview-data-item" v-if="task.comments.length" >
-	  		<font-awesome-icon class="task-preview-data-item-icon" :icon="['far', 'comment']" /> {{task.comments.length}}
-		</p>
-		<p class="task-preview-data-item" v-if="task.attachments.length" >
-	  		<font-awesome-icon class="task-preview-data-item-icon" :icon="['fas', 'paperclip']" /> {{task.attachments.length}}
-		</p>
-		<p class="task-preview-data-item" v-if="task.checkLists.length">
-			<font-awesome-icon class="task-preview-data-item-icon" :icon="['fas', 'tasks']" /> {{ doneItems }}/{{ allItems }}
-		</p>
-    </div>
+      <div>
+        <div class="task-preview-data-items flex">
+          <p class="task-preview-data-item" v-if="task.description !== ''">
+              <font-awesome-icon class="task-preview-data-item-icon" :icon="['fas', 'align-left']" />
+          </p>
+          <p class="task-preview-data-item" v-if="task.comments.length" >
+              <font-awesome-icon class="task-preview-data-item-icon" :icon="['far', 'comment']" /> {{task.comments.length}}
+          </p>
+          <p class="task-preview-data-item" v-if="task.attachments.length" >
+              <font-awesome-icon class="task-preview-data-item-icon" :icon="['fas', 'paperclip']" /> {{task.attachments.length}}
+          </p>
+          <p class="task-preview-data-item" v-if="task.checkLists.length">
+            <font-awesome-icon class="task-preview-data-item-icon" :icon="['fas', 'tasks']" /> {{ doneItems }}/{{ allItems }}
+          </p>
+        </div>
+      </div>
+      </div>
     <ul class="task-preview-members flex" v-if="task.members.length">
       <li v-for="memberId in task.members" :key="memberId">
         <user-avatar :width="25" :user="getMemberById(memberId)"></user-avatar>
@@ -24,6 +28,7 @@
 
 <script>
 import userAvatar from "./user-avatar.cmp";
+import moment from 'moment'
 
 export default {
   name: "taskPreviewFooter",

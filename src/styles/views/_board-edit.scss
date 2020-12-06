@@ -158,6 +158,22 @@
                 padding: 8px;
                 margin-bottom: 10px;
                 cursor: pointer;
+                .task-preview-date{
+                    p{
+                        margin-bottom: -4px;
+                        border-radius: 3px;
+                        background-color: #e06060;
+                        font-weight: 600;
+                        padding: 2px;
+                        color: #ffe7e7;
+                        font-size: rem(12px);
+                    }
+                }
+                .due-date-green{
+                    p{
+                        background-color: #3bcc3d;
+                    }
+                }
                 .task-preview-header {
                     h4 {
                         margin-bottom: 10px;
