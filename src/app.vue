@@ -11,7 +11,9 @@
       :style="{ 'z-index': disablePage.zIndex }"
     ></div> -->
     <app-header />
+    <main>
     <router-view />
+    </main>
   </div>
 </template>
 
@@ -51,8 +53,10 @@ export default {
   watch: {
     $route(to, from) {
       if (this.$route.name === "home-page") {
-        this.isBgcImg = true;
-        this.bgcImg = "home1.jpg";
+          this.isBgcImg = false;
+          this.bgcImg = false;
+        // this.isBgcImg = true;
+        // this.bgcImg = "home1.jpg";
       }
       if (this.$route.name === "login-page") {
         this.isBgcImg = true;
@@ -67,14 +71,16 @@ export default {
     this.$store.dispatch({
       type: "loadUsers",
     });
-    if (this.$route.name === "home-page" || this.$route.name === "login-page") {
+    if (this.$route.name === "home-page") {
+      this.isBgcImg = false;
+      this.bgcImg = false;
+      // this.isBgcImg = true;
+      // this.bgcImg = "home1.jpg";
+    }
+    if (this.$route.name === "login-page") {
       this.isBgcImg = true;
       this.bgcImg = "home1.jpg";
     }
-    // if (this.$route.name === "login-page") {
-    //   this.isBgcImg = true;
-    //   this.bgcImg = "home1.jpg";
-    // }
     eventBusService.$on("boardBgc", (bgc) => {
       if (!bgc.url) {
         this.isBgcImg = false;
