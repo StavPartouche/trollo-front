@@ -669,12 +669,8 @@ export default {
 				const listCopy = Object.assign({}, list);
 				const filterRes = listCopy.tasks.filter(task => task.members.includes(filter));
 				const searchRes = listCopy.tasks.filter(task => task.name.toLowerCase().includes(search.toLowerCase()));
-				if (filter && search) {
-					const set = new Set(filterRes, searchRes);
-					listCopy.tasks = [...set];
-				}
-				else if (filter && !search) listCopy.tasks = filterRes;
-				else listCopy.tasks = searchRes;
+				if (filter && search) listCopy.tasks = filterRes.filter(task => searchRes.includes(task));
+				else listCopy.tasks = (filter) ? filterRes : searchRes;
 				if (listCopy.tasks.length) lists.push(listCopy);
 				return lists;
 			}, []);
