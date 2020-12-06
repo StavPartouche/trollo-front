@@ -165,11 +165,11 @@ export default {
 		},
 		onDragEnd(ev) {
 			document.documentElement.removeEventListener('mousemove', this.mouseMove);
-			document.documentElement.style.setProperty('--rotate', '0deg')
+			document.documentElement.style.setProperty('--rotate', '0deg');
 		},
 		mouseMove(ev) {
 			const rotate = (ev.movementX > 0) ? '7deg' : '-7deg';
-			document.documentElement.style.setProperty('--rotate', rotate)
+			document.documentElement.style.setProperty('--rotate', rotate);
 		}
 	},
 	watch: {
