@@ -17,7 +17,17 @@ export default {
           data: this.TasksPerLists,
         },
       ],
-    });
+    },
+    {
+      scales: {
+        yAxes: [{
+            ticks: {
+                beginAtZero: true
+            }
+        }]
+    }
+    }
+    );
   },
   computed:{
     listsName(){
