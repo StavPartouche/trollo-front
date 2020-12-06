@@ -33,19 +33,23 @@
     </div>
     <div class="charts">
       <div class="charts-top">
-        <div class="chart chart-bar">
+         <div class="chart">
+          <chart-two :board="board" :members="members"/>
+      </div>
+        <!-- <div class="chart chart-bar">
             <chart-one :board="board"/>
-        </div>
+        </div> -->
         <div class="chart chart-doughnut">
-            <!-- <chart-two :board="board" :members="members"/> -->
             <chart-three :board="board"/>
             
         </div>
       </div>
-      <div class="chart-line flex center">
-          <!-- <chart-three :board="board"/> -->
+      <div class="chart-bar  flex center">
+            <chart-one :board="board"/>
+        </div>
+      <!-- <div class="chart-line flex center">
           <chart-two :board="board" :members="members"/>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
