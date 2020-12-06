@@ -227,9 +227,17 @@
                         &.search-container {
                             margin-left: 2.5px;
                             margin-right: 2.5px;
+                            width: 94px;
+                            padding-left: 13px;
+                            .search-btn {
+                                padding-left: 10px;
+                            }
                             .search-input-hide {
                                 display: block;
-                                font-size: rem(12px)
+                                font-size: rem(12px);
+                                width: 82px;
+                                padding-left: 0px;
+                                margin-left: 0px;
                             }
                         }
                         &.filter-btn {
