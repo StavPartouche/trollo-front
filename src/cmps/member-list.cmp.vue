@@ -60,12 +60,12 @@ export default {
   computed: {
       selectedMembersToShow(){
           return this.selectedMembers.filter((member) => {
-        return member.userName.includes(this.filterBy);
+        return member.userName.toLowerCase().includes(this.filterBy.toLowerCase());
       })
       },
       allMembersToShow(){
           return this.allMembers.filter((member) => {
-        return member.userName.includes(this.filterBy);
+        return member.userName.toLowerCase().includes(this.filterBy.toLowerCase());
       })
       }
   },
