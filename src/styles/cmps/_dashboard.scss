@@ -76,4 +76,10 @@
         }
         
     }
+
+    @include for-narrow-layout {
+        top: 337px;
+        width: 99%;
+        height: 80vh;
+    }
 }
