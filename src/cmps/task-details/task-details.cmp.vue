@@ -17,15 +17,12 @@
     >
       {{ task.name }}
     </h2>
-    <!-- <div class="date-container flex center" v-if="task.dueDate">
-        <p><font-awesome-icon :icon="['far', 'clock']" />{{ dueDate(task.dueDate) }}</p>
-    </div> -->
     <div class="task-editor-main">
       <div class="loading-spinner-container" v-if="isLoading">
         <img class="loading-spinner" src="../../styles/assets/loading-attachment.gif" />
       </div>
       <div v-if="!isLoading" class="task-details flex-column">
-          <div class="date-container flex center" v-if="task.dueDate">
+          <div class="date-container flex center" :class="checkDate" v-if="task.dueDate">
             <p><font-awesome-icon :icon="['far', 'clock']" /> {{ dueDate(task.dueDate) }}</p>
           </div>
           <div v-if="membersToShow.length">
@@ -106,7 +103,7 @@
         <p class="side-bar-p">Add To Task</p>
         <div class="add-btns-container">
           <button class="side-bar-btn" @click="openPopup('checkList')">
-            CheckList
+            Checklist
           </button>
           <button class="side-bar-btn" @click="openPopup('labels')">
             Labels
@@ -321,6 +318,13 @@ export default {
     },
   },
   computed: {
+    checkDate(){
+      // console.log(this.task.dueDate);
+      const currDate = new Date(this.task.dueDate)
+      if(currDate > Date.now()){
+        return 'due-date-green'
+      } 
+    },
     taskActivities() {
       return this.activities.filter(
         (activity) => activity.taskId === this.task.id
