@@ -7,12 +7,19 @@
     background-repeat: no-repeat;
     background-size: cover;
     color: #000000ad;
+    .header-bgc {
+        width: 100%;
+        height: 50px;
+        position: absolute;
+        top: 0;
+    }
     .hero {
         // padding-top: 50px;
         background-image: url('../../src/styles/assets/board-background-imgs/home1.jpg');
-        height: 80vh;
+        // height: 80vh;
+        height: 73vh;
         width: 100%;
-        margin-top: -50px;
+        // margin-top: -50px;
         // background-color: #E5AD00; save for undraw
     }
     .explain {
