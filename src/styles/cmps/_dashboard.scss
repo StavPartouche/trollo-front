@@ -5,7 +5,7 @@
     transform: translate(50%, -50%);
     width: 80%;
     max-width: 900px;
-    height: 500px;
+    height: 80vh;
     z-index: 2;
     background-color: #efefefe8;
     border-radius: 13px;
@@ -80,6 +80,5 @@
     @include for-narrow-layout {
         top: 337px;
         width: 99%;
-        height: 80vh;
     }
 }

@@ -530,7 +530,7 @@ export default {
 			});
 			this.$message({
 				type: 'success',
-				message: `${this.currTask.name} color wad changed`
+				message: `${this.currTask.name} color was updated`
 			});
 			socket.emit("log", activity);
 		},
