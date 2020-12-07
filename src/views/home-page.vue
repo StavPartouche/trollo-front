@@ -13,7 +13,7 @@
         alt="no Img"
       />
       <div class="text">
-        <h3>Real time comunication and updates</h3>
+        <h3>Real time communication and updates</h3>
         <p>
           enjoy a workplace that syncs in real time, allowing you to see the
           current state of every piece of work
@@ -33,7 +33,7 @@
     <div class="explain on-track-explain flex align-center justify start">
       <img src="@/styles/assets/home-page-explain/track.svg" alt="no Img" />
       <div class="text">
-        <h3>stay on track</h3>
+        <h3>Stay on track</h3>
         <p>
           all of your projects data will be accessible within one click on the
           dashboard button
