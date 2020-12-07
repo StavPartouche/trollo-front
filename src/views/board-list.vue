@@ -210,6 +210,7 @@ export default {
 			else return true;
 		},
 		loadBoards() {
+			console.log('load boards')
 			this.$store.dispatch({ type: 'loadBoards' });
 		}
 	},
