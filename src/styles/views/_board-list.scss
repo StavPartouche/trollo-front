@@ -4,8 +4,8 @@
     padding: 77px 30px 15px;
     overflow-x: hidden;
     // background-image: url('../../src/styles/assets/board-background-imgs/home1.jpg');
-    background: #e1e1e1;
-    // background: linear-gradient(180deg, rgba(252, 252, 252, 1) 0%, rgba(229, 176, 0, 1) 50%, rgba(252, 252, 252, 1) 100%);
+    // background: #e1e1e1;
+    background: #f6f6f6;
     hr {
         margin: 18px;
     }
@@ -71,55 +71,63 @@
             }
         }
     }
-    .el-row {
-        .clearfix:before,
-        .clearfix:after {
-            display: table;
-            content: "";
-        }
-        .clearfix:after {
-            clear: both;
-        }
-        .el-card {
-            display: block;
-            text-decoration: none;
-            width: 300px;
-            height: 160px;
-            margin: 5px;
-            border-radius: 5px;
-            .card-header-container {
-                background-color: #00000059;
-                width: 100%;
-                padding: 14px;
-                text-align: center;
-                backdrop-filter: blur(5px);
-                transition: background-color 0.3s;
-                .card-header {
-                    color: white;
-                    font-weight: bold;
-                    font-size: 1.125rem;
-                    letter-spacing: 1px;
-                    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.7);
-                }
-            }
-            &:hover {
-                cursor: pointer;
-                .card-header-container {
-                    box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.3), 0 1px 3px 1px rgba(60, 64, 67, 0.15);
-                    background-color: #00000078;
-                }
-            }
-            .el-card__body {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-            }
-            .bottom {
-                margin-top: 13px;
-                line-height: 12px;
-            }
-        }
+    .footer-board-list {
+        position: fixed;
+        bottom: 0;
+        height: 80px;
+        width: calc(100vw - 13px);
+        border-top: 1px solid #e5b000;
+        background-color: #e1e1e1;
     }
+    // .el-row {
+    //     .clearfix:before,
+    //     .clearfix:after {
+    //         display: table;
+    //         content: "";
+    //     }
+    //     .clearfix:after {
+    //         clear: both;
+    //     }
+    //     .el-card {
+    //         display: block;
+    //         text-decoration: none;
+    //         width: 300px;
+    //         height: 160px;
+    //         margin: 5px;
+    //         border-radius: 5px;
+    //         .card-header-container {
+    //             background-color: #00000059;
+    //             width: 100%;
+    //             padding: 14px;
+    //             text-align: center;
+    //             backdrop-filter: blur(5px);
+    //             transition: background-color 0.3s;
+    //             .card-header {
+    //                 color: white;
+    //                 font-weight: bold;
+    //                 font-size: 1.125rem;
+    //                 letter-spacing: 1px;
+    //                 text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.7);
+    //             }
+    //         }
+    //         &:hover {
+    //             cursor: pointer;
+    //             .card-header-container {
+    //                 box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.3), 0 1px 3px 1px rgba(60, 64, 67, 0.15);
+    //                 background-color: #00000078;
+    //             }
+    //         }
+    //         .el-card__body {
+    //             display: flex;
+    //             justify-content: center;
+    //             align-items: center;
+    //         }
+    //         .bottom {
+    //             margin-top: 13px;
+    //             line-height: 12px;
+    //         }
+    //     }
+    // }
     @include for-normal-layout {
         .grid-container {
             .grid {

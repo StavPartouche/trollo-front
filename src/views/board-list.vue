@@ -1,5 +1,5 @@
 <template>
-  <section class="board-list background-image">
+  <section class="board-list background-image flex-column align-center">
     <template v-if="loggedInUser">
       <div class="grid-container felx center">
         <div class="grid">
@@ -32,7 +32,7 @@
     </template>
     <div class="grid-container felx center">
       <div class="grid">
-    <h2>Public Boards</h2>
+        <h2>Public Boards</h2>
         <div
           v-if="!loggedInUser"
           class="board-preview add-board-card flex center"
@@ -58,6 +58,7 @@
         </router-link>
       </div>
     </div>
+    <!-- <div class="footer-board-list"></div> -->
   </section>
 </template>
 

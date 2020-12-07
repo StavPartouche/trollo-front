@@ -21,6 +21,7 @@
       </div>
     </div>
     <div class="explain accesible-explain flex align-center justify start">
+      <img src="@/styles/assets/home-page-explain/accesible.svg" alt="no Img" />
       <div class="text">
         <h3>Extremely accessible and easy to use</h3>
         <p>
@@ -28,7 +29,6 @@
           focus on your project
         </p>
       </div>
-      <img src="@/styles/assets/home-page-explain/accesible.svg" alt="no Img" />
     </div>
     <div class="explain on-track-explain flex align-center justify start">
       <img src="@/styles/assets/home-page-explain/track.svg" alt="no Img" />
