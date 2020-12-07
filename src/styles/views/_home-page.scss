@@ -18,7 +18,8 @@
         // padding-top: 50px;
         background-image: url('../../src/styles/assets/board-background-imgs/home1.jpg');
         // height: 80vh;
-        height: 82vh;
+        // height: 82vh;
+        height: 500px;
         width: 100%;
         // margin-top: -50px;
         // background-color: #E5AD00; save for undraw
@@ -26,14 +27,34 @@
     .explain {
         width: 100%;
         padding: 42px;
+        // height: 500px;
+        &.real-time-explain,
+        &.on-track-explain {
+            background-color: #0000000a;
+            .text {
+                padding: 20px 0px 20px 72px;
+            }
+        }
+        &.accesible-explain {
+            .text {
+                padding: 20px 72px 20px 0px;
+            }
+        }
         img {
             flex: 1;
-            height: 200px;
+            // height: 300px;
+            width: 50%;
         }
         .text {
             flex: 1;
-            padding: 20px;
-            text-align: center;
+            // padding: 20px;
+            h3 {
+                font-size: rem(40px);
+            }
+            // text-align: center;
+            p {
+                font-size: rem(23px);
+            }
         }
     }
     h1.logo {
