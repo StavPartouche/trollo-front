@@ -1,5 +1,5 @@
 <template>
-	<section class="board-list background-image">
+	<section class="board-list">
 		<template v-if="loggedInUser">
 			<h2>User Boards</h2>
 			<div class="grid-container felx center">
