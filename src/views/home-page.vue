@@ -1,8 +1,9 @@
 <template>
   <section class="home-page">
-    <img class="header-bgc" src="@/styles/assets/headerBgc.jpg" />
+    <!-- <img class="header-bgc" src="@/styles/assets/headerBgc.jpg" /> -->
     <div class="hero background-image flex-column center">
       <h1 class="logo"><span>T</span>rollo</h1>
+	  <!-- <div style="height:130px"></div> -->
       <h2 class="flex centetr">Management, the way you want it.</h2>
       <button class="try-now-btn" @click="goToBoards">Try it now</button>
     </div>
@@ -27,16 +28,10 @@
           focus on your project
         </p>
       </div>
-      <img
-        src="@/styles/assets/home-page-explain/accesible.svg"
-        alt="no Img"
-      />
+      <img src="@/styles/assets/home-page-explain/accesible.svg" alt="no Img" />
     </div>
     <div class="explain on-track-explain flex align-center justify start">
-      <img
-        src="@/styles/assets/home-page-explain/track.svg"
-        alt="no Img"
-      />
+      <img src="@/styles/assets/home-page-explain/track.svg" alt="no Img" />
       <div class="text">
         <h3>stay on track</h3>
         <p>
@@ -61,6 +56,8 @@
 </template>
 
 <script>
+import { eventBusService } from "../services/eventBus.service";
+
 export default {
   name: "home-page",
   methods: {

@@ -10,7 +10,9 @@
       class="disable-page-container"
       :style="{ 'z-index': disablePage.zIndex }"
     ></div> -->
-    <app-header />
+    <app-header
+     
+    />
     <!-- <main> -->
     <router-view />
     <!-- </main> -->
@@ -31,6 +33,7 @@ export default {
       isBgcColor: false,
       bgcImg: "",
       bgcColor: "",
+
     };
   },
   computed: {
@@ -53,10 +56,8 @@ export default {
   watch: {
     $route(to, from) {
       if (this.$route.name === "home-page") {
-          this.isBgcImg = false;
-          this.bgcImg = false;
-        // this.isBgcImg = true;
-        // this.bgcImg = "home1.jpg";
+        this.isBgcImg = false;
+        this.bgcImg = false;
       }
       if (this.$route.name === "login-page") {
         this.isBgcImg = true;
@@ -74,9 +75,9 @@ export default {
     if (this.$route.name === "home-page") {
       this.isBgcImg = false;
       this.bgcImg = false;
-      // this.isBgcImg = true;
-      // this.bgcImg = "home1.jpg";
-    }
+    } 
+    
+
     if (this.$route.name === "login-page") {
       this.isBgcImg = true;
       this.bgcImg = "home1.jpg";
@@ -96,14 +97,14 @@ export default {
         this.bgcImg = bgc.url;
       }
     });
-    // eventBusService.$on("disablePage", (info) => {
-    //   this.disablePage.zIndex = info.zIndex ? info.zIndex : 1;
-    //   this.disablePage.isDisable = true;
-    //   this.disablePage.to = info.to
+    // eventBusService.$on("scrolled", (isScrolled) => {
+    //   this.home.isScrolled = isScrolled;
+    //   console.log(this.home.isScrolled);
     // });
   },
   destroyed() {
     eventBusService.$off("boardBgc");
+    // eventBusService.$off("scrolled");
     socket.terminate();
   },
   components: {
