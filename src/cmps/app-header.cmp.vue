@@ -92,26 +92,41 @@ export default {
     $route(to, from) {
       if (this.$route.name === "home-page") {
         this.home.isHome = true;
+        this.home.isScrolled = false;
+                  document
+      .querySelector(".home-page")
+      .addEventListener("scroll", this.onScroll)
+      }else if(this.$route.name === "board-list") {
+        this.home.isHome = true;
+        this.home.isScrolled = true;
       } else {
         this.home.isHome = false;
       }
+      //          document
+      // .querySelector(".home-page")
+      // .removeEventListener("scroll", this.onScroll);
+      }
     },
-  },
   created(){
       if (this.$route.name === "home-page") {
         this.home.isHome = true;
-      } else {
+        this.home.isScrolled = false;
+      } else if(this.$route.name === "board-list") {
+        this.home.isHome = true;
+        this.home.isScrolled = true;
+      }else {
         this.home.isHome = false;
-      }
-    
+      }   
   },
   mounted() {
-    document
+     if (this.$route.name === "home-page"){
+       document
       .querySelector(".home-page")
       .addEventListener("scroll", this.onScroll);
+     }
   },
   beforeDestroy() {
-       document
+    document
       .querySelector(".home-page")
       .removeEventListener("scroll", this.onScroll);
   },

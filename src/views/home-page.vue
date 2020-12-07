@@ -3,7 +3,7 @@
     <!-- <img class="header-bgc" src="@/styles/assets/headerBgc.jpg" /> -->
     <div class="hero background-image flex-column center">
       <h1 class="logo"><span>T</span>rollo</h1>
-	  <!-- <div style="height:130px"></div> -->
+      <!-- <div style="height:130px"></div> -->
       <h2 class="flex centetr">Management, the way you want it.</h2>
       <button class="try-now-btn" @click="goToBoards">Try it now</button>
     </div>
@@ -57,6 +57,7 @@
 
 <script>
 import { eventBusService } from "../services/eventBus.service";
+import appHeader from "../cmps/app-header.cmp";
 
 export default {
   name: "home-page",
@@ -65,5 +66,6 @@ export default {
       this.$router.push("/board");
     },
   },
+
 };
 </script>
