@@ -59,9 +59,12 @@
                         padding-right: 3.5px;
                         .search-input {
                             width: 100px;
+                            transition: 0.3s;
                         }
                         .search-input-hide {
-                            display: none;
+                            width: 0;
+                            padding: 0;
+                            margin: 0;
                         }
                         .search-btn {
                             padding-left: 1px;
