@@ -1,11 +1,13 @@
 .dashboard {
     position: absolute;
-    top: 563%;
+    display: flex;
+    flex-direction: column;
+    top: 50%;
     right: 50%;
-    transform: translate(50%, -50%);
+    transform: translate(50%);
     width: 80%;
     max-width: 900px;
-    height: 80vh;
+    height: 85vh;
     z-index: 2;
     background-color: #efefeff5;
     border-radius: 13px;
@@ -28,7 +30,8 @@
         justify-content: space-around;
         flex-wrap: wrap;
         margin-top: 38px;
-        padding-bottom: 25px;
+        // padding-bottom: 25px;
+        padding: 0 10px 25px 10px;
         .data-card {
             display: flex;
             align-items: center;
@@ -80,7 +83,6 @@
         }
     }
     @include for-narrow-layout {
-        top: 337px;
         width: 99%;
     }
 }
