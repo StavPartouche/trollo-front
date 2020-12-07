@@ -2,7 +2,9 @@
   <div  v-if="labels.length">
     <ul class="flex data-layout">
       <li v-for="(label, idx) in labels" :key="idx">
-        <div class="task-preview-label" :style='{backgroundColor: label.backgroundColor}'></div>
+        <el-tooltip popper-class="title" :visible-arrow="false" effect="light" :content="label.txt" placement="top">
+         <div class="task-preview-label" :style='{backgroundColor: label.backgroundColor}'></div>  
+        </el-tooltip>
       </li>
     </ul>
   </div>

@@ -12,7 +12,6 @@
 				v-for="(label, idx) in labels"
 				:key="idx"
 			>
-					<!-- @blur="emitLabelTxt(idx)" -->
 				<h3
 					@keydown.enter="emitLabelTxt(idx)"
 					@blur="emitLabelTxt(idx)"
@@ -20,14 +19,11 @@
 				>
 					{{ label.txt }}
 				</h3>
-				<!-- <button class="label-txt-btn"  v-if="!isEdits[idx]" @click.stop="toggleEditLabel(idx)"> -->
 				<button class="label-txt-btn"  v-if="!isEdits[`${idx}`]" @click.stop="toggleEditLabel(idx)">
-					<!-- <font-awesome-icon v-if="!isEditable(idx)" -->
 					<font-awesome-icon
 						:icon="['fas', 'pencil-alt']"
 					/>
 				</button>
-				<!-- <button class="label-txt-btn" v-if="isEdits[idx]" @click.stop="toggleEditLabel(idx)"> -->
 				<button class="label-txt-btn" v-if="isEdits[`${idx}`]" @click.stop="toggleEditLabel(idx)">
 					<font-awesome-icon
 						:icon="['fas', 'check']"

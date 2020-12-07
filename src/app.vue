@@ -4,18 +4,8 @@
     class="flex-column app-container background-image"
     :style="background"
   >
-    <!-- <div
-      @click="closeDisable"
-      v-if="disablePage.isDisable"
-      class="disable-page-container"
-      :style="{ 'z-index': disablePage.zIndex }"
-    ></div> -->
-    <app-header
-     
-    />
-    <!-- <main> -->
+    <app-header />
     <router-view />
-    <!-- </main> -->
   </div>
 </template>
 
@@ -56,8 +46,8 @@ export default {
   watch: {
     $route(to, from) {
       if (this.$route.name === "home-page") {
-        this.isBgcImg = false;
-        this.bgcImg = false;
+          this.isBgcImg = false;
+          this.bgcImg = false;
       }
       if (this.$route.name === "login-page") {
         this.isBgcImg = true;
@@ -75,9 +65,7 @@ export default {
     if (this.$route.name === "home-page") {
       this.isBgcImg = false;
       this.bgcImg = false;
-    } 
-    
-
+    }
     if (this.$route.name === "login-page") {
       this.isBgcImg = true;
       this.bgcImg = "home1.jpg";
@@ -97,10 +85,6 @@ export default {
         this.bgcImg = bgc.url;
       }
     });
-    // eventBusService.$on("scrolled", (isScrolled) => {
-    //   this.home.isScrolled = isScrolled;
-    //   console.log(this.home.isScrolled);
-    // });
   },
   destroyed() {
     eventBusService.$off("boardBgc");

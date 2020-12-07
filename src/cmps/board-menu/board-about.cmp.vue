@@ -10,20 +10,10 @@
     <hr />
     <ul>
       <li class="bold">
-        <!-- <h3>{{ name }}</h3> -->
         {{ name }}
       </li>
-      <!-- <li>Made By</li> -->
       <li>
         Due Date:
-        <!-- <h4>Due Date:</h4> -->
-
-        <!-- <input
-          class="justify-end"
-          type="date"
-          v-model="dueDateEdit"
-          @change="updateBoardDueDate"
-        /> -->
         <el-date-picker class="date-input"
           @input="updateBoardDueDate" 
           v-model="dueDateEdit"
@@ -34,7 +24,6 @@
       </li>
       <li>
         Description:
-        <!-- <h4>Description:</h4> -->
             <textarea
             placeholder="Describe here..."
             class="board-desc-content"

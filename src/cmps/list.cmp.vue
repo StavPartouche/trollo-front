@@ -62,7 +62,6 @@
 								}"
 							></li>
 						</ul>
-						<!-- <div class="task-preview-date flex due-date-green" v-if="task.dueDate"> -->
 						<div class="task-preview-date flex" :class="checkDate(task.dueDate)" v-if="task.dueDate">
             				<p><font-awesome-icon :icon="['far', 'clock']" /> {{ dueDate(task.dueDate) }}</p>
         				</div>

@@ -4,26 +4,17 @@
     background-size: cover;
 }
 
-// .el-row * {
-//     display: flex;
-//     justify-content: center;
-//     align-items: center;
-// }
-
 /* custom scrollbar */
 
-// GENERAL SCROLL
+
 // EDIT SCROLL
-// .board-edit {
  ::-webkit-scrollbar {
-    // position: absolute;
     width: 13px;
     height: 13px;
     background-color: rgba(0, 0, 0, 0.38);
 }
 
  ::-webkit-scrollbar-corner {
-    // background: rgba(253, 230, 230, 0.425);
     background-color: rgba(0, 0, 0, 0.38);
 }
 
@@ -32,7 +23,6 @@
 }
 
  ::-webkit-scrollbar-thumb {
-    // background-color: rgba(0, 0, 0, 0.199);
     background-color: rgba(205, 205, 205, 0.51);
     border-radius: 20px;
     border: 2px solid transparent;
@@ -40,12 +30,10 @@
 }
 
  ::-webkit-scrollbar-thumb:hover {
-    // background-color: #a8bbbf;
     cursor: pointer;
     background-color: rgba(232, 232, 232, 0.51);
 }
 
-// }
 // INSIDE SCROLL
 .home-page,
 .board-list,

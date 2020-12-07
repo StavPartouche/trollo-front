@@ -27,14 +27,6 @@
 						<font-awesome-icon :icon="['fas', 'eye']" />
 					</button>
 				</label>
-				<!-- <button
-					ref="passwordBtn"
-					type="button"
-					class="password-btn"
-					@click="togglePassword"
-				>
-					<i class="far fa-eye"></i>
-				</button> -->
 				<br />
 				<p class="login-err-msg" v-if="msg">{{ msg }}</p>
 				<button>Login</button>
@@ -71,21 +63,7 @@
 						<font-awesome-icon :icon="['fas', 'eye']" />
 					</button>
 				</label>
-				<!-- <button
-					ref="passwordBtn"
-					type="button"
-					class="password-btn"
-					@click="togglePassword"
-				>
-					<i class="far fa-eye"></i>
-				</button> -->
 				<br />
-				<!-- <input
-					type="text"
-					v-model="signupCred.password"
-					placeholder="Password"
-				/>
-				<br /> -->
 				<label>
 					Image:
 					<input type="file" @change="onUploadImg" />
@@ -104,7 +82,6 @@
 			</form>
 			<img v-if="isLoading" src="@/styles/assets/loading.gif" />
 		</template>
-		<!-- <hr /> -->
 	</section>
 </template>
 

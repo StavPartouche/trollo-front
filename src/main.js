@@ -12,8 +12,6 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { faUserSecret } from '@fortawesome/free-solid-svg-icons'
 import { faChevronLeft, faClock, faPaintRoller, faSlidersH, faHandPointer, faFileAlt, faUser, faTimes, faChartBar, faEllipsisH, faTrashAlt, faEllipsisV, faAlignJustify, faHistory, faUserPlus, faTasks, faPlus, faAlignLeft, faComment, faPaperclip, faHome, faThLarge, faCheck, faPencilAlt, faFilter, faSearch, faEye } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-// import VueCharts from 'vue-chartjs'
-// import { Bar, Line } from 'vue-chartjs'
 library.add(faUserSecret)
 library.add(faChevronLeft)
 library.add(faTimes)

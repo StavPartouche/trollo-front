@@ -16,7 +16,6 @@
             cols="80"
             rows="3"
           ></textarea> 
-          <!-- <input class="comment-input data-layout" type="text" placeholder="Write a comment" v-model="commentTxt"> -->
           <button class="green-btn">Send</button>
       </form>
   </div>
