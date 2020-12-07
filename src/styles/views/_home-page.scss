@@ -31,6 +31,14 @@
         &.real-time-explain,
         &.on-track-explain {
             background-color: #0000000a;
+            .text {
+                padding: 20px 0px 20px 72px;
+            }
+        }
+        &.accesible-explain {
+            .text {
+                padding: 20px 72px 20px 0px;
+            }
         }
         img {
             flex: 1;
@@ -39,7 +47,7 @@
         }
         .text {
             flex: 1;
-            padding: 20px;
+            // padding: 20px;
             h3 {
                 font-size: rem(40px);
             }

@@ -91,7 +91,7 @@
                     margin: 0;
                 }
             }
-            .due-date-green{
+            .due-date-green {
                 background-color: #3bcc3d;
             }
             .show-controller {
@@ -102,12 +102,18 @@
                 .active {
                     background-color: #505e78;
                     color: #f4f5f7;
+                    &:hover {
+                        background-color: #2f3f5c;
+                    }
                 }
                 button {
                     padding: 7px;
                     margin-right: 10px;
                     background-color: #dddddd;
                     color: #5c5c5c;
+                    &:hover {
+                        background-color: #cecece
+                    }
                 }
             }
             .description-textarea {
@@ -117,8 +123,12 @@
                 border: none;
                 resize: none;
                 width: 97%;
+                cursor: pointer;
                 &:focus {
                     background-color: #fdfdfd;
+                }
+                &:hover {
+                    background-color: #cecece
                 }
             }
             .task-details-checklist {
@@ -254,7 +264,10 @@
             color: #5c5c5c;
             background-color: #dddddd;
             font-size: rem(14px);
-            border-radius: 3px
+            border-radius: 3px;
+            &:hover {
+                background-color: #cecece
+            }
         }
         .add-attachments-input {
             position: absolute;

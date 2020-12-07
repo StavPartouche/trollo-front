@@ -158,8 +158,11 @@
                 padding: 8px;
                 margin-bottom: 10px;
                 cursor: pointer;
-                .task-preview-date{
-                    p{
+                &:hover {
+                    background-color: #f1f1f1;
+                }
+                .task-preview-date {
+                    p {
                         margin-bottom: -4px;
                         border-radius: 3px;
                         background-color: #e06060;
@@ -169,8 +172,8 @@
                         font-size: rem(12px);
                     }
                 }
-                .due-date-green{
-                    p{
+                .due-date-green {
+                    p {
                         background-color: #3bcc3d;
                     }
                 }
