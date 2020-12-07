@@ -1,5 +1,5 @@
 <template>
-  <nav class="app-header flex align-center justify-space-between">
+  <nav class="app-header flex align-center justify-space-between"  :class="{ 'app-header-home-page': home.isHome, 'scrolled': home.isScrolled }">
     <div class="widht-200 app-header-left flex align-center justify-start">
       <router-link class="app-header-home" to="/">
         <font-awesome-icon class="icon home-icon" :icon="['fas', 'home']" />
@@ -29,6 +29,7 @@
         </div>
       </div>
     </div>
+    <!-- <router-link v-if="home.isHome && !home.isScrolled" to="/" class="logo logo-to-home"><span>T</span>rollo</router-link> -->
   </nav>
   <!-- <nav class="app-header flex align-center justify-space-between">
 		<router-link to="/" class="logo"><span>T</span>rollo</router-link>
@@ -53,6 +54,10 @@ export default {
   data() {
     return {
       isMenu: false,
+            home: {
+        isHome: false,
+        isScrolled: false,
+      },
     };
   },
   computed: {
@@ -72,6 +77,59 @@ export default {
     closeMenu() {
       this.isMenu = false;
     },
+        onScroll(e) {
+          this.home.isScrolled = document.querySelector(".home-page").scrollTop > 190
+          if (this.home.isScrolled){
+            document.querySelector(".home-page .logo").style.opacity=0;
+          }else{
+            document.querySelector(".home-page .logo").style.opacity=1;
+          }
+    //  console.log(document.querySelector(".home-page").scrollTop)
+
+    },
+  },
+   watch: {
+    $route(to, from) {
+      if (this.$route.name === "home-page") {
+        this.home.isHome = true;
+        this.home.isScrolled = false;
+                  document
+      .querySelector(".home-page")
+      .addEventListener("scroll", this.onScroll)
+      }else if(this.$route.name === "board-list") {
+        this.home.isHome = true;
+        this.home.isScrolled = true;
+      } else {
+        this.home.isHome = false;
+      }
+      //          document
+      // .querySelector(".home-page")
+      // .removeEventListener("scroll", this.onScroll);
+      }
+    },
+  created(){
+      if (this.$route.name === "home-page") {
+        this.home.isHome = true;
+        this.home.isScrolled = false;
+      } else if(this.$route.name === "board-list") {
+        this.home.isHome = true;
+        this.home.isScrolled = true;
+      }else {
+        this.home.isHome = false;
+      }   
+  },
+  mounted() {
+     if (this.$route.name === "home-page"){
+       document
+      .querySelector(".home-page")
+      .addEventListener("scroll", this.onScroll);
+     }
+  },
+  beforeDestroy() {
+    document
+      .querySelector(".home-page")
+      .removeEventListener("scroll", this.onScroll);
+  },
     // toggleMenu(){
     // 	this.isMenu = !this.isMenu
     // },
@@ -79,7 +137,6 @@ export default {
     //   this.closeMenu();
     //   this.$router.push("/user");
     // },
-  },
   components: {
     userAvatar,
   },

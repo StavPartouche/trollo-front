@@ -23,6 +23,7 @@ export default {
       isBgcColor: false,
       bgcImg: "",
       bgcColor: "",
+
     };
   },
   computed: {
@@ -87,6 +88,7 @@ export default {
   },
   destroyed() {
     eventBusService.$off("boardBgc");
+    // eventBusService.$off("scrolled");
     socket.terminate();
   },
   components: {
