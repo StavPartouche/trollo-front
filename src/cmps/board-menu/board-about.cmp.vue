@@ -8,31 +8,33 @@
     </div>
 
     <hr />
-    <ul>
-      <li class="bold">
-        {{ name }}
-      </li>
-      <li>
-        Due Date:
-        <el-date-picker class="date-input"
-          @input="updateBoardDueDate" 
-          v-model="dueDateEdit"
-          type="date"
-          placeholder="Pick a day"
-          picker-options="Pick a day">
-        </el-date-picker>
-      </li>
-      <li>
-        Description:
-            <textarea
-            placeholder="Describe here..."
-            class="board-desc-content"
-            v-model="descToEdit"
-            @blur="updateBoardDesc"
-            cols="40"
-            rows="6"
-          ></textarea>
-      </li>
+    <ul class="board-about-container">
+      <div>
+        <li class="bold">
+          {{ name }}
+        </li>
+        <li>
+          Due Date:
+          <el-date-picker class="date-input"
+            @input="updateBoardDueDate" 
+            v-model="dueDateEdit"
+            type="date"
+            placeholder="Pick a day"
+            picker-options="Pick a day">
+          </el-date-picker>
+        </li>
+        <li>
+          Description:
+              <textarea
+              placeholder="Describe here..."
+              class="board-desc-content"
+              v-model="descToEdit"
+              @blur="updateBoardDesc"
+              cols="40"
+              rows="6"
+            ></textarea>
+        </li>
+      </div>
       <li @click.stop="removeBoard" class="menu-delete-board">Delete board</li>
     </ul>
   </div>
