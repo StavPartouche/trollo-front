@@ -175,7 +175,7 @@ export default {
 				type: "removeBoard",
 				boardId,
 			});
-			socket.emit("removeBoard");
+			socket.emit("removeBoard", {});
 			this.$router.push("/board");
 		},
 		updateBoardDesc(desc) {
@@ -718,7 +718,6 @@ export default {
 		socket.emit('enterBoard', boardId);
 	},
 	destroyed() {
-		this.boardEditEvs.forEach(ev => socket.off(ev, this.socketEv));
 		socket.emit("leaveBoard");
 		socket.terminate();
 	},

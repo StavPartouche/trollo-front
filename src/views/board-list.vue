@@ -180,7 +180,7 @@ export default {
 				type: "saveBoard",
 				board: newBoard,
 			});
-			socket.emit("addBoard");
+			socket.emit("addBoard", {});
 			this.$router.push(`/board/${saveBoard._id}`);
 		},
 		openPrompt() {
@@ -210,7 +210,6 @@ export default {
 			else return true;
 		},
 		loadBoards() {
-			console.log('load boards')
 			this.$store.dispatch({ type: 'loadBoards' });
 		}
 	},
@@ -232,6 +231,7 @@ export default {
 		const user = (sessionStorage.getItem('user')) ? JSON.parse(sessionStorage.getItem('user')) : { userName: 'guest' };
 		socket.setup(user);
 		socket.emit('userConnect', user);
+		socket.emit('boardList');
 		socket.on('removeBoard', this.loadBoards);
 		socket.on('addBoard', this.loadBoards);
 		this.loadBoards();
@@ -239,8 +239,6 @@ export default {
 		// eventBusService.$emit('boardBgc', { url: 'color', backgroundColor:'#ddd' });
 	},
 	destroyed() {
-		// socket.off('removeBoard', this.loadBoards);
-		// socket.off('addBoard', this.loadBoards);
 		socket.terminate();
 	}
 };
