@@ -3,6 +3,32 @@
     height: 5px;
     border-radius: 20px;
     margin-right: 3px;
+    
+}
+
+.task-label{
+    border-radius: 20px;
+    margin-right: 3px;
+    p{
+        margin: 0;
+        font-size: 14px;
+        font-weight: 700;
+        color: white;
+        padding: 2px;
+    }
+}
+
+
+.title{
+    padding: 0;
+    margin: 0;
+    font-size: 14px;
+    color: #5c5c5c;
+    height: fit-content;
+    background-color: #dddddd !important;
+    border: none !important;
+    // padding: 10px;
+    padding: 10px !important;
 }
 
 .task-editor {
@@ -85,14 +111,16 @@
                 width: fit-content;
                 border-radius: 3px;
                 color: white;
-                margin-bottom: 7px;
+                margin-bottom: 10px;
                 padding: 3px;
                 p {
                     margin: 0;
+                    font-size: 13px;
+                    padding: 2px;
                 }
             }
             .due-date-green{
-                background-color: #3bcc3d;
+                background-color: #5aac44;
             }
             .show-controller {
                 display: flex;
