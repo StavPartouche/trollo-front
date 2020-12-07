@@ -19,6 +19,8 @@
 }
 
 .board-menu {
+    display: flex;
+    flex-direction: column;
     transform: translateX(100%);
     transition: 0.5s;
     opacity: 0.6;
@@ -27,7 +29,7 @@
     right: 0;
     padding: 7px;
     width: 350px;
-    height: 100%;
+    height: calc(100vh - 50px);
     background-color: $task-details-bgc;
     .menu-header {
         font-size: rem(18px);
@@ -57,7 +59,29 @@
     .main-menu,
     .board-about {
         padding: 0 15px 15px 15px;
+        display: flex;
+        flex-direction: column;
         height: 100%;
+        .board-about-container{
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            flex: 1;
+        }
+        .date-input {
+            width: 200px;
+        }
+        input {
+            background-color: transparent;
+            border-radius: 0;
+            border: none;
+            border-bottom: 0.5px solid rgb(163, 163, 163);
+            padding: 2px 0px 5px;
+            color: #292929d9;
+        }
+        p {
+            margin-right: 7px;
+        }
         li {
             font-size: rem(18px);
             padding: 10px 0;
@@ -70,6 +94,16 @@
                 resize: none;
                 &:focus {
                     background-color: #fdfdfd;
+                }
+            }
+            &.menu-delete-board {
+                cursor: pointer;
+                width: fit-content;
+                padding: 3px;
+                border-radius: 5px;
+                &:hover{
+                    background-color:#9e1a1a;
+                    color: rgb(226, 226, 226);
                 }
             }
         }
