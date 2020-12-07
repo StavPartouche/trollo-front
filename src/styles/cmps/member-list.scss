@@ -1,7 +1,4 @@
 .member-list {
-    // overflow-y: auto;
-    // height: 64%;
-    // width: 90%;
     height: 100%;
     overflow-x: hidden;
     input {
@@ -16,9 +13,6 @@
     li {
         cursor: pointer;
         padding: 2px 14px 2px 0px;
-        // .check {
-        //     margin-right: 5px;
-        // }
     }
     .member-list-name {
         flex: 1;

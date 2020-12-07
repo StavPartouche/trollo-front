@@ -45,10 +45,6 @@
             rows="6"
           ></textarea>
         </div>
-        <!-- <div v-if="task.dueDate">
-          <h3>Due Date</h3>
-          <p>{{ task.dueDate }}</p>
-        </div> -->
 
         <taskDetailsAttachments
           :attachments="task.attachments"
@@ -141,11 +137,11 @@
 </template>
 
 <script>
-import checkList from "../task-popups/checkList.cmp";
+import checkList from "../task-popups/checklist.cmp";
 import members from "../task-popups/members.cmp";
-import dueDate from "../task-popups/dueDate.cmp";
+import dueDate from "../task-popups/due-date.cmp";
 import labels from "../task-popups/labels.cmp";
-import backgroundColor from "../task-popups/backgroundColor.cmp";
+import backgroundColor from "../task-popups/background-color.cmp";
 import taskDetailsChecklists from "../task-details/task-details-checklists.cmp";
 import taskDetailsComments from "../task-details/task-details-comments.cmp";
 import taskDetailsAttachments from "../task-details/task-details-attachments.cmp";
@@ -264,7 +260,6 @@ export default {
     openPopup(type) {
       this.cmpType = type;
       this.isPopup = true;
-      // eventBusService.$emit("disablePage", { to: "popup", zIndex: 4 });
     },
     closePopup() {
       this.cmpType = "";
@@ -319,7 +314,6 @@ export default {
   },
   computed: {
     checkDate(){
-      // console.log(this.task.dueDate);
       const currDate = new Date(this.task.dueDate)
       if(currDate > Date.now()){
         return 'due-date-green'
@@ -364,11 +358,9 @@ export default {
   created() {
     this.taskToEdit = JSON.parse(JSON.stringify(this.task));
     document.body.addEventListener("keyup", this.onKeyUp);
-    // eventBusService.$on("disablePage-popup", this.closePopup);
   },
   destroyed() {
     document.body.removeEventListener("keyup", this.onKeyUp);
-    // eventBusService.$off("disablePage-popup");
   },
 };
 </script>

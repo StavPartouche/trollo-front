@@ -29,13 +29,9 @@
             height: 100%;
         }
         .smooth-dnd-container.horizontal {
-            // flex: 1;
-            // height: fit-content;
-            // max-height: 100%;
             display: flex;
             min-width: auto;
             .smooth-dnd-draggable-wrapper {
-                // flex: 1;
                 display: flex;
                 vertical-align: none;
             }
@@ -48,31 +44,13 @@
             padding: 0 4px 0 8px;
             height: fit-content;
             max-height: 100%;
-            // overflow-y: auto;
-            // &:not(:last-child) {
-            // }
             .draggable-tasks-container {
                 flex: 1;
                 overflow-y: auto;
                 overflow-x: hidden;
-                // padding-right: 4px;
             }
             .draggable-tasks {
                 padding-right: 4px;
-                // background-color: red;
-            }
-            &>section {
-                // height: 100%;
-                // display: flex;
-                // flex-direction: column;
-                &>ul {
-                    // flex: 1;
-                    // overflow-y: hidden;
-                    // &>div {
-                    //     height: 100%;
-                    //     overflow-y: auto;
-                    // }
-                }
             }
             .add-item-input {
                 padding-bottom: 5px;
@@ -81,15 +59,6 @@
                 padding: 0 4px 0 0;
                 opacity: 0.4;
             }
-            // .list-edit-menu-container{
-            //   position: absolute;
-            //   top: 0;
-            //   height: 100vh;
-            //   width: 100vw;
-            //   background-color: rgba(0, 0, 0, 0.411);
-            //   // background-color: transparent;
-            //   z-index: 2;
-            // }
             .list-edit-menu {
                 position: absolute;
                 top: 22px;

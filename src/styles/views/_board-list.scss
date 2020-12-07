@@ -1,6 +1,5 @@
 .board-list {
     padding-top: 80px;
-    // height: 100%;
     flex: 1;
     width: 100%;
     padding: 15px 30px;
@@ -48,18 +47,14 @@
                 }
             }
             .add-board-card {
-                // color: #fff;
-                // background-color: #2a2a2a;
                 cursor: pointer;
                 color: #ffffffbf;
-                // background-color: #313131de;
                 background-color: #494949de;
                 font-size: rem(33px);
                 font-weight: 500;
                 text-align: center;
                 box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.3), 0 1px 3px 1px rgba(60, 64, 67, 0.15);
                 .add-board-card-header {
-                    // margin-top: 41px;
                     h2 {
                         margin: 0;
                         margin-left: 4px;
@@ -104,7 +99,6 @@
             }
             &:hover {
                 cursor: pointer;
-                // box-shadow: 0 0 4px rgba(0, 0, 0, 0.63);
                 .card-header-container {
                     box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.3), 0 1px 3px 1px rgba(60, 64, 67, 0.15);
                     background-color: #00000078;

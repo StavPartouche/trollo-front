@@ -10,7 +10,6 @@
 
         <li @click="toggleIsBackground" class="menu-btn">Change background</li>
 
-        <!-- <li @click.stop="openWarning" class="menu-btn">Delete board</li> -->
         <hr />
         <li class="menu-btn" @backToMenu="backToMenu">
           Activity-log
@@ -35,10 +34,6 @@
         @saveBoardBgc="saveBoardBgc"
         v-if="isBackground"
       ></board-background>
-    <!-- <div
-      @click="toggleMenu"
-      :class="{ 'hide': !isMenu, 'disable-page-container': isMenu }"
-    ></div> -->
   </div>
 </template>
 
@@ -95,7 +90,6 @@ export default {
       this.isActivityLog = false;
       this.isAbout = false;
       this.isBackground = false;
-      // this.menu=null;
     },
     onKeyUp(ev){
       if (ev.keyCode === 27) {

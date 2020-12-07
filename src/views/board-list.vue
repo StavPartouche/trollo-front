@@ -13,7 +13,6 @@
 								class="plus-icon"
 								:icon="['fas', 'plus']"
 							/>
-							<!-- <h2>CREAT BOARD</h2> -->
 						</div>
 					</div>
 					<router-link
@@ -33,36 +32,6 @@
 						</div>
 					</router-link>
 				</div>
-
-				<!-- <el-row class="grid">
-					<el-col :span="2" :offset="0">
-						<el-card class="add-board-card" @click.native="openPrompt">
-							<div class="add-board-card-header flex center">
-								<font-awesome-icon class="plus-icon" :icon="['fas', 'plus']" />
-								<h2>CREAT BOARD</h2>
-							</div>
-						</el-card>
-					</el-col>
-					<el-col
-						:span="4"
-						v-for="board in userBoards"
-						:key="board._id"
-						:offset="0"
-					>
-						<router-link :to="'/board/' + board._id">
-							<el-card
-								class="flex center background-image"
-								:body-style="{ padding: '0px', }"
-								:style="boardBackgorund(board.style)"
-							>
-								<div class="card-header-container">
-									<span class="card-header">{{ board.name }}</span>
-									
-								</div>
-							</el-card>
-						</router-link>
-					</el-col>
-				</el-row> -->
 			</div>
 			<hr />
 		</template>
@@ -78,7 +47,6 @@
 							class="plus-icon"
 							:icon="['fas', 'plus']"
 						/>
-						<!-- <h2>CREAT BOARD</h2> -->
 					</div>
 				</div>
 				<router-link
@@ -96,55 +64,7 @@
 					</div>
 				</router-link>
 			</div>
-			<!-- <el-row class="grid">
-				<el-col v-if="!loggedInUser" :span="2" :offset="0">
-					<el-card class="add-board-card" @click.native="openPrompt">
-								<div class="add-board-card-header flex center">
-									<font-awesome-icon class="plus-icon" :icon="['fas', 'plus']" />
-									<h2>CREAT BOARD</h2>
-								</div>
-							</el-card>
-				</el-col>
-				<el-col
-					:span="4"
-					v-for="board in publicBoards"
-					:key="board._id"
-					:offset="0"
-				>
-					<router-link :to="'/board/' + board._id">
-						<el-card
-								class="flex center background-image"
-								:body-style="{ padding: '0px', }"
-								:style="boardBackgorund(board.style)"
-							>
-								<div class="card-header-container">
-									<span class="card-header">{{ board.name }}</span>
-									
-								</div>
-							</el-card>
-					</router-link>
-				</el-col>
-			</el-row> -->
 		</div>
-		<!-- <hr />
-		<h2>Templates:</h2>
-		<el-row class="flex justify-center wrap">
-			<el-col
-				:span="4"
-				v-for="board in templateBoards"
-				:key="board._id"
-				:offset="1"
-			>
-				<router-link :to="'/board/' + board._id">
-					<el-card :body-style="{ padding: '0px', height: '75px' }">
-						<div style="padding: 14px">
-							<span>{{ board.name }}</span>
-							<div class="bottom clearfix"></div>
-						</div>
-					</el-card>
-				</router-link>
-			</el-col>
-		</el-row> -->
 	</section>
 </template>
 
@@ -236,7 +156,6 @@ export default {
 		socket.on('addBoard', this.loadBoards);
 		this.loadBoards();
 		eventBusService.$emit('boardBgc', { url: 'desk6.jpg' });
-		// eventBusService.$emit('boardBgc', { url: 'color', backgroundColor:'#ddd' });
 	},
 	destroyed() {
 		socket.terminate();

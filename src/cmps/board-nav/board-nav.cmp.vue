@@ -1,5 +1,4 @@
 <template>
-  <!-- <div class="board-nav flex justify-space-between align-center"> -->
   <div class="board-nav">
     <div v-if="menu" @click="closeMenu" class="disable-page-container"></div>
       <div>
@@ -21,7 +20,6 @@
         <font-awesome-icon class="board-nav-icon" :icon="['fas', 'filter']" />
        <p class="filte-by-members"> {{ filterSelect }} </p>
       </button>
-    <!-- <div class="board-nav-name flex center"> -->
       <div
         class="board-nav-btn flex center search-container"
       >
@@ -73,15 +71,12 @@
           </li>
         </ul>
       </div>
-    <!-- </div> -->
     <div class="board-nav-tools">
       <board-member
         @removeBoardMember="removeBoardMember"
         @addBoardMember="addBoardMember"
         :boardMembers="members"
       />
-      <!-- <div class="flex center"> -->
-
       <button @click="openBackground" class="board-nav-btn background-btn icon-container">
         <font-awesome-icon
           class="board-nav-icon "
@@ -95,21 +90,15 @@
         />
       </button>
       <div class="board-nav-btn flex center icon-container">
-        <!-- <div class="board-nav-btn settings-icon-container flex center icon-container"> -->
-        <!-- <button v-if="isMenu" @click="closeMenu" class="open-menu-btn"> -->
         <button v-if="menu" @click="closeMenu" class="close-menu-btn times">
           <font-awesome-icon class="board-nav-icon" :icon="['fas', 'times']" />
         </button>
-        <!-- <button class="open-menu-btn" v-if="!isMenu" @click="openMenu"> -->
         <button v-if="!menu" @click="openMenu" class="">
-          <!-- <font-awesome-icon :icon="['fas', 'ellipsis-h']" />
-          Show Menu -->
           <font-awesome-icon
             class="settings-icon board-nav-icon"
             :icon="['fas', 'sliders-h']"
           />
         </button>
-      <!-- </div> -->
       </div>
     </div>
     <dashboard
@@ -131,7 +120,6 @@
 
 <script>
 import boardMember from "./board-member.cmp";
-import boardMemberCard from "./board-member-card.cmp";
 import dashboard from "../dashboard.cmp";
 import _ from "lodash";
 
@@ -144,7 +132,6 @@ export default {
   },
   data() {
     return {
-      // isMenu: false,
       menu: null,
       isBacground: false,
       nameToEdit: null,
@@ -172,15 +159,10 @@ export default {
     openMenu() {
       this.menu = "main";
       this.$emit("toggleMenu", this.menu);
-      // this.isMenu = true;
-      // this.$emit("toggleMenu", { menu: this.isMenu, background: this.isBackground });
     },
     closeMenu() {
       this.menu = null;
       this.$emit("toggleMenu", this.menu);
-      // this.isMenu = false;
-      // this.isBackground = false;
-      // this.$emit("toggleMenu", { menu: this.isMenu, background: this.isBackground });
     },
     openBackground() {
       this.menu = "bgc";
@@ -219,17 +201,11 @@ export default {
   watch: {
     name() {
       this.nameToEdit = this.name;
-    },
-    // '$refs.search.style.display'() {
-    //   this.$refs.search.focus();
-    // }
+    }
   },
   components: {
     boardMember,
     dashboard,
-  },
-  mounted() {
-    // console.log(this.$refs.search)
   },
   created() {
     this.nameToEdit = this.name;

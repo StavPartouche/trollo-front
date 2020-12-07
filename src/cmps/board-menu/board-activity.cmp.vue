@@ -3,7 +3,6 @@
     <user-avatar :user="user"></user-avatar>
     <div class="activity-details">
       <p class="activity-desc"><span>{{user.fullName}}</span> {{activity.txt}}</p>
-      <!-- <p class="activity-date">{{date}}</p> -->
       <p class="activity-date">{{ date }}</p>
     </div>
   </li>

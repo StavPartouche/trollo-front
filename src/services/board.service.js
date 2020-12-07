@@ -105,12 +105,4 @@ function newActivity(txt,userId, taskId = null){
         userId,
         taskId
     }
-    // return {
-    //     createdAt: Date.now(),
-    //     txt:`added a new task "${newTask.name}"`,
-    //     userId: this.$store.getters.loggedInUser
-    //       ? this.$store.getters.loggedInUser._id
-    //       : { fullName: "Guest" },
-    //     taskId: newTask.id
-    // }
 }

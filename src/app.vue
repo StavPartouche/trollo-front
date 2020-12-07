@@ -4,16 +4,8 @@
     class="flex-column app-container background-image"
     :style="background"
   >
-    <!-- <div
-      @click="closeDisable"
-      v-if="disablePage.isDisable"
-      class="disable-page-container"
-      :style="{ 'z-index': disablePage.zIndex }"
-    ></div> -->
     <app-header />
-    <!-- <main> -->
     <router-view />
-    <!-- </main> -->
   </div>
 </template>
 
@@ -55,8 +47,6 @@ export default {
       if (this.$route.name === "home-page") {
           this.isBgcImg = false;
           this.bgcImg = false;
-        // this.isBgcImg = true;
-        // this.bgcImg = "home1.jpg";
       }
       if (this.$route.name === "login-page") {
         this.isBgcImg = true;
@@ -74,8 +64,6 @@ export default {
     if (this.$route.name === "home-page") {
       this.isBgcImg = false;
       this.bgcImg = false;
-      // this.isBgcImg = true;
-      // this.bgcImg = "home1.jpg";
     }
     if (this.$route.name === "login-page") {
       this.isBgcImg = true;
@@ -96,11 +84,6 @@ export default {
         this.bgcImg = bgc.url;
       }
     });
-    // eventBusService.$on("disablePage", (info) => {
-    //   this.disablePage.zIndex = info.zIndex ? info.zIndex : 1;
-    //   this.disablePage.isDisable = true;
-    //   this.disablePage.to = info.to
-    // });
   },
   destroyed() {
     eventBusService.$off("boardBgc");
