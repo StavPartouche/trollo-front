@@ -3,6 +3,32 @@
     height: 5px;
     border-radius: 20px;
     margin-right: 3px;
+    
+}
+
+.task-label{
+    border-radius: 20px;
+    margin-right: 3px;
+    p{
+        margin: 0;
+        font-size: 14px;
+        font-weight: 700;
+        color: white;
+        padding: 2px;
+    }
+}
+
+
+.title{
+    padding: 0;
+    margin: 0;
+    font-size: 14px;
+    color: #5c5c5c;
+    height: fit-content;
+    background-color: #dddddd !important;
+    border: none !important;
+    // padding: 10px;
+    padding: 10px !important;
 }
 
 .task-editor {
@@ -85,14 +111,16 @@
                 width: fit-content;
                 border-radius: 3px;
                 color: white;
-                margin-bottom: 7px;
+                margin-bottom: 10px;
                 padding: 3px;
                 p {
                     margin: 0;
+                    font-size: 13px;
+                    padding: 2px;
                 }
             }
             .due-date-green{
-                background-color: #3bcc3d;
+                background-color: #5aac44;
             }
             .show-controller {
                 display: flex;
@@ -102,12 +130,18 @@
                 .active {
                     background-color: #505e78;
                     color: #f4f5f7;
+                    &:hover {
+                        background-color: #2f3f5c;
+                    }
                 }
                 button {
                     padding: 7px;
                     margin-right: 10px;
                     background-color: #dddddd;
                     color: #5c5c5c;
+                    &:hover {
+                        background-color: #cecece
+                    }
                 }
             }
             .description-textarea {
@@ -117,8 +151,12 @@
                 border: none;
                 resize: none;
                 width: 97%;
+                cursor: pointer;
                 &:focus {
                     background-color: #fdfdfd;
+                }
+                &:hover {
+                    background-color: #cecece
                 }
             }
             .task-details-checklist {
@@ -254,7 +292,10 @@
             color: #5c5c5c;
             background-color: #dddddd;
             font-size: rem(14px);
-            border-radius: 3px
+            border-radius: 3px;
+            &:hover {
+                background-color: #cecece
+            }
         }
         .add-attachments-input {
             position: absolute;

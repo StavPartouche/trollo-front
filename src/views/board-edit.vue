@@ -102,6 +102,7 @@ import list from "../cmps/list.cmp";
 import { Container, Draggable } from "vue-smooth-dnd";
 import socket from "@/services/socket.service";
 import io from "socket.io-client";
+import moment from 'moment';
 
 export default {
 	name: "board-edit",
@@ -191,7 +192,7 @@ export default {
 		updateBoardDueDate(dueDate) {
 			this.board.dueDate = dueDate;
 			const activity = boardService.newActivity(
-				`updated board due date to ${dueDate}`,
+				`updated board due date to ${moment(dueDate).format('DD MMM YYYY')}`,
 				this.userId
 			);
 			this.board.activities.unshift(activity);
@@ -399,7 +400,7 @@ export default {
 		updateDueDate(newDate) {
 			this.currTask.dueDate = newDate;
 			const activity = boardService.newActivity(
-				`updated due date in ${this.currTask.name} to ${newDate}`,
+				`updated due date in ${this.currTask.name} to ${moment(newDate).format('DD MMM YYYY')}`,
 				this.userId,
 				this.currTask.id
 			);
