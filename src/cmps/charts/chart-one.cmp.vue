@@ -1,12 +1,12 @@
 <script>
-import { Bar } from "vue-chartjs";
+import { Doughnut } from "vue-chartjs";
 
 export default {
   name: "chart-one",
   props: {
     board: Object
   },
-  extends: Bar,
+  extends: Doughnut,
   mounted() {
     this.renderChart({
       labels: this.listsName,
@@ -18,15 +18,6 @@ export default {
         },
       ],
     },
-    {
-      scales: {
-        yAxes: [{
-            ticks: {
-                beginAtZero: true
-            }
-        }]
-    }
-    }
     );
   },
   computed:{
