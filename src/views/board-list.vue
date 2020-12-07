@@ -238,8 +238,8 @@ export default {
 		// eventBusService.$emit('boardBgc', { url: 'color', backgroundColor:'#ddd' });
 	},
 	destroyed() {
-		socket.off('removeBoard', this.loadBoards);
-		socket.off('addBoard', this.loadBoards);
+		// socket.off('removeBoard', this.loadBoards);
+		// socket.off('addBoard', this.loadBoards);
 		socket.terminate();
 	}
 };

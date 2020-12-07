@@ -4,6 +4,7 @@
             <h3><font-awesome-icon class="task-preview-data-item-icon" :icon="['fas', 'paperclip']" /> Attachments</h3>
             <button v-if="previewImg" @click="removePreviewImg">Remove cover</button>
         </div>
+        <canvas class="taskCanvas" width="560" height="360" />
         <ul class="flex wrap align-center justify-space-around data-layout" v-if="attachments">
             <li class="img-container" v-for="(attachment, idx) in attachments" :key="idx">
                 <img :src="attachment" class="img-attachments">

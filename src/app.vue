@@ -11,7 +11,9 @@
       :style="{ 'z-index': disablePage.zIndex }"
     ></div> -->
     <app-header />
+    <!-- <main> -->
     <router-view />
+    <!-- </main> -->
   </div>
 </template>
 

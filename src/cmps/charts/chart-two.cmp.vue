@@ -41,7 +41,7 @@ export default {
         list.tasks.forEach(task =>{
           task.members.forEach(memberId =>{
             var idx = tasksPerMember.findIndex(taskPerMember => memberId === taskPerMember.id )
-            tasksPerMember[idx].tasks++
+            if (idx >= 0) tasksPerMember[idx].tasks++
           })
         })
       })

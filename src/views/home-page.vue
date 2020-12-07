@@ -1,5 +1,6 @@
 <template>
 	<section class="home-page ">
+		<img class="header-bgc" src="@/styles/assets/headerBgc.jpg" />
 		<div class="hero background-image flex-column center" >
 		<h1 class="logo"><span>T</span>rollo</h1>
 		<h2 class="flex centetr">something we want to tell about the purpase of this amazing app</h2>
