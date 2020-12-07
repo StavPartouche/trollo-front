@@ -23,7 +23,6 @@ export default {
       isBgcColor: false,
       bgcImg: "",
       bgcColor: "",
-
     };
   },
   computed: {
@@ -46,12 +45,14 @@ export default {
   watch: {
     $route(to, from) {
       if (this.$route.name === "home-page") {
-          this.isBgcImg = false;
-          this.bgcImg = false;
+        this.isBgcImg = false;
+        this.bgcImg = false;
       }
       if (this.$route.name === "login-page") {
-        this.isBgcImg = true;
-        this.bgcImg = "home1.jpg";
+        this.isBgcImg = false;
+        this.bgcImg = false;
+        // this.isBgcImg = true;
+        // this.bgcImg = "home1.jpg";
       }
     },
   },
@@ -67,8 +68,10 @@ export default {
       this.bgcImg = false;
     }
     if (this.$route.name === "login-page") {
-      this.isBgcImg = true;
-      this.bgcImg = "home1.jpg";
+      this.isBgcImg = false;
+      this.bgcImg = false;
+      // this.isBgcImg = true;
+      // this.bgcImg = "home1.jpg";
     }
     eventBusService.$on("boardBgc", (bgc) => {
       if (!bgc.url) {

@@ -3,12 +3,11 @@
     width: 100%;
     padding: 77px 30px 15px;
     overflow-x: hidden;
+    // background-image: url('../../src/styles/assets/board-background-imgs/home1.jpg');
+    background: #e1e1e1;
+    // background: linear-gradient(180deg, rgba(252, 252, 252, 1) 0%, rgba(229, 176, 0, 1) 50%, rgba(252, 252, 252, 1) 100%);
     hr {
         margin: 18px;
-    }
-    h2 {
-        margin-bottom: 31px;
-        text-align: center;
     }
     .button {
         padding: 0;
@@ -23,6 +22,13 @@
             grid-template-columns: 300px 300px 300px;
             column-gap: 12px;
             row-gap: 12px;
+            h2 {
+                font-size: rem(28px);
+                color: #000000c9;
+                grid-column-start: 1;
+                grid-column-end: -1;
+                margin-bottom: 5px;
+            }
             .board-preview {
                 height: 150px;
                 border-radius: 6px;
