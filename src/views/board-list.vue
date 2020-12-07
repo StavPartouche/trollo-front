@@ -100,7 +100,7 @@ export default {
 				type: "saveBoard",
 				board: newBoard,
 			});
-			socket.emit("addBoard", {});
+			socket.emit("addBoard");
 			this.$router.push(`/board/${saveBoard._id}`);
 		},
 		openPrompt() {
