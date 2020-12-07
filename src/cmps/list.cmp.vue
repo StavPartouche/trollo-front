@@ -51,21 +51,30 @@
 						@click="openTask(list.id, task.id)"
 						:style="{ backgroundColor: task.backgroundColor }"
 					>
-					<div class="flex justify-space-between">
-						<ul class="task-preview-labels flex">
-							<li
-								v-for="(label, idx) in task.labels"
-								:key="idx"
-								class="task-preview-label"
-								:style="{
-									backgroundColor: label.backgroundColor,
-								}"
-							></li>
-						</ul>
-						<div class="task-preview-date flex" :class="checkDate(task.dueDate)" v-if="task.dueDate">
-            				<p><font-awesome-icon :icon="['far', 'clock']" /> {{ dueDate(task.dueDate) }}</p>
-        				</div>
-					</div>
+						<div class="flex justify-space-between">
+							<ul class="task-preview-labels flex">
+								<li
+									v-for="(label, idx) in task.labels"
+									:key="idx"
+									class="task-preview-label"
+									:style="{
+										backgroundColor: label.backgroundColor,
+									}"
+								></li>
+							</ul>
+							<div
+								class="task-preview-date flex"
+								:class="checkDate(task.dueDate)"
+								v-if="task.dueDate"
+							>
+								<p>
+									<font-awesome-icon
+										:icon="['far', 'clock']"
+									/>
+									{{ dueDate(task.dueDate) }}
+								</p>
+							</div>
+						</div>
 						<div
 							class="task-preview-header flex align-center justify-space-between"
 						>
@@ -98,7 +107,7 @@ import { Container, Draggable } from 'vue-smooth-dnd';
 import addItemInput from "./add-item-input.cmp";
 import listEditMenu from "./list-edit-menu.cmp";
 import taskPreviewFotter from './task-preview-footer.cmp';
-import moment from 'moment'
+import moment from 'moment';
 export default {
 	name: "list",
 	props: {
@@ -118,18 +127,19 @@ export default {
 				animationDuration: '150',
 				showOnTop: true
 			},
+			prevTouch: null,
 			'--rotate': 'rotateZ(0deg)',
 		};
 	},
 	methods: {
-		checkDate(taskDate){
-			const currDate = new Date(taskDate).getTime()
-			if(currDate > Date.now()){
-				return 'due-date-green'
-			} 
+		checkDate(taskDate) {
+			const currDate = new Date(taskDate).getTime();
+			if (currDate > Date.now()) {
+				return 'due-date-green';
+			}
 		},
-		dueDate(time){
-			return moment(time).format('MMM DD')
+		dueDate(time) {
+			return moment(time).format('MMM DD');
 		},
 		openListEdit() {
 			this.isListEdit = true;
@@ -179,12 +189,22 @@ export default {
 		onDragStart(ev) {
 			if (!ev.isSource) return;
 			document.documentElement.addEventListener('mousemove', this.mouseMove);
+			document.documentElement.addEventListener('touchmove', this.mouseMove);
 		},
 		onDragEnd(ev) {
 			document.documentElement.removeEventListener('mousemove', this.mouseMove);
+			document.documentElement.removeEventListener('touchmove', this.mouseMove);
 			document.documentElement.style.setProperty('--rotate', '0deg');
 		},
 		mouseMove(ev) {
+			if (ev.type === 'touchmove') {
+				const touch = ev.touches[0];
+				if (this.prevTouch) {
+					ev.movementX = touch.pageX - this.prevTouch.pageX;
+					ev.movementY = touch.pageY - this.prevTouch.pageY;
+				}
+				this.prevTouch = touch;
+			}
 			const rotate = (ev.movementX > 0) ? '7deg' : '-7deg';
 			document.documentElement.style.setProperty('--rotate', rotate);
 		}
