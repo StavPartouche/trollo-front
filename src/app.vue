@@ -49,10 +49,8 @@ export default {
         this.bgcImg = false;
       }
       if (this.$route.name === "login-page") {
-        this.isBgcImg = false;
-        this.bgcImg = false;
-        // this.isBgcImg = true;
-        // this.bgcImg = "home1.jpg";
+        this.isBgcImg = true;
+        this.bgcImg = "home1.jpg";
       }
     },
   },
@@ -68,10 +66,8 @@ export default {
       this.bgcImg = false;
     }
     if (this.$route.name === "login-page") {
-      this.isBgcImg = false;
-      this.bgcImg = false;
-      // this.isBgcImg = true;
-      // this.bgcImg = "home1.jpg";
+      this.isBgcImg = true;
+      this.bgcImg = "home1.jpg";
     }
     eventBusService.$on("boardBgc", (bgc) => {
       if (!bgc.url) {

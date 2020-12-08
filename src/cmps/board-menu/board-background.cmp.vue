@@ -8,7 +8,7 @@
     </div>
     <hr />
     <div class="flex wrap center">
-    <img class="bgc-img-preview" title="photos" @click="setType('img')" src="@/styles/assets/photos2.jpg" alt="">
+    <img class="bgc-img-preview" title="photos" @click="setType('img')" src="@/styles/assets/photos.jpg" alt="">
     <img class="bgc-img-preview" title="colors" @click="setType('color')" src="@/styles/assets/colors.png" alt="">
     </div>
     <ul v-if="type === 'img'" class="flex wrap center">
