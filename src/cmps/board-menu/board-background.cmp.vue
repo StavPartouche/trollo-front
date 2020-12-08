@@ -40,7 +40,7 @@
         <li v-for="(url, idx) in urls" :key="idx">
           <img
             class="bgc-img-preview"
-            @click.stop="saveBoardBgc(url.full)"
+            @click.stop="saveBoardBgc(url.regular)"
             :src="`${url.thumb}`"
             alt="no img background"
           />
