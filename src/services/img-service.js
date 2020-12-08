@@ -5,14 +5,12 @@ const axios = require('axios');
 
 
 async function getImgUrlByTerm(search = 'background') {
-    console.log(search);
     try {
-        const res = await axios.get(`https://api.unsplash.com/search/photos?client_id=jDAQjNPjVQDU_46JxFiBQjPksjx3xWun085OAFM8HWY&per_page=20&query=${search}`)
+        const res = await axios.get(`https://api.unsplash.com/search/photos?client_id=jDAQjNPjVQDU_46JxFiBQjPksjx3xWun085OAFM8HWY&per_page=30&query=${search}`)
         return res.data.results
     } catch (err) {
         throw err;
     }
-
 }
 
 module.exports = {
