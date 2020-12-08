@@ -43,11 +43,11 @@ library.add(faEye)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
-// if ('serviceWorker' in navigator) {
-//     window.addEventListener('load', () => {
-//         navigator.serviceWorker.register('./sw.js');
-//     })
-// }
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js');
+    })
+}
 
 import './styles/styles.scss';
 
