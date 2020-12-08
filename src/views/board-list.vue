@@ -80,6 +80,11 @@ export default {
       if (style.url === "color")
         return { backgroundColor: `${style.backgroundColor}` };
       else
+          if (style.url.includes('http')){
+            return {
+              backgroundImage: `url(${style.url})` 
+              } 
+          }
         return {
           backgroundImage: `url(${require(`@/styles/assets/board-background-imgs/${style.url}`)})`,
         };

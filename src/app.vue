@@ -28,6 +28,11 @@ export default {
   computed: {
     background() {
       if (this.isBgcImg) {
+        if (this.bgcImg.includes("http")) {
+          return {
+            backgroundImage: `url(${this.bgcImg})`,
+          };
+        }
         return {
           backgroundImage: `url(${require(`@/styles/assets/board-background-imgs/${this.bgcImg}`)})`,
         };
