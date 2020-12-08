@@ -37,7 +37,6 @@ export default {
     actions: {
         async loadBoards({ commit, getters }) {
             try{
-                console.log('arrived')
                 const user = (getters.loggedInUser) ? getters.loggedInUser._id : undefined;
                 const boards = await boardService.query(user);
                 commit({ type: 'setBoards', boards });

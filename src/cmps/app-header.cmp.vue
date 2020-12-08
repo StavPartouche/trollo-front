@@ -84,8 +84,6 @@ export default {
           }else{
             document.querySelector(".home-page .logo").style.opacity=1;
           }
-    //  console.log(document.querySelector(".home-page").scrollTop)
-
     },
   },
    watch: {
@@ -102,9 +100,6 @@ export default {
       } else {
         this.home.isHome = false;
       }
-      //          document
-      // .querySelector(".home-page")
-      // .removeEventListener("scroll", this.onScroll);
       }
     },
   created(){
@@ -130,13 +125,6 @@ export default {
       .querySelector(".home-page")
       .removeEventListener("scroll", this.onScroll);
   },
-    // toggleMenu(){
-    // 	this.isMenu = !this.isMenu
-    // },
-    // toUserPage() {
-    //   this.closeMenu();
-    //   this.$router.push("/user");
-    // },
   components: {
     userAvatar,
   },

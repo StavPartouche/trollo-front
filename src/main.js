@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import app from './app.vue';
-import './registerServiceWorker';
+import '../public/sw';
 import router from './router/router';
 import store from './store/store';
 import ElementUI from 'element-ui';
@@ -42,6 +42,12 @@ library.add(faPencilAlt)
 library.add(faEye)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
+
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js');
+    })
+}
 
 import './styles/styles.scss';
 
