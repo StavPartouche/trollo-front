@@ -28,10 +28,10 @@
 			/>
 		</div>
 		<ul class="draggable-tasks-container">
+				<!-- non-drag-area-selector="img" -->
 			<Container
 				orientation="vertical"
 				drag-handle-selector=".task-preview"
-				non-drag-area-selector="img"
 				:drag-begin-delay="dragDelay"
 				@drop="onDrop(list.id, $event)"
 				@drag-start="onDragStart"
@@ -84,6 +84,7 @@
 							class="preview-img"
 							v-if="task.previewImg"
 							:src="task.previewImg"
+							draggable="false"
 						/>
 						<taskPreviewFotter :task="task" :members="members" />
 					</li>
